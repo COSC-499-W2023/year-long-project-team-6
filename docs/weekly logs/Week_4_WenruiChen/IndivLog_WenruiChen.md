@@ -1,4 +1,4 @@
-# Individual Log - Zetian Zhao (Week 4)
+# Individual Log - Wenrui Chen (Week 4)
 
 ## Applicable data range
 **September/26/2023** to **October/1/2023**
@@ -20,7 +20,7 @@
 *Board format:*
 ![Board](Board.png)
 *Table format:*
-![Table](Table.png)
+![Table](newTable.png)
 
 ## ScreenShot of peer evaluation
 ![Peer Evaluation](PeerEval.png)
