@@ -1,4 +1,4 @@
-# Individual Log - Zetian Zhao (Week 4)
+# Individual Log - Yiqi Xu (Week 4)
 
 ## Applicable data range
 **September/26/2023** to **October/1/2023**
