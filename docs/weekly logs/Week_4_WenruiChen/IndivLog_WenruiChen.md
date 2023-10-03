@@ -18,7 +18,7 @@
 
 ## My Task on Board
 *Board format:*
-![Board](Board.png)
+![Board](Table.png)
 *Table format:*
 ![Table](newTable.png)
 
