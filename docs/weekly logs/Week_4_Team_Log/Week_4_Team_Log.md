@@ -38,4 +38,4 @@
 ![Table](Table.png)
 
 ## Burnup chart
-![Chart](chart.png)
+![Chart](Chart.png)
