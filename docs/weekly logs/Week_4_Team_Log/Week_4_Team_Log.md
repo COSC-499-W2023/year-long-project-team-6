@@ -36,3 +36,6 @@
 ![Board](Board.png)
 *Table format:*
 ![Table](Table.png)
+
+## Burnup chart
+![Chart](chart.png)
