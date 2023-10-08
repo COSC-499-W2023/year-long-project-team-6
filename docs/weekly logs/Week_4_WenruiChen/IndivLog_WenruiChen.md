@@ -20,7 +20,7 @@
 *Board format:*
 ![Board](Board.png)
 *Table format:*
-![Table](Table.png)
+![Table](newTable.png)
 
 ## ScreenShot of peer evaluation
 ![Peer Evaluation](PeerEval.png)
