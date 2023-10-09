@@ -103,6 +103,7 @@
 
 .leftbar {
     display: flex;
+    margin-left: 250px;
 }
 
 #list .setting {
@@ -154,4 +155,13 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+#infoBox {
+    border: 2px black solid;
+    width: 700px;
+    height: 600px;
+    top: 300px;
+    left: 250px;
+    position: absolute;
 }
