@@ -18,16 +18,21 @@
 
 ## Milestone Goals
 Complete website UI design.
+
 Selection of the stack framework to be used for the production of the website.
+
 Start coding website UI.
 
 ## Completed Tasks 
 Completed website UI design by Figma.
+
 Chose using LAMP stack to build our site.
+
 Finished the layout of a few pages.
 
 ## Task in progress
 One page's UI needs to be coded. 
+
 The pages need to be connected. 
 
 ## Project on Board
