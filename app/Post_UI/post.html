@@ -54,6 +54,13 @@
                     </label>
                     <span id="selectedFileName"></span>
 
+                    <label class="custom-file-upload">
+                        <input type="file" name="file" id="file"
+                            accept="video/mp4, video/avi, video/webm, video/mkv, audio/mpeg"
+                            onchange="displayFileName(event)">
+                        Record Your Video
+                    </label>
+
                 </div>
                 <div id="button">
                     <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
