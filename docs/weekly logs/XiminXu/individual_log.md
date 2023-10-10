@@ -58,10 +58,6 @@ Tasks done vs in progress
 
 **Tasks done:**
 1. Coding the ui bars
-2. Writing technology stack of project plamn
-3. Peer Evaluation
-4. Teamwork distribution table
-
 **In progress**
  
 This week work all done
