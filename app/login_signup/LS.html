@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup</title>
+    <link rel="stylesheet" href="loginS.css">
+
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class='header'>
+            <div class='text'></div>
+            <div class='underline'></div>
+        </div>
+        <div class='inputs'>
+            <div class='input' id="nameInputContainer">
+                <div class="input-content">
+                    <img src="image/person.png" alt="User Icon" />
+                    <!-- Replace "user_icon.jpg" with your actual image file and provide alt text -->
+                    <input type="text" placeholder="Name" />
+                </div>
+            </div>
+            <div class='input'>
+                <img src="image/email.png" alt="Email Icon" />
+                <!-- Replace "email_icon.jpg" with your actual image file and provide alt text -->
+                <input type="email" placeholder="Email" />
+            </div>
+            <div class='input'>
+                <img src="image/password.png" alt="Password Icon" />
+                <!-- Replace "password_icon.jpg" with your actual image file and provide alt text -->
+                <input type="password" placeholder="Password" id="passwordInput" autocomplete="new-password" />
+                <input type="text" id="hiddenPasswordInput" style="opacity: 0; position: absolute; top: -9999px; left: -9999px;" />
+                <button class="password-toggle" onClick="togglePasswordVisibility()">Show</button>
+            </div>
+            
+        </div>
+
+        <div class="forgot-password" onClick="toggleAction()" id="forgotPassword">Forgot password? <span>Click
+                Here!</span></div>
+        <div class="submit-container">
+            <div class="submit gray" onClick="setAction('Sign Up')">Sign Up</div>
+            <div class="submit" onClick="setAction('Login')">Login</div>
+        </div>
+    </div>
+
+    <!-- ---------------------------------------------------------------------- -->
+    <script>
+        let showPassword = false;
+        let action = "Login";  // Initial action
+
+        document.addEventListener("DOMContentLoaded", function () {
+            action = "Login";
+            updateUI(); // 更新UI以反映新的action
+        });
+
+        function togglePasswordVisibility() {
+            showPassword = !showPassword;
+            const passwordInput = document.getElementById("passwordInput");
+            if (showPassword) {
+                passwordInput.type = "text";
+                document.querySelector(".password-toggle").textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                document.querySelector(".password-toggle").textContent = "Show";
+            }
+        }
+
+        function setAction(newAction) {
+            if (newAction === "Login" || newAction === "Sign Up") {
+                action = newAction;
+                // localStorage.setItem('lastAction', action);
+                // Update the UI to reflect the new action, including the name input field
+                updateUI();
+            } else {
+                console.error("Invalid action:", newAction);
+            }
+        }
+
+        function updateUI() {
+            const headerText = document.querySelector('.header .text');
+            const submitContainer = document.querySelector('.submit-container');
+            const nameInputContainer = document.getElementById('nameInputContainer');
+            const forgotPassword = document.getElementById('forgotPassword'); // Get the element by ID
+
+            const signUpButton = submitContainer.querySelector('.submit.gray');
+            const loginButton = submitContainer.querySelector('.submit');
+
+            // 设置按钮的初始样式为紫色
+            if (signUpButton) {
+                signUpButton.classList.add('gray');
+            }
+            if (loginButton) {
+                loginButton.classList.remove('gray');
+            }
+
+            if (action === "Login") {
+                headerText.textContent = "Vup!";
+                nameInputContainer.style.display = "none"; // Hide the name input field
+                if (forgotPassword) {
+                    forgotPassword.style.display = "block";
+                }
+            } else if (action === "Sign Up") {
+                headerText.textContent = "Vup!";
+                nameInputContainer.style.display = "block"; // Show the name input field
+                if (forgotPassword) {
+                    forgotPassword.style.display = "none"; // Hide the forgot password text
+                }
+            }
+        }
+
+
+        function toggleAction() {
+            if (action === "Login") {
+                action = "Sign Up";
+            } else {
+                action = "Login";
+            }
+
+            // Update the UI to reflect the new action
+            updateUI();
+        }
+
+    </script>
+</body>
+
+</html>
