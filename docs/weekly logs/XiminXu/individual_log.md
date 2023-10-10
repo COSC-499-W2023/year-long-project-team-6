@@ -72,5 +72,5 @@ This week we have finished the project plan. I am really looking forward to this
 This week I have learned about AWS, I know what they are and how to use them in practice. 
 
 ### 5. *From project board*
-![Board](images/pb.png)
-![Table](images/table.png)
+![Board](images5/pb.png)
+![Table](images5/table.png)
