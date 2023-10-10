@@ -1,12 +1,24 @@
 .container{
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    margin-top: 200px;
-    background: white;
-    padding-bottom: 30px;
-    width: 600px;
+    max-width: 400px; /* Adjust the maximum width as per your design */
+    margin: 0 auto;
+    background-color: white;
+    position: absolute;
+    padding: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* You can change the font-family if needed */
+}
+
+body {
+    background: linear-gradient(to bottom, white, #4c00b4);
 }
 
 .header{
@@ -38,28 +50,63 @@
     gap: 25px;
 }
 
-.input{
+.input {
     display: flex;
     align-items: center;
     margin: auto;
-    width: 480px;
-    height: 80px;
+    width: 380px;
+    height: 60px;
     background: #eaeaea;
     border-radius: 6px;
 }
-.input img{
-    margin: 0px 30px;
+
+.input-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
 }
 
-.input input{
+.input img {
+    margin: 0px 10px;
+    height: 20px; /* Adjust the height of the icon as needed */
+}
+
+.input input {
     height: 50px;
-    width: 400px;
+    width: 100%; /* Use 100% width to fill the available space */
     background: transparent;
     border: none;
     outline: none;
     color: #797979;
     font-size: 19px;
 }
+
+#nameInputContainer {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 380px;
+    height: 60px;
+    background: #eaeaea;
+    border-radius: 6px;
+}
+#nameInputContainer .input input {
+    height: 50px !important;
+    width: 340px !important; /* Reduce the width to make space for the icon */
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    color: #797979 !important;
+    font-size: 19px !important;
+    flex: 1 !important;
+}
+
+#nameInputContainer .input img {
+    margin:  0px 10px;
+    height: 24px ; /* Adjust the height of the icon as needed */
+}
+
+
 
 .forgot-password{
     padding-left: 62px;
@@ -94,7 +141,11 @@
     font-weight: 700;
     cursor: pointer;
 }
-
+.submit:hover {
+    background: #250060; /* Change the background color on hover */
+    color: #fff; /* Change the text color on hover */
+    transition: background-color 0.3s, color 0.3s; /* Add a smooth transition */
+}
 .gray{
     background: #EAEAEA;
     color: #676767;
