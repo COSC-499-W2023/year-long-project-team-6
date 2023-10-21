@@ -39,7 +39,7 @@ body, h1, p {
     transition: 0.3s;
 }
 
-.sidebar a:hover {
+.sidebar a:hover, a.active {
     background-color: #555;
 }
 

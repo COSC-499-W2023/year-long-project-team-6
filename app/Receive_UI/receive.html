@@ -6,10 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="receive.css">
+    <link rel="stylesheet" href="../UI-bars/sidebar_style.css">
 
 </head>
 
 <body>
+<div class="topnav">
+
+        <div class="topnav-right">
+          <a href="#">login</a>
+
+        </div>
+</div>
+
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="#" class="active"><img src='../UI-bars/images/home.png'></a><span class="tooltiptext">Home</span></li>
+            <li><a href="#"><img src='../UI-bars/images/downloads.png'></a><span class="tooltiptext">Recorded</span></li>
+            <li><a href="#"><img src='../UI-bars/images/post.ico'></a><span class="tooltiptext">Post</span></li>
+            <div class="bot-set">
+                <li><a href='#'><img src='../UI-bars/images/settings-3-64.png'><span class="tooltiptext">Setting</span></a></li>
+            </div>
+            
+        </ul>
+    </div>
+
+    <div class="content">
     <div id="container">
         <div class="group">
             <img src="/" alt="logo">
@@ -59,6 +82,8 @@
         </div>
     </div>
 
+    </div>
+    
     <footer>
         <script>
             function playPauseVid(vid) {
