@@ -3,6 +3,8 @@
     margin: 0 auto;
     background-color: white;
     position: absolute;
+    
+    flex-direction: column; /* 默认方向 */
     padding: 20px;
     top: 50%;
     left: 50%;
@@ -48,6 +50,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 25px;
+    margin-bottom: 15px;
 }
 
 .input {
@@ -80,7 +83,13 @@ body {
     color: #797979;
     font-size: 19px;
 }
-
+.switch-icon {
+    margin: 0 180px;
+    vertical-align: middle;
+    cursor: pointer; /* 使用手形指针表示图标是可点击的 */
+    width: 40px;       /* 设置宽度为40像素 */
+    height: 40px;      /* 设置高度为40像素 */
+}
 #nameInputContainer {
     display: flex;
     align-items: center;
@@ -111,8 +120,10 @@ body {
 .forgot-password{
     padding-left: 62px;
     margin-top: 27px;
+    margin-bottom: 15px;
     color: #797979;
     font-size: 18px;
+    
 }
 
 .forgot-password span{
@@ -124,14 +135,19 @@ body {
 .submit-container{
     display: flex;
     gap: 30px;
-    margin: 60px auto;
-
+    justify-content: center; 
+    margin:30px auto;
+    width: 300px; 
+    /* margin-left: 0;
+    margin-right: 0; */
 }
 
 .submit{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: row; 
+    align-content: center;
     width: 220px;
     height: 59px;
     color: #fff;
@@ -140,6 +156,16 @@ body {
     font-size: 19px;
     font-weight: 700;
     cursor: pointer;
+    overflow: hidden;
+    line-height: 59px; 
+    border: none;            /* 重置浏览器的默认边框 */
+    padding: 0;  
+}
+.submit-container .submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 .submit:hover {
     background: #250060; /* Change the background color on hover */

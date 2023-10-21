@@ -34,17 +34,19 @@
                 <img src="image/password.png" alt="Password Icon" />
                 <!-- Replace "password_icon.jpg" with your actual image file and provide alt text -->
                 <input type="password" placeholder="Password" id="passwordInput" autocomplete="new-password" />
-                <input type="text" id="hiddenPasswordInput" style="opacity: 0; position: absolute; top: -9999px; left: -9999px;" />
+                <input type="text" id="hiddenPasswordInput"
+                    style="opacity: 0; position: absolute; top: -9999px; left: -9999px;" />
                 <button class="password-toggle" onClick="togglePasswordVisibility()">Show</button>
             </div>
-            
+
         </div>
 
         <div class="forgot-password" onClick="toggleAction()" id="forgotPassword">Forgot password? <span>Click
                 Here!</span></div>
+        <img src="image/exchange.png" alt="Switch" class="switch-icon" onClick="toggleAction()" />
         <div class="submit-container">
-            <div class="submit gray" onClick="setAction('Sign Up')">Sign Up</div>
-            <div class="submit" onClick="setAction('Login')">Login</div>
+            <div class="submit gray" id="signUpButton" onClick="showUnimplementedAlert()">Sign Up</div>
+            <div class="submit" id="loginButton" onClick="showUnimplementedAlert()">Login</div>
         </div>
     </div>
 
@@ -58,6 +60,9 @@
             updateUI(); // 更新UI以反映新的action
         });
 
+        function showUnimplementedAlert() {
+            alert("Still working on it!");
+        }
         function togglePasswordVisibility() {
             showPassword = !showPassword;
             const passwordInput = document.getElementById("passwordInput");
@@ -87,29 +92,29 @@
             const nameInputContainer = document.getElementById('nameInputContainer');
             const forgotPassword = document.getElementById('forgotPassword'); // Get the element by ID
 
-            const signUpButton = submitContainer.querySelector('.submit.gray');
-            const loginButton = submitContainer.querySelector('.submit');
+            const signUpButton = document.getElementById('signUpButton');
+            const loginButton = document.getElementById('loginButton');
 
             // 设置按钮的初始样式为紫色
             if (signUpButton) {
-                signUpButton.classList.add('gray');
+                signUpButton.classList.remove('gray');
             }
             if (loginButton) {
                 loginButton.classList.remove('gray');
             }
 
             if (action === "Login") {
-                headerText.textContent = "Vup!";
-                nameInputContainer.style.display = "none"; // Hide the name input field
-                if (forgotPassword) {
-                    forgotPassword.style.display = "block";
-                }
+                headerText.textContent = "Login";
+                nameInputContainer.style.display = "none";
+                forgotPassword.style.display = "block";
+                signUpButton.style.display = "none";
+                loginButton.style.display = "block";
             } else if (action === "Sign Up") {
-                headerText.textContent = "Vup!";
-                nameInputContainer.style.display = "block"; // Show the name input field
-                if (forgotPassword) {
-                    forgotPassword.style.display = "none"; // Hide the forgot password text
-                }
+                headerText.textContent = "Sign Up";
+                nameInputContainer.style.display = "block";
+                forgotPassword.style.display = "none";
+                signUpButton.style.display = "block";
+                loginButton.style.display = "none";
             }
         }
 
