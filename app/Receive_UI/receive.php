@@ -24,7 +24,7 @@
                 </div>
                 <a class="video_description">Video description</a>
 
-                <video id="myVideo_1" width="320" height="176" onclick="playPauseVid(this)">
+                <video id="myVideo_1" width=90% height="auto" onclick="playPauseVid(this)">
                     <source src="./Video/big_buck_bunny.mp4" type="video/mp4">
                 </video>
 
@@ -45,7 +45,7 @@
                 </div>
                 <a class="video_description">Video description</a>
 
-                <video id="myVideo_2" width="320" height="176" onclick="playPauseVid(this)">
+                <video id="myVideo_2" width=90% height="auto" onclick="playPauseVid(this)">
                     <source src="./Video/big_buck_bunny.mp4" type="video/mp4">
                 </video>
                 <div class="user_feedback">

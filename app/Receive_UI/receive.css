@@ -9,7 +9,8 @@ body {
 }
 
 #container {
-    width: 80%;
+    width: 800px; 
+    max-width: 800px; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,12 +54,11 @@ body {
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
-    width: 45%;
+    width: 360px; 
     border-right: 2px solid rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
 }
-
 
 .user_feedback {
     display: flex;
