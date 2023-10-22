@@ -18,13 +18,13 @@
 * Created a google document for helping team work together. 
 
 ## ScreenShot of peer evaluation
-![Peer Evaluation](PE.png)
+![Peer Evaluation](4_imgs/PE.png)
 
 ## My Task on Board
 *Board format:*
-![Board](Board.png)
+![Board](4_imgs/Board.png)
 *Table format:*
-![Table](Table.png)
+![Table](4_imgs/Table.png)
 
 *** 
 ***
@@ -62,7 +62,53 @@
 *Table format:*
 ![Table](5_imgs/Table.png)
 
+*** 
+***
+***
 
+# (Two weeks) Individual Log - Zetian Zhao (Week 6 and 7)
+
+## Applicable data range
+**October/10/2023** to **October/19/2023**
+
+## Recap Goal 
+*My jobs in these two weeks are:* 
+
+**Week 6:**
+* Have a meeting to discuss our plan about the week. 
+* Fully Complete the desgin of homepage of our website. 
+* Complete the peer evaluation. 
+
+**Week 7:**
+* Have a regular meeting with the teammates. 
+* Redo (Revised) the UI of the Homepage due after the group discussion. 
+* No class (so no peer evaluation)
+
+## Completed Tasks 
+* Had a meeting in the week 6 with the team members.
+* Completed the peer evaluation of week 6.
+* Completed whole basic UI of the homepage.
+* Had a meeting with teammates in the week 7. 
+* Revised the Homepage UI after the discussion.
+* Homepage UI still need some optimization. 
+
+## Current HomePage UI (After revision)
+![HomePage](7_imgs/UI_Home.png)
+
+## ScreenShot of peer evaluation on Week 6
+![Peer Evaluation](PE.png)
+
+## My Task on Board on Week 6
+*Board format:*
+![Board](6_imgs/Board.png)
+*Table format:*
+![Table](6_imgs/Table.png)
+
+## My Task on Board on Week 7
+*Board format:*
+![Board](7_imgs/Board.png)
+*Table format:*
+![Table](7_imgs/Table.png)
 
 
 
