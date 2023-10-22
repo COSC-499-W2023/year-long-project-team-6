@@ -96,7 +96,7 @@
 ![HomePage](7_imgs/UI_Home.png)
 
 ## ScreenShot of peer evaluation on Week 6
-![Peer Evaluation](PE.png)
+![Peer Evaluation](6_imgs/PE.png)
 
 ## My Task on Board on Week 6
 *Board format:*
