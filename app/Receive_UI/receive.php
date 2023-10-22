@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="topnav">
+    <!-- <div class="topnav">
         <a class="active" href="#home">Home</a>
         <a href="#">Feature</a>
         <a href="#">Friend</a>
@@ -31,7 +31,7 @@
             </div>
 
         </ul>
-    </div>
+    </div> -->
     
     <div id="container">
         <div class="group">
