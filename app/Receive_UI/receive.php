@@ -10,6 +10,29 @@
 </head>
 
 <body>
+    <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="#">Feature</a>
+        <a href="#">Friend</a>
+        <a href="#">Notice</a>
+        <div class="topnav-right">
+            <a href="#">login</a>
+        </div>
+    </div>
+
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="#"><img src='images/downloads.png'></a><span class="tooltiptext">Recorded</span></li>
+            <li><a href="#"><img src='images/inbox-64.png'></a><span class="tooltiptext">Inbox</span></li>
+            <li><a href="#"><img src='images/likes-64.png'></a><span class="tooltiptext">Liked Videos</span></li>
+            <div class="bot-set">
+                <li><a href='#'><img src='images/settings-3-64.png'><span class="tooltiptext">Setting</span></a></li>
+            </div>
+
+        </ul>
+    </div>
+    
     <div id="container">
         <div class="group">
             <img src="/" alt="logo">
