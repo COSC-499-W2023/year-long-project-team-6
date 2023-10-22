@@ -27,9 +27,10 @@
             </div>
             <div class='input'>
                 <img src="image/email.png" alt="Email Icon" />
-                <!-- Replace "email_icon.jpg" with your actual image file and provide alt text -->
-                <input type="email" placeholder="Email" />
+                <input type="email" placeholder="Email" id="emailInput" onInput="validateEmail()"/>
+                <span class="email-tooltiptext" id="emailTooltip">Invalid format</span>
             </div>
+
             <div class='input'>
                 <img src="image/password.png" alt="Password Icon" />
                 <!-- Replace "password_icon.jpg" with your actual image file and provide alt text -->
@@ -41,9 +42,13 @@
 
         </div>
 
-        <div class="forgot-password" onClick="toggleAction()" id="forgotPassword">Forgot password? <span>Click
-                Here!</span></div>
+        <div class="forgot-password" onClick="navigateToForgotPasswordPage()" id="forgotPassword">Forgot password? 
+            <span>Click Here!</span>
+        </div>
+        <div class="tooltip">        
         <img src="image/exchange.png" alt="Switch" class="switch-icon" onClick="toggleAction()" />
+        <span class="tooltiptext" id="switchTooltip">Switch between Login and Sign Up interface</span>
+        </div>
         <div class="submit-container">
             <div class="submit gray" id="signUpButton" onClick="showUnimplementedAlert()">Sign Up</div>
             <div class="submit" id="loginButton" onClick="showUnimplementedAlert()">Login</div>
@@ -60,6 +65,13 @@
             updateUI(); // 更新UI以反映新的action
         });
 
+        function showText() {
+            document.querySelector('.switch-text').style.visibility = 'visible';
+        }
+
+        function hideText() {
+            document.querySelector('.switch-text').style.visibility = 'hidden';
+        }
         function showUnimplementedAlert() {
             alert("Still working on it!");
         }
@@ -94,6 +106,7 @@
 
             const signUpButton = document.getElementById('signUpButton');
             const loginButton = document.getElementById('loginButton');
+            const tooltipText = document.getElementById('switchTooltip');
 
             // 设置按钮的初始样式为紫色
             if (signUpButton) {
@@ -104,20 +117,35 @@
             }
 
             if (action === "Login") {
-                headerText.textContent = "Login";
+                headerText.textContent = "Vup";
                 nameInputContainer.style.display = "none";
                 forgotPassword.style.display = "block";
                 signUpButton.style.display = "none";
                 loginButton.style.display = "block";
+                tooltipText.textContent = "Switch to Sign Up";
             } else if (action === "Sign Up") {
-                headerText.textContent = "Sign Up";
+                headerText.textContent = "Vup";
                 nameInputContainer.style.display = "block";
                 forgotPassword.style.display = "none";
                 signUpButton.style.display = "block";
                 loginButton.style.display = "none";
+                tooltipText.textContent = "Switch to Log in";
             }
         }
 
+        function validateEmail() {
+            const emailInput = document.getElementById("emailInput");
+            const emailTooltip = document.getElementById("emailTooltip");
+            const emailValue = emailInput.value;
+
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+            if (emailRegex.test(emailValue) && emailValue.endsWith(".com")) {
+                emailTooltip.style.visibility = "hidden"; // Hide tooltip
+            } else {
+                emailTooltip.style.visibility = "visible"; // Show tooltip
+            }
+        }
 
         function toggleAction() {
             if (action === "Login") {
@@ -129,6 +157,51 @@
             // Update the UI to reflect the new action
             updateUI();
         }
+        function navigateToForgotPasswordPage() {
+        const forgotPasswordHTML = `
+        <div class="container" style="text-align: center; padding-top: 30px; padding-bottom: 50px;">
+        <h2 style="color: #4c00b4;">Forgot Password</h2>
+        <h4 style="color:#888888;">Please enter your email address so we can send you an account recovery link.</h4>
+        <div class='inputs' style="margin-top: 10px;">
+        <div class='input'>
+            <img src="image/email.png" alt="Email Icon" />
+            <input type="email" placeholder="Enter your registered email" style="width: 80%;"/>
+        </div>
+        </div>
+        <div class="submit-container" style="margin-top: 20px; margin-bottom: 10px;">
+            <div class="submit" onClick="sendResetLink()" style="width: 180px; height: 40px; padding: 5px 10px; margin-right: 10px; margin-bottom: 10px;">Send Reset Link</div>
+        </div>
+        <div class="separator" style="margin-top: 10px;">
+            <span><h3>OR</h3></span>
+        </div>
+        <div class="submit-container" style="margin-top: 5px; margin-bottom: 5px;">
+            <a onclick="goBackToLogin()" style="cursor: pointer; color: #4c00b4; "><h3 style="margin: 0;">Back to the main page</h3></a>
+        </div>
+        </div>
+
+        `   ;
+
+        document.body.innerHTML = forgotPasswordHTML;
+        }   
+
+        // function navigateToSignupPage() {
+        // action = "Sign Up";
+        // updateUI();
+        // }
+
+
+
+
+        function sendResetLink() {
+        // 开发中
+            alert('Reset link has been sent to your email!');
+        }
+
+        function goBackToLogin() {
+            // navigateToSignupPage();
+            location.reload(); 
+        }
+
 
     </script>
 </body>
