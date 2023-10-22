@@ -1,167 +1,182 @@
-* {
+body {
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    background: linear-gradient(200deg, #517fa4, #243949);
 }
 
 .banner {
     width: 100%;
-    height: 100vh;
+    padding: 20px;
 }
 
-.navbar {
-    width: 95%;
-    margin: auto;
-    padding: 35px 0;
+.navbar .header {
     display: flex;
     align-items: center;
 }
 
 .logo {
-    width: 60px;
-    cursor: pointer;
-}
-
-.navbar ul li {
-    list-style: none;
-    display: inline-block;
-    margin: 0 20px;
-    position: relative;
-    padding: 0 15px;
-}
-
-.navbar ul li a {
-    text-decoration: none;
-    color: black;
-    text-transform: uppercase;
-}
-
-.navbar ul li::after {
-    content: '';
-    height: 3px;
-    width: 0;
-    background: black;
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    transition: 0.5s;
-}
-
-.navbar ul li:hover::after {
-    width: 100%;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    background-color: #6F52ED;
-    padding: 20px;
+    width: 40px;
+    margin-right: 10px;
 }
 
 #logoName {
-    color: white;
-}
-
-#name .username {
+    color: black;
     font-size: 24px;
+    margin: 0;
 }
 
-#name .student {
-    color: green;
-}
-
-.info {
+.user-section {
+    display: flex;
+    align-items: center;
     position: absolute;
-    top: 35px;
-    right: 0;
+    right: 10px;
+    top: 0;
+}
+
+.user-details {
     display: flex;
     align-items: center;
 }
 
 .Userlogo {
-    width: 50px;
-    height: auto;
-    cursor: pointer;
-}
-
-.Logout {
-    width: 40px;
-    padding: 5px;
-    height: auto;
-    cursor: pointer;
-}
-
-.user-details {
-    flex: 1;
+    width: 60px;
+    border-radius: 50%;
     margin-right: 10px;
 }
 
-.leftbar ul ol {
-    margin: 0 50px;
-    padding: 20px 0;
+#name .username {
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.leftbar {
+#name .student {
+    font-size: 14px;
+    color: lightgreen;
+}
+
+.Logout {
+    width: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.main-content {
+    margin-left: 450px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 0;
+    color: black;
+    padding-left: 250px;
+}
+
+.card {
+    position: relative;
+    width: 900px;
+    height: 450px;
+    margin: 20px;
+    background-color: #758a99;
+    border-radius: 20px;
+    overflow: hidden;
     display: flex;
-    margin-left: 250px;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
 }
 
-#list .setting {
-    padding: 450px 0;
+.card .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.Buttons ol {
-    display: inline-block;
-}
-
-.Buttons {
-    margin-left: 500px;
-}
-
-.button3 {
-    background-color: #20D833;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-
-.button2 {
-    background-color: #6F52ED;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-
-.button1 {
-    background-color: #ED5252;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-
-#infoBox {
-    border: 2px black solid;
-    width: 700px;
-    height: 600px;
-    top: 300px;
-    left: 250px;
+.card .photo {
     position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0%;
+    overflow: hidden;
+    /* aniamtion transition. */
+    transition: 0.5s;
+}
+
+/* when mouse hover on the image, image shrink.  */
+.card:hover .photo {
+    top: 10px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* add black to transparent background, so the content can be viewed easily. */
+.card .photo::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 50%, #222)
+}
+
+.card h3 {
+    font-size: 100px;
+    position: absolute;
+    top: 200px;
+    transition: 0.5s;
+}
+
+.card:hover h3 {
+    top: 170px;
+    font-size: 15px;
+}
+
+.card h4 {
+    margin-top: 220px;
+    width: 80%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card p {
+    font-size: 16px;
+    margin-top: 0;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.card a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.card a:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.card a:active {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.Logout:hover {
+    opacity: 0.8;
+}
+
+.navbar {
+    display: flex;
+}
+
+.card:hover {
+    opacity: 0.8;
 }
