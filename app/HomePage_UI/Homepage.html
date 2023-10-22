@@ -3,59 +3,108 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>
-        Home
-    </title>
+    <title>Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="banner">
+        <!-- top bar -->
         <div class="navbar">
             <div class="header">
                 <img src="imgs/play-button.png" class="logo">
                 <h1 id="logoName">Vup</h1>
             </div>
-            <!-- <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Feature</a></li>
-                <li><a href="#">Friends</a></li>
-                <li><a href="#">About</a></li>
-            </ul> -->
-        </div>
-        <div class="leftbar">
-            <!-- <ul id="list">
-                <ol><a href="#">Recorded videos</a></ol>
-                <ol><a href="#">Inbox</a></ol>
-                <ol><a href="#">Liked videos</a></ol>
-                <ol class="setting"><a href="#">Setting</a></ol>
-            </ul> -->
-            <h2 id="PageTitle">DashBoard</h2>
-            <ul class="Buttons">
-                <ol><button class="button1">Upload a video</button></ol>
-                <ol><button class="button2">Record a video</button></ol>
-                <ol><button class="button3">Edit a video</button></ol>
-            </ul>
-        </div>
-
-        <div class="info">
-            <div class="user-details">
-                <p id="name">
-                    <span class="username">Name</span>
-                    <br>
-                    <span class="student">student</span>
-                </p>
+            <!-- User Details and logout Buttons -->
+            <div class="user-section">
+                <div class="user-details">
+                    <img src="imgs/man.png" class="Userlogo">
+                    <p id="name">
+                        <span class="username">Name</span><br>
+                        <span class="student">student</span>
+                    </p>
+                    <img src="imgs/logout.png" class="Logout" id="logoutButton">
+                </div>
             </div>
-            <img src="imgs/man.png" class="Userlogo">
-            <img src="imgs/logout.png" class="Logout">
         </div>
 
-        <div id="infoBox">
-            <p><span>videos</span><span style="right: 0; position: absolute;">views</span></p>
-            <p><span style="position: absolute; bottom: 0;">likes</span><span
-                    style="right: 0; position: absolute; bottom: 0;">contacts</span></p>
+        <!-- Main Content -->
+        <h2>List of Groups: </h2>
+        <div class="main-content">
+            <div class="first-row">
+                <div class="card">
+                    <div class="photo">
+                        <img src="./imgs/1.png" alt="" class="img1">
+                    </div>
+                    <h3>Group1</h3>
+                    <h4>Information:</h4>
+                    <p>Creation time: xxxx/xx/xx
+                        <br>
+                        Admin: XXX
+                        <br>
+                        Number of people: 50
+                        <br>
+                    </p>
+                    <a href="#">Check members</a>
+                </div>
+                <div class="card">
+                    <div class="photo">
+                        <img src="./imgs/2.png" alt="" class="img1">
+                    </div>
+                    <h3>Group2</h3>
+                    <h4>Information:</h4>
+                    <p>Creation time: xxxx/xx/xx
+                        <br>
+                        Admin: XXX
+                        <br>
+                        Number of people: 50
+                        <br>
+                    </p>
+                    <a href="#">Check members</a>
+                </div>
+            </div>
+            <div class="second-row">
+                <div class="card">
+                    <div class="photo">
+                        <img src="./imgs/3.png" alt="" class="img1">
+                    </div>
+                    <h3>Group3</h3>
+                    <h4>Information:</h4>
+                    <p>Creation time: xxxx/xx/xx
+                        <br>
+                        Admin: XXX
+                        <br>
+                        Number of people: 50
+                        <br>
+                    </p>
+                    <a href="#">Check members</a>
+                </div>
+                <div class="card">
+                    <div class="photo">
+                        <img src="./imgs/4.png" alt="" class="img1">
+                    </div>
+                    <h3>Group4</h3>
+                    <h4>Information:</h4>
+                    <p>Creation time: xxxx/xx/xx
+                        <br>
+                        Admin: XXX
+                        <br>
+                        Number of people: 50
+                        <br>
+                    </p>
+                    <a href="#">Check members</a>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- function here: -->
+    <script>
+        var out = document.getElementById("logoutButton");
+        out.onclick = function () {
+            alert("hi, this is logout.")
+        }
+
+    </script>
 </body>
 
 </html>
