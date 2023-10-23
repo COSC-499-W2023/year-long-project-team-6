@@ -1,38 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Sidebar</title>
+    <title>
+      Sample Sidebar
+    </title>
     <link rel="stylesheet" href="sidebar_style.css">
-</head>
-<body>
+  </head>
+  
+  <body>
     <div class="topnav">
-        <a class="active" href="#home">Home</a>
-        <a href="#">Feature</a>
-        <a href="#">Friend</a>
-        <a href="#">Notice</a>
-        <div class="topnav-right">
-          <a href="#">login</a>
-        </div>
+      <div class="topnav-right">
+        <a href="#">
+          login
+        </a>
       </div>
-
-
+    </div>
     <div class="sidebar">
-        <ul>
-            <li><a href="#"><img src='images/downloads.png'></a><span class="tooltiptext">Recorded</span></li>
-            <li><a href="#"><img src='images/inbox-64.png'></a><span class="tooltiptext">Inbox</span></li>
-            <li><a href="#"><img src='images/likes-64.png'></a><span class="tooltiptext">Liked Videos</span></li>
-            <div class="bot-set">
-                <li><a href='#'><img src='images/settings-3-64.png'><span class="tooltiptext">Setting</span></a></li>
+      <ul>
+        <li>
+          <a href="#" class="active">
+            <img src='../UI-bars/images/home.png'>
+          </a>
+          <span class="tooltiptext">
+            Home
+          </span>
+        </li>
+        <li>
+          <a href="#">
+            <img src='../UI-bars/images/downloads.png'>
+          </a>
+          <span class="tooltiptext">
+            Recorded
+          </span>
+        </li>
+        <li>
+          <a href="#">
+            <img src='../UI-bars/images/post.ico'>
+          </a>
+          <span class="tooltiptext">
+            Post
+          </span>
+        </li>
+        <li>
+          <a href="#" id="myBtn">
+            <img src='../UI-bars/images/addgroup.png'>
+          </a>
+          <span class="tooltiptext">
+            Add Group
+          </span>
+        </li>
+        <div id="myModal" class="modal">
+          <div class="modal-content">
+            <span class="close">
+              &times;
+            </span>
+            <div class="addgroup">
+              <h3>
+                Find your group here
+              </h3>
+              <input type="text" id="searchInput" maxlength="5" placeholder="Enter a 5-character code"
+              oninput="this.value = this.value.toUpperCase()">
+              <button onclick="searchGroup()">
+                Search
+              </button>
+              <p id="resultContainer">
+              </p>
             </div>
-            
-        </ul>
+          </div>
+        </div>
+        <div class="bot-set">
+          <li>
+            <a href='#'>
+              <img src='../UI-bars/images/settings-3-64.png'>
+              <span class="tooltiptext">
+                Setting
+              </span>
+            </a>
+          </li>
+        </div>
+      </ul>
     </div>
-
     <div class="content">
-        <h1>Main Content</h1>
-        <p>This is the main content of the page.</p>
+      <h1>
+        Main Content
+      </h1>
+      <p>
+        This is the main content of the page.
+      </p>
     </div>
-</body>
+    <script>
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on the button, open the modal 
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+      function searchGroup() {
+        const searchInput = document.getElementById('searchInput');
+        const resultContainer = document.getElementById('resultContainer');
+
+        // Get the value entered by the user
+        const searchValue = searchInput.value.trim();
+
+        if (searchValue.length === 5) {
+          // You can implement your search logic here
+          // For this example, we'll just display the entered code
+          resultContainer.innerHTML = `Searching
+          for group with code: $ {
+            searchValue
+          }`;
+        } else {
+          resultContainer.innerHTML = 'Please enter a 5-character code.';
+        }
+      }
+    </script>
+  </body>
+
 </html>
