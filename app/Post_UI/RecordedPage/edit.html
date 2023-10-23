@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Video</title>
+    <link rel="stylesheet" href="edit.css">
+</head>
+<body>
+    <div id="main">
+    <h1>Edit Video</h1>
+    
+    <form id="editForm">
+        <label for="videoTitle">Video Title:</label>
+        <input type="text" id="videoTitle" name="videoTitle" placeholder="This is a video title"><br><br>
+
+        <label for="videoDescription">Video Description:</label><br>
+        <textarea id="videoDescription" name="videoDescription" rows="4" cols="50"></textarea><br><br>
+
+        <label for="videoDate">Video Date:</label>
+        <input type="date" id="videoDate" name="videoDate" value="2023-09-09"><br><br>
+
+        <button type="button" id="saveButton">Save Changes</button>
+    </form>
+    </div>
+    <script>
+        document.getElementById("saveButton").addEventListener("click", function () {
+            // Get the updated values from the form
+            var newTitle = document.getElementById("videoTitle").value;
+            var newDescription = document.getElementById("videoDescription").value;
+            var newDate = document.getElementById("videoDate").value;
+
+            // perform update action
+            alert("Video updated successfully.");
+            window.close();
+
+            // can redirect the user back to the video list page or perform other actions as needed
+        });
+    </script>
+</body>
+</html>
