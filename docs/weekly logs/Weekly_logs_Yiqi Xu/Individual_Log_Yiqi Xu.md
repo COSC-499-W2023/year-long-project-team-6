@@ -112,10 +112,10 @@
 * Helped a team member to set up xampp
 
 ## UI design for the Receive Page
-![Receive_Page](w6_img/Receive_Page.png)
+![Receive_Page](w7_img/Receive_Page.png)
 
 ## My Task on Board
 *Board format:*
-![Board](w6_img/Board.png)
+![Board](w7_img/Board.png)
 *Table format:*
-![Table](w6_img/Table.png)
+![Table](w7_img/Table.png)
