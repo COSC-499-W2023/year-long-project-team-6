@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recorded</title>
+    <link rel="stylesheet" href="recorded.css">
+    <script>
+        function confirmDelete() {
+            var result = confirm("Are you sure you want to delete this video?");
+            if (result) {
+                // add delete here
+                alert("Video deleted successfully.");
+            } else {
+
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="condition">
+        <table>
+            <tr>
+                <td>
+                    <h3>Group</h3>
+                </td>
+                <td>
+                    <h3>Arrange By</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="groupId" name="groupId">
+                        <option value="all">All</option>
+                        <option value="A">GroupA</option>
+                        <option value="B">GroupB</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="arrange" name="arrange">
+                        <option value="date">Date</option>
+                        <option value="asc">Name Ascending</option>
+                        <option value="des">Name Descending</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="submit" value="apply" name="apply" id="apply">Apply</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="VideoList">
+        <table id="videoTable">
+            <thead>
+                <tr>
+                    <td class="title">All Videos</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="img"><img src="..\image\1.jpg"></td>
+                    <td class="title" data-description="This is the description of the video.">this is a title</td>
+                    <td class="date">2023/09/09</td>
+                    <td class="edit">
+                        <button type="button" value="edit" name="edit" class="editButton"
+                            onclick="openEditPopup()">Edit</button>
+                    </td>
+                    <td class="delete">
+                        <button type="button" value="delete" name="delete" class="deleteButton"
+                            onclick="confirmDelete()">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="img"><img src="..\image\2.jpg"></td>
+                    <td class="title" data-description="This is the description of the video.">this is a title</td>
+                    <td class="date">2023/09/09</td>
+                    <td class="edit">
+                        <button type="button" value="edit" name="edit" class="editButton"
+                            onclick="openEditPopup()">Edit</button>
+                    </td>
+                    <td class="delete">
+                        <button type="button" value="delete" name="delete" class="deleteButton"
+                            onclick="confirmDelete()">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="img"><img src="..\image\3.jpg"></td>
+                    <td class="title" data-description="This is the description of the video.">this is a title</td>
+                    <td class="date">2023/09/09</td>
+                    <td class="edit">
+                        <button type="button" value="edit" name="edit" class="editButton"
+                            onclick="openEditPopup()">Edit</button>
+                    </td>
+                    <td class="delete">
+                        <button type="button" value="delete" name="delete" class="deleteButton"
+                            onclick="confirmDelete()">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="img"><img src="..\image\1.jpg"></td>
+                    <td class="title" data-description="This is the description of the video.">this is a title</td>
+                    <td class="date">2023/09/09</td>
+                    <td class="edit">
+                        <button type="button" value="edit" name="edit" class="editButton"
+                            onclick="openEditPopup()">Edit</button>
+                    </td>
+                    <td class="delete">
+                        <button type="button" value="delete" name="delete" class="deleteButton"
+                            onclick="confirmDelete()">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="img"><img src="..\image\2.jpg"></td>
+                    <td class="title" data-description="This is the description of the video.">this is a title</td>
+                    <td class="date">2023/09/09</td>
+                    <td class="edit">
+                        <button type="button" value="edit" name="edit" class="editButton"
+                            onclick="openEditPopup()">Edit</button>
+                    </td>
+                    <td class="delete">
+                        <button type="button" value="delete" name="delete" class="deleteButton"
+                            onclick="confirmDelete()">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="img"><img src="..\image\3.jpg"></td>
+                    <td class="title" data-description="This is the description of the video.">this is a title</td>
+                    <td class="date">2023/09/09</td>
+                    <td class="edit">
+                        <button type="button" value="edit" name="edit" class="editButton"
+                            onclick="openEditPopup()">Edit</button>
+                    </td>
+                    <td id="delete">
+                        <button type="button" value="delete" name="delete" class="deleteButton"
+                            onclick="confirmDelete()">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    function openEditPopup() {
+        // Specify the URL of the edit page
+        var editPageUrl = "edit.html"; // Replace with the actual URL of your edit page
+
+        // Set the window features (size, position, etc.)
+        var popupFeatures = "width=600,height=400,scrollbars=yes";
+
+        // Open the edit page in a new popup window
+        window.open(editPageUrl, "Edit Video", popupFeatures);
+    }
+</script>
+
+</html>
