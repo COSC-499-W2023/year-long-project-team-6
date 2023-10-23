@@ -63,3 +63,59 @@
 ![Board](w5_img/Board.png)
 *Table format:*
 ![Table](w5_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 6)
+
+## Applicable data range
+**October/9/2023** to **October/13/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our pages
+* Make a brief layout for our website.
+* Complete the receive page  
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Had a meeting to discuss our pages.
+* Finished a layout for our website.
+* Completed the receive page  
+* Completed the peer evaluation. 
+
+## UI design for the Receive Page
+![ReceivePage](w6_img/Receive_Page.png)
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](w6_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](w6_img/Board.png)
+*Table format:*
+![Table](w6_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 7)
+
+## Applicable data range
+**October/16/2023** to **October/23/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our pages
+* Design the database
+* Revise the receive page (CSS)
+
+## Completed Tasks 
+* Had a meeting to discuss our pages.
+* Designed the database
+* Revise the receive page (CSS), made pages available on different devices
+* Helped a team member to set up xampp
+
+## UI design for the Receive Page
+![ReceivePage](w6_img/Receive_Page.png)
+
+## My Task on Board
+*Board format:*
+![Board](w6_img/Board.png)
+*Table format:*
+![Table](w6_img/Table.png)
