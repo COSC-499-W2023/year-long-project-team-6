@@ -83,7 +83,7 @@
 * Completed the peer evaluation. 
 
 ## UI design for the Receive Page
-![ReceivePage](w6_img/Receive_Page.png)
+![Receive_Page](w6_img/Receive_Page.png)
 
 ## ScreenShot of peer evaluation
 ![Peer Evaluation](w6_img/PeerEval.png)
@@ -112,7 +112,7 @@
 * Helped a team member to set up xampp
 
 ## UI design for the Receive Page
-![ReceivePage](w6_img/Receive_Page.png)
+![Receive_Page](w6_img/Receive_Page.png)
 
 ## My Task on Board
 *Board format:*
