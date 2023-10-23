@@ -62,7 +62,7 @@
 ## Fixed Login/Signup UI 
 ![Login](week6_and_7/login.png)
 ![Signup](week6_and_7/signup.png)
-![Reset Password](week6_and_7)
+![Reset Password](week6_and_7/pw.png)
 
 ## ScreenShot of peer evaluation on Week 6
 ![Peer Evaluation](week6_and_7/PE.png)
