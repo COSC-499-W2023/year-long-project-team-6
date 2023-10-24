@@ -62,7 +62,7 @@
 
 
 
-# Individual Log - Yiqi Xu (Week 6)
+# Individual Log - Jiajun Huang (Week 6)
 
 ## Applicable data range
 **October/9/2023** to **October/13/2023**
@@ -92,7 +92,7 @@
 *Table format:*
 ![Table](Week6_img/Table.png)
 
-# Individual Log - Yiqi Xu (Week 7)
+# Individual Log - Jiajun Huang (Week 7)
 
 ## Applicable data range
 **October/16/2023** to **October/23/2023**
@@ -110,8 +110,8 @@
 * Helped a team member to set up xampp
 
 ## UI design for the Receive Page
-![Receive_Page](Week7_img/Receive_Page.png)
-
+![Recorded](Week7_img/Recorded.png)
+![Post](Week7_img/Post.png)
 ## My Task on Board
 *Board format:*
 ![Board](Week7_img/Board.png)
