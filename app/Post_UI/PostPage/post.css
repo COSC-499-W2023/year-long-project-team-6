@@ -1,11 +1,11 @@
 #send{
-    margin-left: 15em;
-    margin-top: 8em;
+    margin-left: 50px;
+    margin-top: 50px;
     width: 30em;
 
 }
 #input{
-    margin-left: 15em;
+    margin-left: 50px;
     margin-top: 2em;
     line-height: 2em;
     width: 30em;
@@ -27,7 +27,7 @@
 }
 .custom-file-upload {
     padding: 10px 20px;
-    background-color: #7d53db;
+    background-color: #373c53;
     color: #fff;
     border: 1px solid #666;
     border-radius: 5px;
@@ -51,7 +51,7 @@
     margin-top: 2em;
     margin-left: 22em;
     padding: 10px 20px;
-    background-color: #7d53db;
+    background-color: #373c53;
     color: #fff;
     border: 1px solid #666;
     border-radius: 5px;
