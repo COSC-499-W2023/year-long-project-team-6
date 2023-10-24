@@ -70,3 +70,39 @@ This week I have learned about AWS, I know what they are and how to use them in 
 ### 5. *From project board*
 ![Board](images5/pb.png)
 ![Table](images5/table.png)
+
+
+## Ximin Xu week 6-7 personal log
+
+### 1. *Date Range*
+
+Oct.10-23
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](image6/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Coding the ui bars
+2. Writing javascript of ui bar
+3. Writing automated test javascript
+4. Writing database ddl
+5. Connecting pages to each other
+6. Fix bugs while connecting pages
+
+**In progress**
+ 
+1. database implementation
+2. coding database implement
+
+### 4. *Self Reflection and learned*
+
+These two weeks we have almost finished coding the ui work with some other javascript, we have also started the database implementation, so that we are able to accomplish the implemenation before next week.
+
+### 5. *From project board*
+![Board](image6/pb.png)
+![Table](image6/table.png)
+
