@@ -13,126 +13,119 @@
 <body>
     <div class="topnav">
         <div class="topnav-right">
-          <a href="../../login_signup/LS.html">
-            login
-          </a>
+            <a href="../../login_signup/LS.html">
+                login
+            </a>
         </div>
-      </div>
-      <div class="sidebar">
+    </div>
+    <div class="sidebar">
         <ul>
-          <li>
-            <a href="../../HomePage_UI/Homepage.html">
-              <img src='../../UI-bars/images/home.png'>
-            </a>
-            <span class="tooltiptext">
-              Home
-            </span>
-          </li>
-          <li>
-            <a href="../RecordedPage/Recorded.html">
-              <img src='../../UI-bars/images/downloads.png'>
-            </a>
-            <span class="tooltiptext">
-              Recorded
-            </span>
-          </li>
-          <li>
-            <a href="#" class="active">
-              <img src='../../UI-bars/images/post.ico'>
-            </a>
-            <span class="tooltiptext">
-              Post
-            </span>
-          </li>
-          <li>
-            <a href="#" id="myBtn" class="addgroup">
-              <img src='../../UI-bars/images/addgroup.png'>
-            </a>
-            <span class="tooltiptext">
-              Add Group
-            </span>
-          </li>
-          <div id="myModal" class="modal">
-            <div class="modal-content">
-              <span class="close">
-                &times;
-              </span>
-              <div class="addgroup">
-                <h3>
-                  Find your group here
-                </h3>
-                <input type="text" id="searchInput" maxlength="5" placeholder="Enter a 5-character code"
-                oninput="this.value = this.value.toUpperCase()">
-                <button onclick="searchGroup()">
-                  Search
-                </button>
-                <p id="resultContainer">
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="bot-set">
             <li>
-              <a href='#'>
-                <img src='../../UI-bars/images/settings-3-64.png'>
+                <a href="../../HomePage_UI/Homepage.html">
+                    <img src='../../UI-bars/images/home.png'>
+                </a>
                 <span class="tooltiptext">
-                  Setting
+                    Home
                 </span>
-              </a>
             </li>
-          </div>
+            <li>
+                <a href="../RecordedPage/Recorded.html">
+                    <img src='../../UI-bars/images/downloads.png'>
+                </a>
+                <span class="tooltiptext">
+                    Recorded
+                </span>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <img src='../../UI-bars/images/post.ico'>
+                </a>
+                <span class="tooltiptext">
+                    Post
+                </span>
+            </li>
+            <li>
+                <a href="#" id="myBtn" class="addgroup">
+                    <img src='../../UI-bars/images/addgroup.png'>
+                </a>
+                <span class="tooltiptext">
+                    Add Group
+                </span>
+            </li>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">
+                        &times;
+                    </span>
+                    <div class="addgroup">
+                        <h3>
+                            Find your group here
+                        </h3>
+                        <input type="text" id="searchInput" maxlength="5" placeholder="Enter a 5-character code"
+                            oninput="this.value = this.value.toUpperCase()">
+                        <button onclick="searchGroup()">
+                            Search
+                        </button>
+                        <p id="resultContainer">
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="bot-set">
+                <li>
+                    <a href='#'>
+                        <img src='../../UI-bars/images/settings-3-64.png'>
+                        <span class="tooltiptext">
+                            Setting
+                        </span>
+                    </a>
+                </li>
+            </div>
         </ul>
-      </div>
-      <div class="content">
+    </div>
+    <div class="content">
         <div id="send">
             <h2>Send Your Post</h2>
         </div>
         <div class="flex-container">
             <div id="input">
-                <form action="image.php" method="post" enctype="multipart/form-data">
-                    <div id="main" class="main">
-                        <div id="choose">
-                            <label class="custom-file-upload">
-                                <input type="file" name="file" id="file"
-                                    accept="video/mp4, video/avi, video/webm, video/mkv, audio/mpeg"
-                                    onchange="displayFileName(event)">
-                                Select File
-                            </label>
-                            <span id="selectedFileName"></span>
-        
-                            <label class="custom-file-upload">
-                                <input type="file" name="file" id="file"
-                                    accept="video/mp4, video/avi, video/webm, video/mkv, audio/mpeg"
-                                    onchange="displayFileName(event)">
-                                Record Your Video
-                            </label>
-        
-                        </div>
-                        <div class="EnterText">
-                            <legend>Name your new video</legend>
-                            <input type="text" id="VName" placeholder="Video Name" name="VName">
-                        </div>
-    
-                        <div class="EnterText">
-                            <legend>Choose a Group</legend>
-                            <select id="GName" name="GName" onchange="updateMetrics(this.value)">
-                                <option value=""></option>
-                                <option value="Sender">Sender</option>
-                                <option value="Doctor">Doctor</option>
-                                <option value="Professor">Professor</option>
-                            </select>
-                        </div>
-    
-                        <div class="EnterText">
-                            <legend>Description of Your Video</legend>
-                            <input type="text" id="Description" placeholder="Describe your video" name="description">
-                        </div>
-    
+                <!-- <form action="image.php" method="post" enctype="multipart/form-data"> -->
+                <div id="main" class="main">
+                    <div id="choose">
+                        <button class="custom-upload-button" onclick="document.getElementById('record').click();">Record
+                            Your Video</button>
+                        <input type="file" name="file" id="record" class="file"
+                            accept="video/mp4, video/avi, video/webm, video/mkv, audio/mpeg"
+                            onchange="displayFileName(event)" style="display: none;"><br>
+
+                        <span id="selectedFileName"></span>
                     </div>
-                
-                    <div id="button">
-                        <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+                    
+                    <div class="EnterText">
+                        <legend>Name your new video</legend>
+                        <input type="text" id="VName" placeholder="Video Name" name="VName">
                     </div>
+
+                    <div class="EnterText">
+                        <legend>Choose a Group</legend>
+                        <select id="GName" name="GName" onchange="updateMetrics(this.value)">
+                            <option value=""></option>
+                            <option value="Sender">Sender</option>
+                            <option value="Doctor">Doctor</option>
+                            <option value="Professor">Professor</option>
+                        </select>
+                    </div>
+
+                    <div class="EnterText">
+                        <legend>Description of Your Video</legend>
+                        <input type="text" id="Description" placeholder="Describe your video" name="description">
+                    </div>
+
+                </div>
+
+                <div id="button">
+                    <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+                </div>
             </div>
             <div id="HistroyBar">
                 <table id="histroyTable">
@@ -175,17 +168,17 @@
                     </tbody>
                 </table>
             </div>
-    
-    
-    
-            </form>
+
+
+
+            <!-- </form> -->
         </div>
-    
-    
-        </div>
-      </div>
-      <script src="../../UI-bars/sidebar.js"></script>
-      <script>
+
+
+    </div>
+    </div>
+    <script src="../../UI-bars/sidebar.js"></script>
+    <script>
         function displayFileName(event) {
             const input = event.target;
             const fileName = input.files[0].name;
