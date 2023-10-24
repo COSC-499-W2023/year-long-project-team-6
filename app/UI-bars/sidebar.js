@@ -1,3 +1,4 @@
+
 var modal = document.getElementById("myModal");
 
 var links = document.querySelectorAll('li a');
@@ -23,7 +24,8 @@ var links = document.querySelectorAll('li a');
           modal.style.display = "none";
         }
       }
-      function searchGroup() {
+    
+    export function searchGroup() {
         var searchInput = document.getElementById('searchInput');
         var resultContainer = document.getElementById('resultContainer');
 
@@ -33,8 +35,7 @@ var links = document.querySelectorAll('li a');
         if (searchValue.length === 5) {
           // You can implement your search logic here
           // For this example, we'll just display the entered code
-          resultContainer.innerHTML = `Searching
-          for group with code: ${searchValue}`;
+          resultContainer.innerHTML = `Searching for group with code: ${searchValue}`;
         } else {
           resultContainer.innerHTML = 'Please enter a 5-character code.';
         }
@@ -42,13 +43,14 @@ var links = document.querySelectorAll('li a');
       // Select all anchor tags within list items
 
 
-// Add event listener to each anchor tag
-for (let i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', function(event) {
-        // If the clicked anchor has the class 'addgroup', do nothing
-        if (this.classList.contains('addgroup')) {
-            return; // Exit the function early
-        }
+        // Add event listener to each anchor tag
+        var links = document.querySelectorAll('li a');
+        for (let i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function(event) {
+             // If the clicked anchor has the class 'addgroup', do nothing
+             if (this.classList.contains('addgroup')) {
+                return; 
+            }
 
         // Remove 'active' class from all anchor tags except the 'addgroup' link
         for (let j = 0; j < links.length; j++) {
