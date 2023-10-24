@@ -62,7 +62,7 @@ body {
 }
 
 .main-content {
-    margin-left: 450px;
+    margin-left: 50px;
 }
 
 h2 {
@@ -148,7 +148,9 @@ h2 {
     font-size: 16px;
     margin-top: 0;
     line-height: 30px;
+    margin-bottom: 15px;
     font-weight: bold;
+    text-align: center;
 }
 
 .card a {
