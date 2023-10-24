@@ -122,10 +122,17 @@ body {
 
 /* Video CSS */
 #container {
-    width: 800px;
-    max-width: 800px;
+    width: 1300px;
+    max-width: 1300px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.centered-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
@@ -167,10 +174,15 @@ body {
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
-    width: 360px;
+    width: 200em;
+    height: auto;
     border-right: 2px solid rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contain_video_2 {
+    margin-left: 3em;
 }
 
 .user_feedback {
