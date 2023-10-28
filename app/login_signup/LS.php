@@ -4,18 +4,43 @@ include("../Connection.php");
 include("../Function.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $username = $_POST['user_name'];
-    $email = $_POST['user_email'];
-    $password = $_POST['user_pass'];
+    $action = $_POST['action'];
+    if ($action == "Sign Up") {
+        $username = $_POST['user_name'];
+        $email = $_POST['user_email'];
+        $password = $_POST['user_pass'];
 
-    if (!empty($username) && !empty($password) && !is_numeric($username)) {
-        //save to database; 
-        $query = "insert into users (username, password, email) values ('$username', '$password', '$email')";
-        mysqli_query($link, $query);
-        header("Location: LS.php");
-        die;
-    } else {
-        echo "please enter valid information!";
+        if (!empty($username) && !empty($password) && !is_numeric($username)) {
+            //save to database; 
+            $query = "insert into users (username, password, email) values ('$username', '$password', '$email')";
+            mysqli_query($link, $query);
+            header("Location: LS.php");
+            die;
+        } else {
+            echo "please enter valid information!";
+        }
+    } else if ($action == "Login") {
+        $email = $_POST['user_email'];
+        $password = $_POST['user_pass'];
+
+        if (!empty($email) && !empty($password)) {
+            //read from database; 
+            $query = "select * from users where email = '$email' limit 1";
+            $result = mysqli_query($link, $query);
+            if ($result) {
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $user_data = mysqli_fetch_assoc($result);
+                    if ($user_data['password'] === $password) {
+                        $_SESSION['userid'] = $user_data['userid'];
+                        header("Location: ../HomePage_UI/Homepage.php");
+                        die;
+                    }
+                }
+            }
+            echo "Wrong email or password!";
+        } else {
+            echo "Please enter some valid information!";
+        }
     }
 }
 ?>
@@ -34,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 <body>
     <form id="myform" method="post">
+        <input type="hidden" name="action" id="actionInput" value="Login">
         <div class="container">
             <div class='header'>
                 <div class='text'></div>
@@ -156,6 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 loginButton.style.display = "none";
                 tooltipText.textContent = "Switch to Log in";
             }
+            document.getElementById('actionInput').value = action;
         }
 
         function validateEmail() {
@@ -178,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             } else {
                 action = "Login";
             }
-
+            document.getElementById('actionInput').value = action;
             // Update the UI to reflect the new action
             updateUI();
         }
