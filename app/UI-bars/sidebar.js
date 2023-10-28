@@ -25,7 +25,7 @@ var links = document.querySelectorAll('li a');
         }
       }
     
-    export function searchGroup() {
+    function searchGroup() {
         var searchInput = document.getElementById('searchInput');
         var resultContainer = document.getElementById('resultContainer');
 
@@ -33,8 +33,6 @@ var links = document.querySelectorAll('li a');
         var searchValue = searchInput.value.trim();
 
         if (searchValue.length === 5) {
-          // You can implement your search logic here
-          // For this example, we'll just display the entered code
           resultContainer.innerHTML = `Searching for group with code: ${searchValue}`;
         } else {
           resultContainer.innerHTML = 'Please enter a 5-character code.';
