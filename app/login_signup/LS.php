@@ -90,15 +90,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <button class="password-toggle" onClick="togglePasswordVisibility()">Show</button>
                 </div>
 
+
+                
+            </div>
+            <div class="roleChoose" id="roleInputContainer">
+                <label for="role" style="font-size: 1.17em; font-weight: bold; color:#4c00b4"><h3>&nbsp;&nbsp;*Select your role:&nbsp;</label>
+                <select name="role" id="role" style="font-size: 18px; padding: 5px 10px; border-radius:10px; width: 185px; border: 1px solid black;">
+                    <option value="empty" disabled selected hidden></option>
+                    <option value="sender">Sender</option>
+                    <option value="receiver">Receiver</option>
+                </select>
             </div>
 
             <div class="forgot-password" onClick="navigateToForgotPasswordPage()" id="forgotPassword">Forgot password?
                 <span>Click Here!</span>
             </div>
+
             <div class="tooltip">
                 <img src="image/exchange.png" alt="Switch" class="switch-icon" onClick="toggleAction()" />
                 <span class="tooltiptext" id="switchTooltip">Switch between Login and Sign Up interface</span>
             </div>
+            
             <div class="submit-container">
                 <div class="submit gray" id="signUpButton" onClick="showUnimplementedAlert()">Sign Up</div>
                 <div class="submit" id="loginButton" onClick="showUnimplementedAlert()">Login</div>
@@ -109,23 +121,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <!-- ---------------------------------------------------------------------- -->
     <script>
         let showPassword = false;
-        let action = "Login";  // Initial action
+        let action = "Login";  
 
         document.addEventListener("DOMContentLoaded", function () {
             action = "Login";
-            updateUI(); // 更新UI以反映新的action
+            updateUI(); // 更新UI以反映新的action，的、默认进入login
         });
 
-        function showText() {
-            document.querySelector('.switch-text').style.visibility = 'visible';
-        }
+        // function showText() {
+        //     document.querySelector('.switch-text').style.visibility = 'visible';
+        // }
 
-        function hideText() {
-            document.querySelector('.switch-text').style.visibility = 'hidden';
-        }
+        // function hideText() {
+        //     document.querySelector('.switch-text').style.visibility = 'hidden';
+        // }
+
+        //点击login/signup button 
         function showUnimplementedAlert() {
             document.getElementById('myform').submit();
         }
+        //设置密码可见性，点击show即可查看，hide则隐藏
         function togglePasswordVisibility() {
             showPassword = !showPassword;
             const passwordInput = document.getElementById("passwordInput");
@@ -141,8 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         function setAction(newAction) {
             if (newAction === "Login" || newAction === "Sign Up") {
                 action = newAction;
-                // localStorage.setItem('lastAction', action);
-                // Update the UI to reflect the new action, including the name input field
+                //login和signup界面所要的信息不同
                 updateUI();
             } else {
                 console.error("Invalid action:", newAction);
@@ -154,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             const submitContainer = document.querySelector('.submit-container');
             const nameInputContainer = document.getElementById('nameInputContainer');
             const forgotPassword = document.getElementById('forgotPassword'); // Get the element by ID
-
+            const roleInputContainer = document.getElementById('roleInputContainer');
             const signUpButton = document.getElementById('signUpButton');
             const loginButton = document.getElementById('loginButton');
             const tooltipText = document.getElementById('switchTooltip');
@@ -166,14 +180,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if (loginButton) {
                 loginButton.classList.remove('gray');
             }
-
+            //如果在login界面则不显示nameinput和signup button,当鼠标移到“交换”标志时会显示"Switch to Sign Up"
             if (action === "Login") {
                 headerText.textContent = "Vup";
                 nameInputContainer.style.display = "none";
                 forgotPassword.style.display = "block";
                 signUpButton.style.display = "none";
                 loginButton.style.display = "block";
+                roleInputContainer.style.display = "none";
                 tooltipText.textContent = "Switch to Sign Up";
+            //如果在signup界面则不显示forgotpassword button和login button,当鼠标移到“交换”标志时会显示"Switch to Log in"
             } else if (action === "Sign Up") {
                 headerText.textContent = "Vup";
                 nameInputContainer.style.display = "block";
@@ -181,24 +197,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 signUpButton.style.display = "block";
                 loginButton.style.display = "none";
                 tooltipText.textContent = "Switch to Log in";
+                roleInputContainer.style.display = "block";
             }
             document.getElementById('actionInput').value = action;
         }
-
+        //确定邮箱格式，中间必须含有@，结尾必须以.com结束，长度必须在30个characters以内
+        //如果不符合格式将会一直显示“invalid format”直到符合为止
         function validateEmail() {
             const emailInput = document.getElementById("emailInput");
             const emailTooltip = document.getElementById("emailTooltip");
             const emailValue = emailInput.value;
 
             const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-            if (emailRegex.test(emailValue) && emailValue.endsWith(".com")) {
-                emailTooltip.style.visibility = "hidden"; // Hide tooltip
+            
+            if (emailRegex.test(emailValue) && emailValue.endsWith(".com")&& emailValue.length <= 30) {
+                emailTooltip.style.visibility = "hidden"; // "invalid format" hide
             } else {
-                emailTooltip.style.visibility = "visible"; // Show tooltip
+                emailTooltip.style.visibility = "visible"; // "invalid format" show
             }
         }
-
+        //点击"交换"标志则会切换signup和login界面
         function toggleAction() {
             if (action === "Login") {
                 action = "Sign Up";
@@ -209,6 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             // Update the UI to reflect the new action
             updateUI();
         }
+        //forgotpassword design
         function navigateToForgotPasswordPage() {
             const forgotPasswordHTML = `
         <div class="container" style="text-align: center; padding-top: 30px; padding-bottom: 50px;">
