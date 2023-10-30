@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 
             </div>
             <div class="roleChoose" id="roleInputContainer">
-                <label for="role" style="font-size: 1.17em; font-weight: bold; color:#4c00b4"><h3>&nbsp;&nbsp;*Select your role:&nbsp;</label>
+                <label for="role" style="font-size: 1.17em; font-weight: bold; color:#4c00b4"><h3>*Select your role:&nbsp;</label>
                 <select name="role" id="role" style="font-size: 18px; padding: 5px 10px; border-radius:10px; width: 185px; border: 1px solid black;">
                     <option value="empty" disabled selected hidden></option>
                     <option value="sender">Sender</option>
@@ -111,10 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <span>Click Here!</span>
             </div>
 
-            <div class="tooltip">
-                <img src="image/exchange.png" alt="Switch" class="switch-icon" onClick="toggleAction()" />
-                <span class="tooltiptext" id="switchTooltip">Switch between Login and Sign Up interface</span>
+            <div class="tooltip" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; padding: 0;">
+                <img src="image/exchange.png" alt="Switch" class="switch-icon" style="margin: 2px 0; width: 40px; height: 40px;" onClick="toggleAction()" />
+                <span class="tooltiptext" id="switchTooltip" style="text-align: center; margin-top: 2px; margin-bottom: 2px;">Switch between Login and Sign Up interface</span>
             </div>
+
             
             <div class="submit-container">
                 <button class="submit gray" id="signUpButton" type="submit">Submit</button>
