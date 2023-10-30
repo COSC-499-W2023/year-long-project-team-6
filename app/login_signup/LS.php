@@ -17,7 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             header("Location: LS.php");
             die;
         } else {
-            echo "please enter valid information!";
+            echo '<script type="text/javascript">';
+            echo 'alert("please enter valid information!");';
+            echo '</script>';
         }
     } else if ($action == "Login") {
         $email = $_POST['user_email'];
@@ -37,9 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     }
                 }
             }
-            echo "Wrong email or password!";
+            echo '<script type="text/javascript">';
+            echo 'alert("Wrong email or password!");';
+            echo '</script>';
         } else {
-            echo "Please enter some valid information!";
+            echo '<script type="text/javascript">';
+            echo 'alert("Please enter some valid information!");';
+            echo '</script>';
         }
     }
 }
@@ -58,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 
 <body>
-    <form id="myform" method="post">
+    <form id="myform" method="post" onsubmit="return formSubmit();">
         <input type="hidden" name="action" id="actionInput" value="Login">
         <div class="container">
             <div class='header'>
@@ -82,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                 <div class='input'>
                     <img src="image/password.png" alt="Password Icon" />
-                    <!-- Replace "password_icon.jpg" with your actual image file and provide alt text -->
                     <input type="password" placeholder="Password" id="passwordInput" autocomplete="new-password"
                         name="user_pass" />
                     <input type="text" id="hiddenPasswordInput"
@@ -112,8 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
             
             <div class="submit-container">
-                <div class="submit gray" id="signUpButton" onClick="showUnimplementedAlert()">Sign Up</div>
-                <div class="submit" id="loginButton" onClick="showUnimplementedAlert()">Login</div>
+                <button class="submit gray" id="signUpButton" type="submit">Submit</button>
+                <button class="submit" id="loginButton" type="submit">Submit</button>
             </div>
         </div>
     </form>
@@ -138,7 +143,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         //点击login/signup button 
         function showUnimplementedAlert() {
-            document.getElementById('myform').submit();
+            document.getElementById('myform').addEventListener("submit",function(event) {
+    // Prevent the default form submission
+    event.preventDefault();
+
+    // Perform your validations
+    if (validateEmail() && validateRole()) {
+        // If all validations pass, submit the form programmatically
+        // Or perform any other actions you need on successful validation
+        this.submit();
+    } else {
+        // Show an error message or alert if validation fails
+        alert("Please check your inputs.");
+    }
+});
         }
         //设置密码可见性，点击show即可查看，hide则隐藏
         function togglePasswordVisibility() {
@@ -201,8 +219,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
             document.getElementById('actionInput').value = action;
         }
+        
         //确定邮箱格式，中间必须含有@，结尾必须以.com结束，长度必须在30个characters以内
         //如果不符合格式将会一直显示“invalid format”直到符合为止
+
         function validateEmail() {
             const emailInput = document.getElementById("emailInput");
             const emailTooltip = document.getElementById("emailTooltip");
@@ -210,11 +230,33 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
             const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             
-            if (emailRegex.test(emailValue) && emailValue.endsWith(".com")&& emailValue.length <= 30) {
+            if (emailRegex.test(emailValue)&& emailValue.length <= 30) {
                 emailTooltip.style.visibility = "hidden"; // "invalid format" hide
+                return true;
             } else {
                 emailTooltip.style.visibility = "visible"; // "invalid format" show
+                return false;
+
             }
+        }
+        function validateRole() {
+    const roleSelect = document.getElementById("role");
+    if (roleSelect.value === "") {
+        return false;  // Role is not selected
+    }
+    return true;  // Role is selected
+}
+function formSubmit() {
+        // Validate email first
+        if (!validateEmail()) {
+            alert("Please enter correct email")
+            return false;  // Stop form submission
+        }
+        if (!validateRole()) {
+        alert("Please select a role.");
+        return false;  // Stop form submission
+    }
+
         }
         //点击"交换"标志则会切换signup和login界面
         function toggleAction() {

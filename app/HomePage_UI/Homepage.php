@@ -15,7 +15,7 @@ $user_data = check_login($link);
     Home
   </title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="../UI-bars/sidebar_style.css">
+  <link rel="stylesheet" href="../UI-bars/sidebar_style.css?v=1.1">
 </head>
 
 <body>
