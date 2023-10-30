@@ -1,6 +1,6 @@
 # Individual Log - Zetian Zhao (Week 4)
 
-## Applicable data range
+## Applicable date range
 **September/26/2023** to **October/1/2023**
 
 ## Recap Goal 
@@ -32,7 +32,7 @@
 
 # Individual Log - Zetian Zhao (Week 5)
 
-## Applicable data range
+## Applicable date range
 **October/5/2023** to **October/8/2023**
 
 ## Recap Goal 
@@ -68,7 +68,7 @@
 
 # (Two weeks) Individual Log - Zetian Zhao (Week 6 and 7)
 
-## Applicable data range
+## Applicable date range
 **October/10/2023** to **October/19/2023**
 
 ## Recap Goal 
@@ -110,5 +110,38 @@
 *Table format:*
 ![Table](7_imgs/Table.png)
 
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 8)
+
+## Applicable date range
+**October/24/2023** to **October/29/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Able to connect AWS database with required parameters in the local machine.  
+* Begin to work on the sign up functionality.  
+* Begin to work on the log in functionality. 
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* Was being suecessful to connect AWS database in the local machine.  
+* Achieved the basic sign up function that input value can be stored in our AWS database. 
+* Completed the Login function that stored input like email and password during the sign up process can be used for the login page. (Access of Homepage is successful)
+* Completed the peer evaluation. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](8_imgs/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](8_imgs/Board.png)
+*Table format:*
+![Table](8_imgs/Table.png)
 
 
