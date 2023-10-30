@@ -106,3 +106,37 @@ These two weeks we have almost finished coding the ui work with some other javas
 ![Board](image6/pb.png)
 ![Table](image6/table.png)
 
+## Ximin Xu week 8 personal log
+
+### 1. *Date Range*
+
+Oct.24-30
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](image8/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Coding the ui bars
+2. Writing javascript of ui bar
+3. Writing automated test javascript
+4. Writing database ddl
+5. Connecting pages to each other
+6. Fix bugs while connecting pages
+
+**In progress**
+ 
+1. database implementation
+2. coding database implement
+
+### 4. *Self Reflection and learned*
+
+These two weeks we have almost finished coding the ui work with some other javascript, we have also started the database implementation, so that we are able to accomplish the implemenation before next week.
+
+### 5. *From project board*
+![Board](image6/pb.png)
+![Table](image6/table.png)
+
