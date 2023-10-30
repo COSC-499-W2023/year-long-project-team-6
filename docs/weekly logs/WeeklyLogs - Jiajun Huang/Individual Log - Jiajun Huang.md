@@ -117,3 +117,27 @@
 ![Board](Week7_img/Board.png)
 *Table format:*
 ![Table](Week7_img/Table.png)
+
+# Individual Log - Jiajun Huang (Week 8)
+
+## Applicable data range
+**October/24/2023** to **October/29/2023**
+
+## Recap Goal 
+*My jobs in this week are:*
+* Met with my team members and talked about functionalities
+* Manually test own pages(No UI crashes)
+* Start on functionality of recording
+
+## Completed Tasks 
+* Met with my team members and talked about functionalities
+* All UI pass the test
+* Learned about some basics of WebRTC, still working on how to use it in our app
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Week8_img/PE.png)
+## My Task on Board
+*Board format:*
+![Board](Week8_img/Board.png)
+*Table format:*
+![Table](Week8_img/Table.png)
