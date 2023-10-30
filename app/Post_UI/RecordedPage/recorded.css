@@ -6,7 +6,7 @@
 }
 #condition table{
     border-collapse: collapse;
-
+    
 }
 #VideoList{
     width: 70em;
@@ -36,6 +36,7 @@ thead{
     border-radius: 5px;
     width: 20em;
     height: 3em;
+    padding: 5px;
 }
 
 #VideoList .img{
@@ -44,6 +45,12 @@ thead{
 #VideoList th{
     width: 20em;
     text-align: left;
+}
+#VideoList .head{
+    width: 20em;
+    text-align: left;
+    vertical-align: middle;
+    position: relative;
 }
 #VideoList .title{
     width: 20em;
@@ -154,6 +161,6 @@ hover
     text-overflow: ellipsis;
     z-index: 1000; 
     margin-bottom: 5px;
-    opacity: 0.8;
+    opacity: 0.95;
     vertical-align: top;
 }

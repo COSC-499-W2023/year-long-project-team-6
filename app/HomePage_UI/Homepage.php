@@ -1,3 +1,10 @@
+<?php
+session_start();
+include("../Connection.php");
+include("../Function.php");
+$user_data = check_login($link);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,14 +15,16 @@
     Home
   </title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="../UI-bars/sidebar_style.css">
+  <link rel="stylesheet" href="../UI-bars/sidebar_style.css?v=1.1">
 </head>
 
 <body>
   <div class="topnav">
     <div class="topnav-right">
-      <a href="../login_signup/LS.html">
-        login
+      Hello,
+      <?php echo $user_data['username'] ?>
+      <a href="../logout.php">
+        logout
       </a>
     </div>
   </div>

@@ -20,11 +20,42 @@ textarea{
 }
 
 #saveButton{
-    background-color: #7d53db;
+    background-color: #373c53;
     color: #fff;
     border: 1px solid #666;
     border-radius: 5px;
     cursor: pointer;
-    width: 8em;
+    width: 15em;
     height: 4em;
+}
+
+#saveButton {
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.5s;
+    width: 10em; 
+    height: 40px; 
+    display: inline-block; 
+}
+
+#saveButton::before {
+    content: "";
+    position: absolute;
+    background-color: rgba(125, 83, 219, 0.7);
+    border-radius: 50%;
+    width: 200%;
+    height: 200%;
+    left: 50%;
+    top: 50%;
+    transform: scale(0) translate(-50%, -50%);
+    transition: transform 0.5s;
+    z-index: -1;
+}
+
+#saveButton:hover::before {
+    transform: scale(1) translate(-50%, -50%);
+}
+
+#saveButton:hover {
+    background-color: transparent; 
 }
