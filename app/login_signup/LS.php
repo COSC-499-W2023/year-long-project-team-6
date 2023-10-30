@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 
 <body>
-    <form id="myform" method="post" onsubmit="return formSubmit();">
+    <form id="myform" method="post">
         <input type="hidden" name="action" id="actionInput" value="Login">
         <div class="container">
             <div class='header'>
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         name="user_pass" />
                     <input type="text" id="hiddenPasswordInput"
                         style="opacity: 0; position: absolute; top: -9999px; left: -9999px;" />
-                    <button class="password-toggle" onClick="togglePasswordVisibility()">Show</button>
+                    <p class="password-toggle" onClick="togglePasswordVisibility()">Show</p>
                 </div>
 
 
@@ -142,22 +142,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // }
 
         //点击login/signup button 
-        function showUnimplementedAlert() {
-            document.getElementById('myform').addEventListener("submit",function(event) {
-    // Prevent the default form submission
+        document.getElementById('signUpButton').addEventListener("click",function(event) {
     event.preventDefault();
-
-    // Perform your validations
     if (validateEmail() && validateRole()) {
-        // If all validations pass, submit the form programmatically
-        // Or perform any other actions you need on successful validation
-        this.submit();
+        document.getElementById('myform').submit();
     } else {
-        // Show an error message or alert if validation fails
         alert("Please check your inputs.");
     }
 });
-        }
+document.getElementById('loginButton').addEventListener("click",function(event) {
+    event.preventDefault();
+    if (validateEmail()) {
+        document.getElementById('myform').submit();
+    } else {
+        alert("Please check your inputs.");
+    }
+});
+        
         //设置密码可见性，点击show即可查看，hide则隐藏
         function togglePasswordVisibility() {
             showPassword = !showPassword;
@@ -246,18 +247,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     return true;  // Role is selected
 }
-function formSubmit() {
-        // Validate email first
-        if (!validateEmail()) {
-            alert("Please enter correct email")
-            return false;  // Stop form submission
-        }
-        if (!validateRole()) {
-        alert("Please select a role.");
-        return false;  // Stop form submission
-    }
-
-        }
         //点击"交换"标志则会切换signup和login界面
         function toggleAction() {
             if (action === "Login") {
