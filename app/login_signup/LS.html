@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login/Signup</title>
-    <link rel="stylesheet" href="loginS.css">
+    <!-- <link rel="stylesheet" href="loginS.css"> -->
 
 
 </head>
@@ -44,6 +44,13 @@
 
         <div class="forgot-password" onClick="navigateToForgotPasswordPage()" id="forgotPassword">Forgot password? 
             <span>Click Here!</span>
+        </div>
+        <div class='roleChoose' id="roleInputContainer">
+            <label for="role">Select your role:</label>
+            <select name="role" id="role">
+                <option value="sender">Sender</option>
+                <option value="receiver">Receiver</option>
+            </select>
         </div>
         <div class="tooltip">        
         <img src="image/exchange.png" alt="Switch" class="switch-icon" onClick="toggleAction()" />

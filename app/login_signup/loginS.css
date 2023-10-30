@@ -142,14 +142,13 @@ body {
 }
 
 .switch-icon {
-    margin: 0 180px;
+    margin: 110px;
     vertical-align: middle;
     cursor: pointer;
-    /* 使用手形指针表示图标是可点击的 */
     width: 40px;
-    /* 设置宽度为40像素 */
+    
     height: 40px;
-    /* 设置高度为40像素 */
+   
 }
 
 #nameInputContainer {
@@ -224,9 +223,9 @@ body {
 
 .submit-container {
     display: flex;
-    gap: 30px;
+    gap: 10px;
     justify-content: center;
-    margin: 30px auto;
+    margin: 10px auto;
     width: 300px;
     /* margin-left: 0;
     margin-right: 0; */
@@ -268,6 +267,8 @@ body {
     transition: background-color 0.3s, color 0.3s;
     /* Add a smooth transition */
 }
+
+
 
 .gray {
     background: #EAEAEA;
