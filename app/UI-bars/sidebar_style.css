@@ -118,6 +118,7 @@ body, h1, p {
 /* Right-aligned section inside the top navigation */
 .topnav-right {
   float: right;
+  text-align: center;
 }
 
 /* Sidebar Styles */
