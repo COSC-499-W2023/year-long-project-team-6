@@ -73,3 +73,33 @@
 *Table format:*
 ![Table](week6_and_7/table.png)
 
+*** 
+***
+***
+
+# Individual Log - Wenrui Chen (Week 8)
+
+## Applicable date range
+**October/24/2023** to **October/29/2023**
+
+## Recap Goal 
+*My jobs are:* 
+* Meeting with group members. 
+* Connect AWS database to my PC  
+* Sign up and login functions   
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Meeting 
+* AWS database connection with my PC. 
+* Signup/Login functions and their tests
+* Peer evaluation. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](week8/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](week8/board.png)
+*Table format:*
+![Table](week8/table.png)
