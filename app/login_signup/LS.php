@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 
             </div>
             <div class="roleChoose" id="roleInputContainer">
-                <label for="role" style="font-size: 1.17em; font-weight: bold; color:#4c00b4"><h3>*Select your role:&nbsp;</label>
+                <label for="role" style="font-size: 1.17em; font-weight: bold; color:#4c00b4"><h3>&nbsp;&nbsp;*Select your role:&nbsp;</label>
                 <select name="role" id="role" style="font-size: 18px; padding: 5px 10px; border-radius:10px; width: 185px; border: 1px solid black;">
                     <option value="empty" disabled selected hidden></option>
                     <option value="sender">Sender</option>
@@ -144,21 +144,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         //点击login/signup button 
         document.getElementById('signUpButton').addEventListener("click",function(event) {
-        event.preventDefault();
-        if (validateEmail() && validateRole()) {
-            document.getElementById('myform').submit();
-        } else {
-            alert("Please check your inputs.");
-        }
-        });
-        document.getElementById('loginButton').addEventListener("click",function(event) {
-        event.preventDefault();
-        if (validateEmail()) {
-            document.getElementById('myform').submit();
-        } else {
-            alert("Please check your inputs.");
-        }
-        });
+    event.preventDefault();
+    if (validateEmail() && validateRole()) {
+        document.getElementById('myform').submit();
+    } else {
+        alert("Please check your inputs.");
+    }
+});
+document.getElementById('loginButton').addEventListener("click",function(event) {
+    event.preventDefault();
+    if (validateEmail()) {
+        document.getElementById('myform').submit();
+    } else {
+        alert("Please check your inputs.");
+    }
+});
         
         //设置密码可见性，点击show即可查看，hide则隐藏
         function togglePasswordVisibility() {
@@ -242,12 +242,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
         }
         function validateRole() {
-        const roleSelect = document.getElementById("role");
-        if (roleSelect.value === "") {
-            return false;  // Role is not selected
-        }
-            return true;  // Role is selected
-        }
+    const roleSelect = document.getElementById("role");
+    if (roleSelect.value === "") {
+        return false;  // Role is not selected
+    }
+    return true;  // Role is selected
+}
         //点击"交换"标志则会切换signup和login界面
         function toggleAction() {
             if (action === "Login") {
@@ -286,6 +286,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
             document.body.innerHTML = forgotPasswordHTML;
         }
+
+        // function navigateToSignupPage() {
+        // action = "Sign Up";
+        // updateUI();
+        // }
+
+
+
 
         function sendResetLink() {
             // 开发中
