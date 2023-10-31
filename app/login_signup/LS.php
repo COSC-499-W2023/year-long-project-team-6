@@ -144,21 +144,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         //点击login/signup button 
         document.getElementById('signUpButton').addEventListener("click",function(event) {
-    event.preventDefault();
-    if (validateEmail() && validateRole()) {
-        document.getElementById('myform').submit();
-    } else {
-        alert("Please check your inputs.");
-    }
-});
-document.getElementById('loginButton').addEventListener("click",function(event) {
-    event.preventDefault();
-    if (validateEmail()) {
-        document.getElementById('myform').submit();
-    } else {
-        alert("Please check your inputs.");
-    }
-});
+        event.preventDefault();
+        if (validateEmail() && validateRole()) {
+            document.getElementById('myform').submit();
+        } else {
+            alert("Please check your inputs.");
+        }
+        });
+        document.getElementById('loginButton').addEventListener("click",function(event) {
+        event.preventDefault();
+        if (validateEmail()) {
+            document.getElementById('myform').submit();
+        } else {
+            alert("Please check your inputs.");
+        }
+        });
         
         //设置密码可见性，点击show即可查看，hide则隐藏
         function togglePasswordVisibility() {
@@ -242,12 +242,12 @@ document.getElementById('loginButton').addEventListener("click",function(event) 
             }
         }
         function validateRole() {
-    const roleSelect = document.getElementById("role");
-    if (roleSelect.value === "") {
-        return false;  // Role is not selected
-    }
-    return true;  // Role is selected
-}
+        const roleSelect = document.getElementById("role");
+        if (roleSelect.value === "") {
+            return false;  // Role is not selected
+        }
+            return true;  // Role is selected
+        }
         //点击"交换"标志则会切换signup和login界面
         function toggleAction() {
             if (action === "Login") {
@@ -286,14 +286,6 @@ document.getElementById('loginButton').addEventListener("click",function(event) 
 
             document.body.innerHTML = forgotPasswordHTML;
         }
-
-        // function navigateToSignupPage() {
-        // action = "Sign Up";
-        // updateUI();
-        // }
-
-
-
 
         function sendResetLink() {
             // 开发中
