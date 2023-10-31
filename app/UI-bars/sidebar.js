@@ -1,6 +1,6 @@
 var modal = document.getElementById("myModal");
 
-var links = document.querySelectorAll('li a');
+
       // Get the button that opens the modal
       var btn = document.getElementById("myBtn");
 
@@ -23,7 +23,8 @@ var links = document.querySelectorAll('li a');
           modal.style.display = "none";
         }
       }
-      function searchGroup() {
+    
+   function searchGroup() {
         var searchInput = document.getElementById('searchInput');
         var resultContainer = document.getElementById('resultContainer');
 
@@ -33,8 +34,7 @@ var links = document.querySelectorAll('li a');
         if (searchValue.length === 5) {
           // You can implement your search logic here
           // For this example, we'll just display the entered code
-          resultContainer.innerHTML = `Searching
-          for group with code: ${searchValue}`;
+          resultContainer.innerHTML = `Searching for group with code: ${searchValue}`;
         } else {
           resultContainer.innerHTML = 'Please enter a 5-character code.';
         }
@@ -42,9 +42,12 @@ var links = document.querySelectorAll('li a');
       // Select all anchor tags within list items
 
 
+
+        var links = document.querySelectorAll('li a');
 // Add event listener to each anchor tag
 for (let i = 0; i < links.length; i++) {
     links[i].addEventListener('click', function(event) {
+      
         // If the clicked anchor has the class 'addgroup', do nothing
         if (this.classList.contains('addgroup')) {
             return; // Exit the function early
@@ -59,3 +62,4 @@ for (let i = 0; i < links.length; i++) {
         this.classList.add('active');
     });
 }
+      
