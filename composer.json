@@ -1,0 +1,17 @@
+{
+    "name": "17321/year-long-project-team-6",
+    "autoload": {
+        "psr-4": {
+            "17321\\YearLongProjectTeam6\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jasesssss",
+            "email": "17321255681@163.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^10.4"
+    }
+}

@@ -27,7 +27,10 @@ function random_num($length)
 
     $len = rand(4, $length);
 
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     for ($i = 0; $i < $len; $i++) {
-
+        $text .= $characters[rand(0, strlen($characters) - 1)];
     }
+
+    return $text;
 }
