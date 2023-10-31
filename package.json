@@ -19,5 +19,8 @@
       "node_modules"
     ],
     "testEnvironment": "jsdom"
+  },
+  "dependencies": {
+    "supertest": "^6.3.3"
   }
 }

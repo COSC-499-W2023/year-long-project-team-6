@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     </form>
 
     <!-- ---------------------------------------------------------------------- -->
-    <script>
+    <script src="login_signup.js">
         let showPassword = false;
         let action = "Login";  
 
