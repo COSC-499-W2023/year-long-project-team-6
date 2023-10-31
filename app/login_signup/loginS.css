@@ -44,9 +44,11 @@ body {
 }
 
 .tooltip {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .tooltip .tooltiptext {
@@ -64,6 +66,7 @@ body {
     margin-left: -100px;
     opacity: 0;
     transition: opacity 0.3s;
+    margin-top: 5px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -142,11 +145,10 @@ body {
 }
 
 .switch-icon {
-    margin: 110px;
-    vertical-align: middle;
+    /* vertical-align: middle; */
     cursor: pointer;
-    width: 40px;
-    
+    margin: 5px 0;  /* Adjust as needed */
+    width: 40px;    /* Adjust as needed */
     height: 40px;
    
 }
