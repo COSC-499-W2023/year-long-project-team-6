@@ -119,3 +119,35 @@
 ![Board](w7_img/Board.png)
 *Table format:*
 ![Table](w7_img/Table.png)
+
+
+# Individual Log - Yiqi Xu (Week 8)
+
+## Applicable data range
+**October/23/2023** to **October/29/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss the database
+* Set up the database
+* Connect to the database
+* Check the other's work
+* Write a test
+
+## Completed Tasks 
+* Had a meeting to discuss the database
+* Set up the database
+* Connected to the database
+* Wrote a test for Function.php
+
+## Test Report
+![Test_report](w8_img/Test_Report.png)
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](w6_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](w8_img/Board.png)
+*Table format:*
+![Table](w8_img/Table.png)
