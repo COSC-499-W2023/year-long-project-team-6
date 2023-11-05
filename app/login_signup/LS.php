@@ -81,25 +81,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 </div>
                 <div class='input'>
                     <img src="image/email.png" alt="Email Icon" />
-                    <input type="email" placeholder="Email" id="emailInput" onInput="validateEmail()"
-                        name="user_email" />
+                    <input type="email" placeholder="Email" id="emailInput" onInput="validateEmail()" name="user_email" />
                     <span class="email-tooltiptext" id="emailTooltip">Invalid format</span>
                 </div>
 
                 <div class='input'>
                     <img src="image/password.png" alt="Password Icon" />
-                    <input type="password" placeholder="Password" id="passwordInput" autocomplete="new-password"
-                        name="user_pass" />
-                    <input type="text" id="hiddenPasswordInput"
-                        style="opacity: 0; position: absolute; top: -9999px; left: -9999px;" />
+                    <input type="password" placeholder="Password" id="passwordInput" autocomplete="new-password" name="user_pass" />
+                    <input type="text" id="hiddenPasswordInput" style="opacity: 0; position: absolute; top: -9999px; left: -9999px;" />
                     <p class="password-toggle" onClick="togglePasswordVisibility()">Show</p>
                 </div>
 
 
-                
+
             </div>
             <div class="roleChoose" id="roleInputContainer">
-                <label for="role" style="font-size: 1.17em; font-weight: bold; color:#4c00b4"><h3>&nbsp;&nbsp;*Select your role:&nbsp;</label>
+                <label for="role" style="font-size: 1.17em; font-weight: bold; color:#4c00b4">
+                    <h3>&nbsp;&nbsp;*Select your role:&nbsp;
+                </label>
                 <select name="role" id="role" style="font-size: 18px; padding: 5px 10px; border-radius:10px; width: 185px; border: 1px solid black;">
                     <option value="empty" disabled selected hidden></option>
                     <option value="sender">Sender</option>
@@ -116,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <span class="tooltiptext" id="switchTooltip" style="text-align: center; margin-top: 2px; margin-bottom: 2px;">Switch between Login and Sign Up interface</span>
             </div>
 
-            
+
             <div class="submit-container">
                 <button class="submit gray" id="signUpButton" type="submit">Submit</button>
                 <button class="submit" id="loginButton" type="submit">Submit</button>
@@ -127,9 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <!-- ---------------------------------------------------------------------- -->
     <script>
         let showPassword = false;
-        let action = "Login";  
+        let action = "Login";
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             action = "Login";
             updateUI(); // 更新UI以反映新的action，的、默认进入login
         });
@@ -143,23 +142,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // }
 
         //点击login/signup button 
-        document.getElementById('signUpButton').addEventListener("click",function(event) {
-    event.preventDefault();
-    if (validateEmail() && validateRole()) {
-        document.getElementById('myform').submit();
-    } else {
-        alert("Please check your inputs.");
-    }
-});
-document.getElementById('loginButton').addEventListener("click",function(event) {
-    event.preventDefault();
-    if (validateEmail()) {
-        document.getElementById('myform').submit();
-    } else {
-        alert("Please check your inputs.");
-    }
-});
-        
+        document.getElementById('signUpButton').addEventListener("click", function(event) {
+            event.preventDefault();
+            if (validateEmail() && validateRole()) {
+                document.getElementById('myform').submit();
+            } else {
+                alert("Please check your inputs.");
+            }
+        });
+        document.getElementById('loginButton').addEventListener("click", function(event) {
+            event.preventDefault();
+            if (validateEmail()) {
+                document.getElementById('myform').submit();
+            } else {
+                alert("Please check your inputs.");
+            }
+        });
+
         //设置密码可见性，点击show即可查看，hide则隐藏
         function togglePasswordVisibility() {
             showPassword = !showPassword;
@@ -209,7 +208,7 @@ document.getElementById('loginButton').addEventListener("click",function(event) 
                 loginButton.style.display = "block";
                 roleInputContainer.style.display = "none";
                 tooltipText.textContent = "Switch to Sign Up";
-            //如果在signup界面则不显示forgotpassword button和login button,当鼠标移到“交换”标志时会显示"Switch to Log in"
+                //如果在signup界面则不显示forgotpassword button和login button,当鼠标移到“交换”标志时会显示"Switch to Log in"
             } else if (action === "Sign Up") {
                 headerText.textContent = "Vup";
                 nameInputContainer.style.display = "block";
@@ -221,7 +220,7 @@ document.getElementById('loginButton').addEventListener("click",function(event) 
             }
             document.getElementById('actionInput').value = action;
         }
-        
+
         //确定邮箱格式，中间必须含有@，结尾必须以.com结束，长度必须在30个characters以内
         //如果不符合格式将会一直显示“invalid format”直到符合为止
 
@@ -231,8 +230,8 @@ document.getElementById('loginButton').addEventListener("click",function(event) 
             const emailValue = emailInput.value;
 
             const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-            
-            if (emailRegex.test(emailValue)&& emailValue.length <= 30) {
+
+            if (emailRegex.test(emailValue) && emailValue.length <= 30) {
                 emailTooltip.style.visibility = "hidden"; // "invalid format" hide
                 return true;
             } else {
@@ -241,13 +240,14 @@ document.getElementById('loginButton').addEventListener("click",function(event) 
 
             }
         }
+
         function validateRole() {
-    const roleSelect = document.getElementById("role");
-    if (roleSelect.value === "") {
-        return false;  // Role is not selected
-    }
-    return true;  // Role is selected
-}
+            const roleSelect = document.getElementById("role");
+            if (roleSelect.value === "") {
+                return false; // Role is not selected
+            }
+            return true; // Role is selected
+        }
         //点击"交换"标志则会切换signup和login界面
         function toggleAction() {
             if (action === "Login") {
@@ -282,7 +282,7 @@ document.getElementById('loginButton').addEventListener("click",function(event) 
         </div>
         </div>
 
-        `   ;
+        `;
 
             document.body.innerHTML = forgotPasswordHTML;
         }
@@ -304,8 +304,6 @@ document.getElementById('loginButton').addEventListener("click",function(event) 
             // navigateToSignupPage();
             location.reload();
         }
-
-
     </script>
 </body>
 
