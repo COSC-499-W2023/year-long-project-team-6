@@ -113,30 +113,28 @@ These two weeks we have almost finished coding the ui work with some other javas
 Oct.24-30
 
 ### 2. *Screenshot from peer evaluation*
-![peer-eva](image8/pe.png)
+![peer-eva](images8/pe.png)
 
 ### 3. *Recap*
 
 Tasks done vs in progress
 
 **Tasks done:**
-1. Coding the ui bars
-2. Writing javascript of ui bar
-3. Writing automated test javascript
-4. Writing database ddl
-5. Connecting pages to each other
-6. Fix bugs while connecting pages
+1. AWS-database setup
+2. Viewing teams code
+3. fixing bug
+4. preparing mini presentation
 
 **In progress**
  
-1. database implementation
-2. coding database implement
+1. create credential
+2. transverse into react
 
 ### 4. *Self Reflection and learned*
 
-These two weeks we have almost finished coding the ui work with some other javascript, we have also started the database implementation, so that we are able to accomplish the implemenation before next week.
+This week I have been setup database on my own, and help my teammates implement database. Besides, I have been helping them finding bugs and make important changes.
 
 ### 5. *From project board*
-![Board](image6/pb.png)
-![Table](image6/table.png)
+![Board](images8/pb.png)
+![Table](images8/table.png)
 
