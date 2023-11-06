@@ -144,10 +144,42 @@
 ![Test_report](w8_img/Test_Report.png)
 
 ## ScreenShot of peer evaluation
-![Peer Evaluation](w6_img/PeerEval.png)
+![Peer Evaluation](w8_img/PeerEval.png)
 
 ## My Task on Board
 *Board format:*
 ![Board](w8_img/Board.png)
 *Table format:*
 ![Table](w8_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 9)
+
+## Applicable data range
+**October/30/2023** to **November/5/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss the framework
+* set up the environment for React
+* Covert the html and php code to javascript (Login&Signup Page)
+* Use React as the frontend framework
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting to discuss the framework
+* set up the environment for React
+* Coverted the html and php code to javascript (Login&Signup Page)
+* Used React as the frontend framework
+* Finish Peer Evaluation
+
+## ScreenShot of Login Signup Page with React
+![Page](w9_img/Page.png)
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](w9_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](w9_img/Board.png)
+*Table format:*
+![Table](w9_img/Table.png)
