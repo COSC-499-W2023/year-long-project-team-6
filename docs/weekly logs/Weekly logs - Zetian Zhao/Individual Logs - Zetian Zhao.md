@@ -145,3 +145,38 @@
 ![Table](8_imgs/Table.png)
 
 
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 9)
+
+## Applicable date range
+**October/30/2023** to **November/5/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Prepare the presentation of the demo of project. 
+* Prepare my own part on the presentation. 
+* Complete the peer evaluation. 
+* Complete 5+ team evaluations. 
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* Used the google slides to make the power point of the presentation.
+* Completed my own portion of the presentation. 
+* Completed the peer evaluation. 
+* Complete the team evaluations more than 5. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](9_imgs/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](9_imgs/Board.png)
+*Table format:*
+![Table](9_imgs/Table_1.png)
+![Table](9_imgs/Table_2.png)
+
+
