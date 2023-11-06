@@ -141,3 +141,33 @@
 ![Board](Week8_img/Board.png)
 *Table format:*
 ![Table](Week8_img/Table.png)
+
+# Individual Log - Jiajun Huang (Week 9)
+
+## Applicable data range
+**October/30/2023** to **November/05/2023**
+
+## Recap Goal 
+*My jobs in this week are:*
+* Met with my team members to talk about framework
+* Set up react environment
+* Convert current code to js and use react to build frontend
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members and talked about framework
+* React environment has set up
+* Converted code to js
+* Used react for frontend
+* Finished Peer evaluation
+
+## ScreenShot of pages
+![Recorded](Week9_img/Recorded.png)
+![Post](Week9_img/Post.png)
+## ScreenShot of peer evaluation
+![Peer Evaluation](Week9_img/PE.png)
+## My Task on Board
+*Board format:*
+![Board](Week9_img/Board.png)
+*Table format:*
+![Table](Week9_img/Table.png)
