@@ -1,11 +1,11 @@
 #send{
-    margin-left: 15em;
-    margin-top: 8em;
+    margin-left: 50px;
+    margin-top: 50px;
     width: 30em;
 
 }
 #input{
-    margin-left: 15em;
+    margin-left: 50px;
     margin-top: 2em;
     line-height: 2em;
     width: 30em;
@@ -25,14 +25,22 @@
     height: 5em;
     width: 25em;
 }
-.custom-file-upload {
+#input * {
+    margin: 0;
+    padding: 0;
+}
+
+
+.custom-upload-button {
     padding: 10px 20px;
-    background-color: #7d53db;
+    background-color: #373c53;
     color: #fff;
     border: 1px solid #666;
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
+    width: 15em; 
+    height: 40px; 
 }
 
 #selectedFileName {
@@ -43,20 +51,18 @@
     display: none;
 }
 
-#choose{
-    margin-top: 2em;
-}
 
 #submit{
     margin-top: 2em;
     margin-left: 22em;
     padding: 10px 20px;
-    background-color: #7d53db;
+    background-color: #373c53;
     color: #fff;
     border: 1px solid #666;
     border-radius: 5px;
     cursor: pointer;
-    width: 10em;
+    width: 8em; 
+    height: 40px; 
 }
 
 #HistroyBar{
@@ -117,4 +123,31 @@ input[type="text"] {
 }
 
 
+.custom-upload-button, #submit {
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.5s;
+    display: inline-block; 
+}
 
+.custom-upload-button::before, #submit::before {
+    content: "";
+    position: absolute;
+    background-color: rgba(125, 83, 219, 0.7);
+    border-radius: 50%;
+    width: 200%;
+    height: 200%;
+    left: 50%;
+    top: 50%;
+    transform: scale(0) translate(-50%, -50%);
+    transition: transform 0.5s;
+    z-index: -1;
+}
+
+.custom-upload-button:hover::before, #submit:hover::before {
+    transform: scale(1) translate(-50%, -50%);
+}
+
+.custom-upload-button:hover, #submit:hover {
+    background-color: transparent; 
+}
