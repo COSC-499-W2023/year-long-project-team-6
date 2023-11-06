@@ -103,3 +103,31 @@
 ![Board](week8/board.png)
 *Table format:*
 ![Table](week8/table.png)
+
+# Individual Log - Wenrui Chen (Week 9)
+
+## Applicable date range
+**October/30/2023** to **November/5/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* meeting to discuss our plan 
+* Prepare the presentation and live demo
+* Prepare my own part
+* Complete the peer evaluation 
+* Complete 5+ team evaluations 
+
+## Completed Tasks 
+* meeting  
+* Completed my own part of the presentation (Signup)
+* Completed the peer evaluation
+* Complete 5+ team evaluations
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](week9/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](week9/board.png)
+*Table format:*
+![Table](week9/table.png)
