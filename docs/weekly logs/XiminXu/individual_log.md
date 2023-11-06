@@ -138,3 +138,32 @@ This week I have been setup database on my own, and help my teammates implement 
 ![Board](images8/pb.png)
 ![Table](images8/table.png)
 
+
+## Ximin Xu week 9 personal log
+
+### 1. *Date Range*
+
+Oct.31-Nov.6
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images9/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. mini-presentation
+2. coding to embed current work of homepage into react
+
+
+**In progress**
+ 
+1. create api for react
+
+### 4. *Self Reflection and learned*
+
+This week we finish our mini presentation, although accidents occured when presenting. I learned how react works and embed the current ui into react.Next week I am planning to figure out how api works and try to connect react to one of it.
+
+### 5. *From project board*
+![Board](images9/pb.png)
