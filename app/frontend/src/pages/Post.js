@@ -25,7 +25,7 @@ function PostPage() {
     }
 
     return (
-        <div>
+        <div id='page'>
             <div id="send">
                 <h2>Send Your Post</h2>
             </div>
