@@ -207,8 +207,8 @@ describe('togglePasswordVisibility', () => {
 });
 ```
 *Output:*
-![Tests](Test.jpg)
-![Tests](Test2.jpg)
+![Tests](Test.png)
+![Tests](Test2.png)
 
 ## Project on Board
 *Board format:*
@@ -217,14 +217,14 @@ describe('togglePasswordVisibility', () => {
 
 *Table format:*
 
-![Table](table1.png)
-![Table](table2.png)
-![Table](table3.png)
-![Table](table4.png)
-![Table](table5.png)
-![Table](table6.png)
-![Table](table7.png)
-![Table](table8.png)
+![Table](Table1.png)
+![Table](Table2.png)
+![Table](Table3.png)
+![Table](Table4.png)
+![Table](Table5.png)
+![Table](Table6.png)
+![Table](Table7.png)
+![Table](Table8.png)
 
 ## Burnup chart
 ![Chart](Chart.png)
