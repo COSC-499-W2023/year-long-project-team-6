@@ -167,3 +167,34 @@ This week we finish our mini presentation, although accidents occured when prese
 
 ### 5. *From project board*
 ![Board](images9/pb.png)
+
+## Ximin Xu week 10 personal log
+
+### 1. *Date Range*
+
+Nov.7-Nov.12
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images10/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Linking all pages in react
+3. Fixing UI bugs of their signup page 
+4. Manual testing on UI function
+
+
+**In progress**
+ 
+1. Linking frontend with backend
+
+### 4. *Self Reflection and learned*
+
+This week, we completed the process of integrating the code into React, and moving forward, our focus will be on working with React. I have a stronger familiarity with React, and I'm optimistic about successfully connecting the frontend with the backend.
+
+### 5. *From project board*
+![Board](images10/pb.png)
