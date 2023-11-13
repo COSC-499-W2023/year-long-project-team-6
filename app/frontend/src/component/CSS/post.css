@@ -1,35 +1,40 @@
-#page{
+#page {
     margin-top: 10em;
     margin-left: 10em;
 }
 
-#send{
+#send {
     margin-left: 50px;
     margin-top: 50px;
     width: 30em;
 
 }
-#input{
+
+#input {
     margin-left: 50px;
     margin-top: 2em;
     line-height: 2em;
     width: 30em;
 }
-.main #VName{
+
+.main #VName {
     height: 2em;
     width: 25em;
 }
-.main #GName{
+
+.main #GName {
     height: 2em;
     width: 25.5em;
     box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
     border: 1px solid lightgray;
     border-radius: 5px;
 }
-.main #Description{
+
+.main #Description {
     height: 5em;
     width: 25em;
 }
+
 #input * {
     margin: 0;
     padding: 0;
@@ -44,12 +49,13 @@
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
-    width: 15em; 
-    height: 40px; 
+    width: 15em;
+    height: 40px;
 }
 
 #selectedFileName {
-    margin-left: 10px;  /* Adjust as necessary */
+    margin-left: 10px;
+    /* Adjust as necessary */
 }
 
 #file {
@@ -57,7 +63,7 @@
 }
 
 
-#submit{
+#submit {
     margin-top: 2em;
     margin-left: 22em;
     padding: 10px 20px;
@@ -66,58 +72,62 @@
     border: 1px solid #666;
     border-radius: 5px;
     cursor: pointer;
-    width: 8em; 
-    height: 40px; 
+    width: 8em;
+    height: 40px;
 }
 
-#HistroyBar{
+#HistroyBar {
     float: right;
     box-shadow: 0 8px 8px 2px rgba(0, 0, 0, 0.1);
     width: 20em;
-    border-radius: 5px; 
+    border-radius: 5px;
     margin-right: 10em;
 }
 
-thead{
+thead {
     text-align: left;
     vertical-align: middle;
     height: 3em;
     font-weight: bold;
 }
 
-#HistroyTable tr{
+#HistroyTable tr {
     height: 3em;
 }
 
-td{
+td {
     width: 20em;
     text-align: left;
     vertical-align: middle;
 }
-#HistroyBar #Sort{
+
+#HistroyBar #Sort {
     text-align: right;
 }
-#HistroyBar #order{
+
+#HistroyBar #order {
     box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
     border: 1px solid lightgray;
     border-radius: 5px;
 }
-#HistroyBar img{
+
+#HistroyBar img {
     width: 50px;
     height: 60px;
     text-align: left;
     vertical-align: middle;
-    
+
 }
 
-#date{
+#date {
     text-align: right;
     vertical-align: middle;
 }
 
 .flex-container {
     display: flex;
-    justify-content: space-between; /* This will put max space between the two divs */
+    justify-content: space-between;
+    /* This will put max space between the two divs */
 }
 
 input[type="text"] {
@@ -128,14 +138,16 @@ input[type="text"] {
 }
 
 
-.custom-upload-button, #submit {
+.custom-upload-button,
+#submit {
     position: relative;
     overflow: hidden;
     transition: background-color 0.5s;
-    display: inline-block; 
+    display: inline-block;
 }
 
-.custom-upload-button::before, #submit::before {
+.custom-upload-button::before,
+#submit::before {
     content: "";
     position: absolute;
     background-color: rgba(125, 83, 219, 0.7);
@@ -149,10 +161,12 @@ input[type="text"] {
     z-index: -1;
 }
 
-.custom-upload-button:hover::before, #submit:hover::before {
+.custom-upload-button:hover::before,
+#submit:hover::before {
     transform: scale(1) translate(-50%, -50%);
 }
 
-.custom-upload-button:hover, #submit:hover {
-    background-color: transparent; 
+.custom-upload-button:hover,
+#submit:hover {
+    background-color: transparent;
 }
