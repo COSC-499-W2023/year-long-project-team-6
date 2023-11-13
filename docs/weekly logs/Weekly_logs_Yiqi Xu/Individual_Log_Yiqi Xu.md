@@ -204,6 +204,9 @@
 * Connected Database with Nodejs
 * Finished Peer Evaluation
 
+## Test Report for PostDao
+![Test Report](w10_img/Test%20Reoport.png)
+
 ## ScreenShot of peer evaluation
 ![Peer Evaluation](w10_img/PeerEval.png)
 
