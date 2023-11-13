@@ -13,7 +13,10 @@ function LoginSignupForm() {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [role, setRole] = useState("");
+    const [passw, setPassw] = useState("");
     const [emailError, setEmailError] = useState(false);
+    const [passwError, setPasswError] = useState(false);
+
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -29,6 +32,27 @@ function LoginSignupForm() {
         }
     };
 
+    const validatePassw = () => {
+        // Check if password length is between 6 and 30 characters
+        const isLengthValid = passw.length >= 6 && passw.length <= 30;
+
+        // Check if password contains at least one digit
+        const hasDigit = /\d/.test(passw);
+
+        // Check if password contains at least one letter (uppercase or lowercase)
+        const hasLetter = /[a-zA-Z]/.test(passw);
+
+        // Check if password contains at least one symbol
+        const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(passw);
+
+        if (isLengthValid && hasDigit && hasLetter && hasSymbol) {
+            // Return true if all conditions are met
+            setPasswError(false);
+        } else {
+            setPasswError(true);
+        }
+    };
+
     const validateRole = () => {
         return role !== "";
     };
@@ -39,14 +63,11 @@ function LoginSignupForm() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        if (validateEmail() && validateRole()) {
-            console.log("Submitted:", email, name, role);
+        if (validateEmail() && validatePassw() && validateRole()) {
+            console.log("Submitted:", email, name, passw, role);
         } else {
             alert("Please check your inputs.");
         }
-    };
-
-    const navigateToForgotPasswordPage = () => {
     };
 
     const sendResetLink = () => {
@@ -57,13 +78,13 @@ function LoginSignupForm() {
         window.location.reload();
     };
 
-    const renderLoginForm = () => {
+    const renderSignupForm = () => {
         return (
             <form id="myform" method="post" onSubmit={handleFormSubmit}>
                 <input type="hidden" name="action" id="actionInput" value={action} />
                 <div className="container">
                     <div className="header">
-                        <div className="text"></div>
+                        <div className="text">Vup</div>
                         <div className="underline"></div>
                     </div>
                     <div className="inputs">
@@ -100,6 +121,113 @@ function LoginSignupForm() {
                                 id="passwordInput"
                                 autoComplete="new-password"
                                 name="user_pass"
+                                value={passw}
+                                onChange={(e) => setPassw(e.target.value)}
+                                onBlur={validatePassw}
+                            />
+                            {passwError && <span className="email-tooltiptext" id="emailTooltip">Invalid format</span>}
+
+                            <input
+                                type="text"
+                                id="hiddenPasswordInput"
+                                style={{ opacity: 0, position: "absolute", top: -9999, left: -9999 }}
+                            />
+                            <p className="password-toggle" onClick={togglePasswordVisibility}>
+                                {showPassword ? "Hide" : "Show"}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="roleChoose" id="roleInputContainer" style={{ display: "flex", alignItems: "center" }}>
+                        <label htmlFor="role" style={{ fontSize: "1.17em", fontWeight: "bold", color: "#4c00b4", marginRight: "10px", marginBottom: "0" }}>
+                            <h3 style={{ margin: "0" }}>*Select your role:</h3>
+                        </label>
+                        <select
+                            name="role"
+                            id="role"
+                            style={{
+                                fontSize: "18px",
+                                padding: "5px 10px",
+                                borderRadius: "10px",
+                                width: "185px",
+                                border: "1px solid black",
+                                marginTop: "5px",
+                                marginBottom: "8px"
+                            }}
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                        >
+                            <option value="empty" disabled hidden>Select a role</option>
+                            <option value="sender">Sender</option>
+                            <option value="receiver">Receiver</option>
+                        </select>
+                    </div>
+                    {/* <div className="forgot-password" onClick={navigateToForgotPasswordPage} id="forgotPassword">
+                        Forgot password? <span>Click Here!</span>
+                    </div> */}
+                    <div className="tooltip" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", margin: 0, padding: 0 }}>
+                        <img
+                            src={exchange}
+                            alt="Switch"
+                            className="switch-icon"
+                            style={{ margin: "2px 0", width: "40px", height: "40px" }}
+                            onClick={toggleAction}
+                        />
+                        <span className="tooltiptext" id="switchTooltip" style={{ textAlign: "center", marginTop: "2px", marginBottom: "2px" }}>
+                            {action === "Login" ? "Switch to Sign Up" : "Switch to Log in"}
+                        </span>
+                    </div>
+                    <div className="submit-container">
+                        <button className={action === "Login" ? "submit" : "submit"} type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        );
+    };
+    const renderLoginForm = () => {
+        return (
+            <form id="myform" method="post" onSubmit={handleFormSubmit}>
+                <input type="hidden" name="action" id="actionInput" value={action} />
+                <div className="container">
+                    <div className="header">
+                        <div className="text">Vup</div>
+                        <div className="underline"></div>
+                    </div>
+                    <div className="inputs">
+                        {/* <div className="input" id="nameInputContainer">
+                            <div className="input-content">
+                                <img src={person} alt="User Icon" />
+                                <input
+                                    type="text"
+                                    placeholder="Name"
+                                    name="user_name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </div>
+                        </div> */}
+                        <div className="input">
+                            <img src={email_image} alt="Email Icon" />
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                id="emailInput"
+                                name="user_email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                onBlur={validateEmail}
+                            />
+                            {emailError && <span className="email-tooltiptext" id="emailTooltip">Invalid format</span>}
+                        </div>
+                        <div className="input">
+                            <img src={password} alt="Password Icon" />
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                id="passwordInput"
+                                autoComplete="new-password"
+                                name="user_pass"
                             />
                             <input
                                 type="text"
@@ -111,14 +239,21 @@ function LoginSignupForm() {
                             </p>
                         </div>
                     </div>
-                    <div className="roleChoose" id="roleInputContainer">
-                        <label htmlFor="role" style={{ fontSize: "1.17em", fontWeight: "bold", color: "#4c00b4" }}>
-                            <h3>&nbsp;&nbsp;*Select your role:&nbsp;</h3>
+                    {/* <div className="roleChoose" id="roleInputContainer" style={{ display: "flex", alignItems: "center" }}>
+                        <label htmlFor="role" style={{ fontSize: "1.17em", fontWeight: "bold", color: "#4c00b4", marginRight: "10px", marginBottom: "0" }}>
+                            <h3 style={{ margin: "0" }}>*Select your role:</h3>
                         </label>
                         <select
                             name="role"
                             id="role"
-                            style={{ fontSize: "18px", padding: "5px 10px", borderRadius: "10px", width: "185px", border: "1px solid black" }}
+                            style={{
+                                fontSize: "18px",
+                                padding: "5px 10px",
+                                borderRadius: "10px",
+                                width: "185px",
+                                border: "1px solid black",
+                                marginTop: "5px",
+                            }}
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
                         >
@@ -126,9 +261,9 @@ function LoginSignupForm() {
                             <option value="sender">Sender</option>
                             <option value="receiver">Receiver</option>
                         </select>
-                    </div>
-                    <div className="forgot-password" onClick={navigateToForgotPasswordPage} id="forgotPassword">
-                        Forgot password? <span>Click Here!</span>
+                    </div> */}
+                    <div className="forgot-password" onClick={renderForgotPasswordForm} id="forgotPassword">
+                        Forgot password? <span onClick={() => setAction("Forget")}>Click Here!</span>
                     </div>
                     <div className="tooltip" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", margin: 0, padding: 0 }}>
                         <img
@@ -151,7 +286,6 @@ function LoginSignupForm() {
             </form>
         );
     };
-
     const renderForgotPasswordForm = () => {
         return (
             <div className="container" style={{ textAlign: "center", paddingTop: "30px", paddingBottom: "50px" }}>
@@ -159,7 +293,7 @@ function LoginSignupForm() {
                 <h4 style={{ color: "#888888" }}>Please enter your email address so we can send you an account recovery link.</h4>
                 <div className="inputs" style={{ marginTop: "10px" }}>
                     <div className="input">
-                        <img src={email} alt="Email Icon" />
+                        <img src={email_image} alt="Email Icon" />
                         <input type="email" placeholder="Enter your registered email" style={{ width: "80%" }} />
                     </div>
                 </div>
@@ -175,16 +309,25 @@ function LoginSignupForm() {
                 </div>
                 <div className="submit-container" style={{ marginTop: "5px", marginBottom: "5px" }}>
                     <a onClick={goBackToLogin} style={{ cursor: "pointer", color: "#4c00b4" }}>
-                        <h3 style={{ margin: "0" }}>Back to the main page</h3>
+                        <h3 style={{ margin: "0" }}>Back to the Login Page</h3>
                     </a>
                 </div>
             </div>
         );
     };
 
+    let form;
+    if (action === "Login") {
+        form = renderLoginForm();
+    } else if (action === "Forget") {
+        form = renderForgotPasswordForm();
+    } else {
+        form = renderSignupForm();
+    }
+
     return (
         <div>
-            {action === "Login" ? renderLoginForm() : renderForgotPasswordForm()}
+            {form}
         </div>
     );
 }
