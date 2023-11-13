@@ -9,7 +9,8 @@
     "jest-environment-jsdom": "^29.7.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "jest": {
     "transform": {
@@ -19,5 +20,8 @@
       "node_modules"
     ],
     "testEnvironment": "jsdom"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
