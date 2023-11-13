@@ -130,12 +130,12 @@ td {
     /* This will put max space between the two divs */
 }
 
-input[type="text"] {
+.page input[type="text"] {
     border: 1px solid lightgray;
     box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 
-}
+} 
 
 
 .custom-upload-button,

@@ -135,8 +135,6 @@ body {
 
 .input input {
     height: 50px;
-    width: 100%;
-    /* Use 100% width to fill the available space */
     background: transparent;
     border: none;
     outline: none;

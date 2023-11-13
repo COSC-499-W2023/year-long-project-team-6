@@ -204,7 +204,7 @@ body, h1, p {
 .addgroup{
     padding: 20px;
 }
-input[type="text"] {
+.Modal input[type="text"] {
     width: 200px;
     padding: 10px;
     border: 1px solid #ccc;
