@@ -11,9 +11,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LoginForm />} />
-          <Route path="/PostPage" element = {<PostPage />}/>
-          <Route path="/RecordedPage" element = {<RecordedPage />}/>
-          <Route path="/EditPage" element = {<EditPage />}/>
+          <Route path="/PostPage" element={<PostPage />} />
+          <Route path="/RecordedPage" element={<RecordedPage />} />
+          <Route path="/EditPage" element={<EditPage />} />
         </Routes>
       </Router>
     </div>
