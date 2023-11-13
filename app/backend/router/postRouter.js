@@ -2,7 +2,7 @@ const express = require('express');
 const PostDao = require('../dao/displayDAO');
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/post-history', (req, res) => {
     const postDao = new PostDao(req.db);
 
     postDao.getUsernameAndPostDate((err, results) => {
