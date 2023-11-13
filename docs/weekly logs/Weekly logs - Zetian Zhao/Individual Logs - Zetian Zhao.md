@@ -180,3 +180,36 @@
 ![Table](9_imgs/Table_2.png)
 
 
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 10)
+
+## Applicable date range
+**November/7/2023** to **November/12/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Fix the switch functionality between sign up, login in and forget password pages. 
+* Complete the peer evaluation. 
+* Fix the problem in the password validation during the sign up process.  
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* Fixed the switch problem on the Main page(login, sign up). 
+* Completed the peer evaluation. 
+* Fixed the password validation, and make it work properly. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](10_imgs/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](10_imgs/Board.png)
+*Table format:*
+![Table](10_imgs/Table_1.png)
+![Table](10_imgs/Table_2.png)
+
+
