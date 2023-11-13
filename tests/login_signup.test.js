@@ -1,4 +1,39 @@
-const { validateEmail, togglePasswordVisibility } = require('./login_signup.js');
+const { validateEmail, togglePasswordVisibility, validatePassw } = require('./login_signup.js');
+
+const setPasswErrorMock = jest.fn();
+
+// Test cases
+describe('validatePassw', () => {
+    it('should set passwError to false for a valid password', () => {
+        const validPassword = 'Valid@Password123';
+        validatePassw(validPassword, setPasswErrorMock);
+        expect(setPasswErrorMock).toHaveBeenCalledWith(false);
+    });
+
+    it('should set passwError to true for an invalid password with insufficient length', () => {
+        const invalidPassword = 'Short1';
+        validatePassw(invalidPassword, setPasswErrorMock);
+        expect(setPasswErrorMock).toHaveBeenCalledWith(true);
+    });
+
+    it('should set passwError to true for an invalid password without a digit', () => {
+        const invalidPassword = 'NoDigitPassword';
+        validatePassw(invalidPassword, setPasswErrorMock);
+        expect(setPasswErrorMock).toHaveBeenCalledWith(true);
+    });
+
+    it('should set passwError to true for an invalid password without a letter', () => {
+        const invalidPassword = '1234567890';
+        validatePassw(invalidPassword, setPasswErrorMock);
+        expect(setPasswErrorMock).toHaveBeenCalledWith(true);
+    });
+
+    it('should set passwError to true for an invalid password without a symbol', () => {
+        const invalidPassword = 'NoSymbol123';
+        validatePassw(invalidPassword, setPasswErrorMock);
+        expect(setPasswErrorMock).toHaveBeenCalledWith(true);
+    });
+});
 
 describe('validateEmail', () => {
     let emailInput, emailTooltip;
