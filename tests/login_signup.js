@@ -4,8 +4,8 @@ function validateEmail() {
     const emailValue = emailInput.value;
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    
-    if (emailRegex.test(emailValue)&& emailValue.length <= 30) {
+
+    if (emailRegex.test(emailValue) && emailValue.length <= 30) {
         emailTooltip.style.visibility = "hidden"; // "invalid format" hide
         return true;
     } else {
@@ -25,6 +25,18 @@ function togglePasswordVisibility() {
         document.querySelector(".password-toggle").textContent = "Show";
     }
 }
+function validatePassw(passw, setPasswError) {
+    const isLengthValid = passw.length >= 6 && passw.length <= 30;
+    const hasDigit = /\d/.test(passw);
+    const hasLetter = /[a-zA-Z]/.test(passw);
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(passw);
+    if (isLengthValid && hasDigit && hasLetter && hasSymbol) {
+        setPasswError(false);
+    } else {
+        setPasswError(true);
+    }
+}
 
 
-module.exports = { validateEmail, togglePasswordVisibility };
+
+module.exports = { validateEmail, togglePasswordVisibility, validatePassw };
