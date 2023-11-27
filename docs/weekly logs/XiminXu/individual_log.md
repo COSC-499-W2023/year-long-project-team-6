@@ -198,3 +198,36 @@ This week, we completed the process of integrating the code into React, and movi
 
 ### 5. *From project board*
 ![Board](images10/pb.png)
+
+## Ximin Xu week 11-12 personal log
+
+### 1. *Date Range*
+
+Nov.13-Nov.26
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images12/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Finishing API for Login
+3. React integrate to api
+4. Combining all apis into one server
+
+
+**In progress**
+ 
+1. testing on login API
+2. Signup API
+
+### 4. *Self Reflection and learned*
+
+Finishing tasks helped us work together better and get better at coding. We also learned to keep things safe, write things down clearly, and make sure everything works well. Putting all the computer parts in one place made things faster. We also learned to keep checking and fixing problems. Right now, we're making another part for people to sign up, and we're making sure it's consistent. Learning never stops in computer work, and teamwork is important for success.
+
+### 5. *From project board*
+![Board](images12/pb.png)
+

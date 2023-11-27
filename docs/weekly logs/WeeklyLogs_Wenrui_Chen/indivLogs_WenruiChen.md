@@ -162,10 +162,10 @@
 ![Table](week10/table1.png)
 ![Table](week10/table.png)
 
-# Individual Log - Wenrui Chen (Week 12)
+# Individual Log - Wenrui Chen (Week 11 and 12)
 
 ## Applicable date range
-**November/21/2023** to **November/26/2023**
+**November/213/2023** to **November/26/2023**
 
 ## Recap Goal 
 *My jobs in this week are:* 
@@ -182,15 +182,15 @@
 * tests for handleSubmitForm and switchButton in progress
 
 ## ScreenShot of peer evaluation
-![Peer Evaluation](week12/PE.png)
+![Peer Evaluation](week11_12/PE.png)
 
 ## My Task on Board
 *Board format:*
-![Board](week12/Board.png)
+![Board](week11_12/Board.png)
 
 *Tests:*
-![Board](week12/test.png)
-![Board](week12/test1.png)
+![Board](week11_12/test.png)
+![Board](week11_12/test1.png)
 
 *Table format:*
-![Table](week12/table.png)
+![Table](week11_12/table.png)
