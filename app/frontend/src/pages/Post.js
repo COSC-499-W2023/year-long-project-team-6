@@ -23,14 +23,14 @@ function PostPage() {
                 return response.json();
             })
             .then(data => {
-                // const arr = [];
-                // for (let i in data) {
-                //     let o = {};
-                //     o[i] = data[i];
-                //     arr.push(o);
-                // }
-
-                setPostHistory(data);
+                const arr = [];
+                for (let i in data) {
+                    let o = {};
+                    o[i] = data[i];
+                    arr.push(o);
+                }
+                console.log(arr[0].data);
+                setPostHistory(arr[0].data);
             })
             .catch(error => console.error('Error fetching post history:', error));
     }, [userId]);
@@ -121,7 +121,7 @@ function PostPage() {
                             {postHistory.map((post, index) => (
                                 <tr key={index}>
                                     <td id="img">
-                                        {`User ${post.post_title}`}
+                                        {`${post.post_title}`}
                                     </td>
                                     <td id="date">{new Date(post.post_date).toLocaleString()}</td>
                                 </tr>
