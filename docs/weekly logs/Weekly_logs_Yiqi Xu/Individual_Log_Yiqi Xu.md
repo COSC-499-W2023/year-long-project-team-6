@@ -226,6 +226,7 @@
 * Have a meeting to assign work
 * Code backend for recorded page with team member
 * Code the post page frontend and ensure it can work properly
+* write a jest for recorded dao
 * Update Database
 * Finish Peer Evaluation
 
