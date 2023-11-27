@@ -4,10 +4,10 @@ const db = require('../db/db');
 
 async function getUsernameAndPostDate(userId, callback) {
     const query = `
-            SELECT u.username, p.post_date 
-            FROM users u 
-            JOIN posts p ON u.userid = p.userid
-            WHERE u.userid = ?;
+    SELECT p.post_title, p.post_date
+    FROM posts p
+    JOIN users u ON u.userid = p.userid
+    WHERE u.userid = ?;
         `;
 
     db.query(query, [userId], (err, results) => {

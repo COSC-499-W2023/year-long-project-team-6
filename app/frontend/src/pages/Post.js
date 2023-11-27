@@ -13,22 +13,28 @@ function PostPage() {
     const [selectedFile, setSelectedFile] = useState("");
     const [selectedGroup, setSelectedGroup] = useState("");
     const [postHistory, setPostHistory] = useState([]);
-    useEffect(() => {
-        fetch(`/post-history/${userId}`)
-    .then(response => {
-        console.log(response);  // Log the response object here
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);  // Log the parsed data
-        setPostHistory(data);
-    })
-    .catch(error => console.error('Error fetching post history:', error));
 
+    useEffect(() => {
+        fetch(`http://localhost:5000/post-history/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // const arr = [];
+                // for (let i in data) {
+                //     let o = {};
+                //     o[i] = data[i];
+                //     arr.push(o);
+                // }
+
+                setPostHistory(data);
+            })
+            .catch(error => console.error('Error fetching post history:', error));
     }, [userId]);
+
 
     function displayFileName(event) {
         const fileName = event.target.files[0].name;
@@ -114,8 +120,10 @@ function PostPage() {
                         <tbody>
                             {postHistory.map((post, index) => (
                                 <tr key={index}>
-                                    <td id="img"><img src={post.user_image} alt={`User ${post.userid}`} />{`User ${post.userid}`}</td>
-                                    <td id="date">{post.post_date}</td>
+                                    <td id="img">
+                                        {`User ${post.post_title}`}
+                                    </td>
+                                    <td id="date">{new Date(post.post_date).toLocaleString()}</td>
                                 </tr>
                             ))}
                         </tbody>
