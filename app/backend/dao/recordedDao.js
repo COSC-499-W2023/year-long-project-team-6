@@ -5,7 +5,7 @@ class recordedDao {
     getPostInfor(userId, callback) {
         const query = `
             SELECT p.userid, p.post_id, p.post_title, p.post_date, p.s3_content_key, p.post_text
-            FROM posts p WHERE p.userid = ? 
+            FROM posts p WHERE p.userid = ?;
         `;
 
         this.db.query(query, [userId], (err, results) => {

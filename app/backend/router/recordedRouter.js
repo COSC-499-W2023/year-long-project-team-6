@@ -3,17 +3,18 @@ const RecordedDao = require('../dao/recordedDao');
 const router = express.Router();
 
 // Get post information
-router.get('/get-posts/:id', (req, res) => {
-    const recordedDao = new RecordedDao(req.db);
-    const postId = req.params.id;
-    recordedDao.getPostInfor(postId, (err, results) => {
+router.get('/get-posts/:user_id', (req, res) => {
+    const userId = req.params.user_id;
+    recordedDao.getPostInfor(userId, (err, results) => {
         if (err) {
-            res.status(500).send('Error retrieving posts');
+            console.error('Error in /get-posts/:user_id:', err);
+            res.status(500).send(`Error retrieving posts: ${err.message}`);
         } else {
             res.json(results);
         }
     });
 });
+
 
 // Get group information
 router.get('/get-groups', (req, res) => {

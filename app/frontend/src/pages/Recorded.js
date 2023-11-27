@@ -1,39 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import "../component/CSS/recorded.css";
-import "../component/CSS/sidebar_style.css"
-import user1 from "../component/image/1.jpg"
-import user2 from "../component/image/2.jpg"
-import user3 from "../component/image/3.jpg"
-import addgroup from "../component/image/addgroup.png"
-import downloads from "../component/image/downloads.png"
-import home from "../component/image/home.png"
-import inbox from "../component/image/inbox-64.png"
-import likes from "../component/image/likes-64.png"
-import post from "../component/image/post.ico"
-import setting from "../component/image/settings-3-64.png"
+import "../component/CSS/sidebar_style.css";
+// ... (Other imports)
 
 function RecordedPage() {
     const [userId, setUserId] = useState('2');
     const [group, setGroup] = useState('all');
     const [arrangement, setArrangement] = useState('date');
+    const [posts, setPosts] = useState([]);
 
+    useEffect(() => {
+        fetch(`http://localhost:5000/get-posts/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetched data:', data); 
+                setPosts(data);
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+            });
+    }, [userId]);
+    
 
-    const confirmDelete = () => {
-        const result = window.confirm('Are you sure you want to delete this video?');
-        if (result) {
-            // Code to delete the video goes here
-            alert('Video deleted successfully.');
-        }
+    const handleDelete = (postId) => {
+        fetch(`http://localhost:5000/delete-post/${postId}`, { method: 'DELETE' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error in deleting post');
+                }
+                return response.json();
+            })
+            .then(() => {
+                setPosts(posts.filter(post => post.id !== postId));
+            })
+            .catch(error => console.error('Error:', error));
     };
 
-    const openEditPopup = () => {
-        var editPageUrl = "EditPage"; // Replace with the actual URL of your edit page
-
-        // Set the window features (size, position, etc.)
-        var popupFeatures = "width=600,height=400,scrollbars=yes";
-
-        // Open the edit page in a new popup window
-        window.open(editPageUrl, "Edit Video", popupFeatures);
+    const handleEdit = (postId, newTitle, newText) => {
+        const postData = { title: newTitle, text: newText };
+        fetch(`http://localhost:5000/edit-post/${postId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error in editing post');
+                }
+                return response.json();
+            })
+            .then(() => {
+                setPosts(posts.map(post => post.id === postId ? { ...post, ...postData } : post));
+            })
+            .catch(error => console.error('Error:', error));
     };
 
     return (
@@ -51,14 +75,14 @@ function RecordedPage() {
                         </tr>
                         <tr>
                             <td>
-                                <select id="groupId" name="groupId" value={group} onChange={(e) => setGroup(e.target.value)}>
+                                <select name="group" value={group} onChange={(e) => setGroup(e.target.value)}>
                                     <option value="all">All</option>
-                                    <option value="A">GroupA</option>
-                                    <option value="B">GroupB</option>
+                                    <option value="group1">Group 1</option>
+                                    <option value="group2">Group 2</option>
                                 </select>
                             </td>
                             <td>
-                                <select id="arrange" name="arrange" value={arrangement} onChange={(e) => setArrangement(e.target.value)}>
+                                <select name="arrange" value={arrangement} onChange={(e) => setArrangement(e.target.value)}>
                                     <option value="date">Date</option>
                                     <option value="asc">Name Ascending</option>
                                     <option value="des">Name Descending</option>
@@ -79,16 +103,13 @@ function RecordedPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {[user1, user2, user3, user1, user2, user3].map((userImg, index) => (
-                            <tr key={index}>
-                                <td className="img"><img src={userImg} alt={`User ${index + 1}`} /></td>
-                                <td className="title" data-description="This is the description of the video.">This is a title</td>
-                                <td className="date">2023/09/09</td>
-                                <td className="edit">
-                                    <button type="button" className="editButton" onClick={openEditPopup}>Edit</button>
-                                </td>
-                                <td className="delete">
-                                    <button type="button" className="deleteButton" onClick={confirmDelete}>Delete</button>
+                        {posts.map(post => (
+                            <tr key={post.id}>
+                                <td>{post.title}</td>
+                                <td>{post.date}</td>
+                                <td>
+                                    <button onClick={() => handleEdit(post.id)}>Edit</button>
+                                    <button onClick={() => handleDelete(post.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
