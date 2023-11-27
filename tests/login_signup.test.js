@@ -1,8 +1,82 @@
-const { validateEmail, togglePasswordVisibility, validatePassw } = require('./login_signup.js');
+const {
+    togglePasswordVisibility,
+    validateEmail,
+    validatePassw,
+    validateRole,
+    handleFormSubmit,
+} = require('./login_signup.js');
 
 const setPasswErrorMock = jest.fn();
+global.alert = jest.fn();
+global.console.log = jest.fn();
 
-// Test cases
+// describe('handleFormSubmit', () => {
+//     let mockEvent;
+
+//     beforeEach(() => {
+//         jest.clearAllMocks();
+//         // Mocking the preventDefault function
+//         mockEvent = { preventDefault: jest.fn() };
+//     });
+//     const validateEmail = jest.fn();
+//     const validatePassw = jest.fn();
+//     const validateRole = jest.fn();
+
+//     it('should log "Submitted" if all validations pass', () => {
+//         // Mocking validation functions to return true
+//         validateEmail.mockReturnValue(true);
+//         validatePassw.mockReturnValue(true);
+//         validateRole.mockReturnValue(true);
+//         // handleFormSubmit(mockEvent, email, name, passw, role);
+
+
+//         // Mock data
+//         const email = 'test@example.com';
+//         const name = 'John Doe';
+//         const passw = 'Valid@Password123';
+//         const role = 'Receiver';
+
+//         // Run the function
+//         handleFormSubmit(mockEvent, email, name, passw, role);
+
+//         // Assertions
+//         expect(global.console.log).toHaveBeenCalledWith('Submitted:', email, name, passw, role);
+//         expect(mockEvent.preventDefault).toHaveBeenCalled();
+//         expect(validateEmail).toHaveBeenCalledWith(email);
+//         expect(validatePassw).toHaveBeenCalledWith(passw);
+//         expect(validateRole).toHaveBeenCalledWith(role);
+//     });
+// });
+
+describe('validateRole', () => {
+    it('should return false for an empty role', () => {
+        // Arrange
+        const role = "";
+        // Act
+        const result = validateRole(role);
+        // Assert
+        expect(result).toBe(false);
+    });
+
+    it('should return true for a non-empty role', () => {
+        // Arrange
+        const role = "Sender"; // Replace with a non-empty role value
+        // Act
+        const result = validateRole(role);
+        // Assert
+        expect(result).toBe(true);
+    });
+
+    it('should return true for a non-empty role', () => {
+        // Arrange
+        const role = "Receiver"; // Replace with a non-empty role value
+        // Act
+        const result = validateRole(role);
+        // Assert
+        expect(result).toBe(true);
+    });
+});
+
 describe('validatePassw', () => {
     it('should set passwError to false for a valid password', () => {
         const validPassword = 'Valid@Password123';
@@ -48,13 +122,17 @@ describe('validateEmail', () => {
 
         // 使用jest.fn()创建模拟函数
         document.getElementById = jest.fn((id) => {
-            if (id === 'emailInput') {
-                return emailInput;
+            const elements = {
+                'emailInput': emailInput,
+                'emailTooltip': emailTooltip,
+            };
+
+            if (!(id in elements)) {
+                console.error(`No mock implementation for element with id: ${id}`);
+                throw new Error(`No mock implementation for element with id: ${id}`);
             }
-            if (id === 'emailTooltip') {
-                return emailTooltip;
-            }
-            return null;
+
+            return elements[id];
         });
     });
 
@@ -71,8 +149,8 @@ describe('validateEmail', () => {
         expect(result).toBe(false);
         expect(emailTooltip.style.visibility).toBe('visible');
     });
-
 });
+
 describe('togglePasswordVisibility', () => {
     let passwordInput, passwordToggle;
 
