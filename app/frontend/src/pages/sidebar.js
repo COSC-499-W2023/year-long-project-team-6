@@ -37,8 +37,8 @@ const Sidebar = () => {
 
   return (
     <>
-    <div class="topnav">
-    <div class="topnav-right">
+    <div className="topnav">
+    <div className="topnav-right">
       <a href="/Signup">
         login
       </a>
@@ -49,7 +49,7 @@ const Sidebar = () => {
         <li>
         <Link to="/" className={activeLink === 'home' ? 'active' : ''} onClick={() => handleLinkClick('home')}>
             <img src='/home.png' alt="Home" />
-            <span class="tooltiptext">
+            <span className="tooltiptext">
           Home
         </span>
         </Link>
@@ -65,7 +65,7 @@ const Sidebar = () => {
         <li>
          <Link to="/PostPage" className={activeLink === 'PostPage' ? 'active' : ''} onClick={() => handleLinkClick('PostPage')}>
             <img src='/post.ico' alt="Post" />
-            <span class="tooltiptext">
+            <span className="tooltiptext">
           Post
         </span>
         </Link>
@@ -74,7 +74,7 @@ const Sidebar = () => {
         <a id="myBtn" className="addgroup" href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleModal(); }}>
             <img src='/addgroup.png' alt="Add Group" />
         </a> 
-            <span class="tooltiptext">
+            <span className="tooltiptext">
 
           Add Group
         </span>

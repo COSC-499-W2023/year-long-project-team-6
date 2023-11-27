@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../component/CSS/post.css";
 import email_image from "../component/image/email.png"
 import exchange from "../component/image/exchange.png"
@@ -6,14 +6,35 @@ import password from "../component/image/password.png"
 import person from "../component/image/person.png"
 import showpw from "../component/image/showpw.png"
 import showpw2 from "../component/image/showpw2.png"
-import user1 from "../component/image/1.jpg"
-import user2 from "../component/image/2.jpg"
-import user3 from "../component/image/3.jpg"
 
 
 function PostPage() {
+    const [userId, setUserId] = useState(2);
     const [selectedFile, setSelectedFile] = useState("");
     const [selectedGroup, setSelectedGroup] = useState("");
+    const [postHistory, setPostHistory] = useState([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/post-history/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const arr = [];
+                for (let i in data) {
+                    let o = {};
+                    o[i] = data[i];
+                    arr.push(o);
+                }
+                console.log(arr[0].data);
+                setPostHistory(arr[0].data);
+            })
+            .catch(error => console.error('Error fetching post history:', error));
+    }, [userId]);
+
 
     function displayFileName(event) {
         const fileName = event.target.files[0].name;
@@ -31,7 +52,7 @@ function PostPage() {
             </div>
             <div className="flex-container">
                 <div id="input">
-                    <form action="image.php" method="post" enctype="multipart/form-data">
+                    <form action="image.php" method="post" encType="multipart/form-data">
                         <div id="main" className="main">
                             <div id="choose">
                                 <label className="custom-file-upload">
@@ -97,18 +118,14 @@ function PostPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td id="img"><img src={user1} alt="User1" />User1</td>
-                                <td id="date">2023/09/09</td>
-                            </tr>
-                            <tr>
-                                <td id="img"><img src={user2} alt="User2" />User2</td>
-                                <td id="date">2023/09/09</td>
-                            </tr>
-                            <tr>
-                                <td id="img"><img src={user3} alt="User3" />User3</td>
-                                <td id="date">2023/09/09</td>
-                            </tr>
+                            {postHistory.map((post, index) => (
+                                <tr key={index}>
+                                    <td id="img">
+                                        {`${post.post_title}`}
+                                    </td>
+                                    <td id="date">{new Date(post.post_date).toLocaleString()}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

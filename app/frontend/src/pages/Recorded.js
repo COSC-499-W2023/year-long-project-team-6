@@ -13,8 +13,10 @@ import post from "../component/image/post.ico"
 import setting from "../component/image/settings-3-64.png"
 
 function RecordedPage() {
+    const [userId, setUserId] = useState('2');
     const [group, setGroup] = useState('all');
     const [arrangement, setArrangement] = useState('date');
+
 
     const confirmDelete = () => {
         const result = window.confirm('Are you sure you want to delete this video?');
@@ -35,7 +37,7 @@ function RecordedPage() {
     };
 
     return (
-       <>
+        <>
             <div id="condition">
                 <table>
                     <tbody>
