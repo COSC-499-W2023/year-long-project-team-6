@@ -35,7 +35,7 @@ function RecordedPage() {
     };
 
     return (
-       <>
+        <>
             <div id="condition">
                 <table>
                     <tbody>

@@ -1,0 +1,45 @@
+.members-page {
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.members-filter {
+    margin-left: 200px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 50%;
+}
+
+.dropdown {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.members-table {
+    margin-left: 200px;
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.members-table thead {
+    background-color: #eee;
+}
+
+.members-table th,
+.members-table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}

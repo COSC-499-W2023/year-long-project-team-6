@@ -1,0 +1,37 @@
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+
+.user-profile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.user-profile h1 {
+    padding-top: 20px;
+    margin: 0;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.user-profile p {
+    padding-top: 20px;
+    margin: 0;
+    color: #666;
+    font-size: 20px;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function GroupCard({ imgUrl, groupName, admin, numberOfPeople }) {
   return (
@@ -12,7 +13,7 @@ function GroupCard({ imgUrl, groupName, admin, numberOfPeople }) {
         Admin: {admin}<br />
         Number of people: {numberOfPeople}<br />
       </p>
-      <a href="#">Check members</a>
+      <Link to="/Members">Check members</Link>
     </div>
   );
 }
