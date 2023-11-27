@@ -36,7 +36,19 @@ function validatePassw(passw, setPasswError) {
         setPasswError(true);
     }
 }
+//still working on it
+function handleFormSubmit(event) {
+    event.preventDefault();
+    if (validateEmail() && validatePassw() && validateRole()) {
+        console.log("Submitted:", email, passw, role);
+    } else {
+        alert("Please check your inputs.");
+    }
+}
+function validateRole(role) {
+    return role !== "";
+}
 
 
 
-module.exports = { validateEmail, togglePasswordVisibility, validatePassw };
+module.exports = { validateEmail: validateEmail, togglePasswordVisibility, validatePassw, validateRole, handleFormSubmit};
