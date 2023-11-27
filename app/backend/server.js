@@ -47,6 +47,41 @@ app.post('/login', (req, res) => {
       }
   });
 });
+app.post('/signup', (req, res) => {
+  const { username, email, password, role, userImage } = req.body;
+
+  // Check if username exists
+  postDao.checkUsernameExists(username, (err, usernameExists) => {
+      if (err) {
+          console.error("Error checking username:", err);
+          return res.status(500).json({ success: false, message: 'Error checking username' });
+      }
+      if (usernameExists) {
+          return res.status(409).json({ success: false, message: 'Username already exists' });
+      }
+
+      // Check if email exists
+      postDao.checkEmailExists(email, (err, emailExists) => {
+          if (err) {
+              console.error("Error checking email:", err);
+              return res.status(500).json({ success: false, message: 'Error checking email' });
+          }
+          if (emailExists) {
+              return res.status(409).json({ success: false, message: 'Email already exists' });
+          }
+
+          // Proceed with registration if both checks pass
+          postDao.signup(username, email, password, role, userImage, (err, results) => {
+              if (err) {
+                  console.error("Error during user registration:", err);
+                  return res.status(500).json({ success: false, message: 'Error during user registration' });
+              }
+              return res.status(201).json({ success: true, message: 'User successfully registered' });
+          });
+      });
+  });
+});
+
 const postRouter = require('./router/postRouter');
 app.use(postRouter);
 

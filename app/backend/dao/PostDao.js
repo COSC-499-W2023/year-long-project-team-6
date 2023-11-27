@@ -48,6 +48,41 @@ class PostDao {
             }
         });
     }
+    checkUsernameExists(username, callback) {
+        const query = 'SELECT COUNT(*) AS count FROM users WHERE username = ?';
+        this.db.query(query, [username], (err, results) => {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, results[0].count > 0);
+            }
+        });
+    }
+
+    checkEmailExists(email, callback) {
+        const query = 'SELECT COUNT(*) AS count FROM users WHERE email = ?';
+        this.db.query(query, [email], (err, results) => {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, results[0].count > 0);
+            }
+        });
+    }
+    signup(username, email, password, role, userImage, callback) {
+        const query = `
+            INSERT INTO users (username, email, password, role, user_image)
+            VALUES (?, ?, ?, ?, ?);
+        `;
+
+        this.db.query(query, [username, email, password, role, userImage], (err, results) => {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, results);
+            }
+        });
+    }
 }
 
 module.exports = PostDao;

@@ -52,7 +52,38 @@ function LoginSignupForm() {
             // Handle error here (e.g., show error message)
         });
     };
-
+    const handleSignup = () => {
+        fetch('http://localhost:5001/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: name,
+                email: email,
+                password: passw,
+                role: role,
+                userImage: ''
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Signup successful:', data);
+                alert("Signup successful!");
+                window.location.href = '/';
+            } else {
+                console.error('Signup failed:', data.message);
+                alert("Signup failed: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred during signup.");
+        });
+    };
+    
+    
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -68,7 +99,18 @@ function LoginSignupForm() {
             return(false);
         }
     };
+    const validateName = () => {
+        // Check if name length is more than 5 characters
+        if (name.length > 5) {
+            // Return true if the name is more than 5 characters
+            return true;
+        } else {
 
+            alert("Name must be more than 5 characters.");
+            return false;
+        }
+    };
+    
     const validatePassw = () => {
         // Check if password length is between 6 and 30 characters
         const isLengthValid = passw.length >= 6 && passw.length <= 30;
@@ -114,7 +156,11 @@ function LoginSignupForm() {
     };
     const handlesignupFormSubmit = (event) => {
         event.preventDefault();
-        if (validateEmail() && validatePassw() && validateRole() ) {
+        console.log(role)
+        console.log(validateEmail(),validatePassw(),validateRole(),validateName())
+        if (validateEmail() && validatePassw() && validateRole() && validateName() ) {
+
+            handleSignup();
             console.log("Submitted:", email, name, passw, role);
         } else {
             alert("Please check your inputs.");
@@ -148,6 +194,7 @@ function LoginSignupForm() {
                                     name="user_name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
+                                    onBlur={validateName}
                                 />
                             </div>
                         </div>
@@ -205,9 +252,9 @@ function LoginSignupForm() {
                                 marginBottom: "8px"
                             }}
                             value={role}
-                            onChange={(e) => setRole(e.target.value)}
+                            onChange={(e) => {setRole(e.target.value);}}
                         >
-                            <option value="empty" disabled hidden>Select a role</option>
+                            <option value="" >Select a role</option>
                             <option value="sender">Sender</option>
                             <option value="receiver">Receiver</option>
                         </select>
@@ -246,7 +293,7 @@ function LoginSignupForm() {
                         <div className="underline"></div>
                     </div>
                     <div className="inputs">
-                        {/* <div className="input" id="nameInputContainer">
+                        <div className="input" id="nameInputContainer">
                             <div className="input-content">
                                 <img src={person} alt="User Icon" />
                                 <input
@@ -257,7 +304,7 @@ function LoginSignupForm() {
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             </div>
-                        </div> */}
+                        </div> 
                         <div className="input">
                             <img src={email_image} alt="Email Icon" />
                             <input
