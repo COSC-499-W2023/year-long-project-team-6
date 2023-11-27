@@ -183,3 +183,35 @@
 ![Board](w9_img/Board.png)
 *Table format:*
 ![Table](w9_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 10)
+
+## Applicable data range
+**November/6/2023** to **November/12/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to assign work
+* Code backend for post page with team member
+* Update Database
+* Connect Database with Nodejs
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting to assign work
+* Coded backend for post page with team member
+* Updated Database
+* Connected Database with Nodejs
+* Finished Peer Evaluation
+
+## Test Report for PostDao
+![Test Report](w10_img/Test%20Reoport.png)
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](w10_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](w10_img/Board.png)
+*Table format:*
+![Table](w10_img/Table.png)

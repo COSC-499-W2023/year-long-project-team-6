@@ -145,3 +145,121 @@
 ![Table](8_imgs/Table.png)
 
 
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 9)
+
+## Applicable date range
+**October/30/2023** to **November/5/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Prepare the presentation of the demo of project. 
+* Prepare my own part on the presentation. 
+* Complete the peer evaluation. 
+* Complete 5+ team evaluations. 
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* Used the google slides to make the power point of the presentation.
+* Completed my own portion of the presentation. 
+* Completed the peer evaluation. 
+* Complete the team evaluations more than 5. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](9_imgs/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](9_imgs/Board.png)
+*Table format:*
+![Table](9_imgs/Table_1.png)
+![Table](9_imgs/Table_2.png)
+
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 10)
+
+## Applicable date range
+**November/7/2023** to **November/12/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Fix the switch functionality between sign up, login in and forget password pages. 
+* Complete the peer evaluation. 
+* Fix the problem in the password validation during the sign up process.  
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* Fixed the switch problem on the Main page(login, sign up). 
+* Completed the peer evaluation. 
+* Fixed the password validation, and make it work properly. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](10_imgs/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](10_imgs/Board.png)
+*Table format:*
+![Table](10_imgs/Table_1.png)
+![Table](10_imgs/Table_2.png)
+
+*** 
+***
+***
+
+# (Two weeks) Individual Log - Zetian Zhao (Week 11 and 12)
+
+## Applicable date range
+**November/13/2023** to **November/26/2023**
+
+## Recap Goal 
+*My jobs in these two weeks are:* 
+
+**Week 11:**
+* Have a meeting to discuss our plan about the week. 
+* Complete the members list page when clicking the "check members" on the home page. 
+* Reading break, so no peer evaluation need to complete. 
+
+**Week 12:**
+* Have a regular meeting with the teammates. 
+* Complete the frontend part (UI) of the user profile for the log-in users. 
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Had a meeting in the week 11 with the team members.
+* Completed the UI of members list for the "check members" button. 
+* Had a meeting with teammates in the week 12. 
+* Completed the UI of User profile with basic mock user data. 
+* Completed the peer evaluation of week 12.
+
+## ScreenShot of What I have done
+![Members](11+12_imgs/list.png)
+![Profile](11+12_imgs/Profile.png)
+
+## ScreenShot of peer evaluation on Week 12
+![Peer Evaluation](11+12_imgs/PE.png)
+
+## My Task on Board on Week 11
+*Board format:*
+![Board](11+12_imgs/Board_11.png)
+*Table format:*
+![Table](11+12_imgs/Table_11(1).png)
+![Table](11+12_imgs/Table_11(2).png)
+
+## My Task on Board on Week 12
+*Board format:*
+![Board](11+12_imgs/Board_12.png)
+*Table format:*
+![Table](11+12_imgs/Table_12(1).png)
+![Table](11+12_imgs/Table_12(2).png)
+
+

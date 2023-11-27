@@ -103,3 +103,94 @@
 ![Board](week8/board.png)
 *Table format:*
 ![Table](week8/table.png)
+
+# Individual Log - Wenrui Chen (Week 9)
+
+## Applicable date range
+**October/30/2023** to **November/5/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* meeting to discuss our plan 
+* Prepare the presentation and live demo
+* Prepare my own part
+* Complete the peer evaluation 
+* Complete 5+ team evaluations 
+
+## Completed Tasks 
+* meeting  
+* Completed my own part of the presentation (Signup)
+* Completed the peer evaluation
+* Complete 5+ team evaluations
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](week9/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](week9/board.png)
+*Table format:*
+![Table](week9/table.png)
+
+# Individual Log - Wenrui Chen (Week 10)
+
+## Applicable date range
+**November/7/2023** to **November/12/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* meeting 
+* test and test report
+* login/signup fomat details
+* Complete the peer evaluation 
+
+## Completed Tasks 
+* meeting  
+* Completed validate password function
+* Completed the peer evaluation
+* Complete tests and test reports
+* Most login/signup format problems
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](week10/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](week10/board.png)
+
+*Table format:*
+![Table](week10/table1.png)
+![Table](week10/table.png)
+
+# Individual Log - Wenrui Chen (Week 11 and 12)
+
+## Applicable date range
+**November/213/2023** to **November/26/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* meeting 
+* test report
+* tests for login/signup's functions
+* Complete the peer evaluation 
+
+## Completed Tasks 
+* meeting  
+* Completed test for roleSelection
+* Completed the peer evaluation
+* Complete test reports
+* tests for handleSubmitForm and switchButton in progress
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](week11_12/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](week11_12/Board.png)
+
+*Tests:*
+![Board](week11_12/test.png)
+![Board](week11_12/test1.png)
+
+*Table format:*
+![Table](week11_12/table.png)
