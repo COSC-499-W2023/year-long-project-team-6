@@ -186,7 +186,7 @@
 
 ## My Task on Board
 *Board format:*
-![Board](week12/board.png)
+![Board](week12/Board.png)
 
 *Table format:*
 ![Table](week12/table.png)
