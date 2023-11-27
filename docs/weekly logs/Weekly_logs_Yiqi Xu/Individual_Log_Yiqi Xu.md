@@ -215,3 +215,32 @@
 ![Board](w10_img/Board.png)
 *Table format:*
 ![Table](w10_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 12)
+
+## Applicable data range
+**November/20/2023** to **November/26/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to assign work
+* Code backend for recorded page with team member
+* Code the post page frontend and ensure it can work properly
+* Update Database
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting to assign work
+* Coded backend for post page with team member
+* Coded the post page frontend
+* Updated Database
+* Finished Peer Evaluation
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](w12_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](w12_img/Board.png)
+*Table format:*
+![Table](w12_img/Table.png)
