@@ -17,6 +17,41 @@ function LoginSignupForm() {
     const [emailError, setEmailError] = useState(false);
     const [passwError, setPasswError] = useState(false);
 
+    const handleLogin = () => {
+        fetch('http://localhost:5001/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: passw
+            })
+        })
+        .then(response => {
+            if (response.headers.get("Content-Type").includes("application/json")) {
+              return response.json();
+            }
+            return response.text();
+          })
+        .then(data => {
+
+            if (data.success) { // Check if login was successful
+                // Store user data in session storage
+                console.log(JSON.stringify(data.user))
+                sessionStorage.setItem('user', JSON.stringify(data.user));
+                window.location.href = '/'
+            } else {
+                // Handle unsuccessful login
+                // Display an error message to the user
+                alert("Login failed: Invalid credentials");
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            // Handle error here (e.g., show error message)
+        });
+    };
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -27,8 +62,10 @@ function LoginSignupForm() {
 
         if (emailRegex.test(email) && email.length <= 30) {
             setEmailError(false);
+            return(true);
         } else {
             setEmailError(true);
+            return(false);
         }
     };
 
@@ -46,10 +83,13 @@ function LoginSignupForm() {
         const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(passw);
 
         if (isLengthValid && hasDigit && hasLetter && hasSymbol) {
+
             // Return true if all conditions are met
             setPasswError(false);
+            return(true);
         } else {
             setPasswError(true);
+            return(false);
         }
     };
 
@@ -63,13 +103,24 @@ function LoginSignupForm() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        if (validateEmail() && validatePassw() && validateRole()) {
+        if (validateEmail() && validatePassw() ) {
+            handleLogin();
+            
+        } else {
+            
+            alert("Please check your input.");
+        }
+       
+    };
+    const handlesignupFormSubmit = (event) => {
+        event.preventDefault();
+        if (validateEmail() && validatePassw() && validateRole() ) {
             console.log("Submitted:", email, name, passw, role);
         } else {
             alert("Please check your inputs.");
         }
+       
     };
-
     const sendResetLink = () => {
         alert("Reset link has been sent to your email!");
     };
@@ -80,7 +131,7 @@ function LoginSignupForm() {
 
     const renderSignupForm = () => {
         return (
-            <form id="myform" method="post" onSubmit={handleFormSubmit}>
+            <form id="myform" method="post" onSubmit={handlesignupFormSubmit}>
                 <input type="hidden" name="action" id="actionInput" value={action} />
                 <div className="container">
                     <div className="header">
@@ -223,11 +274,14 @@ function LoginSignupForm() {
                         <div className="input">
                             <img src={password} alt="Password Icon" />
                             <input
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Password"
-                                id="passwordInput"
-                                autoComplete="new-password"
-                                name="user_pass"
+                                 type={showPassword ? "text" : "password"}
+                                 placeholder="Password"
+                                 id="passwordInput"
+                                 autoComplete="new-password"
+                                 name="user_pass"
+                                 value={passw}
+                                 onChange={(e) => setPassw(e.target.value)}
+                                 onBlur={validatePassw}
                             />
                             <input
                                 type="text"
