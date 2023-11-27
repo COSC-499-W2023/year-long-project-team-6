@@ -171,3 +171,32 @@
 ![Board](Week9_img/Board.png)
 *Table format:*
 ![Table](Week9_img/Table.png)
+
+# Individual Log - Jiajun Huang (Week 12)
+
+## Applicable data range
+**November/13/2023** to **November/26/2023**
+
+## Recap Goal 
+*My jobs in this week are:*
+* Met with my team members
+* Finish frontend and backend linking for post and recorded pages
+* Complete button functionalities in recorded page
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Post page linking is done
+* Finished Peer evaluation
+
+## In Progress
+* Recorded page linking
+* Button functionalities in recorded page
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Week12_img/PE.png)
+## My Task on Board
+*Board format:*
+![Board](Week12_img/Board.png)
+*Table format:*
+![Table](Week12_img/Table.png)
