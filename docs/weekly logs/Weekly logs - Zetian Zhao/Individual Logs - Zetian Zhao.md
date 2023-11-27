@@ -212,4 +212,54 @@
 ![Table](10_imgs/Table_1.png)
 ![Table](10_imgs/Table_2.png)
 
+*** 
+***
+***
+
+# (Two weeks) Individual Log - Zetian Zhao (Week 11 and 12)
+
+## Applicable date range
+**November/13/2023** to **November/26/2023**
+
+## Recap Goal 
+*My jobs in these two weeks are:* 
+
+**Week 11:**
+* Have a meeting to discuss our plan about the week. 
+* Complete the members list page when clicking the "check members" on the home page. 
+* Reading break, so no peer evaluation need to complete. 
+
+**Week 12:**
+* Have a regular meeting with the teammates. 
+* Complete the frontend part (UI) of the user profile for the log-in users. 
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Had a meeting in the week 11 with the team members.
+* Completed the UI of members list for the "check members" button. 
+* Had a meeting with teammates in the week 12. 
+* Completed the UI of User profile with basic mock user data. 
+* Completed the peer evaluation of week 12.
+
+## ScreenShot of What I have done
+![Members](11+12_imgs/list.png)
+![Profile](11+12_imgs/Profile.png)
+
+## ScreenShot of peer evaluation on Week 12
+![Peer Evaluation](11+12_imgs/PE.png)
+
+## My Task on Board on Week 11
+*Board format:*
+![Board](11+12_imgs/Board_11.png)
+*Table format:*
+![Table](11+12_imgs/Table_11(1).png)
+![Table](11+12_imgs/Table_11(2).png)
+
+## My Task on Board on Week 12
+*Board format:*
+![Board](11+12_imgs/Board_12.png)
+*Table format:*
+![Table](11+12_imgs/Table_12(1).png)
+![Table](11+12_imgs/Table_12(2).png)
+
 
