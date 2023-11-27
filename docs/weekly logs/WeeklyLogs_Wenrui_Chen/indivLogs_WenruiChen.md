@@ -188,5 +188,9 @@
 *Board format:*
 ![Board](week12/Board.png)
 
+*Tests:*
+![Board](week12/test.png)
+![Board](week12/test1.png)
+
 *Table format:*
 ![Table](week12/table.png)
