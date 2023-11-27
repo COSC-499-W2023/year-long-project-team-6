@@ -161,3 +161,32 @@
 *Table format:*
 ![Table](week10/table1.png)
 ![Table](week10/table.png)
+
+# Individual Log - Wenrui Chen (Week 12)
+
+## Applicable date range
+**November/21/2023** to **November/26/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* meeting 
+* test report
+* tests for login/signup's functions
+* Complete the peer evaluation 
+
+## Completed Tasks 
+* meeting  
+* Completed test for roleSelection
+* Completed the peer evaluation
+* Complete test reports
+* tests for handleSubmitForm and switchButton in progress
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](week12/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](week12/board.png)
+
+*Table format:*
+![Table](week12/table.png)
