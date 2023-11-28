@@ -3,50 +3,13 @@ const {
     validateEmail,
     validatePassw,
     validateRole,
-    handleFormSubmit,
+    toggleAction
 } = require('./login_signup.js');
 
 const setPasswErrorMock = jest.fn();
 global.alert = jest.fn();
 global.console.log = jest.fn();
-
-// describe('handleFormSubmit', () => {
-//     let mockEvent;
-
-//     beforeEach(() => {
-//         jest.clearAllMocks();
-//         // Mocking the preventDefault function
-//         mockEvent = { preventDefault: jest.fn() };
-//     });
-//     const validateEmail = jest.fn();
-//     const validatePassw = jest.fn();
-//     const validateRole = jest.fn();
-
-//     it('should log "Submitted" if all validations pass', () => {
-//         // Mocking validation functions to return true
-//         validateEmail.mockReturnValue(true);
-//         validatePassw.mockReturnValue(true);
-//         validateRole.mockReturnValue(true);
-//         // handleFormSubmit(mockEvent, email, name, passw, role);
-
-
-//         // Mock data
-//         const email = 'test@example.com';
-//         const name = 'John Doe';
-//         const passw = 'Valid@Password123';
-//         const role = 'Receiver';
-
-//         // Run the function
-//         handleFormSubmit(mockEvent, email, name, passw, role);
-
-//         // Assertions
-//         expect(global.console.log).toHaveBeenCalledWith('Submitted:', email, name, passw, role);
-//         expect(mockEvent.preventDefault).toHaveBeenCalled();
-//         expect(validateEmail).toHaveBeenCalledWith(email);
-//         expect(validatePassw).toHaveBeenCalledWith(passw);
-//         expect(validateRole).toHaveBeenCalledWith(role);
-//     });
-// });
+const setAction = jest.fn();
 
 describe('validateRole', () => {
     it('should return false for an empty role', () => {
@@ -189,3 +152,21 @@ describe('togglePasswordVisibility', () => {
         expect(passwordToggle.textContent).toBe('Show');
     });
 });
+
+
+describe('toggleAction', () => {
+    it('toggles "Login" to "Sign Up"', () => {
+        global.action = "Login";
+        toggleAction(action, setAction);
+        expect(setAction).toHaveBeenCalledWith("Sign Up");
+    });
+
+    it('toggles "Sign Up" to "Login"', () => {
+        global.action = "Sign Up";
+        toggleAction(action, setAction);
+        expect(setAction).toHaveBeenCalledWith("Login");
+    });
+});
+global.setAction = setAction;
+// global.action = action;
+

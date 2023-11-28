@@ -50,5 +50,8 @@ function validateRole(role) {
 }
 
 
+function toggleAction() {
+    setAction(action === "Login" ? "Sign Up" : "Login");
+}
 
-module.exports = { validateEmail: validateEmail, togglePasswordVisibility, validatePassw, validateRole, handleFormSubmit};
+module.exports = { validateEmail, togglePasswordVisibility, validatePassw, validateRole, toggleAction};
