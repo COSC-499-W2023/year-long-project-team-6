@@ -44,6 +44,10 @@ function PostPage() {
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
     }
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0]; // Formats to 'month/day/year'. Adjust the locale and options as needed.
+    };
 
     return (
         <div id='page'>
@@ -123,7 +127,7 @@ function PostPage() {
                                     <td id="img">
                                         {`${post.post_title}`}
                                     </td>
-                                    <td id="date">{new Date(post.post_date).toLocaleString()}</td>
+                                    <td id="date">{formatDate(post.post_date)}</td>
                                 </tr>
                             ))}
                         </tbody>

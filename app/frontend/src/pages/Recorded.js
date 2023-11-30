@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../component/CSS/recorded.css";
 import "../component/CSS/sidebar_style.css";
-// ... (Other imports)
 
 function RecordedPage() {
     const [userId, setUserId] = useState('2');
@@ -59,6 +58,10 @@ function RecordedPage() {
             })
             .catch(error => console.error('Error:', error));
     };
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0]; // Formats to 'month/day/year'. Adjust the locale and options as needed.
+    };
 
     return (
         <>
@@ -103,13 +106,15 @@ function RecordedPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {posts.map(post => (
-                            <tr key={post.id}>
-                                <td>{post.title}</td>
-                                <td>{post.date}</td>
+                        {posts.map((post) => (
+                            <tr key={post.post_id}>
+                                <td className="title" data-description={post.post_text}>
+                                    {post.post_title}
+                                </td>
+                                <td>{formatDate(post.post_date)}</td>
                                 <td>
-                                    <button onClick={() => handleEdit(post.id)}>Edit</button>
-                                    <button onClick={() => handleDelete(post.id)}>Delete</button>
+                                    <button className='editButton' onClick={() => handleEdit(post.post_id)}>Edit</button>
+                                    <button className='deleteButton' onClick={() => handleDelete(post.post_id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
