@@ -55,4 +55,17 @@ router.post('/edit-posts', express.json(), (req, res) => {
     });
 });
 
+router.post('/add-post', express.json(), (req, res) => {
+    const recordedDao = new RecordedDao(req.db);
+    const postData = req.body;
+
+    recordedDao.addPost(postData, (err, result) => {
+        if (err) {
+            res.status(500).send('Error adding post: ' + err.message);
+        } else {
+            res.status(200).send(`New post added successfully with ID ${result.insertId}`);
+        }
+    });
+});
+
 module.exports = router;
