@@ -1,6 +1,5 @@
 const express = require('express');
 const { getUsernameAndPostDate } = require('../dao/displayDAO'); 
-
 const router = express.Router();
 
 router.get('/post-history/:user_id', (req, res) => {
