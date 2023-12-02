@@ -1,19 +1,3 @@
-function validateEmail() {
-    const emailInput = document.getElementById("emailInput");
-    const emailTooltip = document.getElementById("emailTooltip");
-    const emailValue = emailInput.value;
-
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-    if (emailRegex.test(emailValue) && emailValue.length <= 30) {
-        emailTooltip.style.visibility = "hidden"; // "invalid format" hide
-        return true;
-    } else {
-        emailTooltip.style.visibility = "visible"; // "invalid format" show
-        return false;
-
-    }
-}
 function togglePasswordVisibility() {
     const passwordInput = document.getElementById("passwordInput");
     const showPassword = passwordInput.type === "password";
@@ -36,22 +20,49 @@ function validatePassw(passw, setPasswError) {
         setPasswError(true);
     }
 }
-//still working on it
 function handleFormSubmit(event) {
     event.preventDefault();
-    if (validateEmail() && validatePassw() && validateRole()) {
-        console.log("Submitted:", email, passw, role);
+    if (validateEmail() && validatePassw()) {
+        handleLogin();
     } else {
-        alert("Please check your inputs.");
+        alert("Please check your input.");
     }
 }
+
 function validateRole(role) {
     return role !== "";
 }
 
 
 function toggleAction() {
-    setAction(action === "Login" ? "Sign Up" : "Login");
+    setAction(global.action === "Login" ? "Sign Up" : "Login");
 }
 
-module.exports = { validateEmail, togglePasswordVisibility, validatePassw, validateRole, toggleAction};
+function handleLogin(email, password) {
+    const validEmail = "test@test.com";
+    const validPassw = "password123.";
+    if (email === validEmail && password === validPassw) {
+        console.log("Login successful!");
+    } else {
+        console.error("Invalid credentials. Please try again.");
+    }
+}
+
+function validateEmail() {
+    const emailInput = document.getElementById("emailInput");
+    const emailTooltip = document.getElementById("emailTooltip");
+    const emailValue = emailInput.value;
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (emailRegex.test(emailValue) && emailValue.length <= 30) {
+        emailTooltip.style.visibility = "hidden"; // "invalid format" hide
+        return true;
+    } else {
+        emailTooltip.style.visibility = "visible"; // "invalid format" show
+        return false;
+
+    }
+}
+
+module.exports = { validateEmail, togglePasswordVisibility, validatePassw, validateRole, toggleAction, handleFormSubmit, handleLogin };

@@ -3,13 +3,19 @@ const {
     validateEmail,
     validatePassw,
     validateRole,
-    toggleAction
-} = require('./login_signup.js');
-
+    toggleAction,
+    handleFormSubmit,
+    handleLogin
+} = require('./login_signup');
+const loginSignupModule = require('./login_signup');
 const setPasswErrorMock = jest.fn();
 global.alert = jest.fn();
 global.console.log = jest.fn();
 const setAction = jest.fn();
+const validateEmailMock = jest.fn();
+const validatePasswMock = jest.fn();
+loginSignupModule.validateEmail = validateEmailMock;
+loginSignupModule.validatePassw = validatePasswMock;
 
 describe('validateRole', () => {
     it('should return false for an empty role', () => {
@@ -75,15 +81,10 @@ describe('validatePassw', () => {
 describe('validateEmail', () => {
     let emailInput, emailTooltip;
 
-    beforeEach(() => {
-        // 创建可变的style对象
+    beforeAll(() => {
         const style = { visibility: 'hidden' };
-
-        // 设置emailInput和emailTooltip对象
         emailInput = { value: '' };
         emailTooltip = { style };
-
-        // 使用jest.fn()创建模拟函数
         document.getElementById = jest.fn((id) => {
             const elements = {
                 'emailInput': emailInput,
@@ -118,19 +119,14 @@ describe('togglePasswordVisibility', () => {
     let passwordInput, passwordToggle;
 
     beforeEach(() => {
-        // 设置passwordInput对象
         passwordInput = { type: 'password' };
-        // 创建一个模拟的.password-toggle元素
         passwordToggle = { textContent: '' };
-
-        // 使用jest.fn()创建模拟函数
         document.getElementById = jest.fn((id) => {
             if (id === 'passwordInput') {
                 return passwordInput;
             }
             return null;
         });
-        // 使用jest.fn()模拟document.querySelector函数
         document.querySelector = jest.fn((selector) => {
             if (selector === '.password-toggle') {
                 return passwordToggle;
@@ -169,4 +165,46 @@ describe('toggleAction', () => {
 });
 global.setAction = setAction;
 // global.action = action;
+//in progress
+describe('handleFormSubmit', () => {
+    let mockEmailInput, mockEmailTooltip, mockPasswordInput;
+
+    beforeEach(() => {
+        mockEmailInput = { value: '' };
+        mockEmailTooltip = { style: { visibility: 'hidden' } };
+        mockPasswordInput = { value: '' };
+
+        document.getElementById = jest.fn((id) => {
+            if (id === 'emailInput') return mockEmailInput;
+            if (id === 'emailTooltip') return mockEmailTooltip;
+            if (id === 'passwordInput') return mockPasswordInput;
+            return null;
+        });
+
+        // Reset mocks
+        validateEmailMock.mockClear();
+        validatePasswMock.mockClear();
+    });
+    test('handleFormSubmit should call handleLogin when email and password are valid', () => {
+        mockEmailInput.value = 'test@example.com';
+        mockPasswordInput.value = 'ValidPassword123!'; // Set a valid password
+    
+        validateEmailMock.mockReturnValue(true);
+        validatePasswMock.mockReturnValue(true);
+    
+        // Mock handleLogin 
+        const handleLoginMock = jest.fn();
+        loginSignupModule.handleLogin = handleLoginMock;
+
+        const mockEvent = { preventDefault: jest.fn() };
+        handleFormSubmit(mockEvent);
+        expect(mockEvent.preventDefault).toHaveBeenCalled();
+        expect(validateEmailMock).toHaveBeenCalled();
+        expect(validatePasswMock).toHaveBeenCalled();
+        expect(handleLoginMock).toHaveBeenCalledWith('test@example.com', 'ValidPassword123!');
+    
+        // Add any additional assertions as necessary
+    });
+    
+});
 
