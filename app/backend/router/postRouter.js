@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUsernameAndPostDate } = require('../dao/displayDAO'); 
+const { getUsernameAndPostDate, addPost} = require('../dao/postDAO'); 
 
 const router = express.Router();
 
@@ -11,6 +11,18 @@ router.get('/post-history/:user_id', (req, res) => {
             res.status(500).send('Error retrieving data from database');
         } else {
             res.json({ data: results });
+        }
+    });
+});
+
+// Add a new post
+router.post('/add-post', express.json(), (req, res) => {
+    const postData = req.body;
+    addPost(postData, (err, result) => {
+        if (err) {
+            res.status(500).send('Error adding post: ' + err.message);
+        } else {
+            res.status(200).send(`New post added successfully with ID ${result.insertId}`);
         }
     });
 });

@@ -64,6 +64,9 @@ async function editPost(postId, newTitle, newText, callback) {
 
 
 
+
 module.exports = {
-    getPostInfor
+    getPostInfor,
+    deletePost,
+    editPost
 };

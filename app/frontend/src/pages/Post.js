@@ -35,6 +35,30 @@ function PostPage() {
             .catch(error => console.error('Error fetching post history:', error));
     }, [userId]);
 
+    const handleSubmit = (event) => {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(event.target); // Assuming form fields are named appropriately
+
+        fetch('http://localhost:5000/add-post', { // Replace with your backend route
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            // Handle success - maybe update state, clear form, or redirect
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    };
+    
 
     function displayFileName(event) {
         const fileName = event.target.files[0].name;
@@ -56,7 +80,7 @@ function PostPage() {
             </div>
             <div className="flex-container">
                 <div id="input">
-                    <form action="image.php" method="post" encType="multipart/form-data">
+                    <form onSubmit={handleSubmit}>
                         <div id="main" className="main">
                             <div id="choose">
                                 <label className="custom-file-upload">

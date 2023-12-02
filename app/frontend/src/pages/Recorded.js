@@ -17,6 +17,7 @@ function RecordedPage() {
                 return response.json();
             })
             .then(data => {
+                console.log(userId);
                 console.log('Fetched data:', data); 
                 setPosts(data);
             })
@@ -27,15 +28,26 @@ function RecordedPage() {
     
 
     const handleDelete = (postId) => {
-        fetch(`http://localhost:5000/delete-post/${postId}`, { method: 'DELETE' })
+        // Confirmation dialog
+        const isConfirmed = window.confirm("Are you sure you want to delete this post?");
+        if (!isConfirmed) {
+            return; // If the user clicks 'Cancel', do nothing
+        }
+    
+        // Proceed with deletion if confirmed
+        fetch(`http://localhost:5000/delete-posts/${postId}`, { method: 'DELETE' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error in deleting post');
                 }
-                return response.json();
+                return response.text();
             })
             .then(() => {
-                setPosts(posts.filter(post => post.id !== postId));
+                // Update the posts state to remove the deleted post
+                setPosts(prevPosts => prevPosts.filter(post => post.post_id !== postId));
+    
+                // Show success message
+                window.alert("Post deleted successfully");
             })
             .catch(error => console.error('Error:', error));
     };
@@ -126,3 +138,6 @@ function RecordedPage() {
 }
 
 export default RecordedPage;
+
+
+
