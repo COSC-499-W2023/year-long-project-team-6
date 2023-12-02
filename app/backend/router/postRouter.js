@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUsernameAndPostDate, addPost} = require('../dao/postDAO'); 
+const { getUsernameAndPostDate, addPost} = require('../dao/displayDAO'); 
 
 const router = express.Router();
 
