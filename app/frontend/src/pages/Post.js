@@ -15,7 +15,7 @@ function PostPage() {
     const [postHistory, setPostHistory] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/post-history/${userId}`)
+        fetch(`http://localhost:5001/post-history/${userId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -40,7 +40,7 @@ function PostPage() {
 
         const formData = new FormData(event.target); // Assuming form fields are named appropriately
 
-        fetch('http://localhost:5000/add-post', { // Replace with your backend route
+        fetch('http://localhost:5001/add-post', { // Replace with your backend route
             method: 'POST',
             body: formData
         })
