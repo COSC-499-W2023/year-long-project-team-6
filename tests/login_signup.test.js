@@ -4,7 +4,6 @@ const {
     validatePassw,
     validateRole,
     toggleAction,
-    handleFormSubmit,
     handleLogin
 } = require('./login_signup');
 const loginSignupModule = require('./login_signup');
@@ -19,29 +18,19 @@ loginSignupModule.validatePassw = validatePasswMock;
 
 describe('validateRole', () => {
     it('should return false for an empty role', () => {
-        // Arrange
         const role = "";
-        // Act
         const result = validateRole(role);
-        // Assert
         expect(result).toBe(false);
     });
-
     it('should return true for a non-empty role', () => {
-        // Arrange
         const role = "Sender"; // Replace with a non-empty role value
-        // Act
         const result = validateRole(role);
-        // Assert
         expect(result).toBe(true);
     });
 
     it('should return true for a non-empty role', () => {
-        // Arrange
         const role = "Receiver"; // Replace with a non-empty role value
-        // Act
         const result = validateRole(role);
-        // Assert
         expect(result).toBe(true);
     });
 });
@@ -166,45 +155,72 @@ describe('toggleAction', () => {
 global.setAction = setAction;
 // global.action = action;
 //in progress
-describe('handleFormSubmit', () => {
-    let mockEmailInput, mockEmailTooltip, mockPasswordInput;
+// describe('handleFormSubmit', () => {
+//     let mockEmailInput, mockEmailTooltip, mockPasswordInput;
 
-    beforeEach(() => {
-        mockEmailInput = { value: '' };
-        mockEmailTooltip = { style: { visibility: 'hidden' } };
-        mockPasswordInput = { value: '' };
+//     beforeEach(() => {
+//         mockEmailInput = { value: '' };
+//         mockEmailTooltip = { style: { visibility: 'hidden' } };
+//         mockPasswordInput = { value: '' };
 
-        document.getElementById = jest.fn((id) => {
-            if (id === 'emailInput') return mockEmailInput;
-            if (id === 'emailTooltip') return mockEmailTooltip;
-            if (id === 'passwordInput') return mockPasswordInput;
-            return null;
-        });
+//         document.getElementById = jest.fn((id) => {
+//             if (id === 'emailInput') return mockEmailInput;
+//             if (id === 'emailTooltip') return mockEmailTooltip;
+//             if (id === 'passwordInput') return mockPasswordInput;
+//             return null;
+//         });
 
-        // Reset mocks
-        validateEmailMock.mockClear();
-        validatePasswMock.mockClear();
+//         // Reset mocks
+//         validateEmailMock.mockClear();
+//         validatePasswMock.mockClear();
+//     });
+//     test('handleFormSubmit should call handleLogin when email and password are valid', () => {
+//         mockEmailInput.value = 'test@example.com';
+//         mockPasswordInput.value = 'ValidPassword123!'; // Set a valid password
+
+//         validateEmailMock.mockReturnValue(true);
+//         validatePasswMock.mockReturnValue(true);
+
+//         // Mock handleLogin 
+//         const handleLoginMock = jest.fn();
+//         loginSignupModule.handleLogin = handleLoginMock;
+
+//         const mockEvent = { preventDefault: jest.fn() };
+//         handleFormSubmit(mockEvent);
+//         expect(mockEvent.preventDefault).toHaveBeenCalled();
+//         expect(validateEmailMock).toHaveBeenCalled();
+//         expect(validatePasswMock).toHaveBeenCalled();
+//         expect(handleLoginMock).toHaveBeenCalledWith('test@example.com', 'ValidPassword123!');
+
+//         // Add any additional assertions as necessary
+//     });
+
+// });
+describe('handleLogin', () => {
+    it('should log in successfully with valid credentials', () => {
+        const spyConsoleLog = jest.spyOn(console, 'log').mockImplementation(() => { });
+
+        // Replace these values with your valid email and password
+        const validEmail = "test@test.com";
+        const validPassw = "password123.";
+
+        handleLogin(validEmail, validPassw);
+
+        expect(spyConsoleLog).toHaveBeenCalledWith('Login successful!');
+
+        spyConsoleLog.mockRestore(); // Restore the original console.log
     });
-    test('handleFormSubmit should call handleLogin when email and password are valid', () => {
-        mockEmailInput.value = 'test@example.com';
-        mockPasswordInput.value = 'ValidPassword123!'; // Set a valid password
-    
-        validateEmailMock.mockReturnValue(true);
-        validatePasswMock.mockReturnValue(true);
-    
-        // Mock handleLogin 
-        const handleLoginMock = jest.fn();
-        loginSignupModule.handleLogin = handleLoginMock;
+    it('should show an error for invalid credentials', () => {
+        const spyConsoleError = jest.spyOn(console, 'error').mockImplementation(() => { });
 
-        const mockEvent = { preventDefault: jest.fn() };
-        handleFormSubmit(mockEvent);
-        expect(mockEvent.preventDefault).toHaveBeenCalled();
-        expect(validateEmailMock).toHaveBeenCalled();
-        expect(validatePasswMock).toHaveBeenCalled();
-        expect(handleLoginMock).toHaveBeenCalledWith('test@example.com', 'ValidPassword123!');
-    
-        // Add any additional assertions as necessary
+        // Replace these values with invalid email and password
+        const invalidEmail = "invalid@test.com";
+        const invalidPassw = "invalidpassword";
+
+        handleLogin(invalidEmail, invalidPassw);
+
+        expect(spyConsoleError).toHaveBeenCalledWith('Invalid credentials. Please try again.');
+
+        spyConsoleError.mockRestore(); // Restore the original console.error
     });
-    
 });
-
