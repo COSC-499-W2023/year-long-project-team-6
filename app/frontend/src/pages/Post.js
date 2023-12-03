@@ -54,7 +54,7 @@ function PostPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
-    
+
         const postData = {
             post_title: formData.get('post_title'),
             post_text: formData.get('post_text'),
@@ -62,26 +62,27 @@ function PostPage() {
         };
 
         console.log("postData to be sent:", postData); // Add this line for debugging
-    
+
         fetch('http://localhost:5001/add-post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(postData)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                navigate('/');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     };
-    
+
 
 
     function displayFileName(event) {
@@ -134,7 +135,7 @@ function PostPage() {
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-{/* 
+                            {/* 
                             <div className="EnterText">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
