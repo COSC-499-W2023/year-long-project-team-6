@@ -1,23 +1,25 @@
 const express = require('express');
-const RecordedDao = require('../dao/recordedDao');
+
+const { getPostInfor, deletePost, editPost } = require('../dao/recordedDao');
 const router = express.Router();
-const recordedDao = new RecordedDao();  
 
 // Get post information
-router.get('/get-posts/:id', (req, res) => {
-    const postId = req.params.id;
-    recordedDao.getPostInfor(postId, (err, results) => {
+router.get('/get-posts/:user_id', (req, res) => {
+    const userId = req.params.user_id;
+    getPostInfor(userId, (err, results) => {
         if (err) {
-            res.status(500).send('Error retrieving posts');
+            console.error('Error in /get-posts/:user_id:', err);
+            res.status(500).send(`Error retrieving posts: ${err.message}`);
         } else {
             res.json(results);
         }
     });
 });
 
+
 // Get group information
 router.get('/get-groups', (req, res) => {
-    recordedDao.getGroupInfor((err, results) => {
+    getGroupInfor((err, results) => {
         if (err) {
             res.status(500).send('Error retrieving groups');
         } else {
@@ -29,7 +31,7 @@ router.get('/get-groups', (req, res) => {
 // Delete a post
 router.delete('/delete-posts/:id', (req, res) => {
     const postId = req.params.id;
-    recordedDao.deletePost(postId, (err, result) => {
+    deletePost(postId, (err, result) => {
         if (err) {
             res.status(500).send('Error deleting post');
         } else {
@@ -42,23 +44,12 @@ router.delete('/delete-posts/:id', (req, res) => {
 router.post('/edit-posts', express.json(), (req, res) => {
     const postId = req.body.id;
     const { newTitle, newText } = req.body;
-    recordedDao.editPost(postId, newTitle, newText, (err, result) => {
+
+    editPost(postId, newTitle, newText, (err, result) => {
         if (err) {
             res.status(500).send('Error updating post');
         } else {
             res.status(200).send(`Post with ID ${postId} updated successfully`);
-        }
-    });
-});
-
-// Add a new post
-router.post('/add-post', express.json(), (req, res) => {
-    const postData = req.body;
-    recordedDao.addPost(postData, (err, result) => {
-        if (err) {
-            res.status(500).send('Error adding post: ' + err.message);
-        } else {
-            res.status(200).send(`New post added successfully with ID ${result.insertId}`);
         }
     });
 });
