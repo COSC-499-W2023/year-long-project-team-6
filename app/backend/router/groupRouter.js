@@ -2,15 +2,24 @@ const express = require('express');
 const { addNewGroup, editGroupName, deleteGroup, getGroupInfo } = require('../dao/groupDao');
 const router = express.Router();
 
-router.post('/add-group', express.json(), (req, res) => {
-    const { groupname, invite_code } = req.body;
-    addNewGroup(groupname, invite_code, (err, result) => {
-        if (err) {
-            res.status(500).send('Error adding group: ' + err.message);
-        } else {
-            res.status(200).send(`New group added successfully with ID ${result.insertId}`);
-        }
-    });
+router.post('/add-group', async (req, res) => {
+    const { groupName, code } = req.body;
+    console.log(groupName, code)
+    if(groupName && code){
+        addNewGroup(groupName, code, (err, result) => {
+            if (err) {
+                res.status(500).send('Error adding group: ' + err.message);
+                console.log('Error adding group: ' + err.message)
+                
+            } else {
+                res.status(200).send(`New group added successfully with ID ${result.insertId}`);
+                console.log(`New group added successfully with ID ${result.insertId}`)
+            }
+        });
+    }else{
+        console.log("empty")
+    }
+
 });
 
 router.post('/edit-group/:id', express.json(), (req, res) => {

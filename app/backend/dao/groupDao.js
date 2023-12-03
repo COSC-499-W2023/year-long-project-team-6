@@ -1,15 +1,17 @@
 const db = require('../db/db');
 
 async function addNewGroup(groupname, invite_code, callback) {
-    const query = 'INSERT INTO groups (groupname, invite_code) VALUES (?, ?)';
+    const query = 'INSERT INTO `groups` (`groupname`, `invite_code`) VALUES (?, ?)';
     db.query(query, [groupname, invite_code], (err, result) => {
         if (err) {
-            callback(err, null);
+            console.error(err); // Log the error for debugging
+            callback('Error adding group', null); // Send a generic error message to the frontend
         } else {
             callback(null, result);
         }
     });
 }
+
 
 async function editGroupName(groupId, newGroupName, callback) {
     const query = 'UPDATE groups SET groupname = ? WHERE groupid = ?';
