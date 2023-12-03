@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../component/CSS/loginS.css";
 import email_image from "../component/image/email.png"
 import exchange from "../component/image/exchange.png"
 import password from "../component/image/password.png"
 import person from "../component/image/person.png"
+import { AuthContext } from "./AuthContext";
 import showpw from "../component/image/showpw.png"
 import showpw2 from "../component/image/showpw2.png"
 
@@ -16,6 +18,76 @@ function LoginSignupForm() {
     const [passw, setPassw] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [passwError, setPasswError] = useState(false);
+    const { setIsAuthenticated } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        fetch('http://localhost:5001/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: passw
+            })
+        })
+            .then(response => {
+                if (response.headers.get("Content-Type").includes("application/json")) {
+                    return response.json();
+                }
+                return response.text();
+            })
+            .then(data => {
+
+                if (data.success) { // Check if login was successful
+                    // Store user data in session storage
+                    console.log(JSON.stringify(data.user))
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
+                    setIsAuthenticated(true);
+                    navigate('/'); // navigate to the home page. 
+                } else {
+                    // Handle unsuccessful login
+                    // Display an error message to the user
+                    alert("Login failed: Invalid credentials");
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Handle error here (e.g., show error message)
+            });
+    };
+    const handleSignup = () => {
+        fetch('http://localhost:5001/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: name,
+                email: email,
+                password: passw,
+                role: role,
+                userImage: ''
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Signup successful:', data);
+                    alert("Signup successful!");
+                    setIsAuthenticated(true);
+                    navigate('/');
+                } else {
+                    console.error('Signup failed:', data.message);
+                    alert("Signup failed: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred during signup.");
+            });
+    };
 
 
     const togglePasswordVisibility = () => {
@@ -27,8 +99,21 @@ function LoginSignupForm() {
 
         if (emailRegex.test(email) && email.length <= 30) {
             setEmailError(false);
+            return (true);
         } else {
             setEmailError(true);
+            return (false);
+        }
+    };
+    const validateName = () => {
+        // Check if name length is more than 5 characters
+        if (name.length > 5) {
+            // Return true if the name is more than 5 characters
+            return true;
+        } else {
+
+            alert("Name must be more than 5 characters.");
+            return false;
         }
     };
 
@@ -46,10 +131,13 @@ function LoginSignupForm() {
         const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(passw);
 
         if (isLengthValid && hasDigit && hasLetter && hasSymbol) {
+
             // Return true if all conditions are met
             setPasswError(false);
+            return (true);
         } else {
             setPasswError(true);
+            return (false);
         }
     };
 
@@ -63,13 +151,28 @@ function LoginSignupForm() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        if (validateEmail() && validatePassw() && validateRole()) {
+        if (validateEmail() && validatePassw()) {
+            handleLogin();
+
+        } else {
+
+            alert("Please check your input.");
+        }
+
+    };
+    const handlesignupFormSubmit = (event) => {
+        event.preventDefault();
+        console.log(role)
+        console.log(validateEmail(), validatePassw(), validateRole(), validateName())
+        if (validateEmail() && validatePassw() && validateRole() && validateName()) {
+
+            handleSignup();
             console.log("Submitted:", email, name, passw, role);
         } else {
             alert("Please check your inputs.");
         }
-    };
 
+    };
     const sendResetLink = () => {
         alert("Reset link has been sent to your email!");
     };
@@ -80,7 +183,7 @@ function LoginSignupForm() {
 
     const renderSignupForm = () => {
         return (
-            <form id="myform" method="post" onSubmit={handleFormSubmit}>
+            <form id="myform" method="post" onSubmit={handlesignupFormSubmit}>
                 <input type="hidden" name="action" id="actionInput" value={action} />
                 <div className="container">
                     <div className="header">
@@ -97,6 +200,7 @@ function LoginSignupForm() {
                                     name="user_name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
+                                    onBlur={validateName}
                                 />
                             </div>
                         </div>
@@ -154,9 +258,9 @@ function LoginSignupForm() {
                                 marginBottom: "8px"
                             }}
                             value={role}
-                            onChange={(e) => setRole(e.target.value)}
+                            onChange={(e) => { setRole(e.target.value); }}
                         >
-                            <option value="empty" disabled hidden>Select a role</option>
+                            <option value="" >Select a role</option>
                             <option value="sender">Sender</option>
                             <option value="receiver">Receiver</option>
                         </select>
@@ -195,7 +299,7 @@ function LoginSignupForm() {
                         <div className="underline"></div>
                     </div>
                     <div className="inputs">
-                        {/* <div className="input" id="nameInputContainer">
+                        <div className="input" id="nameInputContainer">
                             <div className="input-content">
                                 <img src={person} alt="User Icon" />
                                 <input
@@ -206,7 +310,7 @@ function LoginSignupForm() {
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             </div>
-                        </div> */}
+                        </div>
                         <div className="input">
                             <img src={email_image} alt="Email Icon" />
                             <input
@@ -228,6 +332,9 @@ function LoginSignupForm() {
                                 id="passwordInput"
                                 autoComplete="new-password"
                                 name="user_pass"
+                                value={passw}
+                                onChange={(e) => setPassw(e.target.value)}
+                                onBlur={validatePassw}
                             />
                             <input
                                 type="text"

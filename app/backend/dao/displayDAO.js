@@ -1,7 +1,5 @@
 const db = require('../db/db');
 
-
-
 async function getUsernameAndPostDate(userId, callback) {
     const query = `
     SELECT p.post_title, p.post_date
