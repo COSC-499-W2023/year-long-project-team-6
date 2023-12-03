@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../component/CSS/post.css";
 import email_image from "../component/image/email.png"
 import exchange from "../component/image/exchange.png"
@@ -9,56 +10,69 @@ import showpw2 from "../component/image/showpw2.png"
 
 
 function PostPage() {
-    const [userId, setUserId] = useState(2);
+    const [userId, setUserId] = useState("");
     const [selectedFile, setSelectedFile] = useState("");
     const [selectedGroup, setSelectedGroup] = useState("");
     const [postHistory, setPostHistory] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5001/post-history/${userId}`)
+        const sessionUser = sessionStorage.getItem('user');
+        console.log("Sessopm User: " + sessionUser);
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (userId) {
+            fetch(`http://localhost:5001/post-history/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const arr = [];
+                    for (let i in data) {
+                        let o = {};
+                        o[i] = data[i];
+                        arr.push(o);
+                    }
+                    console.log(arr[0].data);
+                    setPostHistory(arr[0].data);
+                })
+                .catch(error => console.error('Error fetching post history:', error));
+        }
+    }, [userId]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        fetch('http://localhost:5001/add-post', {
+            method: 'POST',
+            body: formData
+        })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
-                const arr = [];
-                for (let i in data) {
-                    let o = {};
-                    o[i] = data[i];
-                    arr.push(o);
-                }
-                console.log(arr[0].data);
-                setPostHistory(arr[0].data);
+                console.log('Success:', data);
             })
-            .catch(error => console.error('Error fetching post history:', error));
-    }, [userId]);
-
-    const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent the default form submission
-
-        const formData = new FormData(event.target); // Assuming form fields are named appropriately
-
-        fetch('http://localhost:5001/add-post', { // Replace with your backend route
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-            // Handle success - maybe update state, clear form, or redirect
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     };
-    
+
 
     function displayFileName(event) {
         const fileName = event.target.files[0].name;
@@ -70,7 +84,7 @@ function PostPage() {
     }
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toISOString().split('T')[0]; // Formats to 'month/day/year'. Adjust the locale and options as needed.
+        return date.toISOString().split('T')[0];
     };
 
     return (
