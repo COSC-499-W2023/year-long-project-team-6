@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../component/CSS/post.css";
 import email_image from "../component/image/email.png"
 import exchange from "../component/image/exchange.png"
@@ -9,56 +10,80 @@ import showpw2 from "../component/image/showpw2.png"
 
 
 function PostPage() {
-    const [userId, setUserId] = useState(2);
+    const [userId, setUserId] = useState("");
     const [selectedFile, setSelectedFile] = useState("");
     const [selectedGroup, setSelectedGroup] = useState("");
     const [postHistory, setPostHistory] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5001/post-history/${userId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const arr = [];
-                for (let i in data) {
-                    let o = {};
-                    o[i] = data[i];
-                    arr.push(o);
-                }
-                console.log(arr[0].data);
-                setPostHistory(arr[0].data);
-            })
-            .catch(error => console.error('Error fetching post history:', error));
+        const sessionUser = sessionStorage.getItem('user');
+        console.log("Sessopm User: " + sessionUser);
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (userId) {
+            fetch(`http://localhost:5001/post-history/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const arr = [];
+                    for (let i in data) {
+                        let o = {};
+                        o[i] = data[i];
+                        arr.push(o);
+                    }
+                    console.log(arr[0].data);
+                    setPostHistory(arr[0].data);
+                })
+                .catch(error => console.error('Error fetching post history:', error));
+        }
     }, [userId]);
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
+        const formData = new FormData(event.target);
 
-        const formData = new FormData(event.target); // Assuming form fields are named appropriately
+        const postData = {
+            post_title: formData.get('post_title'),
+            post_text: formData.get('post_text'),
+            userid: userId
+        };
 
-        fetch('http://localhost:5001/add-post', { // Replace with your backend route
+        console.log("postData to be sent:", postData); // Add this line for debugging
+
+        fetch('http://localhost:5001/add-post', {
             method: 'POST',
-            body: formData
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-            // Handle success - maybe update state, clear form, or redirect
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                navigate('/');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     };
-    
+
+
 
     function displayFileName(event) {
         const fileName = event.target.files[0].name;
@@ -70,7 +95,7 @@ function PostPage() {
     }
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toISOString().split('T')[0]; // Formats to 'month/day/year'. Adjust the locale and options as needed.
+        return date.toISOString().split('T')[0];
     };
 
     return (
@@ -108,9 +133,9 @@ function PostPage() {
                             </div>
                             <div className="EnterText">
                                 <legend>Name your new video</legend>
-                                <input type="text" id="VName" placeholder="Video Name" name="VName" />
+                                <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-
+                            {/* 
                             <div className="EnterText">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
@@ -119,11 +144,11 @@ function PostPage() {
                                     <option value="Doctor">Doctor</option>
                                     <option value="Professor">Professor</option>
                                 </select>
-                            </div>
+                            </div> */}
 
                             <div className="EnterText">
                                 <legend>Description of Your Video</legend>
-                                <input type="text" id="Description" placeholder="Describe your video" name="description" />
+                                <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
                         </div>
 

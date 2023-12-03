@@ -9,6 +9,8 @@ const Sidebar = () => {
   const [searchValue, setSearchValue] = useState('');
   const [result, setResult] = useState('');
   const [activeLink, setActiveLink] = useState('home');
+  const [code, setCode] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
   const modalRef = useRef(null);
   const navigate = useNavigate();
   const { setIsAuthenticated } = useContext(AuthContext);
@@ -38,6 +40,53 @@ const Sidebar = () => {
     sessionStorage.removeItem('user');
     navigate('/Signup');
   };
+
+  const generateRandomCode = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    let result = '';
+    for (let i = 0; i < 5; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  };
+  const handleCreateGroup = async () => {
+    const newCode = generateRandomCode();
+    setCode(newCode);
+    setShowPopup(true);
+  
+    const groupName = document.querySelector('[name="groupname"]').value;
+    console.log(groupName);
+    if (groupName) {
+      try {
+        const response = fetch('http://localhost:5001/add-group', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ groupName: groupName, code: newCode }),
+        });
+        if(!response){
+          console.log('no');
+        }else{
+          console.log(response);
+        }
+        if (response) {
+          // Handle successful group creation
+          console.log('Group created successfully');
+        } else {
+          // Handle errors
+          console.error('Failed to create group');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      // Handle case where group name is not entered
+      console.error('Group name is required');
+    }
+  };
+  
+  
 
 
   useEffect(() => {
@@ -103,6 +152,16 @@ const Sidebar = () => {
           <div className="modal" ref={modalRef}>
             <div className="modal-content">
               <span className="close" onClick={toggleModal}>&times;</span>
+              <div className='creategroup'>
+                <h3>Create your group here</h3>
+                <input
+                  type="text"
+                  placeholder="Your Group Name"
+                  name='groupname'
+                />
+                <button onClick={handleCreateGroup}>Create!</button>
+                {showPopup && <div>Group Code: {code}</div>}
+              </div>
               <div className="addgroup">
                 <h3>Find your group here</h3>
                 <input
@@ -112,7 +171,7 @@ const Sidebar = () => {
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value.toUpperCase())}
                 />
-                <button onClick={searchGroup}>Search</button>
+                <button onClick={searchGroup}>Join!</button>
                 <p>{result}</p>
               </div>
             </div>
