@@ -19,6 +19,9 @@ app.use(postRouter);
 const recordedRouter = require('./router/recordedRouter');
 app.use(recordedRouter);
 
+const groupRouter = require('./router/groupRouter');
+app.use(groupRouter);
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
