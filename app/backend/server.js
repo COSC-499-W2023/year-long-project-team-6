@@ -19,6 +19,8 @@ app.use(postRouter);
 const recordedRouter = require('./router/recordedRouter');
 app.use(recordedRouter);
 
+const profileRouter = require('./router/profileRouter');
+app.use(profileRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
