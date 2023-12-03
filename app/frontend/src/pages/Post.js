@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../component/CSS/post.css";
 import email_image from "../component/image/email.png"
 import exchange from "../component/image/exchange.png"
@@ -6,16 +6,23 @@ import password from "../component/image/password.png"
 import person from "../component/image/person.png"
 import showpw from "../component/image/showpw.png"
 import showpw2 from "../component/image/showpw2.png"
-
+import { initializeWebRTC, cleanupWebRTC } from './webrtc';
 
 function PostPage() {
+    const [showWebRTC, setShowWebRTC] = useState(false);
     const [userId, setUserId] = useState(2);
-    const [selectedFile, setSelectedFile] = useState("");
     const [selectedGroup, setSelectedGroup] = useState("");
     const [postHistory, setPostHistory] = useState([]);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const signalingClientRef = useRef(null);
+    const peerConnectionRef = useRef(null);
+    const localView = useRef(null);
+    
+    const remoteView = useRef(null);
 
+    const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
     useEffect(() => {
-        fetch(`http://localhost:5000/post-history/${userId}`)
+        fetch(`http://localhost:5001/post-history/${userId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -33,13 +40,42 @@ function PostPage() {
                 setPostHistory(arr[0].data);
             })
             .catch(error => console.error('Error fetching post history:', error));
+            
+        // Cleanup
+        return () => {
+            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+        };
     }, [userId]);
+   
+    const handleTogglePlay = async () => {
+        console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
 
+        if (!isPlaying) {
 
-    function displayFileName(event) {
-        const fileName = event.target.files[0].name;
-        setSelectedFile(fileName);
-    }
+            setTimeout(async() => {
+                console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
+            if (localView.current ) {
+                try {
+                    const webrtc = await initializeWebRTC(channelARN, localView.current);
+                    signalingClientRef.current = webrtc.signalingClient;
+                    peerConnectionRef.current = webrtc.peerConnection;
+                    setShowWebRTC(true);
+                } catch (error) {
+                    console.error('Error initializing WebRTC: ', error);
+                }
+            } else {
+                console.log('Refs are not set:', localView.current);
+            }},100);
+        
+        } else {
+            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+            signalingClientRef.current = null;
+            peerConnectionRef.current = null;
+            setShowWebRTC(false);
+        }
+        setIsPlaying(!isPlaying);
+    };
+    
 
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
@@ -54,30 +90,16 @@ function PostPage() {
                 <div id="input">
                     <form action="image.php" method="post" encType="multipart/form-data">
                         <div id="main" className="main">
-                            <div id="choose">
-                                <label className="custom-file-upload">
-                                    <input
-                                        type="file"
-                                        name="file"
-                                        id="file"
-                                        accept="video/*, audio/*"
-                                        onChange={displayFileName}
-                                    />
-                                    Select File
-                                </label>
-                                <span id="selectedFileName">{selectedFile}</span>
+                        <div id="videoContainer">
+                        {isPlaying && (
+                    <>
+                       <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
 
-                                <label className="custom-file-upload">
-                                    <input
-                                        type="file"
-                                        name="file"
-                                        id="file"
-                                        accept="video/*, audio/*"
-                                        onChange={displayFileName}
-                                    />
-                                    Record Your Video
-                                </label>
-                            </div>
+                    </>
+                )}
+                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+</div>
+
                             <div className="EnterText">
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="VName" />

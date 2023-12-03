@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "amazon-kinesis-video-streams-webrtc": "^2.2.0",
+    "aws-sdk": "^2.1510.0"
+  }
+}
