@@ -1,4 +1,5 @@
 const express = require('express');
+
 const { getPostInfor, deletePost, editPost } = require('../dao/recordedDao');
 const router = express.Router();
 

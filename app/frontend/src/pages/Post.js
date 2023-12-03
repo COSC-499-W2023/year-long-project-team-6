@@ -15,7 +15,7 @@ function PostPage() {
     const [postHistory, setPostHistory] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/post-history/${userId}`)
+        fetch(`http://localhost:5001/post-history/${userId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -35,6 +35,30 @@ function PostPage() {
             .catch(error => console.error('Error fetching post history:', error));
     }, [userId]);
 
+    const handleSubmit = (event) => {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(event.target); // Assuming form fields are named appropriately
+
+        fetch('http://localhost:5001/add-post', { // Replace with your backend route
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            // Handle success - maybe update state, clear form, or redirect
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    };
+    
 
     function displayFileName(event) {
         const fileName = event.target.files[0].name;
@@ -44,6 +68,10 @@ function PostPage() {
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
     }
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0]; // Formats to 'month/day/year'. Adjust the locale and options as needed.
+    };
 
     return (
         <div id='page'>
@@ -52,7 +80,7 @@ function PostPage() {
             </div>
             <div className="flex-container">
                 <div id="input">
-                    <form action="image.php" method="post" encType="multipart/form-data">
+                    <form onSubmit={handleSubmit}>
                         <div id="main" className="main">
                             <div id="choose">
                                 <label className="custom-file-upload">
@@ -123,7 +151,7 @@ function PostPage() {
                                     <td id="img">
                                         {`${post.post_title}`}
                                     </td>
-                                    <td id="date">{new Date(post.post_date).toLocaleString()}</td>
+                                    <td id="date">{formatDate(post.post_date)}</td>
                                 </tr>
                             ))}
                         </tbody>
