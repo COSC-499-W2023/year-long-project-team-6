@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../component/CSS/loginS.css";
 import email_image from "../component/image/email.png"
 import exchange from "../component/image/exchange.png"
 import password from "../component/image/password.png"
 import person from "../component/image/person.png"
+import { AuthContext } from "./AuthContext";
 import showpw from "../component/image/showpw.png"
 import showpw2 from "../component/image/showpw2.png"
 
@@ -16,6 +18,8 @@ function LoginSignupForm() {
     const [passw, setPassw] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [passwError, setPasswError] = useState(false);
+    const { setIsAuthenticated } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogin = () => {
         fetch('http://localhost:5001/login', {
@@ -28,29 +32,30 @@ function LoginSignupForm() {
                 password: passw
             })
         })
-        .then(response => {
-            if (response.headers.get("Content-Type").includes("application/json")) {
-              return response.json();
-            }
-            return response.text();
-          })
-        .then(data => {
+            .then(response => {
+                if (response.headers.get("Content-Type").includes("application/json")) {
+                    return response.json();
+                }
+                return response.text();
+            })
+            .then(data => {
 
-            if (data.success) { // Check if login was successful
-                // Store user data in session storage
-                console.log(JSON.stringify(data.user))
-                sessionStorage.setItem('user', JSON.stringify(data.user));
-                window.location.href = '/'
-            } else {
-                // Handle unsuccessful login
-                // Display an error message to the user
-                alert("Login failed: Invalid credentials");
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            // Handle error here (e.g., show error message)
-        });
+                if (data.success) { // Check if login was successful
+                    // Store user data in session storage
+                    console.log(JSON.stringify(data.user))
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
+                    setIsAuthenticated(true);
+                    navigate('/'); // navigate to the home page. 
+                } else {
+                    // Handle unsuccessful login
+                    // Display an error message to the user
+                    alert("Login failed: Invalid credentials");
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Handle error here (e.g., show error message)
+            });
     };
     const handleSignup = () => {
         fetch('http://localhost:5001/signup', {
@@ -66,24 +71,25 @@ function LoginSignupForm() {
                 userImage: ''
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log('Signup successful:', data);
-                alert("Signup successful!");
-                window.location.href = '/';
-            } else {
-                console.error('Signup failed:', data.message);
-                alert("Signup failed: " + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("An error occurred during signup.");
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Signup successful:', data);
+                    alert("Signup successful!");
+                    setIsAuthenticated(true);
+                    navigate('/');
+                } else {
+                    console.error('Signup failed:', data.message);
+                    alert("Signup failed: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred during signup.");
+            });
     };
-    
-    
+
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -93,10 +99,10 @@ function LoginSignupForm() {
 
         if (emailRegex.test(email) && email.length <= 30) {
             setEmailError(false);
-            return(true);
+            return (true);
         } else {
             setEmailError(true);
-            return(false);
+            return (false);
         }
     };
     const validateName = () => {
@@ -110,7 +116,7 @@ function LoginSignupForm() {
             return false;
         }
     };
-    
+
     const validatePassw = () => {
         // Check if password length is between 6 and 30 characters
         const isLengthValid = passw.length >= 6 && passw.length <= 30;
@@ -128,10 +134,10 @@ function LoginSignupForm() {
 
             // Return true if all conditions are met
             setPasswError(false);
-            return(true);
+            return (true);
         } else {
             setPasswError(true);
-            return(false);
+            return (false);
         }
     };
 
@@ -145,27 +151,27 @@ function LoginSignupForm() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        if (validateEmail() && validatePassw() ) {
+        if (validateEmail() && validatePassw()) {
             handleLogin();
-            
+
         } else {
-            
+
             alert("Please check your input.");
         }
-       
+
     };
     const handlesignupFormSubmit = (event) => {
         event.preventDefault();
         console.log(role)
-        console.log(validateEmail(),validatePassw(),validateRole(),validateName())
-        if (validateEmail() && validatePassw() && validateRole() && validateName() ) {
+        console.log(validateEmail(), validatePassw(), validateRole(), validateName())
+        if (validateEmail() && validatePassw() && validateRole() && validateName()) {
 
             handleSignup();
             console.log("Submitted:", email, name, passw, role);
         } else {
             alert("Please check your inputs.");
         }
-       
+
     };
     const sendResetLink = () => {
         alert("Reset link has been sent to your email!");
@@ -252,7 +258,7 @@ function LoginSignupForm() {
                                 marginBottom: "8px"
                             }}
                             value={role}
-                            onChange={(e) => {setRole(e.target.value);}}
+                            onChange={(e) => { setRole(e.target.value); }}
                         >
                             <option value="" >Select a role</option>
                             <option value="sender">Sender</option>
@@ -304,7 +310,7 @@ function LoginSignupForm() {
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             </div>
-                        </div> 
+                        </div>
                         <div className="input">
                             <img src={email_image} alt="Email Icon" />
                             <input
@@ -321,14 +327,14 @@ function LoginSignupForm() {
                         <div className="input">
                             <img src={password} alt="Password Icon" />
                             <input
-                                 type={showPassword ? "text" : "password"}
-                                 placeholder="Password"
-                                 id="passwordInput"
-                                 autoComplete="new-password"
-                                 name="user_pass"
-                                 value={passw}
-                                 onChange={(e) => setPassw(e.target.value)}
-                                 onBlur={validatePassw}
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                id="passwordInput"
+                                autoComplete="new-password"
+                                name="user_pass"
+                                value={passw}
+                                onChange={(e) => setPassw(e.target.value)}
+                                onBlur={validatePassw}
                             />
                             <input
                                 type="text"
