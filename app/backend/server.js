@@ -1,12 +1,21 @@
+require('dotenv').config({ path: "./process.env"});
 const express = require('express');
 const cors = require('cors');
+
 const app = express();
 const port = 5001;
 
+
 app.use(cors({
   origin: 'http://localhost:3000',
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  allowedHeaders: ['Content-Type'] 
 }));
+const awsRouter = require('./router/awsRouter');
+app.use(awsRouter);
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
