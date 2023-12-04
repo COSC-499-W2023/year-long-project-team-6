@@ -194,3 +194,43 @@
 
 *Table format:*
 ![Table](week12/table.png)
+
+# Individual Log - Wenrui Chen (Week 13)
+
+## Applicable date range
+**November/28/2023** to **December/3/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* meeting 
+* test report
+* tests for authContext's functions
+* tests for userProfile's functions
+* test for member's functions
+* Design Document
+* Complete the peer evaluation 
+
+## Completed Tasks 
+* meeting  
+* tests for authContext's functions
+* tests for userProfile's functions
+* test for member's functions in progress
+* test reports
+* Design Document
+* PE done
+* login/signup tests done
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](week12/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](week13/Board.png)
+
+*Tests:*
+![Board](week13/test.png)
+![Board](week13/test1.png)
+![Board](week13/test2.png)
+
+*Table format:*
+![Table](week13/Table.png)
