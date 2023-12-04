@@ -135,17 +135,6 @@ function PostPage() {
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-                            {/* 
-                            <div className="EnterText">
-                                <legend>Choose a Group</legend>
-                                <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
-                                    <option value=""></option>
-                                    <option value="Sender">Sender</option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Professor">Professor</option>
-                                </select>
-                            </div> */}
-
                             <div className="EnterText">
                                 <legend>Description of Your Video</legend>
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
