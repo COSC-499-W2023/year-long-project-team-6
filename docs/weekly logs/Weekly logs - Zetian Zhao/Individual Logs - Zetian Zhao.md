@@ -263,3 +263,43 @@
 ![Table](11+12_imgs/Table_12(2).png)
 
 
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 13)
+
+## Applicable date range
+**November/27/2023** to **December/3/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Fix the problem that when project start, it should begin with the login page.
+* Add the authentication to the homepage of the website. 
+* Complete the logout button, profile button. 
+* Complete the edit function in the profile page. 
+* Complete the function of search bar and selection dropdown list in the members list page. 
+* Complete the peer evaluation. 
+* Complete design document. 
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* Fixed the starting page problem of the program. Now, it start at the Login page. 
+* Created a authentication for the people to the homepage. (People how are not login cannot use our website. Cannot go to the homepage.)
+* Completed the buttons like log out and user profile. 
+* Completed the functionality of edit button on the profile page. 
+* Completed the function that user able to filter user with search bar and selection role list. 
+* Completed the peer evaluation. 
+* Completed the design document. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](13_imgs/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](13_imgs/Board.png)
+*Table format:*
+![Table](13_imgs/Table_1.png)
+![Table](13_imgs/Table_2.png)
+
