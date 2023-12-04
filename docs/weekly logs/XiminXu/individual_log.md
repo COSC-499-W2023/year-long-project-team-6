@@ -231,3 +231,38 @@ Finishing tasks helped us work together better and get better at coding. We also
 ### 5. *From project board*
 ![Board](images12/pb.png)
 
+## Ximin Xu week 13 personal log
+
+### 1. *Date Range*
+
+Nov.27-Dec.3
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images13/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Finish Signup API
+3. Frontend fetching to Signup API
+4. Learning Webrtc and KVS
+5. linking connection between server and KVS
+6. Peerconnection with KVS
+7. Capture video 
+8. Store captured video into S3 bucket
+
+
+**In progress**
+ 1. Updating post.js to allow storing s3 bucket information into db.
+ 2. Writing jest on APIs.
+
+### 4. *Self Reflection and learned*
+In our recent project update, I've accomplished several crucial tasks. I began with a productive group meeting, efficiently assigning responsibilities. Next, I successfully completed the Signup API, ensuring it's ready for integration. The frontend has been configured to fetch data from the Signup API seamlessly. Additionally, I embarked on learning Webrtc and KVS, establishing a connection between the server and KVS. I've also made significant progress in implementing peer connections with KVS. On the video front, I achieved video capture and streamlined the process of storing captured videos in the S3 bucket. Currently, I'm diligently working on updating the 'post.js' file to facilitate the storage of S3 bucket information into our database.
+
+### 5. *From project board*
+![Board](images13/pb1.png)
+![Board](images13/pb2.png)
+

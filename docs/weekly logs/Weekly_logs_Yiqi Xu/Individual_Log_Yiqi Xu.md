@@ -274,6 +274,12 @@
 * Finished Peer Evaluation
 * Finished the team report with team members
 
+## In Progress
+* Writing the jest for Daos.
+
+## Self reflection
+I've made considerable progress, demonstrating a strong command in both frontend and backend development. My coordination skills were key in team meetings for work assignment, and I successfully developed critical functionalities, including video operations for both frontend and backend, and user profile and group management features. I also updated the database structure and enhanced the login and signup processes, showcasing my grasp of data management and security. 
+
 ## ScreenShot of peer evaluation
 ![Peer Evaluation](w13_img/PeerEval.png)
 
