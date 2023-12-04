@@ -1,13 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../component/CSS/post.css";
-import email_image from "../component/image/email.png"
-import exchange from "../component/image/exchange.png"
-import password from "../component/image/password.png"
-import person from "../component/image/person.png"
-import showpw from "../component/image/showpw.png"
-import showpw2 from "../component/image/showpw2.png"
 import { initializeWebRTC, cleanupWebRTC } from './webrtc';
-
+import { uploadVideo } from './webrtc';
+import { wait } from "@testing-library/user-event/dist/utils";
 function PostPage() {
     const [showWebRTC, setShowWebRTC] = useState(false);
     const [userId, setUserId] = useState(2);
@@ -17,8 +12,12 @@ function PostPage() {
     const signalingClientRef = useRef(null);
     const peerConnectionRef = useRef(null);
     const localView = useRef(null);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
+    const [recordedChunks, setRecordedChunks] = useState([]);
+    const [isRecordingStopped, setIsRecordingStopped] = useState(false);
+
+
     
-    const remoteView = useRef(null);
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
     useEffect(() => {
@@ -46,36 +45,76 @@ function PostPage() {
             cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
         };
     }, [userId]);
-   
-    const handleTogglePlay = async () => {
-        console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
+    useEffect(() => {
+        console.log('recordedChunks updated:', recordedChunks);
+    }, [recordedChunks]);
+    // Temporary array to hold recorded chunks, outside of the function
+let tempRecordedChunks = [];
 
-        if (!isPlaying) {
+const handleTogglePlay = async () => {
+    console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
 
-            setTimeout(async() => {
-                console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
-            if (localView.current ) {
+    if (!isPlaying) {
+        setTimeout(async () => {
+            if (localView.current) {
                 try {
                     const webrtc = await initializeWebRTC(channelARN, localView.current);
                     signalingClientRef.current = webrtc.signalingClient;
                     peerConnectionRef.current = webrtc.peerConnection;
+
+                    // Initialize MediaRecorder here
+                    const stream = localView.current.srcObject; // Assuming this is your local stream
+                    console.log('stream', stream);
+                    const options = { mimeType: 'video/webm; codecs=vp9' };
+                    const recorder = new MediaRecorder(stream, options);
+                    setMediaRecorder(recorder);
+
+                    recorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            tempRecordedChunks.push(event.data);
+                        }
+                    };
+
+                    recorder.onstop = async () => {
+                        console.log('tempchunk',tempRecordedChunks);
+                        setRecordedChunks(tempRecordedChunks);
+
+                        // Create blob from recorded chunks
+                        const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
+                        console.log(blob);
+
+                        try {
+                            const uploadResult = await uploadVideo(blob);
+                            console.log('Video uploaded successfully:', uploadResult);
+                        } catch (uploadError) {
+                            console.error('Failed to upload video:', uploadError);
+                        }
+
+                        setRecordedChunks([]);
+                        tempRecordedChunks = [];
+                    };
+
                     setShowWebRTC(true);
+                    recorder.start();
+
                 } catch (error) {
                     console.error('Error initializing WebRTC: ', error);
                 }
             } else {
                 console.log('Refs are not set:', localView.current);
-            }},100);
-        
-        } else {
-            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
-            signalingClientRef.current = null;
-            peerConnectionRef.current = null;
-            setShowWebRTC(false);
+            }
+        }, 100);
+    } else {
+        if (mediaRecorder) {
+            mediaRecorder.stop();
         }
-        setIsPlaying(!isPlaying);
-    };
-    
+        cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+        signalingClientRef.current = null;
+        peerConnectionRef.current = null;
+        setShowWebRTC(false);
+    }
+    setIsPlaying(!isPlaying);
+};
 
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);

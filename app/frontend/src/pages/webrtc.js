@@ -1,5 +1,27 @@
 const SignalingClient = require('amazon-kinesis-video-streams-webrtc').SignalingClient;
 const KVSWebRTC = require('amazon-kinesis-video-streams-webrtc');
+// Add at the top of your webrtc.js
+const uploadVideo = async (blob) => {
+    const formData = new FormData();
+    formData.append('video', blob, 'video.webm'); // Adjust the file name as needed
+
+    try {
+        const response = await fetch('http://localhost:5001/upload-video', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.json();
+        console.log('Upload result:', result);
+        return result; // Return the result for further processing if needed
+    } catch (error) {
+        console.error('Error uploading video:', error);
+        throw error; // Throw the error to be handled by the caller
+    }
+};
+
+// Export the function
+export { uploadVideo };
 
 // Function to request signaling channel endpoint and ICE server configuration from the server
 async function getSignalingChannelConfig(channelARN) {
@@ -8,13 +30,14 @@ async function getSignalingChannelConfig(channelARN) {
         throw new Error(`Failed to get signaling channel config: ${response.statusText}`);
     }
     const config = await response.json();
-console.log("Received config from server:", config);
-return config;
-
+    console.log("Received config from server:", config);
+    return config;
 }
+
+// Function to fetch temporary AWS credentials
 async function fetchCredentials() {
     try {
-        const response = await fetch('http://localhost:5001/get-temp-credentials');  // The endpoint on your server
+        const response = await fetch('http://localhost:5001/get-temp-credentials');
         if (!response.ok) {
             throw new Error('Failed to fetch credentials: ' + response.statusText);
         }
@@ -26,14 +49,14 @@ async function fetchCredentials() {
         };
     } catch (error) {
         console.error('Error fetching credentials from server:', error);
-        throw error;  // Rethrow the error to handle it in the calling function
+        throw error;
     }
 }
+
 // Function to create and configure the peer connection
 function createPeerConnection(iceServers) {
     const peerConnectionConfig = { iceServers };
     const peerConnection = new RTCPeerConnection(peerConnectionConfig);
-    
     return peerConnection;
 }
 
@@ -47,7 +70,6 @@ export async function initializeWebRTC(channelARN, localView) {
         const peerConnection = createPeerConnection(iceServers);
         let localStream = null;
 
-        // Get a stream from the webcam and add it to the peer connection
         try {
             localStream = await navigator.mediaDevices.getUserMedia({
                 video: { width: { ideal: 1280 }, height: { ideal: 720 } },
@@ -63,7 +85,7 @@ export async function initializeWebRTC(channelARN, localView) {
         const signalingClient = new SignalingClient({
             channelARN,
             channelEndpoint: endpointsByProtocol.WSS,
-            clientId: '23', 
+            clientId: '23', // Customize clientId as needed
             role: KVSWebRTC.Role.VIEWER,
             region: 'us-east-1',
             credentials: credentials
@@ -71,9 +93,7 @@ export async function initializeWebRTC(channelARN, localView) {
 
         signalingClient.open();
 
-        // Set up signaling client event listeners and peer connection logic
         signalingClient.on('open', async () => {
-            // Create an SDP offer and send it to the master
             const offer = await peerConnection.createOffer({
                 offerToReceiveAudio: true,
                 offerToReceiveVideo: true,
@@ -90,14 +110,14 @@ export async function initializeWebRTC(channelARN, localView) {
             peerConnection.addIceCandidate(candidate);
         });
 
-        return { signalingClient, peerConnection };
+        return { signalingClient, peerConnection, localStream };
     } catch (error) {
         console.error('Error initializing WebRTC: ', error);
     }
 }
 
 export function cleanupWebRTC(signalingClient, peerConnection) {
-    console.log("webRtc is cleaned");
+    console.log("WebRTC is cleaned up");
     if (signalingClient) {
         signalingClient.close();
     }
