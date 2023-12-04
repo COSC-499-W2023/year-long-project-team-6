@@ -30,6 +30,10 @@ thead{
 
 }
 
+#condition{
+padding-left: 50px;
+}
+
 #condition select{
     box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
     border: 1px solid lightgray;
@@ -52,7 +56,7 @@ thead{
     vertical-align: middle;
     position: relative;
 }
-#VideoList .title{
+#VideoList .all, .title{
     width: 20em;
     text-align: left;
     vertical-align: middle;
