@@ -165,7 +165,7 @@ function RecordedPage() {
                 <table id="videoTable">
                     <thead>
                         <tr>
-                            <td className="title">All Videos</td>
+                            <td className="all">All Videos</td>
                         </tr>
                     </thead>
                     <tbody>
