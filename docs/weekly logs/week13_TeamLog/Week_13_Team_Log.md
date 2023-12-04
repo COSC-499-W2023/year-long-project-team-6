@@ -163,10 +163,10 @@ describe('authContext', () => {
 });
 ```
 *Output:*
-![Tests](test1.jpg)
-![Tests](test2.jpg)
-![Tests](test3.jpg)
-![Tests](test4.jpg)
+![Tests](test1.png)
+![Tests](test2.png)
+![Tests](test3.png)
+![Tests](test4.png)
 
 ## Project on Board
 *Board format:*
