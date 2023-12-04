@@ -245,3 +245,40 @@
 ![Board](w12_img/Board.png)
 *Table format:*
 ![Table](w12_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 13)
+
+## Applicable data range
+**November/27/2023** to **December/3/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to assign work
+* Code backend (add videos, edit videos, and delete videos)
+* Code the functions in post page frontend (add videos, edit videos, and delete videos)
+* Code the backend for profile
+* Code the backend for group function
+* Update the login and sign up
+* Update Database structure
+* Finish Peer Evaluation
+* Finish the team report with team members
+
+## Completed Tasks 
+* Had a meeting to assign work
+* Coded backend (add videos, edit videos, and delete videos)
+* Coded the functions in post page frontend (add videos, edit videos, and delete videos)
+* Coded the backend for profile
+* Coded the backend for group function (add a new group, edit the group name, delete the group, get group information)
+* Updated the login and sign up
+* Updated Database structure
+* Finished Peer Evaluation
+* Finished the team report with team members
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](w13_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](w13_img/Board.png)
+*Table format:*
+![Table](w13_img/Table.png)
