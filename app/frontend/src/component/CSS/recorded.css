@@ -86,34 +86,6 @@ padding-left: 50px;
     border-radius: 50%;
 }
 
-.editButton{
-    background-color: #373c53;
-    color: #fff;
-    border: 1px solid #666;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 8em;
-    height: 3em;
-}
-
-.deleteButton{
-    background-color: #373c53;
-    color: #fff;
-    border: 1px solid #666;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 8em;
-    height: 3em;
-}
-#apply{
-    background-color: #373c53;
-    color: #fff;
-    border: 1px solid #666;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 5em;
-    height: 3em;
-}
 .save{
     float: right;
     background-color: #373c53;
@@ -123,60 +95,6 @@ padding-left: 50px;
     cursor: pointer;
     width: 5em;
     height: 3em;
-}
-/*
-hover
-*/
-.editButton, .deleteButton, #apply, .save{
-    position: relative;
-    overflow: hidden;
-    transition: background-color 0.5s;
-    width: 100px; 
-    height: 40px; 
-    display: inline-block; 
-}
-
-.editButton::before, .deleteButton::before, #apply::before, .save::before {
-    content: "";
-    position: absolute;
-    background-color: rgba(125, 83, 219, 0.7);
-    border-radius: 50%;
-    width: 200%;
-    height: 200%;
-    left: 50%;
-    top: 50%;
-    transform: scale(0) translate(-50%, -50%);
-    transition: transform 0.5s;
-    z-index: -1;
-}
-
-.editButton:hover::before, .deleteButton:hover::before, #apply:hover::before, .save:hover::before {
-    transform: scale(1) translate(-50%, -50%);
-}
-
-.editButton:hover, .deleteButton:hover, #apply:hover, .save:hover {
-    background-color: transparent; 
-}
-
-
-.title:hover::before {
-    content: attr(data-description);
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    width: 30em; 
-    height: 5em;
-    background-color: #333; 
-    color: #fff; 
-    border: 1px solid #666;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    z-index: 1000; 
-    margin-bottom: 5px;
-    opacity: 0.95;
-    vertical-align: top;
 }
 
 /* Add these styles to your CSS file */
