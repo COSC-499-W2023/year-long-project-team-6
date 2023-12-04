@@ -200,3 +200,35 @@
 ![Board](Week12_img/Board.png)
 *Table format:*
 ![Table](Week12_img/Table.png)
+
+# Individual Log - Jiajun Huang (Week 13)
+
+## Applicable data range
+**November/27/2023** to **December/3/2023**
+
+## Recap Goal 
+*My jobs in this week are:*
+* Met with my team members
+* Finish button functionalities for two pages
+* Making a button for create groups
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Completed adding, editing, deleting videos button in frontend
+* Successfully created a button for creating group and it can actually store in database
+* Finished Peer evaluation
+
+## In Progress
+* Improving hover for some pages
+
+## Self reflection
+I have made a reasonable progress in this week. After a productive team meeting, I successfully deployed functionalities to most of the button. Also made frontend interacting with backend. I showed a strong understanding of using react framework for both backend and frontend. I worked with Yiqi this week and we have accomplished an amazing achieve.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Week12_img/PE.png)
+## My Task on Board
+*Board format:*
+![Board](Week13_img/Board.png)
+*Table format:*
+![Table](Week13_img/Table.png)
