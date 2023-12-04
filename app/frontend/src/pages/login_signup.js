@@ -299,18 +299,6 @@ function LoginSignupForm() {
                         <div className="underline"></div>
                     </div>
                     <div className="inputs">
-                        <div className="input" id="nameInputContainer">
-                            <div className="input-content">
-                                <img src={person} alt="User Icon" />
-                                <input
-                                    type="text"
-                                    placeholder="Name"
-                                    name="user_name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                            </div>
-                        </div>
                         <div className="input">
                             <img src={email_image} alt="Email Icon" />
                             <input
