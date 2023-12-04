@@ -4,6 +4,14 @@ import '@testing-library/jest-dom';
 import { AuthProvider, AuthContext } from './authContext.js';
 
 describe('authContext', () => {
+    it('renders without crashing', () => {
+        render(
+            <AuthProvider>
+                <div>Test</div>
+            </AuthProvider>
+        );
+    });
+
     it('should provide initial isAuthenticated state as false', () => {
         sessionStorage.removeItem('user');
 
@@ -40,5 +48,17 @@ describe('authContext', () => {
             await new Promise(resolve => setTimeout(resolve, 0)); // Wait for state to update
         });
         expect(screen.getByText('Not Authenticated')).toBeInTheDocument();
+    });
+    it('sets isAuthenticated based on session storage', () => {
+        Storage.prototype.getItem = jest.fn(() => 'user');
+        let testRender;
+        act(() => {
+            testRender = render(
+                <AuthProvider>
+                    <div>Authenticated</div>
+                </AuthProvider>
+            );
+        });
+        expect(testRender.getByText('Authenticated')).toBeInTheDocument();
     });
 });

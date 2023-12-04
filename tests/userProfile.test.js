@@ -29,6 +29,7 @@ describe('UserProfile Component', () => {
         expect(screen.getByText(/Sender/)).toBeInTheDocument();
     });
     //edit function in progress
+    //test if button wroks
     it('toggles edit mode', async () => {
         render(<UserProfile />);
         expect(screen.getByText('Edit Profile')).toBeInTheDocument();
