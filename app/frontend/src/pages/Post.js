@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../component/CSS/post.css";
+import { useNavigate } from "react-router-dom";
 import { initializeWebRTC, cleanupWebRTC } from './webrtc';
 import { uploadVideo } from './webrtc';
 import { wait } from "@testing-library/user-event/dist/utils";
 function PostPage() {
     const [showWebRTC, setShowWebRTC] = useState(false);
-    const [userId, setUserId] = useState(2);
+    const [userId, setUserId] = useState("");
     const [selectedGroup, setSelectedGroup] = useState("");
     const [postHistory, setPostHistory] = useState([]);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -14,37 +15,89 @@ function PostPage() {
     const localView = useRef(null);
     const [mediaRecorder, setMediaRecorder] = useState(null);
     const [recordedChunks, setRecordedChunks] = useState([]);
+    const navigate = useNavigate();
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
 
 
     
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
+useEffect(() => {
+         const sessionUser = sessionStorage.getItem('user');
+         console.log("Sessopm User: " + sessionUser);
+         if (!sessionUser) {
+             navigate('/login');
+         } else {
+             const user = JSON.parse(sessionUser);
+             setUserId(user.userid);
+             console.log("User Id: " + user.userid);
+         }
+     }, []);
+     useEffect(() => {
+        const sessionUser = sessionStorage.getItem('user');
+        console.log("Sessopm User: " + sessionUser);
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
+
     useEffect(() => {
-        fetch(`http://localhost:5001/post-history/${userId}`)
+        if (userId) {
+            fetch(`http://localhost:5001/post-history/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const arr = [];
+                    for (let i in data) {
+                        let o = {};
+                        o[i] = data[i];
+                        arr.push(o);
+                    }
+                    console.log(arr[0].data);
+                    setPostHistory(arr[0].data);
+                })
+                .catch(error => console.error('Error fetching post history:', error));
+        }
+    }, [userId]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        const postData = {
+            post_title: formData.get('post_title'),
+            post_text: formData.get('post_text'),
+            userid: userId
+        };
+
+        console.log("postData to be sent:", postData); // Add this line for debugging
+
+        fetch('http://localhost:5001/add-post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+        })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error('Network response was not ok');
                 }
-                return response.json();
+                return response.text();
             })
             .then(data => {
-                const arr = [];
-                for (let i in data) {
-                    let o = {};
-                    o[i] = data[i];
-                    arr.push(o);
-                }
-                console.log(arr[0].data);
-                setPostHistory(arr[0].data);
+                console.log('Success:', data);
+                navigate('/');
             })
-            .catch(error => console.error('Error fetching post history:', error));
-            
-        // Cleanup
-        return () => {
-            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
-        };
-    }, [userId]);
+            .catch((error) => {
+                console.error('Error:', error);
+            });}
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
@@ -119,7 +172,10 @@ const handleTogglePlay = async () => {
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
     }
-
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0];
+    };
     return (
         <div id='page'>
             <div id="send">
@@ -127,7 +183,7 @@ const handleTogglePlay = async () => {
             </div>
             <div className="flex-container">
                 <div id="input">
-                    <form action="image.php" method="post" encType="multipart/form-data">
+                <form onSubmit={handleSubmit}>
                         <div id="main" className="main">
                         <div id="videoContainer">
                         {isPlaying && (
@@ -141,9 +197,9 @@ const handleTogglePlay = async () => {
 
                             <div className="EnterText">
                                 <legend>Name your new video</legend>
-                                <input type="text" id="VName" placeholder="Video Name" name="VName" />
+                                <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-
+                        {/*
                             <div className="EnterText">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
@@ -153,10 +209,10 @@ const handleTogglePlay = async () => {
                                     <option value="Professor">Professor</option>
                                 </select>
                             </div>
-
+                        */}
                             <div className="EnterText">
                                 <legend>Description of Your Video</legend>
-                                <input type="text" id="Description" placeholder="Describe your video" name="description" />
+                                <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
                         </div>
 
@@ -184,7 +240,7 @@ const handleTogglePlay = async () => {
                                     <td id="img">
                                         {`${post.post_title}`}
                                     </td>
-                                    <td id="date">{new Date(post.post_date).toLocaleString()}</td>
+                                    <td id="date">{formatDate(post.post_date)}</td>
                                 </tr>
                             ))}
                         </tbody>
