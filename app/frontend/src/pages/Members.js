@@ -23,12 +23,22 @@ const Members = () => {
         setRoleFilter(event.target.value);
     };
 
+    const filteredData = mockData.filter(member => {
+        // Make the filter function here. 
+        // return if the input name matched with the existed mock member name. 
+        const matchesSearchTerm = member.name.toLowerCase().includes(searchTerm.toLowerCase());
+        // if the role still All role, we do not need filters. But if role change, we only show the user with corresponding role. 
+        const matchesRole = roleFilter === 'All Roles' || member.role === roleFilter;
+
+        return matchesSearchTerm && matchesRole;
+    });
+
     return (
         <div className="members-page">
             <div className="members-filter">
                 <input
                     type="text"
-                    placeholder="Search users"
+                    placeholder="Search username"
                     value={searchTerm}
                     onChange={handleSearchChange}
                     className="search-bar"
@@ -48,7 +58,7 @@ const Members = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {mockData.map((member, index) => (
+                    {filteredData.map((member, index) => (
                         <tr key={index}>
                             <td>{member.name}</td>
                             <td>{member.group}</td>

@@ -1,50 +1,181 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../component/CSS/post.css";
-import email_image from "../component/image/email.png"
-import exchange from "../component/image/exchange.png"
-import password from "../component/image/password.png"
-import person from "../component/image/person.png"
-import showpw from "../component/image/showpw.png"
-import showpw2 from "../component/image/showpw2.png"
-
-
+import { useNavigate } from "react-router-dom";
+import { initializeWebRTC, cleanupWebRTC } from './webrtc';
+import { uploadVideo } from './webrtc';
+import { wait } from "@testing-library/user-event/dist/utils";
 function PostPage() {
-    const [userId, setUserId] = useState(2);
-    const [selectedFile, setSelectedFile] = useState("");
+    const [showWebRTC, setShowWebRTC] = useState(false);
+    const [userId, setUserId] = useState("");
     const [selectedGroup, setSelectedGroup] = useState("");
     const [postHistory, setPostHistory] = useState([]);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const signalingClientRef = useRef(null);
+    const peerConnectionRef = useRef(null);
+    const localView = useRef(null);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
+    const [recordedChunks, setRecordedChunks] = useState([]);
+    const navigate = useNavigate();
+    const [isRecordingStopped, setIsRecordingStopped] = useState(false);
+
+
+    
+
+    const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
+useEffect(() => {
+         const sessionUser = sessionStorage.getItem('user');
+         console.log("Sessopm User: " + sessionUser);
+         if (!sessionUser) {
+             navigate('/login');
+         } else {
+             const user = JSON.parse(sessionUser);
+             setUserId(user.userid);
+             console.log("User Id: " + user.userid);
+         }
+     }, []);
+     useEffect(() => {
+        const sessionUser = sessionStorage.getItem('user');
+        console.log("Sessopm User: " + sessionUser);
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/post-history/${userId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const arr = [];
-                for (let i in data) {
-                    let o = {};
-                    o[i] = data[i];
-                    arr.push(o);
-                }
-                console.log(arr[0].data);
-                setPostHistory(arr[0].data);
-            })
-            .catch(error => console.error('Error fetching post history:', error));
+        if (userId) {
+            fetch(`http://localhost:5001/post-history/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const arr = [];
+                    for (let i in data) {
+                        let o = {};
+                        o[i] = data[i];
+                        arr.push(o);
+                    }
+                    console.log(arr[0].data);
+                    setPostHistory(arr[0].data);
+                })
+                .catch(error => console.error('Error fetching post history:', error));
+        }
     }, [userId]);
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
 
-    function displayFileName(event) {
-        const fileName = event.target.files[0].name;
-        setSelectedFile(fileName);
+        const postData = {
+            post_title: formData.get('post_title'),
+            post_text: formData.get('post_text'),
+            userid: userId
+        };
+
+        console.log("postData to be sent:", postData); // Add this line for debugging
+
+        fetch('http://localhost:5001/add-post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                navigate('/');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });}
+    useEffect(() => {
+        console.log('recordedChunks updated:', recordedChunks);
+    }, [recordedChunks]);
+    // Temporary array to hold recorded chunks, outside of the function
+let tempRecordedChunks = [];
+
+const handleTogglePlay = async () => {
+    console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
+
+    if (!isPlaying) {
+        setTimeout(async () => {
+            if (localView.current) {
+                try {
+                    const webrtc = await initializeWebRTC(channelARN, localView.current);
+                    signalingClientRef.current = webrtc.signalingClient;
+                    peerConnectionRef.current = webrtc.peerConnection;
+
+                    // Initialize MediaRecorder here
+                    const stream = localView.current.srcObject; // Assuming this is your local stream
+                    console.log('stream', stream);
+                    const options = { mimeType: 'video/webm; codecs=vp9' };
+                    const recorder = new MediaRecorder(stream, options);
+                    setMediaRecorder(recorder);
+
+                    recorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            tempRecordedChunks.push(event.data);
+                        }
+                    };
+
+                    recorder.onstop = async () => {
+                        console.log('tempchunk',tempRecordedChunks);
+                        setRecordedChunks(tempRecordedChunks);
+
+                        // Create blob from recorded chunks
+                        const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
+                        console.log(blob);
+
+                        try {
+                            const uploadResult = await uploadVideo(blob);
+                            console.log('Video uploaded successfully:', uploadResult);
+                        } catch (uploadError) {
+                            console.error('Failed to upload video:', uploadError);
+                        }
+
+                        setRecordedChunks([]);
+                        tempRecordedChunks = [];
+                    };
+
+                    setShowWebRTC(true);
+                    recorder.start();
+
+                } catch (error) {
+                    console.error('Error initializing WebRTC: ', error);
+                }
+            } else {
+                console.log('Refs are not set:', localView.current);
+            }
+        }, 100);
+    } else {
+        if (mediaRecorder) {
+            mediaRecorder.stop();
+        }
+        cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+        signalingClientRef.current = null;
+        peerConnectionRef.current = null;
+        setShowWebRTC(false);
     }
+    setIsPlaying(!isPlaying);
+};
 
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
     }
-
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0];
+    };
     return (
         <div id='page'>
             <div id="send">
@@ -52,37 +183,23 @@ function PostPage() {
             </div>
             <div className="flex-container">
                 <div id="input">
-                    <form action="image.php" method="post" encType="multipart/form-data">
+                <form onSubmit={handleSubmit}>
                         <div id="main" className="main">
-                            <div id="choose">
-                                <label className="custom-file-upload">
-                                    <input
-                                        type="file"
-                                        name="file"
-                                        id="file"
-                                        accept="video/*, audio/*"
-                                        onChange={displayFileName}
-                                    />
-                                    Select File
-                                </label>
-                                <span id="selectedFileName">{selectedFile}</span>
+                        <div id="videoContainer">
+                        {isPlaying && (
+                    <>
+                       <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
 
-                                <label className="custom-file-upload">
-                                    <input
-                                        type="file"
-                                        name="file"
-                                        id="file"
-                                        accept="video/*, audio/*"
-                                        onChange={displayFileName}
-                                    />
-                                    Record Your Video
-                                </label>
-                            </div>
+                    </>
+                )}
+                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+</div>
+
                             <div className="EnterText">
                                 <legend>Name your new video</legend>
-                                <input type="text" id="VName" placeholder="Video Name" name="VName" />
+                                <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-
+                        {/*
                             <div className="EnterText">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
@@ -92,10 +209,10 @@ function PostPage() {
                                     <option value="Professor">Professor</option>
                                 </select>
                             </div>
-
+                        */}
                             <div className="EnterText">
                                 <legend>Description of Your Video</legend>
-                                <input type="text" id="Description" placeholder="Describe your video" name="description" />
+                                <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
                         </div>
 
@@ -123,7 +240,7 @@ function PostPage() {
                                     <td id="img">
                                         {`${post.post_title}`}
                                     </td>
-                                    <td id="date">{new Date(post.post_date).toLocaleString()}</td>
+                                    <td id="date">{formatDate(post.post_date)}</td>
                                 </tr>
                             ))}
                         </tbody>

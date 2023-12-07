@@ -1,7 +1,5 @@
 const db = require('../db/db');
 
-
-
 async function getUsernameAndPostDate(userId, callback) {
     const query = `
     SELECT p.post_title, p.post_date
@@ -20,9 +18,27 @@ async function getUsernameAndPostDate(userId, callback) {
         }
     });
 }
-
-
-
+async function addPost(postData, callback) {
+    const {
+        user_group_id,
+        s3_content_key,
+        post_text,
+        userid,
+        post_title
+    } = postData;
+    const query = `
+        INSERT INTO posts (user_group_id, s3_content_key, post_text, userid, post_title)
+        VALUES (?, ?, ?, ?, ?)
+    `;
+    db.query(query, [user_group_id, s3_content_key, post_text, userid, post_title], (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
+}
 module.exports = {
-    getUsernameAndPostDate
+    getUsernameAndPostDate,
+    addPost
 };
