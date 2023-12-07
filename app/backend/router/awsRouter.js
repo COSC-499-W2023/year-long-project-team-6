@@ -1,6 +1,6 @@
 require('dotenv').config({ path: "./process.env" });
 process.env.AWS_SDK_LOAD_CONFIG = '1'; // Enable loading of AWS SDK config
-process.env.AWS_PROFILE = 'botocore-client-ximin_sso'; 
+process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658'; 
 const { KinesisVideo } = require('@aws-sdk/client-kinesis-video');
 const express = require('express');
 const { STSClient, AssumeRoleCommand } = require('@aws-sdk/client-sts');
