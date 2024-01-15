@@ -266,3 +266,31 @@ In our recent project update, I've accomplished several crucial tasks. I began w
 ![Board](images13/pb1.png)
 ![Board](images13/pb2.png)
 
+## Ximin Xu T2 week 1 personal log
+
+### 1. *Date Range*
+
+Jan.8-Jan.14
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images14/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Change the input format of s3 bucket from webm to mp4 for better adapatability
+3. Return the Object key of videos and store them into db
+
+
+**In progress**
+ 1. Creating API for creating presigned Url of videos via the stored object key
+
+### 4. *Self Reflection and learned*
+I successfully converted video formats to mp4 and stored them in our S3 bucket, enhancing compatibility and accessibility. This technical task required attention to detail and ensured more user-friendly content. Currently, I'm developing an API for generating secure presigned URLs for video access. These tasks have highlighted the importance of adaptability and efficient data management. I'm learning valuable technical skills and project relevance as I continue working on the API project, aiming to contribute significantly to our project's success.
+
+### 5. *From project board*
+![Board](images14/pb.png)
+
