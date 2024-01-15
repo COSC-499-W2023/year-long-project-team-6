@@ -22,8 +22,6 @@ router.get('/get-profile/:userId', (req, res) => {
         } else if (result) {
             console.log("reslut:"+result);
             res.status(200).json(result);
-        } else {
-            res.status(404).send('User not found');
         }
     });
 });

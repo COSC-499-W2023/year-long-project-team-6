@@ -26,12 +26,7 @@ function getUserProfile(userId, callback) {
         if (err) {
             callback(err, null);
         } else {
-            if (result.length > 0) {
-                const user = result;
-                callback(null, user);
-            } else {
-                callback(new Error('User not found'), null);
-            }
+            callback(null, result[0]);
         }
     });
 }
