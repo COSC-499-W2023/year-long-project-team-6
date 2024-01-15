@@ -26,9 +26,18 @@ const UserProfile = () => {
                     setUser(response.data);
                 })
                 .catch(error => {
+<<<<<<< HEAD
                     console.error('Error fetching profile: ', error);
                     setError('Failed to fetch profile.');
+=======
+                    if (error.response) {
+                        console.error('User not found');
+                    } else {
+                        console.error('Error fetching profile:', error);
+                    }
+>>>>>>> eff52ca08a8656022db822101bdca89f4511b66e
                 });
+                
         }
     }, []);
 

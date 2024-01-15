@@ -20,6 +20,7 @@ router.get('/get-profile/:userId', (req, res) => {
         if (err) {
             res.status(500).send('Error fetching profile: ' + err.message);
         } else if (result) {
+            console.log("reslut:"+result);
             res.status(200).json(result);
         }
     });
