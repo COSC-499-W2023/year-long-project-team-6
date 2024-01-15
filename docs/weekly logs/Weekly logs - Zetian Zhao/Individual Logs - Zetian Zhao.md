@@ -334,6 +334,12 @@
 ## ScreenShot of peer evaluation
 ![Peer Evaluation](Term_2_Week_1/PE.png)
 
+## Revised UI
+*Post Page:*
+![Post Page](Term_2_Week_1/PostPage.png)
+*Recorded Page:*
+![Recorded Page](Term_2_Week_1/RecordedPage.png)
+
 ## My Task on Board
 *Board format:*
 ![Board](Term_2_Week_1/Board.png)
