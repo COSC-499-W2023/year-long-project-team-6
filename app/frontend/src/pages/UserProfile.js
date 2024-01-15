@@ -49,6 +49,7 @@ const UserProfile = () => {
     const handleSaveClick = () => {
         const storedUserData = sessionStorage.getItem('user');
         const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
+        console.log("User: is " + user);
         if (storedUser && storedUser.userid) {
             axios.post(`http://localhost:5001/edit-profile/${storedUser.userid}`, user)
                 .then(response => {
