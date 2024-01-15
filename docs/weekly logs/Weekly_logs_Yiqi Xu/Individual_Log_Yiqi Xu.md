@@ -288,3 +288,38 @@ I've made considerable progress, demonstrating a strong command in both frontend
 ![Board](w13_img/Board.png)
 *Table format:*
 ![Table](w13_img/Table.png)
+
+# Term 2
+
+# Individual Log - Yiqi Xu (Week 1)
+
+## Applicable data range
+**Januart/8/2023** to **January/14/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to
+* Code backend (Profile)
+* Update Database structure
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting to
+* Coded backend (Profile)
+* Updated Database structure
+* Finished Peer Evaluation
+
+## In Progress
+* Coding on the frontend of Profile
+
+## Self reflection
+This week, I demonstrated a strong balance between technical proficiency and collaborative skills. I efficiently managed backend development, updated the database structure, and successfully conducted peer evaluations. Currently we are making progress in frontend coding.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w1_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w1_img/Board.png)
+*Table format:*
+![Table](T2_w1_img/Table.png)
