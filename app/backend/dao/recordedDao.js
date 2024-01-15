@@ -1,7 +1,9 @@
 const mysql = require('mysql');
 
 class recordedDao {
-
+    constructor(db) {
+        this.db = db;
+    }
     getPostInfor(userId, callback) {
         const query = `
             SELECT p.userid, p.post_id, p.post_title, p.post_date, p.s3_content_key, p.post_text
@@ -33,7 +35,7 @@ class recordedDao {
             DELETE FROM posts 
             WHERE post_id = ?
         `;
-        db.query(query, [postId], (err, result) => {
+        this.db.query(query, [postId], (err, result) => {
             if (err) {
                 callback(err, null);
             } else {
@@ -48,7 +50,7 @@ class recordedDao {
             SET post_title = ?, post_text = ?
             WHERE post_id = ?
         `;
-        db.query(query, [newTitle, newText, postId], (err, result) => {
+        this.db.query(query, [newTitle, newText, postId], (err, result) => {
             if (err) {
                 callback(err, null);
             } else {
