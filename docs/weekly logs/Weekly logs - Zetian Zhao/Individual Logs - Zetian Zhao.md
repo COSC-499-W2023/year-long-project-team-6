@@ -303,3 +303,42 @@
 ![Table](13_imgs/Table_1.png)
 ![Table](13_imgs/Table_2.png)
 
+
+
+*** 
+***
+***
+# *Term 2*
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 1)
+
+## Applicable date range
+**January/8/2024** to **January/14/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Complete the UI Improvement for the recorded page. 
+* Complete the UI Improvement for the post vidoe page. 
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* The UI revision for the recorded page has been done. (First version)
+* The UI Change of the videos post page has also been accomplished. (May require future Improvement)
+* Completed the peer evaluation. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_1/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_1/Board.png)
+*Table format:*
+![Table](Term_2_Week_1/Table_1.png)
+![Table](Term_2_Week_1/Table_2.png)
+![Table](Term_2_Week_1/Table_3.png)
+
