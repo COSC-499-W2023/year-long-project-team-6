@@ -234,3 +234,35 @@
 
 *Table format:*
 ![Table](week13/Table.png)
+
+# Individual Log - Wenrui Chen (Week 5)
+
+## Applicable data range
+**January/9/2024** to **January/16/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Meetings and see what's the plan. 
+* test for Dao and router test
+* Complete the peer evaluation. 
+* AWS activation. 
+
+## Completed Tasks 
+* meeting with team members.
+* Completed Dao and router tests. 
+* Completed the peer evaluation of this week. 
+* fixed some bugs of tests done before 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](t2w1/PE.png)
+
+## Task on Board
+*Board format:*
+![Board](t2w1/board.png)
+
+*Tests:*
+![Board](t2w1/test1.png)
+![Board](t2w1/test2.png)
+
+*Table format:*
+![Task1](t2w1/table.png)
