@@ -19,21 +19,21 @@ function PostPage() {
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
 
 
-    
+
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
-useEffect(() => {
-         const sessionUser = sessionStorage.getItem('user');
-         console.log("Sessopm User: " + sessionUser);
-         if (!sessionUser) {
-             navigate('/login');
-         } else {
-             const user = JSON.parse(sessionUser);
-             setUserId(user.userid);
-             console.log("User Id: " + user.userid);
-         }
-     }, []);
-     useEffect(() => {
+    useEffect(() => {
+        const sessionUser = sessionStorage.getItem('user');
+        console.log("Sessopm User: " + sessionUser);
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
+    useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         console.log("Sessopm User: " + sessionUser);
         if (!sessionUser) {
@@ -97,77 +97,78 @@ useEffect(() => {
             })
             .catch((error) => {
                 console.error('Error:', error);
-            });}
+            });
+    }
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
     // Temporary array to hold recorded chunks, outside of the function
-let tempRecordedChunks = [];
+    let tempRecordedChunks = [];
 
-const handleTogglePlay = async () => {
-    console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
+    const handleTogglePlay = async () => {
+        console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
 
-    if (!isPlaying) {
-        setTimeout(async () => {
-            if (localView.current) {
-                try {
-                    const webrtc = await initializeWebRTC(channelARN, localView.current);
-                    signalingClientRef.current = webrtc.signalingClient;
-                    peerConnectionRef.current = webrtc.peerConnection;
+        if (!isPlaying) {
+            setTimeout(async () => {
+                if (localView.current) {
+                    try {
+                        const webrtc = await initializeWebRTC(channelARN, localView.current);
+                        signalingClientRef.current = webrtc.signalingClient;
+                        peerConnectionRef.current = webrtc.peerConnection;
 
-                    // Initialize MediaRecorder here
-                    const stream = localView.current.srcObject; // Assuming this is your local stream
-                    console.log('stream', stream);
-                    const options = { mimeType: 'video/webm; codecs=vp9' };
-                    const recorder = new MediaRecorder(stream, options);
-                    setMediaRecorder(recorder);
+                        // Initialize MediaRecorder here
+                        const stream = localView.current.srcObject; // Assuming this is your local stream
+                        console.log('stream', stream);
+                        const options = { mimeType: 'video/webm; codecs=vp9' };
+                        const recorder = new MediaRecorder(stream, options);
+                        setMediaRecorder(recorder);
 
-                    recorder.ondataavailable = (event) => {
-                        if (event.data.size > 0) {
-                            tempRecordedChunks.push(event.data);
-                        }
-                    };
+                        recorder.ondataavailable = (event) => {
+                            if (event.data.size > 0) {
+                                tempRecordedChunks.push(event.data);
+                            }
+                        };
 
-                    recorder.onstop = async () => {
-                        console.log('tempchunk',tempRecordedChunks);
-                        setRecordedChunks(tempRecordedChunks);
+                        recorder.onstop = async () => {
+                            console.log('tempchunk', tempRecordedChunks);
+                            setRecordedChunks(tempRecordedChunks);
 
-                        // Create blob from recorded chunks
-                        const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
-                        console.log(blob);
+                            // Create blob from recorded chunks
+                            const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
+                            console.log(blob);
 
-                        try {
-                            const uploadResult = await uploadVideo(blob);
-                            console.log('Video uploaded successfully:', uploadResult);
-                        } catch (uploadError) {
-                            console.error('Failed to upload video:', uploadError);
-                        }
+                            try {
+                                const uploadResult = await uploadVideo(blob);
+                                console.log('Video uploaded successfully:', uploadResult);
+                            } catch (uploadError) {
+                                console.error('Failed to upload video:', uploadError);
+                            }
 
-                        setRecordedChunks([]);
-                        tempRecordedChunks = [];
-                    };
+                            setRecordedChunks([]);
+                            tempRecordedChunks = [];
+                        };
 
-                    setShowWebRTC(true);
-                    recorder.start();
+                        setShowWebRTC(true);
+                        recorder.start();
 
-                } catch (error) {
-                    console.error('Error initializing WebRTC: ', error);
+                    } catch (error) {
+                        console.error('Error initializing WebRTC: ', error);
+                    }
+                } else {
+                    console.log('Refs are not set:', localView.current);
                 }
-            } else {
-                console.log('Refs are not set:', localView.current);
+            }, 100);
+        } else {
+            if (mediaRecorder) {
+                mediaRecorder.stop();
             }
-        }, 100);
-    } else {
-        if (mediaRecorder) {
-            mediaRecorder.stop();
+            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+            signalingClientRef.current = null;
+            peerConnectionRef.current = null;
+            setShowWebRTC(false);
         }
-        cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
-        signalingClientRef.current = null;
-        peerConnectionRef.current = null;
-        setShowWebRTC(false);
-    }
-    setIsPlaying(!isPlaying);
-};
+        setIsPlaying(!isPlaying);
+    };
 
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
@@ -183,23 +184,23 @@ const handleTogglePlay = async () => {
             </div>
             <div className="flex-container">
                 <div id="input">
-                <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <div id="main" className="main">
-                        <div id="videoContainer">
-                        {isPlaying && (
-                    <>
-                       <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
+                            <div id="videoContainer">
+                                {isPlaying && (
+                                    <>
+                                        <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
 
-                    </>
-                )}
-                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
-</div>
+                                    </>
+                                )}
+                                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+                            </div>
 
                             <div className="EnterText">
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-                        {/*
+                            {/*
                             <div className="EnterText">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>

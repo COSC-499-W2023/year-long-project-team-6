@@ -16,7 +16,7 @@ function RecordedPage() {
 
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
-        console.log("Sessopm User: " + sessionUser);
+        console.log("Session User: " + sessionUser);
         if (!sessionUser) {
             navigate('/login');
         } else {

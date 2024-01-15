@@ -16,6 +16,27 @@ function editUserProfile(userId, { username, password, role, user_image, gender,
     });
 }
 
+function getUserProfile(userId, callback) {
+    const query = `
+        SELECT username, password, email, role, user_image, gender, birthday 
+        FROM users 
+        WHERE userid = ?;
+    `;
+    db.query(query, [userId], (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            if (result.length > 0) {
+                const user = result;
+                callback(null, user);
+            } else {
+                callback(new Error('User not found'), null);
+            }
+        }
+    });
+}
+
 module.exports = {
-    editUserProfile
+    editUserProfile,
+    getUserProfile
 };
