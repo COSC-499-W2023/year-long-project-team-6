@@ -8,7 +8,7 @@ const UserProfile = () => {
         userId: '',
         username: '',
         email: '',
-        profilePicture: '',
+        profilePicture: profilePicture,
         gender: '',
         birthday: '',
         role: ''
@@ -27,13 +27,8 @@ const UserProfile = () => {
                     setUser(prevState => ({ ...prevState, ...response.data }));
                 })
                 .catch(error => {
-                    if (error.response) {
-                        console.error('User not found');
-                    } else {
-                        console.error('Error fetching profile:', error);
-                    }
+                    console.error('Error fetching profile:', error);
                 });
-                
         }
         console.log(user);
     }, []);
