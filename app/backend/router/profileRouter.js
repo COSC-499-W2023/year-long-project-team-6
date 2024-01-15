@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const { editUserProfile, getUserProfile } = require('../dao/profileDao');
 
-router.post('/edit-profile/:userId', express.json(), (req, res) => {
+router.put('/edit-profile/:userId', (req, res) => {
+    console.log('Received data:', req.body);
     const userId = req.params.userId;
-    const updatedProfile = req.body;
-    console.log("Updated Profile: " + updatedProfile);
-    editUserProfile(userId, updatedProfile, (err, result) => {
+    const userDataArray = req.body; // Assuming the array is sent directly
+    // console.log("Updated Profile: " + updatedProfile);
+    editUserProfile(userId, userDataArray, (err, result) => {
         if (err) {
             res.status(500).send('Error updating profile: ' + err.message);
         } else {

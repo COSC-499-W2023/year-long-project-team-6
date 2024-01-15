@@ -1,13 +1,17 @@
 const db = require('../db/db');
 
-function editUserProfile(userId, { username, password, role, user_image, gender, birthday }, callback) {
+function editUserProfile(userId, userDataArray, callback) {
     const query = `
         UPDATE users 
-        SET username = ?, password = ?, role = ?, user_image = ?, gender = ?, birthday = ?
+        SET username = ?, role = ?, gender = ?, birthday = ?
         WHERE userid = ?;
     `;
 
-    db.query(query, [username, password, role, user_image, gender, birthday, userId], (err, result) => {
+    userDataArray.push(userId);
+    console.log(userDataArray);
+
+    db.query(query, userDataArray, (err, result) => {
+        console.log(result);
         if (err) {
             callback(err, null);
         } else {

@@ -46,23 +46,25 @@ const UserProfile = () => {
         setIsEditMode(true);
     };
 
+    
     const handleSaveClick = () => {
         const storedUserData = sessionStorage.getItem('user');
         const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
-        console.log("User: is " + user);
         if (storedUser && storedUser.userid) {
-            axios.post(`http://localhost:5001/edit-profile/${storedUser.userid}`, user)
-                .then(response => {
-                    setIsEditMode(false);
-                    setError('');
-                })
-                .catch(error => {
-                    console.error('Error updating profile:', error);
-                    setError('Failed to update profile.');
-                });
+            const userDataArray = Object.values(user);
+            console.log(userDataArray);
+            axios.put(`http://localhost:5001/edit-profile/${storedUser.userid}`, userDataArray)            
+            .then(response => {
+                console.log(response);
+                setIsEditMode(false);
+                setError('');
+            })
+            .catch(error => {
+                console.error('Error updating profile:', error);
+                setError('Failed to update profile.');
+            });
         }
     };
-
 
     return (
         <div className="user-profile">
@@ -77,12 +79,16 @@ const UserProfile = () => {
             {isEditMode ? (
                 <>
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} /></p>
-                    <p>Gender: <input type="radio" name="male" value="Male" onChange={handleInputChange} /><label for="male">Male</label>
-                        <input type="radio" name="female" value="Female" onChange={handleInputChange} /><label for="female">Female</label>
-                        <input type="radio" name="other" value="Other" onChange={handleInputChange} /><label for="other">Other</label></p>
+                    <p>Gender: 
+                        <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
+                        <input type="radio" name="gender" value="Female" checked={user.gender === "Female"} onChange={handleInputChange} /><label>Female</label>
+                        <input type="radio" name="gender" value="Other" checked={user.gender === "Other"} onChange={handleInputChange} /><label>Other</label>
+                    </p>
                     <p>Birth Date: <input type="date" name="birthday" value={user.birthday} onChange={handleInputChange} /></p>
-                    <p>Role: <input type="radio" name="receiver" value="receiver" onChange={handleInputChange} /><label for="receiver">receiver</label>
-                        <input type="radio" name="sender" value="sender" onChange={handleInputChange} /><label for="sender">Sender</label></p>
+                    <p>Role: 
+                        <input type="radio" name="role" value="Receiver" checked={user.role === "Receiver"} onChange={handleInputChange} /><label>Receiver</label>
+                        <input type="radio" name="role" value="Sender" checked={user.role === "Sender"} onChange={handleInputChange} /><label>Sender</label>
+                    </p>
                     <button className="save-profile" onClick={handleSaveClick}>Save</button>
                     <button className="cancel-profile" onClick={handleSaveClick}>Cancel</button>
                 </>
