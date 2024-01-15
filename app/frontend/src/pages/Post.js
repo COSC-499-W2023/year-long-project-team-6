@@ -17,6 +17,8 @@ function PostPage() {
     const [recordedChunks, setRecordedChunks] = useState([]);
     const navigate = useNavigate();
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
+    const [recordedVideo, setRecordedVideo] = useState(null);
+
 
 
     
@@ -68,18 +70,29 @@ useEffect(() => {
         }
     }, [userId]);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
-
+        let videoKey = '';
+        
+        if (recordedVideo) {
+            try {
+                const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title')); // Modify this function as needed
+                console.log('Video uploaded successfully:', uploadResult);
+                videoKey = uploadResult.key;
+            } catch (uploadError) {
+                console.error('Failed to upload video:', uploadError);
+                return; // Stop the submission if the upload fails
+            }
+        }
         const postData = {
             post_title: formData.get('post_title'),
             post_text: formData.get('post_text'),
+            s3_content_key: videoKey,
             userid: userId
-        };
-
+        }; 
         console.log("postData to be sent:", postData); // Add this line for debugging
-
+        
         fetch('http://localhost:5001/add-post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -118,8 +131,8 @@ const handleTogglePlay = async () => {
                     // Initialize MediaRecorder here
                     const stream = localView.current.srcObject; // Assuming this is your local stream
                     console.log('stream', stream);
-                    const options = { mimeType: 'video/webm; codecs=vp9' };
-                    const recorder = new MediaRecorder(stream, options);
+
+                    const recorder = new MediaRecorder(stream);
                     setMediaRecorder(recorder);
 
                     recorder.ondataavailable = (event) => {
@@ -129,23 +142,11 @@ const handleTogglePlay = async () => {
                     };
 
                     recorder.onstop = async () => {
-                        console.log('tempchunk',tempRecordedChunks);
-                        setRecordedChunks(tempRecordedChunks);
-
-                        // Create blob from recorded chunks
                         const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
-                        console.log(blob);
-
-                        try {
-                            const uploadResult = await uploadVideo(blob);
-                            console.log('Video uploaded successfully:', uploadResult);
-                        } catch (uploadError) {
-                            console.error('Failed to upload video:', uploadError);
-                        }
-
-                        setRecordedChunks([]);
+                        setRecordedVideo(blob); // Assuming you have a state called recordedVideo
                         tempRecordedChunks = [];
                     };
+                    
 
                     setShowWebRTC(true);
                     recorder.start();
