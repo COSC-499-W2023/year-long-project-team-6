@@ -37,9 +37,6 @@ const UserProfile = () => {
         }
     }, []);
 
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
 
     const handleInputChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
