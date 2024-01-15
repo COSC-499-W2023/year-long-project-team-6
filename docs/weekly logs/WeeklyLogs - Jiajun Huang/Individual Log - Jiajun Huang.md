@@ -232,3 +232,34 @@ I have made a reasonable progress in this week. After a productive team meeting,
 ![Board](Week13_img/Board.png)
 *Table format:*
 ![Table](Week13_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 1)
+
+## Applicable data range
+**January/8/2024** to **January/14/2024**
+
+## Recap Goal 
+*My jobs in this week are:*
+* Met with my team members
+* Finish button functionalities for profile page
+* Complete frontend and backend linking for profile page
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Completed frontend and backend linking for profile page
+* Finished Peer evaluation
+
+## In Progress
+* Updating info in database using edit button
+
+## Self reflection
+I have made a reasonable progress in this week. I linked frontend and backend for user profile page and adjusted the design of it to make it looks better. However, I have not finished the button functionality yet, I met some difficulties while sending data to database. I believe I can fix it very soon next week. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W1_img/PE.png)
+## My Task on Board
+*Board format:*
+![Board](T2W1_img/Board.png)
+*Table format:*
+![Table](T2W1_img/Table.png)
