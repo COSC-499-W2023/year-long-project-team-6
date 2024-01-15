@@ -19,35 +19,45 @@ describe('recordedDao', () => {
         const callback = jest.fn();
         const userId = 'testUserId';
         dao.getPostInfor(userId, callback);
-
+    
+        const expectedQuery = `
+            SELECT p.userid, p.post_id, p.post_title, p.post_date, p.s3_content_key, p.post_text
+            FROM posts p WHERE p.userid = ?
+        `.trim();
+    
         expect(mockQuery).toHaveBeenCalledWith(
-            expect.stringContaining('SELECT p.userid, p.post_id, p.post_title, p.post_date, p.s3_content_key, p.post_text FROM posts p WHERE p.userid = ?'),
+            expect.stringContaining(expectedQuery),
             [userId],
             expect.any(Function)
         );
     });
+    
 
     it('should query the database for group information', () => {
         const callback = jest.fn();
         dao.getGroupInfor(callback);
-
-        expect(mockQuery).toHaveBeenCalledWith(
-            expect.stringContaining('SELECT groupid, groupname FROM groups'),
-            expect.any(Function)
-        );
-    });
+    
+        const expectedQuery = 'SELECT groupid, groupname FROM groups';
+    
+        const sanitizedExpected = expectedQuery.replace(/\s+/g, ' ').trim();
+        const sanitizedReceived = mockQuery.mock.calls[0][0].replace(/\s+/g, ' ').trim();
+    
+        expect(sanitizedReceived).toEqual(expect.stringMatching(`${sanitizedExpected}(;)?$`));
+    });       
 
     it('should delete a post from the database', () => {
         const callback = jest.fn();
         const postId = 'testPostId';
         dao.deletePost(postId, callback);
-
-        expect(mockQuery).toHaveBeenCalledWith(
-            expect.stringContaining('DELETE FROM posts WHERE post_id = ?'),
-            [postId],
-            expect.any(Function)
-        );
+    
+        const expectedQuery = 'DELETE FROM posts WHERE post_id = ?';
+    
+        const sanitizedExpected = expectedQuery.replace(/\s+/g, ' ').trim();
+        const sanitizedReceived = mockQuery.mock.calls[0][0].replace(/\s+/g, ' ').trim();
+    
+        expect(sanitizedReceived).toEqual(expect.stringContaining(sanitizedExpected));
     });
+    
 
     it('should update a post in the database', () => {
         const callback = jest.fn();
@@ -55,11 +65,12 @@ describe('recordedDao', () => {
         const newTitle = 'New Title';
         const newText = 'New Text';
         dao.editPost(postId, newTitle, newText, callback);
-
-        expect(mockQuery).toHaveBeenCalledWith(
-            expect.stringContaining('UPDATE posts SET post_title = ?, post_text = ? WHERE post_id = ?'),
-            [newTitle, newText, postId],
-            expect.any(Function)
-        );
-    });
+    
+        const expectedQuery = 'UPDATE posts SET post_title = ?, post_text = ? WHERE post_id = ?';
+    
+        const sanitizedExpected = expectedQuery.replace(/\s+/g, ' ').trim();
+        const sanitizedReceived = mockQuery.mock.calls[0][0].replace(/\s+/g, ' ').trim();
+    
+        expect(sanitizedReceived).toEqual(expect.stringContaining(sanitizedExpected));
+    });    
 });

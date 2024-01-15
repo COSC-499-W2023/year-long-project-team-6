@@ -6,7 +6,6 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        // Check if user is logged in (e.g., check session storage)
         const user = sessionStorage.getItem('user');
         setIsAuthenticated(!!user);
     }, []);
