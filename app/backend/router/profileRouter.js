@@ -21,8 +21,6 @@ router.get('/get-profile/:userId', (req, res) => {
             res.status(500).send('Error fetching profile: ' + err.message);
         } else if (result) {
             res.status(200).json(result);
-        } else {
-            res.status(404).send('User not found');
         }
     });
 });

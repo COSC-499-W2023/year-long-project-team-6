@@ -1,43 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import profilePicture from '../component/image/AvatarForProfile.png';
-import "../component/CSS/profile.css"
+import "../component/CSS/profile.css";
 
 const UserProfile = () => {
     const [user, setUser] = useState({
         userId: '',
         username: '',
         email: '',
-        profilePicture: profilePicture,
+        profilePicture: '',
         gender: '',
         birthday: '',
         role: ''
     });
 
     const [isEditMode, setIsEditMode] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const storedUserData = sessionStorage.getItem('user');
-        console.log("Session User: " + storedUserData);
         const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
         if (storedUser && storedUser.userid) {
-            setUser(prevState => ({ ...prevState, userId: storedUser.userid }));
             axios.get(`http://localhost:5001/get-profile/${storedUser.userid}`)
                 .then(response => {
-                    setUser(prevState => ({ ...prevState, ...response.data }));
+                    setUser(response.data);
                 })
                 .catch(error => {
-                    console.error('Error fetching profile:', error);
+                    console.error('Error fetching profile: ', error);
+                    setError('Failed to fetch profile.');
                 });
         }
-        console.log(user);
     }, []);
 
+    useEffect(() => {
+        console.log(user);
+    }, [user]);
+
     const handleInputChange = (e) => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value
-        });
+        setUser({ ...user, [e.target.name]: e.target.value });
     };
 
     const handleEditClick = () => {
@@ -47,11 +47,12 @@ const UserProfile = () => {
     const handleSaveClick = () => {
         axios.put(`/edit-profile/${user.userId}`, user)
             .then(response => {
-                console.log('Profile updated successfully', response.data);
                 setIsEditMode(false);
+                setError('');
             })
             .catch(error => {
                 console.error('Error updating profile:', error);
+                setError('Failed to update profile.');
             });
     };
 
