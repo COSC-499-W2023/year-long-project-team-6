@@ -245,7 +245,6 @@
 * Meetings and see what's the plan. 
 * test for Dao and router test
 * Complete the peer evaluation. 
-* AWS activation. 
 
 ## Completed Tasks 
 * meeting with team members.
