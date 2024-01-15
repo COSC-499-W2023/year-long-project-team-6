@@ -50,17 +50,18 @@ const UserProfile = () => {
         const storedUserData = sessionStorage.getItem('user');
         const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
         if (storedUser && storedUser.userid) {
-            axios.put(`http://localhost:5001/edit-profile/${storedUser.userid}`, user)            
-            .then(response => {
-                setIsEditMode(false);
-                setError('');
-            })
-            .catch(error => {
-                console.error('Error updating profile:', error);
-                setError('Failed to update profile.');
-            });
+            axios.post(`http://localhost:5001/edit-profile/${storedUser.userid}`, user)
+                .then(response => {
+                    setIsEditMode(false);
+                    setError('');
+                })
+                .catch(error => {
+                    console.error('Error updating profile:', error);
+                    setError('Failed to update profile.');
+                });
         }
     };
+
 
     return (
         <div className="user-profile">
@@ -76,11 +77,11 @@ const UserProfile = () => {
                 <>
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} /></p>
                     <p>Gender: <input type="radio" name="male" value="Male" onChange={handleInputChange} /><label for="male">Male</label>
-                    <input type="radio" name="female" value="Female" onChange={handleInputChange} /><label for="female">Female</label>
-                    <input type="radio" name="other" value="Other" onChange={handleInputChange} /><label for="other">Other</label></p>
+                        <input type="radio" name="female" value="Female" onChange={handleInputChange} /><label for="female">Female</label>
+                        <input type="radio" name="other" value="Other" onChange={handleInputChange} /><label for="other">Other</label></p>
                     <p>Birth Date: <input type="date" name="birthday" value={user.birthday} onChange={handleInputChange} /></p>
                     <p>Role: <input type="radio" name="receiver" value="receiver" onChange={handleInputChange} /><label for="receiver">receiver</label>
-                    <input type="radio" name="sender" value="sender" onChange={handleInputChange} /><label for="sender">Sender</label></p>
+                        <input type="radio" name="sender" value="sender" onChange={handleInputChange} /><label for="sender">Sender</label></p>
                     <button className="save-profile" onClick={handleSaveClick}>Save</button>
                     <button className="cancel-profile" onClick={handleSaveClick}>Cancel</button>
                 </>

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { editUserProfile, getUserProfile } = require('../dao/profileDao');
 
-router.put('/edit-profile/:userId', express.json(), (req, res) => {
+router.post('/edit-profile/:userId', express.json(), (req, res) => {
     const userId = req.params.userId;
     const updatedProfile = req.body;
     editUserProfile(userId, updatedProfile, (err, result) => {
@@ -13,6 +13,7 @@ router.put('/edit-profile/:userId', express.json(), (req, res) => {
         }
     });
 });
+
 
 router.get('/get-profile/:userId', (req, res) => {
     const userId = req.params.userId;
