@@ -10,7 +10,7 @@ function editUserProfile(userId, userData, callback) {
     `;
 
     const params = [userData.username, userData.email, userData.gender, userData.birthday, userId];
-    console.log(params);
+    console.log("params is: " + params);
 
     db.query(query, params, (err, result) => {
         if (err) {

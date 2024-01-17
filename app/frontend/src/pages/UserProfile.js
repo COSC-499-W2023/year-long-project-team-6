@@ -6,7 +6,7 @@ import "../component/CSS/profile.css";
 
 const UserProfile = () => {
     const [user, setUser] = useState({
-        userId: '',
+        userid: '',
         username: '',
         email: '',
         profilePicture: '',
@@ -14,8 +14,10 @@ const UserProfile = () => {
         birthday: '',
         role: ''
     });
+    
     const [isEditMode, setIsEditMode] = useState(false);
     const [error, setError] = useState('');
+    const [userId, setId] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,31 +28,31 @@ const UserProfile = () => {
             const user = JSON.parse(sessionUser);
             setUser(user);
             console.log(user);
+            if (user.userid) {
+                fetch(`http://localhost:5001/get-profile/${user.userid}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(user.userid);
+                        setId(user.userid);
+                        console.log('Fetched data:', data);
+                        if (data.birthday) {
+                            data.birthday = data.birthday.split('T')[0]; // Keeps only the 'YYYY-MM-DD' part
+                        }
+                        setUser(data);
+                        console.log(userId);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching posts:', error);
+                    });
+            }
         }
     }, [navigate]);
 
-    useEffect(() => {
-        if (user.userid) {
-            fetch(`http://localhost:5001/get-profile/${user.userid}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(user.userid);
-                    console.log('Fetched data:', data);
-                    if (data.birthday) {
-                        data.birthday = data.birthday.split('T')[0]; // Keeps only the 'YYYY-MM-DD' part
-                    }
-                    setUser(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching posts:', error);
-                });
-        }
-    }, [user.userid]);
 
 
     const handleInputChange = (e) => {
@@ -66,8 +68,8 @@ const UserProfile = () => {
     };
 
     const handleSaveClick = () => {
-        console.log(user.userid);
-        axios.put(`http://localhost:5001/edit-profile/${user.userid}`, user)
+        console.log('Session User:', user);
+        axios.put(`http://localhost:5001/edit-profile/${userId}`, user)
             .then(response => {
                 console.log('Profile updated:', response.data);
                 setIsEditMode(false);
