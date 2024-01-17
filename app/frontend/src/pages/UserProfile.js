@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import profilePicture from '../component/image/AvatarForProfile.png';
 import "../component/CSS/profile.css";
 
@@ -13,29 +14,43 @@ const UserProfile = () => {
         birthday: '',
         role: ''
     });
-
     const [isEditMode, setIsEditMode] = useState(false);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUserData = sessionStorage.getItem('user');
-        const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
-        if (storedUser && storedUser.userid) {
-            axios.get(`http://localhost:5001/get-profile/${storedUser.userid}`)
+        const sessionUser = sessionStorage.getItem('user');
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUser(user);
+            console.log(user);
+        }
+    }, [navigate]);
+
+    useEffect(() => {
+        if (user.userid) {
+            fetch(`http://localhost:5001/get-profile/${user.userid}`)
                 .then(response => {
-                    setUser(response.data);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(user.userid);
+                    console.log('Fetched data:', data);
+                    if (data.birthday) {
+                        data.birthday = data.birthday.split('T')[0]; // Keeps only the 'YYYY-MM-DD' part
+                    }
+                    setUser(data);
                 })
                 .catch(error => {
-                    console.error('Error fetching profile: ', error);
-                    setError('Failed to fetch profile.');
-                    if (error.response) {
-                        console.error('User not found');
-                    } else {
-                        console.error('Error fetching profile:', error);
-                    }
+                    console.error('Error fetching posts:', error);
                 });
         }
-    }, []);
+    }, [user.userid]);
 
 
     const handleInputChange = (e) => {
@@ -46,32 +61,30 @@ const UserProfile = () => {
         setIsEditMode(true);
     };
 
-    
-    const handleSaveClick = () => {
-        const storedUserData = sessionStorage.getItem('user');
-        const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
-        if (storedUser && storedUser.userid) {
-            const userDataArray = Object.values(user);
-            console.log(userDataArray);
-            axios.put(`http://localhost:5001/edit-profile/${storedUser.userid}`, userDataArray)            
-            .then(response => {
-                console.log(response);
-                setIsEditMode(false);
-                setError('');
-            })
-            .catch(error => {
-                console.error('Error updating profile:', error);
-                setError('Failed to update profile.');
-            });
-        }
+    const handleCancelClick = () => {
+        setIsEditMode(false);
     };
 
+    const handleSaveClick = () => {
+        console.log(user.userid);
+        axios.put(`http://localhost:5001/edit-profile/${user.userid}`, user)
+            .then(response => {
+                console.log('Profile updated:', response.data);
+                setIsEditMode(false);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setError('Failed to update profile.');
+            });
+    };
     return (
         <div className="user-profile">
             <div className="avatar-container">
                 <img src={user.profilePicture || profilePicture} alt={`${user.username}'s profile`} />
                 {isEditMode ? (
-                    <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
+                    <>
+                        <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
+                    </>
                 ) : (
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
                 )}
@@ -85,12 +98,8 @@ const UserProfile = () => {
                         <input type="radio" name="gender" value="Other" checked={user.gender === "Other"} onChange={handleInputChange} /><label>Other</label>
                     </p>
                     <p>Birth Date: <input type="date" name="birthday" value={user.birthday} onChange={handleInputChange} /></p>
-                    <p>Role: 
-                        <input type="radio" name="role" value="Receiver" checked={user.role === "Receiver"} onChange={handleInputChange} /><label>Receiver</label>
-                        <input type="radio" name="role" value="Sender" checked={user.role === "Sender"} onChange={handleInputChange} /><label>Sender</label>
-                    </p>
                     <button className="save-profile" onClick={handleSaveClick}>Save</button>
-                    <button className="cancel-profile" onClick={handleSaveClick}>Cancel</button>
+                    <button className="cancel-profile" onClick={handleCancelClick}>Cancel</button>
                 </>
             ) : (
                 <>

@@ -65,6 +65,7 @@ function RecordedPage() {
             })
             .catch(error => console.error('Error:', error));
     };
+    
     const handleEdit = (postId) => {
         const postData = { id: postId, newTitle: newTitle, newText: newText };
 

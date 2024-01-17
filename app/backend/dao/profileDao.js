@@ -1,17 +1,18 @@
 const db = require('../db/db');
 
-function editUserProfile(userId, userDataArray, callback) {
+// profileDao.js
+
+function editUserProfile(userId, userData, callback) {
     const query = `
         UPDATE users 
-        SET username = ?, role = ?, gender = ?, birthday = ?
+        SET username = ?, email = ?, gender = ?, birthday = ?
         WHERE userid = ?;
     `;
 
-    userDataArray.push(userId);
-    console.log(userDataArray);
+    const params = [userData.username, userData.email, userData.gender, userData.birthday, userId];
+    console.log(params);
 
-    db.query(query, userDataArray, (err, result) => {
-        console.log(result);
+    db.query(query, params, (err, result) => {
         if (err) {
             callback(err, null);
         } else {
@@ -20,9 +21,10 @@ function editUserProfile(userId, userDataArray, callback) {
     });
 }
 
+
 function getUserProfile(userId, callback) {
     const query = `
-        SELECT username, password, email, role, user_image, gender, birthday 
+        SELECT username, email, role, gender, birthday 
         FROM users 
         WHERE userid = ?;
     `;

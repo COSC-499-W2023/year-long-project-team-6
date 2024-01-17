@@ -5,9 +5,9 @@ const { editUserProfile, getUserProfile } = require('../dao/profileDao');
 router.put('/edit-profile/:userId', (req, res) => {
     console.log('Received data:', req.body);
     const userId = req.params.userId;
-    const userDataArray = req.body; // Assuming the array is sent directly
+    const userData = req.body; // Assuming the array is sent directly
     // console.log("Updated Profile: " + updatedProfile);
-    editUserProfile(userId, userDataArray, (err, result) => {
+    editUserProfile(userId, userData, (err, result) => {
         if (err) {
             res.status(500).send('Error updating profile: ' + err.message);
         } else {
