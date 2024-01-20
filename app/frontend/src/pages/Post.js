@@ -21,21 +21,21 @@ function PostPage() {
 
 
 
-    
+
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
-useEffect(() => {
-         const sessionUser = sessionStorage.getItem('user');
-         console.log("Sessopm User: " + sessionUser);
-         if (!sessionUser) {
-             navigate('/login');
-         } else {
-             const user = JSON.parse(sessionUser);
-             setUserId(user.userid);
-             console.log("User Id: " + user.userid);
-         }
-     }, []);
-     useEffect(() => {
+    useEffect(() => {
+        const sessionUser = sessionStorage.getItem('user');
+        console.log("Sessopm User: " + sessionUser);
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
+    useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         console.log("Sessopm User: " + sessionUser);
         if (!sessionUser) {
@@ -110,11 +110,13 @@ useEffect(() => {
             })
             .catch((error) => {
                 console.error('Error:', error);
-            });}
+            });
+    }
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
     // Temporary array to hold recorded chunks, outside of the function
+  
 let tempRecordedChunks = [];
 
 const handleTogglePlay = async () => {
@@ -154,21 +156,18 @@ const handleTogglePlay = async () => {
                 } catch (error) {
                     console.error('Error initializing WebRTC: ', error);
                 }
-            } else {
-                console.log('Refs are not set:', localView.current);
+            }, 100);
+        } else {
+            if (mediaRecorder) {
+                mediaRecorder.stop();
             }
-        }, 100);
-    } else {
-        if (mediaRecorder) {
-            mediaRecorder.stop();
+            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+            signalingClientRef.current = null;
+            peerConnectionRef.current = null;
+            setShowWebRTC(false);
         }
-        cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
-        signalingClientRef.current = null;
-        peerConnectionRef.current = null;
-        setShowWebRTC(false);
-    }
-    setIsPlaying(!isPlaying);
-};
+        setIsPlaying(!isPlaying);
+    };
 
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
@@ -184,23 +183,23 @@ const handleTogglePlay = async () => {
             </div>
             <div className="flex-container">
                 <div id="input">
-                <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <div id="main" className="main">
-                        <div id="videoContainer">
-                        {isPlaying && (
-                    <>
-                       <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
+                            <div id="videoContainer">
+                                {isPlaying && (
+                                    <>
+                                        <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
 
-                    </>
-                )}
-                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
-</div>
+                                    </>
+                                )}
+                                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+                            </div>
 
                             <div className="EnterText">
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-                        {/*
+                            {/*
                             <div className="EnterText">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
