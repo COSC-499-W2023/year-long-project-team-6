@@ -35,8 +35,8 @@ app.use(groupRouter);
 const profileRouter = require('./router/profileRouter');
 app.use(profileRouter);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const homeRouter = require('./router/homeRouter');
+app.use('/api', homeRouter);
 
 const server = http.createServer(app);
 

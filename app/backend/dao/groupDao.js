@@ -4,8 +4,8 @@ async function addNewGroup(groupname, invite_code, callback) {
     const query = 'INSERT INTO `groups` (`groupname`, `invite_code`) VALUES (?, ?)';
     db.query(query, [groupname, invite_code], (err, result) => {
         if (err) {
-            console.error(err); // Log the error for debugging
-            callback('Error adding group', null); // Send a generic error message to the frontend
+            console.error(err); 
+            callback('Error adding group', null); 
         } else {
             callback(null, result);
         }
