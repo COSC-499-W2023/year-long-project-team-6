@@ -17,6 +17,8 @@ function PostPage() {
     const [recordedChunks, setRecordedChunks] = useState([]);
     const navigate = useNavigate();
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
+    const [recordedVideo, setRecordedVideo] = useState(null);
+
 
 
 
@@ -68,18 +70,29 @@ function PostPage() {
         }
     }, [userId]);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
-
+        let videoKey = '';
+        
+        if (recordedVideo) {
+            try {
+                const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title')); // Modify this function as needed
+                console.log('Video uploaded successfully:', uploadResult);
+                videoKey = uploadResult.key;
+            } catch (uploadError) {
+                console.error('Failed to upload video:', uploadError);
+                return; // Stop the submission if the upload fails
+            }
+        }
         const postData = {
             post_title: formData.get('post_title'),
             post_text: formData.get('post_text'),
+            s3_content_key: videoKey,
             userid: userId
-        };
-
+        }; 
         console.log("postData to be sent:", postData); // Add this line for debugging
-
+        
         fetch('http://localhost:5001/add-post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -103,59 +116,45 @@ function PostPage() {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
     // Temporary array to hold recorded chunks, outside of the function
-    let tempRecordedChunks = [];
+  
+let tempRecordedChunks = [];
 
-    const handleTogglePlay = async () => {
-        console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
+const handleTogglePlay = async () => {
+    console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
 
-        if (!isPlaying) {
-            setTimeout(async () => {
-                if (localView.current) {
-                    try {
-                        const webrtc = await initializeWebRTC(channelARN, localView.current);
-                        signalingClientRef.current = webrtc.signalingClient;
-                        peerConnectionRef.current = webrtc.peerConnection;
+    if (!isPlaying) {
+        setTimeout(async () => {
+            if (localView.current) {
+                try {
+                    const webrtc = await initializeWebRTC(channelARN, localView.current);
+                    signalingClientRef.current = webrtc.signalingClient;
+                    peerConnectionRef.current = webrtc.peerConnection;
 
-                        // Initialize MediaRecorder here
-                        const stream = localView.current.srcObject; // Assuming this is your local stream
-                        console.log('stream', stream);
-                        const options = { mimeType: 'video/webm; codecs=vp9' };
-                        const recorder = new MediaRecorder(stream, options);
-                        setMediaRecorder(recorder);
+                    // Initialize MediaRecorder here
+                    const stream = localView.current.srcObject; // Assuming this is your local stream
+                    console.log('stream', stream);
 
-                        recorder.ondataavailable = (event) => {
-                            if (event.data.size > 0) {
-                                tempRecordedChunks.push(event.data);
-                            }
-                        };
+                    const recorder = new MediaRecorder(stream);
+                    setMediaRecorder(recorder);
 
-                        recorder.onstop = async () => {
-                            console.log('tempchunk', tempRecordedChunks);
-                            setRecordedChunks(tempRecordedChunks);
+                    recorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            tempRecordedChunks.push(event.data);
+                        }
+                    };
 
-                            // Create blob from recorded chunks
-                            const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
-                            console.log(blob);
+                    recorder.onstop = async () => {
+                        const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
+                        setRecordedVideo(blob); // Assuming you have a state called recordedVideo
+                        tempRecordedChunks = [];
+                    };
+                    
 
-                            try {
-                                const uploadResult = await uploadVideo(blob);
-                                console.log('Video uploaded successfully:', uploadResult);
-                            } catch (uploadError) {
-                                console.error('Failed to upload video:', uploadError);
-                            }
+                    setShowWebRTC(true);
+                    recorder.start();
 
-                            setRecordedChunks([]);
-                            tempRecordedChunks = [];
-                        };
-
-                        setShowWebRTC(true);
-                        recorder.start();
-
-                    } catch (error) {
-                        console.error('Error initializing WebRTC: ', error);
-                    }
-                } else {
-                    console.log('Refs are not set:', localView.current);
+                } catch (error) {
+                    console.error('Error initializing WebRTC: ', error);
                 }
             }, 100);
         } else {
