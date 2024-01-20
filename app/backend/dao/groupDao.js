@@ -46,10 +46,32 @@ async function getGroupInfo(groupId, callback) {
     });
 }
 
+async function joinGroupByInviteCode(userId, inviteCode, callback) {
+    const findGroupQuery = 'SELECT groupid FROM groups WHERE invite_code = ?';
+    db.query(findGroupQuery, [inviteCode], (err, groupResults) => {
+        if (err) {
+            callback(err, null);
+        } else if (groupResults.length === 0) {
+            callback('No group found with the provided invite code', null);
+        } else {
+            const groupId = groupResults[0].groupid;
+            const insertQuery = 'INSERT INTO user_groups (user_id, group_id) VALUES (?, ?)';
+            db.query(insertQuery, [userId, groupId], (insertErr, insertResult) => {
+                if (insertErr) {
+                    callback(insertErr, null);
+                } else {
+                    callback(null, insertResult);
+                }
+            });
+        }
+    });
+}
+
 
 module.exports = {
     addNewGroup,
     editGroupName,
     deleteGroup,
-    getGroupInfo
+    getGroupInfo,
+    joinGroupByInviteCode
 };
