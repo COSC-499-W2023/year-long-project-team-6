@@ -1,19 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import GroupCard from './GroupCard';
+
+
 function MainContent() {
-  return (
-    <div className="content">
-      <div className="main-content">
-        <div className="first-row">
-          {/* Reuse GroupCard for each group */}
-          <GroupCard imgUrl="/1.png" groupName="Group1" admin="XXX" numberOfPeople="50" />
-          <GroupCard imgUrl="/2.png" groupName="Group2" admin="XXX" numberOfPeople="50" />
-          {/* Add more GroupCards as needed */} 
+    const [userId, setUserId] = useState('');
+    const [groups, setGroups] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+      const sessionUser = sessionStorage.getItem('user');
+      console.log("Session User: " + sessionUser);
+      if (!sessionUser) {
+          navigate('/login');
+      } else {
+          const user = JSON.parse(sessionUser);
+          setUserId(user.userid);
+          console.log("User Id: " + user.userid);
+      }
+    }, []);
+
+    useEffect(() => {
+      if (userId) {
+        fetch(`http://localhost:5001/groups/${userId}`,)
+          .then(response => {
+            console.log(response);
+            if (!response.ok) {
+              console.error('Response Status:', response.status);
+              console.error('Response Status Text:', response.statusText);
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            setGroups(data);
+            console.log(setGroups);
+          })
+          .catch(error => {
+            console.error('Error fetching groups:', error);
+          });
+        }
+      }, [userId]);
+
+
+
+
+
+    return (
+      <div className="content">
+        <div className="main-content">
+          <div className="first-row">
+            {groups.map(group => (
+              <GroupCard 
+                key={group.id} // Replace with actual unique identifier
+                imgUrl={group.imgUrl} 
+                groupName={group.name} 
+                admin={group.admin} 
+                numberOfPeople={group.numberOfPeople}
+              />
+            ))}
+          </div>
+
         </div>
-        {/* Add more rows and GroupCards as needed */}
       </div>
-    </div>
-  );
+    );
 }
 
 export default MainContent;

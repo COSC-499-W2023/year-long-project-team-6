@@ -36,7 +36,7 @@ const profileRouter = require('./router/profileRouter');
 app.use(profileRouter);
 
 const homeRouter = require('./router/homeRouter');
-app.use('/api', homeRouter);
+app.use(homeRouter);
 
 const server = http.createServer(app);
 

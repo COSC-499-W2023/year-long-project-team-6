@@ -9,6 +9,8 @@ function getGroups(userId, callback) {
     JOIN users u ON ug.userid = u.userid
     WHERE u.userid = ?;  
     `;
+    console.log("Executing query:", query);
+    console.log("With userId:", userId);
 
     db.query(query, [userId], (err, results) => {
         if (err) {
