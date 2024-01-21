@@ -22,7 +22,8 @@
     "moduleNameMapper": {
       "^react$": "<rootDir>/node_modules/react",
       "^react-dom$": "<rootDir>/node_modules/react-dom",
-      "\\.(png|jpg|jpeg|gif|svg)$": "identity-obj-proxy"
+      "\\.(png|jpg|jpeg|gif|svg)$": "identity-obj-proxy",
+      "^bcrypt$": "<rootDir>/node_modules/bcrypt"
     },
     "moduleDirectories": [
       "node_modules"
@@ -30,6 +31,7 @@
     "testEnvironment": "jsdom"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.18.2",
     "mysql": "^2.18.1",
     "react": "^18.2.0",
