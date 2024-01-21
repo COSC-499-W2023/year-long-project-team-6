@@ -183,7 +183,7 @@
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    width: 69.5%;
+    width: 94%;
     height: 80px;
 }
 
@@ -217,4 +217,41 @@
 #text_one {
     margin-bottom: 25px;
     margin-top: 15px;
+    margin-left: 400px;
+    font-size: larger;
+}
+
+#text_two {
+    margin-bottom: 25px;
+    margin-top: 15px;
+    margin-left: 400px;
+    font-size: larger;
+}
+
+#VName {
+    font-size: large;
+}
+
+#Description {
+    font-size: large;
+}
+
+#submit {
+    margin-left: 550px;
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+}
+
+#send {
+    margin-left: 375px;
+    color: #3498db;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+}
+
+#videoContainer {
+    margin-left: 590px;
 }

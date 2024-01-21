@@ -180,7 +180,7 @@ function PostPage() {
     return (
         <div id='page'>
             <div id="send">
-                <h2>Send Your Post</h2>
+                <h2>Send Your Post Here</h2>
             </div>
             <div className="flex-container">
                 <div id="input">
@@ -211,7 +211,7 @@ function PostPage() {
                                 </select>
                             </div>
                         */}
-                            <div className="EnterText">
+                            <div className="EnterText" id="text_two">
                                 <legend>Description of Your Video</legend>
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
