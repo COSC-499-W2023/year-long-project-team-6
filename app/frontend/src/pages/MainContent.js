@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import GroupCard from './GroupCard';
 
-
 function MainContent() {
   const [userId, setUserId] = useState('');
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     const sessionUser = sessionStorage.getItem('user');
-    console.log("Sessopm User: " + sessionUser);
     if (!sessionUser) {
       navigate('/login');
     } else {
@@ -48,7 +47,7 @@ function MainContent() {
           {
             groups.map(group => (
               <GroupCard
-                key={group.groupid} 
+                key={group.groupid}
                 imgUrl={group.imgUrl}
                 groupName={group.name}
                 admin={group.admin}
