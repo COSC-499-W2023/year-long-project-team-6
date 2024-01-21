@@ -1,73 +1,119 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import profilePicture from '../component/image/AvatarForProfile.png';
-import "../component/CSS/profile.css"
+import "../component/CSS/profile.css";
+
 const UserProfile = () => {
     const [user, setUser] = useState({
-        name: '',
+        userid: '',
+        username: '',
         email: '',
-        profilePicture: profilePicture,
+        profilePicture: '',
         gender: '',
-        Bdate: '',
+        birthday: '',
         role: ''
     });
+    
     const [isEditMode, setIsEditMode] = useState(false);
-    // Just a temporary value for the both fields since we do not have them in the database. 
-    const [tempGender, setTempGender] = useState(user.gender);
-    const [tempBdate, setTempBdate] = useState(user.Bdate);
+    const [error, setError] = useState('');
+    const [userId, setId] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUser = JSON.parse(sessionStorage.getItem('user'));
-        if (storedUser) {
-            setUser({
-                ...storedUser,
-                profilePicture: storedUser.profilePicture || profilePicture
-            });
+        const sessionUser = sessionStorage.getItem('user');
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUser(user);
+            console.log(user);
+            if (user.userid) {
+                fetch(`http://localhost:5001/get-profile/${user.userid}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(user.userid);
+                        setId(user.userid);
+                        console.log('Fetched data:', data);
+                        if (data.birthday) {
+                            data.birthday = data.birthday.split('T')[0]; // Keeps only the 'YYYY-MM-DD' part
+                        }
+                        setUser(data);
+                        console.log(userId);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching posts:', error);
+                    });
+            }
         }
-    }, []);
+    }, [navigate]);
+
+
+
+    const handleInputChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
 
     const handleEditClick = () => {
         setIsEditMode(true);
     };
 
-    const handleSaveClick = () => {
-        setUser({ ...user, gender: tempGender, Bdate: tempBdate });
+    const handleCancelClick = () => {
         setIsEditMode(false);
     };
 
-
+    const handleSaveClick = () => {
+        console.log('Session User:', user);
+        axios.put(`http://localhost:5001/edit-profile/${userId}`, user)
+            .then(response => {
+                console.log('Profile updated:', response.data);
+                setIsEditMode(false);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setError('Failed to update profile.');
+            });
+    };
     return (
         <div className="user-profile">
             <div className="avatar-container">
-                <img src={user.profilePicture} alt={`${user.username}'s profile`} />
-                {/* first is false, so we show the edit profile. when handleEditclick function perform, isEditmode will be true. Then we came to the edit page*/}
+                <img src={user.profilePicture || profilePicture} alt={`${user.username}'s profile`} />
                 {isEditMode ? (
-                    <button className="save-profile" onClick={handleSaveClick}>Save</button>
+                    <>
+                        <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
+                    </>
                 ) : (
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
                 )}
             </div>
-            <h1>Username: {user.username}</h1>
-            <p><strong>Email: </strong>{user.email}</p>
-            <p><strong>Gender: </strong>
-                {isEditMode ? (
-                    // since we are in edit mode, we need to change the value. However, input value will be back to N/A after a refresh. 
-                    <input type="text" value={tempGender} onChange={(input) => setTempGender(input.target.value)} />
-                ) : (
-                    user.gender || "Null"
-                )}
-            </p>
-            <p><strong>Birth Date: </strong>
-                {isEditMode ? (
-                    <input type="date" value={tempBdate} onChange={(input) => setTempBdate(input.target.value)} />
-                ) : (
-                    user.Bdate || "Null"
-                )}
-            </p>
-            <p><strong>Role: </strong>{user.role}</p>
+            {isEditMode ? (
+                <>
+                    <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} /></p>
+                    <p>Gender: 
+                        <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
+                        <input type="radio" name="gender" value="Female" checked={user.gender === "Female"} onChange={handleInputChange} /><label>Female</label>
+                        <input type="radio" name="gender" value="Other" checked={user.gender === "Other"} onChange={handleInputChange} /><label>Other</label>
+                    </p>
+                    <p>Birth Date: <input type="date" name="birthday" value={user.birthday} onChange={handleInputChange} /></p>
+                    <button className="save-profile" onClick={handleSaveClick}>Save</button>
+                    <button className="cancel-profile" onClick={handleCancelClick}>Cancel</button>
+                </>
+            ) : (
+                <>
+                    <h1>Username: {user.username}</h1>
+                    <p><strong>Email: </strong>{user.email}</p>
+                    <p><strong>Gender: </strong>{user.gender}</p>
+                    <p><strong>Birth Date: </strong>{user.birthday}</p>
+                    <p><strong>Role: </strong>{user.role}</p>
+                </>
+            )}
         </div>
     );
-
-
 }
 
 export default UserProfile;
