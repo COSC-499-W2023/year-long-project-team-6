@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-const mysql = require('mysql');
-
-class PostDao {
-    constructor(db) {
-        this.db = db;
-    }
-
-    getUsernameAndPostDate(callback) {
-        const query = `
-            SELECT u.username, p.post_date 
-            FROM users u 
-            JOIN posts p ON u.userid = p.userid;
-        `;
-
-        this.db.query(query, (err, results) => {
-            callback(err, results);
-        });
-    }
-}
-
-module.exports = PostDao;
-=======
 const db = require('../db/db');
 
 async function getUsernameAndPostDate(userId, callback) {
@@ -65,4 +42,3 @@ module.exports = {
     getUsernameAndPostDate,
     addPost
 };
->>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f

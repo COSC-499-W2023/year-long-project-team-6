@@ -1,21 +1,4 @@
 const express = require('express');
-<<<<<<< HEAD
-const PostDao = require('../dao/displayDAO');
-const router = express.Router();
-
-router.get('/post-history', (req, res) => {
-    const postDao = new PostDao(req.db);
-
-    postDao.getUsernameAndPostDate((err, results) => {
-        if (err) {
-            res.status(500).send('Error retrieving data from database');
-            return;
-        }
-        res.json(results);
-    });
-});
-
-=======
 const { getUsernameAndPostDate, addPost} = require('../dao/displayDAO'); 
 
 const router = express.Router();
@@ -48,5 +31,4 @@ router.post('/add-post', express.json(), (req, res) => {
 
 
 
->>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f
 module.exports = router;
