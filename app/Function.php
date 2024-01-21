@@ -27,6 +27,7 @@ function random_num($length)
 
     $len = rand(4, $length);
 
+<<<<<<< HEAD
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     for ($i = 0; $i < $len; $i++) {
         $text .= $characters[rand(0, strlen($characters) - 1)];
@@ -34,3 +35,9 @@ function random_num($length)
 
     return $text;
 }
+=======
+    for ($i = 0; $i < $len; $i++) {
+
+    }
+}
+>>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f

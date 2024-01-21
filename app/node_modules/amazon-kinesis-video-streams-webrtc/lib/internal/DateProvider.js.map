@@ -1,0 +1,1 @@
+{"version":3,"file":"DateProvider.js","sourceRoot":"","sources":["../../src/internal/DateProvider.ts"],"names":[],"mappings":";;AAAA;;;;;;;GAOG;AACH;IAGI,sBAAmB,aAAqB;QACpC,IAAI,CAAC,aAAa,GAAG,aAAa,CAAC;IACvC,CAAC;IAED;;OAEG;IACI,8BAAO,GAAd;QACI,OAAO,IAAI,IAAI,CAAC,IAAI,CAAC,GAAG,EAAE,GAAG,IAAI,CAAC,aAAa,CAAC,CAAC;IACrD,CAAC;IACL,mBAAC;AAAD,CAAC,AAbD,IAaC"}
