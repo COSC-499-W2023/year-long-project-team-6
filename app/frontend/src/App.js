@@ -17,7 +17,7 @@ function App() {
     <div>
         <Router>
           <Routes>
-            <Route path="/Signup" element={<LoginForm />} />
+            <Route path="/login" element={<LoginForm />} />
             <Route path="/" element={<LayoutWithSidebar />}>
               <Route index element={<MainContent />} />
               <Route path="PostPage" element={<PostPage />} />
