@@ -35,7 +35,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
-    navigate('/Signup');
+    navigate('/login');
   };
 
   const generateRandomCode = () => {

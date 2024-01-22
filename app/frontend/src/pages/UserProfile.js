@@ -14,7 +14,7 @@ const UserProfile = () => {
         birthday: '',
         role: ''
     });
-    
+
     const [isEditMode, setIsEditMode] = useState(false);
     const [error, setError] = useState('');
     const [userId, setId] = useState('');
@@ -23,7 +23,7 @@ const UserProfile = () => {
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         if (!sessionUser) {
-            navigate('/signup');
+            navigate('/login');
         } else {
             const user = JSON.parse(sessionUser);
             setUser(user);
@@ -94,7 +94,7 @@ const UserProfile = () => {
             {isEditMode ? (
                 <>
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} /></p>
-                    <p>Gender: 
+                    <p>Gender:
                         <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
                         <input type="radio" name="gender" value="Female" checked={user.gender === "Female"} onChange={handleInputChange} /><label>Female</label>
                         <input type="radio" name="gender" value="Other" checked={user.gender === "Other"} onChange={handleInputChange} /><label>Other</label>

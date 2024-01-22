@@ -19,10 +19,6 @@ function PostPage() {
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
     const [recordedVideo, setRecordedVideo] = useState(null);
 
-
-
-
-
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
