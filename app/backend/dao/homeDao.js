@@ -2,14 +2,15 @@ const db = require('../db/db');
 
 function getGroups(userId, callback) {
     const query = `
-        SELECT g.groupid, g.groupname, g.group_creation_time
-        FROM \`groups\` g
-        JOIN user_groups ug ON g.groupid = ug.groupid
-        JOIN users u ON ug.userid = u.userid
-        WHERE u.userid = ?;
+    SELECT g.groupid, g.groupname, g.group_creation_time, g.admin, COUNT(ug.userid) AS member_count
+    FROM \`groups\` g
+    JOIN user_groups ug ON g.groupid = ug.groupid
+    WHERE g.groupid IN (
+        SELECT groupid FROM user_groups WHERE userid = ?
+    )
+    GROUP BY g.groupid;
     `;
-    console.log("Executing query:", query);
-    console.log("With userId:", userId);
+
 
     db.query(query, [userId], (err, results) => {
         if (err) {

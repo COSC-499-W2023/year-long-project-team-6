@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function GroupCard({ imgUrl, groupName, admin, numberOfPeople }) {
+function GroupCard({ imgUrl, time, groupName, admin, numberOfPeople  }) {
   return (
     <div className="card">
       <div className="photo">
@@ -9,7 +9,7 @@ function GroupCard({ imgUrl, groupName, admin, numberOfPeople }) {
       </div>
       <h3>{groupName}</h3>
       <h4>Information:</h4>
-      <p>Creation time: xxxx/xx/xx<br />
+      <p>Creation time: {time.split('T')[0]}<br />
         Admin: {admin}<br />
         Number of people: {numberOfPeople}<br />
       </p>

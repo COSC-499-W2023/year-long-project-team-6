@@ -32,13 +32,14 @@ function MainContent() {
         })
         .then(data => {
           setGroups(data);
-          console.log(setGroups);
         })
         .catch(error => {
           console.error('Error fetching groups:', error);
         });
     }
   }, [userId]);
+  console.log(groups);
+
 
   return (
     <div className="content">
@@ -49,9 +50,10 @@ function MainContent() {
               <GroupCard
                 key={group.groupid}
                 imgUrl={group.imgUrl}
-                groupName={group.name}
+                time={group.group_creation_time}
+                groupName={group.groupname}
                 admin={group.admin}
-                numberOfPeople={group.numberOfPeople}
+                numberOfPeople={group.member_count}
               />
             ))
           }
