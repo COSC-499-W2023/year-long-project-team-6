@@ -323,3 +323,39 @@ This week, I demonstrated a strong balance between technical proficiency and col
 ![Board](T2_w1_img/Board.png)
 *Table format:*
 ![Table](T2_w1_img/Table.png)
+
+
+# Individual Log - Yiqi Xu (Week 2)
+
+## Applicable data range
+**Januart/15/2023** to **January/21/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Code backend (homepage)
+* Update function for adding group
+* Update Database
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Coded backend (homepage)
+* Updated function for adding group
+* Updated Database 
+* Finished Peer Evaluation
+
+## In Progress
+* Coding on the backend of group member board
+
+## Self reflection
+This week, I  made substantial strides in backend development, notably coding the homepage and enhancing the group addition feature. Database updates were pivotal for system efficiency.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w1_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w1_img/Board.png)
+*Table format:*
+![Table](T2_w1_img/Table.png)
