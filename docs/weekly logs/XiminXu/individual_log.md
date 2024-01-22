@@ -294,3 +294,33 @@ I successfully converted video formats to mp4 and stored them in our S3 bucket, 
 ### 5. *From project board*
 ![Board](images14/pb.png)
 
+## Ximin Xu T2 week 2 personal log
+
+### 1. *Date Range*
+
+Jan.15-Jan.21
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images15/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Creating signed url for videos everytime the user ask to view the video
+3. Download button for user to download video
+4. Lambda function for detecting face using aws Rekognition video.
+
+
+**In progress**
+ 1. Creating state machine workflow for all lambda function
+ 2. creating Container Image 
+
+### 4. *Self Reflection and learned*
+In our recent project, I've made significant progress. I successfully held a productive group meeting and distributed tasks efficiently. I've implemented key features like creating signed URLs for video access and enabling video downloads, enhancing user experience. Additionally, I've started working on a vital aspect, which is setting up a state machine workflow for all my lambda functions, ensuring seamless execution. Furthermore, I'm actively engaged in creating a container image, a critical step that promises to further enhance my project's efficiency and scalability. This balance between completed tasks and ongoing initiatives reflects my commitment to achieving project milestones.
+
+### 5. *From project board*
+![Board](images15/pb.png)
+
