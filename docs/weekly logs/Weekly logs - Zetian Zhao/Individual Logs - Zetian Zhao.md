@@ -377,7 +377,7 @@
 
 ## Revised UI
 *Post Page:*
-![Post Page](Term_2_Week_1/PostPage.png)
+![Post Page](Term_2_Week_2/work.png)
 
 ## My Task on Board
 *Board format:*
