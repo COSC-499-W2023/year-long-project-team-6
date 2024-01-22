@@ -5,9 +5,6 @@ import email_image from "../component/image/email.png"
 import exchange from "../component/image/exchange.png"
 import password from "../component/image/password.png"
 import person from "../component/image/person.png"
-import { AuthContext } from "./AuthContext";
-import showpw from "../component/image/showpw.png"
-import showpw2 from "../component/image/showpw2.png"
 
 function LoginSignupForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +15,6 @@ function LoginSignupForm() {
     const [passw, setPassw] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [passwError, setPasswError] = useState(false);
-    const { setIsAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogin = () => {
@@ -41,20 +37,15 @@ function LoginSignupForm() {
             .then(data => {
 
                 if (data.success) { // Check if login was successful
-                    // Store user data in session storage
                     console.log(JSON.stringify(data.user))
                     sessionStorage.setItem('user', JSON.stringify(data.user));
-                    setIsAuthenticated(true);
                     navigate('/'); // navigate to the home page. 
                 } else {
-                    // Handle unsuccessful login
-                    // Display an error message to the user
                     alert("Login failed: Invalid credentials");
                 }
             })
             .catch((error) => {
                 console.error('Error:', error);
-                // Handle error here (e.g., show error message)
             });
     };
     const handleSignup = () => {
@@ -76,7 +67,6 @@ function LoginSignupForm() {
                 if (data.success) {
                     console.log('Signup successful:', data);
                     alert("Signup successful!");
-                    setIsAuthenticated(true);
                     navigate('/');
                 } else {
                     console.error('Signup failed:', data.message);
