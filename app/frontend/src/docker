@@ -1,0 +1,27 @@
+# Use an official Node.js runtime as a base image
+FROM node:14
+
+# FFmpeg is required for video processing
+RUN apt-get update && apt-get install -y ffmpeg
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install Node.js dependencies
+RUN npm install
+
+# To install OpenCV, you might need additional dependencies
+# This will depend on the specific Node.js package you use for OpenCV
+# RUN apt-get install -y <additional-opencv-dependencies>
+
+# Copy the rest of your application's source code
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Define the command to run your app
+CMD ["node", "app.js"] 
