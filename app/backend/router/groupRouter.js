@@ -5,18 +5,18 @@ const router = express.Router();
 router.post('/add-group', async (req, res) => {
     const { groupName, code } = req.body;
     console.log(groupName, code)
-    if(groupName && code){
+    if (groupName && code) {
         addNewGroup(groupName, code, (err, result) => {
             if (err) {
                 res.status(500).send('Error adding group: ' + err.message);
                 console.log('Error adding group: ' + err.message)
-                
+
             } else {
                 res.status(200).send(`New group added successfully with ID ${result.insertId}`);
                 console.log(`New group added successfully with ID ${result.insertId}`)
             }
         });
-    }else{
+    } else {
         console.log("empty")
     }
 

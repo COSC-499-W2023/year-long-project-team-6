@@ -1,6 +1,6 @@
 require('dotenv').config({ path: "./process.env" });
 process.env.AWS_SDK_LOAD_CONFIG = '1'; // Enable loading of AWS SDK config
-process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658'; 
+process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658';
 const { KinesisVideo } = require('@aws-sdk/client-kinesis-video');
 const express = require('express');
 const { STSClient, AssumeRoleCommand } = require('@aws-sdk/client-sts');
@@ -68,7 +68,7 @@ router.get('/get-temp-credentials', async (req, res) => {
 // Route handler to provide signaling channel configuration to the client
 router.get('/getSignalingChannelConfig', async (req, res) => {
     const channelARN = req.query.channelARN;
-    
+
     try {
         const params = {
             ChannelARN: channelARN,
@@ -136,10 +136,11 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
         fs.unlinkSync(file.path);
         fs.unlinkSync(mp4FilePath);
 
-        res.status(200).json({ message: 'Video uploaded successfully', 
-        data,
-        key: s3Key
-    });
+        res.status(200).json({
+            message: 'Video uploaded successfully',
+            data,
+            key: s3Key
+        });
     } catch (error) {
         console.error('Error uploading video:', error);
         res.status(500).json({ error: 'Error uploading video', details: error.toString() });
