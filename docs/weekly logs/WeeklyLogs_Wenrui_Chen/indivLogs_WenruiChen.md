@@ -247,8 +247,7 @@
 * Complete the peer evaluation. 
 
 ## Completed Tasks 
-* meeting with team members.
-* Completed Dao and router tests. 
+* meeting with team members. 
 * Completed the peer evaluation of this week. 
 * fixed some bugs of tests done before 
 
@@ -265,3 +264,40 @@
 
 *Table format:*
 ![Task1](t2w1/table.png)
+
+# Individual Log - Wenrui Chen (t2w2)
+
+## Applicable data range
+**January/17/2024** to **January/23/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Meetings and see what's the plan. 
+* test for Dao and router test
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* meeting with team members.
+* Completed Dao test. 
+* Started router test
+* Completed the peer evaluation of this week. 
+* fixed some bugs of tests done merge conflicts before 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](t2w2/PE.png)
+
+## Task on Board
+*Board format:*
+![Board](t2w2/board.png)
+
+*Tests:*
+![Board](t2w2/t1.png)
+![Board](t2w2/t2.png)
+![Board](t2w2/t3.png)
+![Board](t2w2/t4.png)
+![Board](t2w2/t5.png)
+![Board](t2w2/t6.png)
+
+
+*Table format:*
+![Task1](t2w2/table.png)
