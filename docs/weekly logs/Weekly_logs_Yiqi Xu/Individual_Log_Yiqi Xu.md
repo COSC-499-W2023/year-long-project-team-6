@@ -352,10 +352,10 @@ This week, I demonstrated a strong balance between technical proficiency and col
 This week, I  made substantial strides in backend development, notably coding the homepage and enhancing the group addition feature. Database updates were pivotal for system efficiency.
 
 ## ScreenShot of peer evaluation
-![Peer Evaluation](T2_w1_img/PeerEval.png)
+![Peer Evaluation](T2_w2_img/PeerEval.png)
 
 ## My Task on Board
 *Board format:*
-![Board](T2_w1_img/Board.png)
+![Board](T2_w2_img/Board.png)
 *Table format:*
-![Table](T2_w1_img/Table.png)
+![Table](T2_w2_img/Table.png)

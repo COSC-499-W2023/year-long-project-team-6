@@ -263,3 +263,36 @@ I have made a reasonable progress in this week. I linked frontend and backend fo
 ![Board](T2W1_img/Board.png)
 *Table format:*
 ![Table](T2W1_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 2)
+
+## Applicable data range
+**Januart/15/2023** to **January/21/2023**
+
+## Recap Goal 
+*My jobs in this week are:*
+* Met with my team members
+* Finish home page group card match with user's group
+* Group info listed correctly
+* Complete add group functionality
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Finish home page group card match with user's group
+* Group info listed correctly(group image still under discussion)
+* Finished Peer evaluation
+
+## In Progress
+* Complete add group functionality
+
+## Self reflection
+I fixed what left from last week. For this week, I successfully make the home page work properly. Group cards are showing as they expected and the group info are shown correctly as well. It takes me a lot of time to figure out how to count the number of people in each groups even backend function is ready for me. However, based on my understanding, I changed backend sql to make it work.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W2_img/PE.png)
+## My Task on Board
+*Board format:*
+![Board](T2W2_img/Board.png)
+*Table format:*
+![Table](T2W2_img/Table.png)
