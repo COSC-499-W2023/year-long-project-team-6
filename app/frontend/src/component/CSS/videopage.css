@@ -1,0 +1,25 @@
+.video-container {
+    max-width: 640px;
+    margin: auto;
+    padding: 20px;
+}
+
+.download-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.download-btn:hover,
+.download-btn:focus {
+    background-color: #0056b3;
+    color: #fff;
+    text-decoration: none;
+}

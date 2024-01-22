@@ -18,24 +18,24 @@ function PostPage() {
     const navigate = useNavigate();
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
     const [recordedVideo, setRecordedVideo] = useState(null);
+const [blurFace, setBlurFace] = useState(false);
 
 
-
-
+    
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
-    useEffect(() => {
-        const sessionUser = sessionStorage.getItem('user');
-        console.log("Sessopm User: " + sessionUser);
-        if (!sessionUser) {
-            navigate('/login');
-        } else {
-            const user = JSON.parse(sessionUser);
-            setUserId(user.userid);
-            console.log("User Id: " + user.userid);
-        }
-    }, []);
-    useEffect(() => {
+useEffect(() => {
+         const sessionUser = sessionStorage.getItem('user');
+         console.log("Sessopm User: " + sessionUser);
+         if (!sessionUser) {
+             navigate('/login');
+         } else {
+             const user = JSON.parse(sessionUser);
+             setUserId(user.userid);
+             console.log("User Id: " + user.userid);
+         }
+     }, []);
+     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         console.log("Sessopm User: " + sessionUser);
         if (!sessionUser) {
@@ -74,10 +74,10 @@ function PostPage() {
         event.preventDefault();
         const formData = new FormData(event.target);
         let videoKey = '';
-
+        
         if (recordedVideo) {
             try {
-                const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title')); // Modify this function as needed
+                const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title'));
                 console.log('Video uploaded successfully:', uploadResult);
                 videoKey = uploadResult.key;
             } catch (uploadError) {
@@ -89,10 +89,11 @@ function PostPage() {
             post_title: formData.get('post_title'),
             post_text: formData.get('post_text'),
             s3_content_key: videoKey,
-            userid: userId
-        };
+            userid: userId,
+            blurFace: blurFace
+        }; 
         console.log("postData to be sent:", postData); // Add this line for debugging
-
+        
         fetch('http://localhost:5001/add-post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -110,66 +111,66 @@ function PostPage() {
             })
             .catch((error) => {
                 console.error('Error:', error);
-            });
-    }
+            });}
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
     // Temporary array to hold recorded chunks, outside of the function
-    let tempRecordedChunks = [];
+let tempRecordedChunks = [];
 
-    const handleTogglePlay = async () => {
-        console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
+const handleTogglePlay = async () => {
+    console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
 
-        if (!isPlaying) {
-            setTimeout(async () => {
-                if (localView.current) {
-                    try {
-                        const webrtc = await initializeWebRTC(channelARN, localView.current);
-                        signalingClientRef.current = webrtc.signalingClient;
-                        peerConnectionRef.current = webrtc.peerConnection;
+    if (!isPlaying) {
+        setTimeout(async () => {
+            if (localView.current) {
+                try {
+                    const webrtc = await initializeWebRTC(channelARN, localView.current);
+                    signalingClientRef.current = webrtc.signalingClient;
+                    peerConnectionRef.current = webrtc.peerConnection;
 
-                        // Initialize MediaRecorder here
-                        const stream = localView.current.srcObject; // Assuming this is your local stream
-                        console.log('stream', stream);
+                    // Initialize MediaRecorder here
+                    const stream = localView.current.srcObject; // Assuming this is your local stream
+                    console.log('stream', stream);
 
-                        const recorder = new MediaRecorder(stream);
-                        setMediaRecorder(recorder);
+                    const recorder = new MediaRecorder(stream);
+                    setMediaRecorder(recorder);
 
-                        recorder.ondataavailable = (event) => {
-                            if (event.data.size > 0) {
-                                tempRecordedChunks.push(event.data);
-                            }
-                        };
+                    recorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            tempRecordedChunks.push(event.data);
+                        }
+                    };
 
-                        recorder.onstop = async () => {
-                            const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
-                            setRecordedVideo(blob); // Assuming you have a state called recordedVideo
-                            tempRecordedChunks = [];
-                        };
+                    recorder.onstop = async () => {
+                        const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
+                        setRecordedVideo(blob); // Assuming you have a state called recordedVideo
+                        tempRecordedChunks = [];
+                    };
+                    
 
+                    setShowWebRTC(true);
+                    recorder.start();
 
-                        setShowWebRTC(true);
-                        recorder.start();
-
-                    } catch (error) {
-                        console.error('Error initializing WebRTC: ', error);
-                    }
-                } else {
-                    console.log('Refs are not set:', localView.current);
+                } catch (error) {
+                    console.error('Error initializing WebRTC: ', error);
                 }
-            }, 100);
-        } else {
-            if (mediaRecorder) {
-                mediaRecorder.stop();
+            } else {
+                console.log('Refs are not set:', localView.current);
             }
-            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
-            signalingClientRef.current = null;
-            peerConnectionRef.current = null;
-            setShowWebRTC(false);
+        }, 100);
+    } else {
+        if (mediaRecorder) {
+            mediaRecorder.stop();
+
         }
-        setIsPlaying(!isPlaying);
-    };
+        cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+        signalingClientRef.current = null;
+        peerConnectionRef.current = null;
+        setShowWebRTC(false);
+    }
+    setIsPlaying(!isPlaying);
+};
 
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
@@ -181,27 +182,27 @@ function PostPage() {
     return (
         <div id='page'>
             <div id="send">
-                <h2>Send Your Post Here</h2>
+                <h2>Send Your Post</h2>
             </div>
             <div className="flex-container">
                 <div id="input">
-                    <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                         <div id="main" className="main">
-                            <div id="videoContainer">
-                                {isPlaying && (
-                                    <>
-                                        <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
+                        <div id="videoContainer">
+                        {isPlaying && (
+                    <>
+                       <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
 
-                                    </>
-                                )}
-                                <button id="record_button" type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
-                            </div>
+                    </>
+                )}
+                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+</div>
 
-                            <div className="EnterText" id="text_one">
+                            <div className="EnterText">
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-                            {/*
+                        {/*
                             <div className="EnterText">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
@@ -212,12 +213,22 @@ function PostPage() {
                                 </select>
                             </div>
                         */}
-                            <div className="EnterText" id="text_two">
+                            <div className="EnterText">
                                 <legend>Description of Your Video</legend>
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
                         </div>
-
+                        <div>
+                                <legend>
+                                    BlurFace  
+                                </legend>   
+                                <input
+                                    type="checkbox"
+                                     id="blurFace"
+                                     checked={blurFace}
+                                     onChange={(e) => setBlurFace(e.target.checked)}
+                                    />
+                            </div>
                         <div id="button">
                             <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
                         </div>
@@ -235,6 +246,7 @@ function PostPage() {
                                     </select>
                                 </td>
                             </tr>
+                           
                         </thead>
                         <tbody>
                             {postHistory.map((post, index) => (
