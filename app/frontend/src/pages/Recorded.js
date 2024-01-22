@@ -21,7 +21,6 @@ function RecordedPage() {
     
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
-        console.log("Session User: " + sessionUser);
         if (!sessionUser) {
             navigate('/login');
         } else {
@@ -70,7 +69,7 @@ function RecordedPage() {
             })
             .catch(error => console.error('Error:', error));
     };
-    
+
     const handleEdit = (postId) => {
         const postData = { id: postId, newTitle: newTitle, newText: newText };
 
