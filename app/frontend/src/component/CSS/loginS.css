@@ -146,14 +146,6 @@ body {
 }
 
 .switch-icon {
-<<<<<<< HEAD:app/login_signup/loginS.css
-    /* vertical-align: middle; */
-    cursor: pointer;
-    margin: 5px 0;  /* Adjust as needed */
-    width: 40px;    /* Adjust as needed */
-    height: 40px;
-   
-=======
     margin: 110px;
     vertical-align: middle;
     cursor: pointer;
@@ -161,7 +153,6 @@ body {
 
     height: 40px;
 
->>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f:app/frontend/src/component/CSS/loginS.css
 }
 
 #nameInputContainer {

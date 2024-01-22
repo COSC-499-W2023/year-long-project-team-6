@@ -34,10 +34,7 @@
     height: 5em;
     width: 25em;
 }
-<<<<<<< HEAD:app/Post_UI/PostPage/post.css
-=======
 
->>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f:app/frontend/src/component/CSS/post.css
 #input * {
     margin: 0;
     padding: 0;
@@ -52,13 +49,8 @@
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
-<<<<<<< HEAD:app/Post_UI/PostPage/post.css
-    width: 15em; 
-    height: 40px; 
-=======
     width: 15em;
     height: 40px;
->>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f:app/frontend/src/component/CSS/post.css
 }
 
 #selectedFileName {
@@ -79,13 +71,8 @@
     border: 1px solid #666;
     border-radius: 5px;
     cursor: pointer;
-<<<<<<< HEAD:app/Post_UI/PostPage/post.css
-    width: 8em; 
-    height: 40px; 
-=======
     width: 8em;
     height: 40px;
->>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f:app/frontend/src/component/CSS/post.css
 }
 
 #submit:hover {
@@ -153,17 +140,17 @@ td {
     box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 
-} 
+}
 
-.custom-upload-button, #submit {
+.custom-upload-button,
+#submit {
     position: relative;
     overflow: hidden;
     transition: background-color 0.5s;
-    display: inline-block; 
+    display: inline-block;
 }
 
-<<<<<<< HEAD:app/Post_UI/PostPage/post.css
-.custom-upload-button::before, #submit::before {
+#submit::before {
     content: "";
     position: absolute;
     background-color: rgba(125, 83, 219, 0.7);
@@ -177,19 +164,19 @@ td {
     z-index: -1;
 }
 
-.custom-upload-button:hover::before, #submit:hover::before {
+.custom-upload-button:hover::before,
+#submit:hover::before {
     transform: scale(1) translate(-50%, -50%);
 }
 
-.custom-upload-button:hover, #submit:hover {
-    background-color: transparent; 
+.custom-upload-button:hover,
+#submit:hover {
+    background-color: transparent;
 }
-=======
-.custom-upload-button,
+
 #submit {
     position: relative;
     overflow: hidden;
     transition: background-color 0.5s;
     display: inline-block;
 }
->>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f:app/frontend/src/component/CSS/post.css

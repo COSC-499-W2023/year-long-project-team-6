@@ -131,13 +131,8 @@ a.active {
 
 /* Right-aligned section inside the top navigation */
 .topnav-right {
-<<<<<<< HEAD:app/UI-bars/sidebar_style.css
-  float: right;
-  text-align: center;
-=======
     float: right;
     text-align: center;
->>>>>>> 07fffb993a70f62b8a37adff83105b36f9c6883f:app/frontend/src/component/CSS/sidebar_style.css
 }
 
 /* Sidebar Styles */
