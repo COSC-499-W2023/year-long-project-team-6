@@ -17,7 +17,7 @@ function RecordedPage() {
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         if (!sessionUser) {
-            navigate('/login');
+            navigate('/signup');
         } else {
             const user = JSON.parse(sessionUser);
             setUserId(user.userid);

@@ -39,7 +39,7 @@ useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         console.log("Sessopm User: " + sessionUser);
         if (!sessionUser) {
-            navigate('/login');
+            navigate('/signup');
         } else {
             const user = JSON.parse(sessionUser);
             setUserId(user.userid);

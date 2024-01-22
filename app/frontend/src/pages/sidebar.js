@@ -50,7 +50,7 @@ const Sidebar = () => {
     const newCode = generateRandomCode();
     setCode(newCode);
     setShowPopup(true);
-  
+
     const groupName = document.querySelector('[name="groupname"]').value;
     console.log(groupName);
     if (groupName) {
@@ -62,9 +62,9 @@ const Sidebar = () => {
           },
           body: JSON.stringify({ groupName: groupName, code: newCode }),
         });
-        if(!response){
+        if (!response) {
           console.log('no');
-        }else{
+        } else {
           console.log(response);
         }
         if (response) {
@@ -82,8 +82,8 @@ const Sidebar = () => {
       console.error('Group name is required');
     }
   };
-  
-  
+
+
 
 
   useEffect(() => {
