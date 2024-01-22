@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import '../component/CSS/sidebar_style.css';
 import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext';
 
 const Sidebar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -13,7 +12,6 @@ const Sidebar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const modalRef = useRef(null);
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext(AuthContext);
 
   const toggleModal = () => {
     setModalOpen(prev => !prev);
@@ -36,7 +34,6 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
     sessionStorage.removeItem('user');
     navigate('/Signup');
   };

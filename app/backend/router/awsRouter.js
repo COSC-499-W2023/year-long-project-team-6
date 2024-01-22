@@ -1,8 +1,11 @@
 require('dotenv').config({ path: "./process.env" });
+const mysql = require('mysql');
 process.env.AWS_SDK_LOAD_CONFIG = '1'; // Enable loading of AWS SDK config
 process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658';
 const { KinesisVideo } = require('@aws-sdk/client-kinesis-video');
 const express = require('express');
+const { GetObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { STSClient, AssumeRoleCommand } = require('@aws-sdk/client-sts');
 const fs = require('fs');
 const router = express.Router();
@@ -11,11 +14,20 @@ const upload = multer({ dest: 'uploads/' }); // temporarily store files in 'uplo
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const ffmpegStatic = require('ffmpeg-static');
 const path = require('path');
+const PostDao = require('../dao/PostDao'); 
+const connection = mysql.createConnection({
+    host: process.env.DBHOST,
+    user: process.env.DBUSER,
+    password: process.env.DBPASS,
+    database: process.env.DBNAME
+});
+const postDao = new PostDao(connection);
 // This will give you the path to the FFmpeg binary
 const ffmpegPath = ffmpegStatic;
 
 // You can then use this path with fluent-ffmpeg or any other library that requires FFmpeg
 const ffmpeg = require('fluent-ffmpeg');
+const { error } = require('console');
 ffmpeg.setFfmpegPath(ffmpegPath);
 
 // Initialize the S3 client
@@ -128,6 +140,7 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
             Key: s3Key,
             Body: fileStream,
             ContentType: 'video/mp4',
+            ContentDisposition: 'attachment'
         };
 
         const data = await s3Client.send(new PutObjectCommand(uploadParams));
@@ -145,6 +158,35 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
         console.error('Error uploading video:', error);
         res.status(500).json({ error: 'Error uploading video', details: error.toString() });
     }
+});
+router.get('/get-video-url/:videoId', (req, res) => {
+    const videoId = req.params.videoId;
+    
+    // Use DAO to retrieve the video key from the database
+    postDao.getVideoByKey(videoId, (err, videoKey) => {
+        if (err) {
+            console.error('Error in /get-video-url/:videoId:', err);
+            return res.status(500).json({ error: `Error getting video URL: ${err.message}` });
+        }
+
+        if (!videoKey) {
+            return res.status(404).json({ error: 'Video not found' });
+        }
+
+        // Generate a signed URL for accessing the video
+        const s3Client = new S3Client({ region: "us-east-1" });
+        const urlParams = { Bucket: "cosc499-video-submission", Key: videoKey };
+        const command = new GetObjectCommand(urlParams);
+
+        getSignedUrl(s3Client, command, { expiresIn: 3600 })
+            .then(signedUrl => {
+                res.json({ signedUrl });
+            })
+            .catch(signedUrlErr => {
+                console.error('Error generating signed URL:', signedUrlErr);
+                res.status(500).json({ error: `Error generating signed URL: ${signedUrlErr.message}` });
+            });
+    });
 });
 
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { addNewGroup, editGroupName, deleteGroup, getGroupInfo } = require('../dao/groupDao');
+const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInviteCode } = require('../dao/groupDao');
 const router = express.Router();
 
 router.post('/add-group', async (req, res) => {
@@ -54,6 +54,23 @@ router.get('/get-group-infor/:id', (req, res) => {
             res.status(404).send('Group not found');
         } else {
             res.status(200).json(group);
+        }
+    });
+});
+
+router.post('/join-group/:userId', (req, res) => {
+    const userId = req.params.userId; 
+    const { inviteCode } = req.body; 
+
+    if (!inviteCode) {
+        return res.status(400).json({ message: "Invite code is required" });
+    }
+
+    joinGroupByInviteCode(userId, inviteCode, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+        } else {
+            res.status(200).json({ message: "Successfully joined the group", result });
         }
     });
 });
