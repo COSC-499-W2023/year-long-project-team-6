@@ -1,28 +1,53 @@
 const db = require('../db/db');
 
-async function addNewGroup(groupname, invite_code, callback) {
-    const query = 'INSERT INTO `groups` (`groupname`, `invite_code`) VALUES (?, ?)';
-    db.query(query, [groupname, invite_code], (err, result) => {
+async function addNewGroup(groupname, invite_code, admin, image, callback) {
+    const query = 'INSERT INTO `groups` (`groupname`, `invite_code`, `admin`, `image`) VALUES (?, ?, ?, ?)';
+    db.query(query, [groupname, invite_code, admin, image], (err, result) => {
         if (err) {
-            console.error(err); 
-            callback('Error adding group', null); 
+            console.error(err);
+            callback('Error adding group', null);
         } else {
             callback(null, result);
         }
     });
 }
 
+async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
+    let query = 'UPDATE `groups` SET';
+    const queryParams = [];
+    
+    // Dynamically construct the query based on provided data
+    if (newGroupName) {
+        query += ' `groupname` = ?,';
+        queryParams.push(newGroupName);
+    }
+    if (newAdmin) {
+        query += ' `admin` = ?,';
+        queryParams.push(newAdmin);
+    }
+    if (newImage !== undefined) { 
+        query += ' `image` = ?,';
+        queryParams.push(newImage);
+    }
+    query = query.slice(0, -1);
+    
+    query += ' WHERE `groupid` = ?';
+    queryParams.push(groupId);
 
-async function editGroupName(groupId, newGroupName, callback) {
-    const query = 'UPDATE groups SET groupname = ? WHERE groupid = ?';
-    db.query(query, [newGroupName, groupId], (err, result) => {
+    if (queryParams.length === 1) { 
+        return callback('No new data provided for update', null);
+    }
+
+    db.query(query, queryParams, (err, result) => {
         if (err) {
-            callback(err, null);
+            console.error(err);
+            callback('Error updating group details', null);
         } else {
             callback(null, result);
         }
     });
 }
+
 
 async function deleteGroup(groupId, callback) {
     const query = 'DELETE FROM groups WHERE groupid = ?';
@@ -70,7 +95,7 @@ async function joinGroupByInviteCode(userId, inviteCode, callback) {
 
 module.exports = {
     addNewGroup,
-    editGroupName,
+    editGroup,
     deleteGroup,
     getGroupInfo,
     joinGroupByInviteCode
