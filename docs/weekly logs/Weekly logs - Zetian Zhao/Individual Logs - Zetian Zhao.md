@@ -303,3 +303,85 @@
 ![Table](13_imgs/Table_1.png)
 ![Table](13_imgs/Table_2.png)
 
+
+
+*** 
+***
+***
+# *Term 2*
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 1)
+
+## Applicable date range
+**January/8/2024** to **January/14/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Complete the UI Improvement for the recorded page. 
+* Complete the UI Improvement for the post vidoe page. 
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* The UI revision for the recorded page has been done. (First version)
+* The UI Change of the videos post page has also been accomplished. (May require future Improvement)
+* Completed the peer evaluation. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_1/PE.png)
+
+## Revised UI
+*Post Page:*
+![Post Page](Term_2_Week_1/PostPage.png)
+*Recorded Page:*
+![Recorded Page](Term_2_Week_1/RecordedPage.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_1/Board.png)
+*Table format:*
+![Table](Term_2_Week_1/Table_1.png)
+![Table](Term_2_Week_1/Table_2.png)
+![Table](Term_2_Week_1/Table_3.png)
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 2)
+
+## Applicable date range
+**January/15/2024** to **January/21/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Complete UI revision for the post page. 
+* Complete the automated test for the group router backend. 
+* Complete the Team log. 
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* Completed revision about the layout of the post page UI. 
+* Completed the automated test for the group router backend functions.  
+* Completed the team log for the entire team about this week. 
+* Completed the peer evaluation. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_2/PE.png)
+
+## Revised UI
+*Post Page:*
+![Post Page](Term_2_Week_2/work.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_2/Board.png)
+*Table format:*
+![Table](Term_2_Week_2/Table.png)
+*missions with tag "done before" are from the previous weeks.*
