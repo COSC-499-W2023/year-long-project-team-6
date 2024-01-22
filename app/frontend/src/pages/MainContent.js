@@ -10,7 +10,7 @@ function MainContent() {
   useEffect(() => {
     const sessionUser = sessionStorage.getItem('user');
     if (!sessionUser) {
-      navigate('/signup');
+      navigate('/login');
     } else {
       const user = JSON.parse(sessionUser);
       setUserId(user.userid);
