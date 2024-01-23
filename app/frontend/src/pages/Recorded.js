@@ -133,6 +133,7 @@ function RecordedPage() {
 
     return (
         <>
+        <div id="content">
             <div id="condition">
                 <table>
                     <tbody>
@@ -197,6 +198,7 @@ function RecordedPage() {
                         ))}
                     </tbody>
                 </table>
+            </div>
             </div>
         </>
     );

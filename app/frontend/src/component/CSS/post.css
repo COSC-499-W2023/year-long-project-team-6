@@ -41,7 +41,7 @@
 }
 
 #input * {
-    margin: 0;
+    margin: 10;
     padding: 0;
 }
 
@@ -237,7 +237,6 @@
 }
 
 #submit {
-    margin-left: 550px;
     width: 150px;
     height: 50px;
     font-size: 20px;
@@ -251,7 +250,6 @@
     letter-spacing: 2px;
 
 }
-
-#videoContainer {
-    margin-left: 590px;
+.blur{
+    margin-top: 5em;
 }

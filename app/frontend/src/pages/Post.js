@@ -218,7 +218,7 @@ const handleTogglePlay = async () => {
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
                         </div>
-                        <div>
+                        <div className="blur">
                                 <legend>
                                     BlurFace  
                                 </legend>   
@@ -229,9 +229,7 @@ const handleTogglePlay = async () => {
                                      onChange={(e) => setBlurFace(e.target.checked)}
                                     />
                             </div>
-                        <div id="button">
                             <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
-                        </div>
                     </form>
                 </div>
                 <div id="HistroyBar">
