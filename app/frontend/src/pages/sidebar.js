@@ -4,6 +4,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
+  const [userId, setUserId] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [result, setResult] = useState('');
@@ -12,6 +13,17 @@ const Sidebar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const modalRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const sessionUser = sessionStorage.getItem('user');
+    if (!sessionUser) {
+        navigate('/login');
+    } else {
+        const user = JSON.parse(sessionUser);
+        setUserId(user.userid);
+        console.log("User Id: " + user.userid);
+    }
+}, []);
 
   const toggleModal = () => {
     setModalOpen(prev => !prev);
@@ -96,6 +108,35 @@ const Sidebar = () => {
     return () => window.removeEventListener('click', handleClickOutside);
   }, []);
 
+
+  const joinGroup = async () => {
+    if (searchValue.length === 5) { // Assuming invite codes are 5 characters long
+      try {
+        const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ inviteCode: searchValue }) // Send invite code in request body
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          setResult("Successfully joined the group!");
+        } else {
+          setResult(data.message || "Error joining the group.");
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setResult("Failed to join the group.");
+      }
+    } else {
+      setResult('Please enter a 5-character code.');
+    }
+  };
+  
+
   return (
     <>
       <div className="topnav">
@@ -168,7 +209,7 @@ const Sidebar = () => {
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value.toUpperCase())}
                 />
-                <button onClick={searchGroup}>Join!</button>
+                <button onClick={joinGroup}>Join!</button>
                 <p>{result}</p>
               </div>
             </div>
