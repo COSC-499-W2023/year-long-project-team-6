@@ -4,8 +4,8 @@ const router = express.Router();
 
 router.post('/add-group', async (req, res) => {
     const { groupName, code, admin, image } = req.body;
-    if (groupName && code && admin) { 
-        addNewGroup(groupName, code, admin, image || null, (err, result) => { // pass null if image is undefined
+    if (groupName && code && admin) {
+        addNewGroup(groupName, code, admin, image || null, (err, result) => {
             if (err) {
                 res.status(500).send('Error adding group: ' + err.message);
                 console.log('Error adding group: ' + err.message);
@@ -23,7 +23,7 @@ router.post('/add-group', async (req, res) => {
 router.post('/edit-group/:id', express.json(), (req, res) => {
     const groupId = req.params.id;
     const { newGroupName, newAdmin, newImage } = req.body;
-    if (newGroupName && newAdmin) { 
+    if (newGroupName && newAdmin) {
         editGroup(groupId, newGroupName, newAdmin, newImage || null, (err, result) => {
             if (err) {
                 res.status(500).send('Error updating group details: ' + err.message);
@@ -61,8 +61,8 @@ router.get('/get-group-infor/:id', (req, res) => {
 });
 
 router.post('/join-group/:userId', (req, res) => {
-    const userId = req.params.userId; 
-    const { inviteCode } = req.body; 
+    const userId = req.params.userId;
+    const { inviteCode } = req.body;
 
     if (!inviteCode) {
         console.log(inviteCode);
