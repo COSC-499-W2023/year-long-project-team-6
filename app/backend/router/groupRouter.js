@@ -3,22 +3,22 @@ const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInvite
 const router = express.Router();
 
 router.post('/add-group', async (req, res) => {
-    const { groupName, code, admin, image } = req.body;
+    const { groupName, code, admin } = req.body;
     if (groupName && code && admin) {
-        addNewGroup(groupName, code, admin, image || null, (err, result) => {
+        addNewGroup(groupName, code, admin, (err, result) => {
             if (err) {
                 res.status(500).send('Error adding group: ' + err.message);
                 console.log('Error adding group: ' + err.message);
             } else {
-                res.status(200).send(`New group added successfully with ID ${result.insertId}`);
-                console.log(`New group added successfully with ID ${result.insertId}`);
+                res.status(200).send(`New group added successfully with ID ${admin}`);
             }
         });
     } else {
-        res.status(400).send("All fields except image (group name, invite code, admin) are required.");
+        res.status(400).send("All fields are required.");
         console.log("Missing fields");
     }
 });
+
 
 router.post('/edit-group/:id', express.json(), (req, res) => {
     const groupId = req.params.id;
@@ -72,6 +72,7 @@ router.post('/join-group/:userId', (req, res) => {
     joinGroupByInviteCode(userId, inviteCode, (err, result) => {
         if (err) {
             res.status(500).json({ error: err });
+            console.log("Error: " + err);
         } else {
             res.status(200).json({ message: "Successfully joined the group", result });
         }

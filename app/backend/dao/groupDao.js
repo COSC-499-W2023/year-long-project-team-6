@@ -1,14 +1,23 @@
 const db = require('../db/db');
 
-async function addNewGroup(groupname, invite_code, admin, image, callback) {
-    const query = 'INSERT INTO `groups` (`groupname`, `invite_code`, `admin`, `image`) VALUES (?, ?, ?, ?)';
-    const imageParam = image || null;
-    db.query(query, [groupname, invite_code, admin, imageParam], (err, result) => {
+async function addNewGroup(groupname, invite_code, admin, callback) {
+    const query = 'INSERT INTO `groups` (`groupname`, `invite_code`, `admin`) VALUES (?, ?, ?)';
+    const queryParams = [groupname, invite_code, admin];
+    db.query(query, queryParams, (err, result) => {
         if (err) {
             console.error(err);
             callback('Error adding group', null);
         } else {
-            callback(null, result);
+            const groupId = result.insertId;
+            const addUserToGroupQuery = 'INSERT INTO user_groups (userid, groupid) VALUES (?, ?)';
+            db.query(addUserToGroupQuery, [admin, groupId], (addUserErr, addUserResult) => {
+                if (addUserErr) {
+                    console.error(addUserErr);
+                    callback('Error adding user to the new group', null);
+                } else {
+                    callback(null, { groupId, addUserResult });
+                }
+            });
         }
     });
 }
@@ -17,7 +26,7 @@ async function addNewGroup(groupname, invite_code, admin, image, callback) {
 async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
     let query = 'UPDATE `groups` SET';
     const queryParams = [];
-    
+
     // Dynamically construct the query based on provided data
     if (newGroupName) {
         query += ' `groupname` = ?,';
@@ -27,16 +36,16 @@ async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
         query += ' `admin` = ?,';
         queryParams.push(newAdmin);
     }
-    if (newImage !== undefined) { 
+    if (newImage !== undefined) {
         query += ' `image` = ?,';
         queryParams.push(newImage);
     }
     query = query.slice(0, -1);
-    
+
     query += ' WHERE `groupid` = ?';
     queryParams.push(groupId);
 
-    if (queryParams.length === 1) { 
+    if (queryParams.length === 1) {
         return callback('No new data provided for update', null);
     }
 
@@ -74,7 +83,7 @@ async function getGroupInfo(groupId, callback) {
 }
 
 async function joinGroupByInviteCode(userId, inviteCode, callback) {
-    const findGroupQuery = 'SELECT groupid FROM groups WHERE invite_code = ?';
+    const findGroupQuery = 'SELECT groupid FROM `groups` WHERE invite_code = ?';
     db.query(findGroupQuery, [inviteCode], (err, groupResults) => {
         if (err) {
             callback(err, null);
@@ -82,7 +91,7 @@ async function joinGroupByInviteCode(userId, inviteCode, callback) {
             callback('No group found with the provided invite code', null);
         } else {
             const groupId = groupResults[0].groupid;
-            const insertQuery = 'INSERT INTO user_groups (user_id, group_id) VALUES (?, ?)';
+            const insertQuery = 'INSERT INTO user_groups (userid, groupid) VALUES (?, ?)';
             db.query(insertQuery, [userId, groupId], (insertErr, insertResult) => {
                 if (insertErr) {
                     callback(insertErr, null);
@@ -93,6 +102,7 @@ async function joinGroupByInviteCode(userId, inviteCode, callback) {
         }
     });
 }
+
 
 
 module.exports = {

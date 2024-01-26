@@ -1,7 +1,6 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import GroupCard from './GroupCard';
-import newUserArrow from '../component/image/Arrow_newUser.png';
 
 function MainContent() {
   const [userId, setUserId] = useState('');
@@ -46,7 +45,7 @@ function MainContent() {
         });
     }
   }, [userId]);
-  console.log(groups);
+
 
   const generateRandomCode = () => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -60,7 +59,6 @@ function MainContent() {
     const newCode = generateRandomCode();
     setCode(newCode);
     setShowPopup(true);
-
     const groupName = document.querySelector('[name="groupname"]').value;
     console.log(groupName);
     if (groupName) {
@@ -78,17 +76,14 @@ function MainContent() {
           console.log(response);
         }
         if (response) {
-          // Handle successful group creation
           console.log('Group created successfully');
         } else {
-          // Handle errors
           console.error('Failed to create group');
         }
       } catch (error) {
         console.error('Error:', error);
       }
     } else {
-      // Handle case where group name is not entered
       console.error('Group name is required');
     }
   };
@@ -108,54 +103,55 @@ function MainContent() {
     <div className="content">
       <div className="main-content">
         <div className="first-row">
-        {groups.length > 0 ? (
-                        groups.map(group => (
-                            <GroupCard
-                                key={group.groupid}
-                                imgUrl={group.imgUrl}
-                                time={group.group_creation_time}
-                                groupName={group.groupname}
-                                admin={group.admin}
-                                numberOfPeople={group.member_count}
-                            />
-                        ))
-                    ) : (
-                      <div className='newUser'>
-                        <h2>You are not in any group yet. Join or create a new group to get started!</h2>
-                        <a id="myBtn" className="addgroup" href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleModal(); }}>
-                        <button>Click Here to Create or Join!</button>
-                        </a>
-                        </div>
-                    )}
-                    {isModalOpen && (
-          <div className="modal" ref={modalRef}>
-            <div className="modal-content">
-              <span className="close" onClick={toggleModal}>&times;</span>
-              <div className='creategroup'>
-                <h3>Create your group here</h3>
-                <input
-                  type="text"
-                  placeholder="Your Group Name"
-                  name='groupname'
-                />
-                <button onClick={handleCreateGroup}>Create!</button>
-                {showPopup && <div>Group Code: {code}</div>}
-              </div>
-              <div className="addgroup">
-                <h3>Find your group here</h3>
-                <input
-                  type="text"
-                  maxLength="5"
-                  placeholder="Enter a 5-character code"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value.toUpperCase())}
-                />
-                <button onClick={searchGroup}>Join!</button>
-                <p>{result}</p>
+          {groups.length > 0 ? (
+            groups.map(group => (
+              <GroupCard
+                key={group.groupid}
+                imgUrl={group.imgUrl}
+                time={group.group_creation_time}
+                groupName={group.groupname}
+                admin={group.admin_username}
+                invite_code={group.invite_code}
+                numberOfPeople={group.member_count}
+              />
+            ))
+          ) : (
+            <div className='newUser'>
+              <h2>You are not in any group yet. Join or create a new group to get started!</h2>
+              <a id="myBtn" className="addgroup" href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleModal(); }}>
+                <button>Click Here to Create or Join!</button>
+              </a>
+            </div>
+          )}
+          {isModalOpen && (
+            <div className="modal" ref={modalRef}>
+              <div className="modal-content">
+                <span className="close" onClick={toggleModal}>&times;</span>
+                <div className='creategroup'>
+                  <h3>Create your group here</h3>
+                  <input
+                    type="text"
+                    placeholder="Your Group Name"
+                    name='groupname'
+                  />
+                  <button onClick={handleCreateGroup}>Create!</button>
+                  {showPopup && <div>Group Code: {code}</div>}
+                </div>
+                <div className="addgroup">
+                  <h3>Find your group here</h3>
+                  <input
+                    type="text"
+                    maxLength="5"
+                    placeholder="Enter a 5-character code"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value.toUpperCase())}
+                  />
+                  <button onClick={searchGroup}>Join!</button>
+                  <p>{result}</p>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
         </div>
 
       </div>

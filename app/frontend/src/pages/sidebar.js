@@ -17,13 +17,13 @@ const Sidebar = () => {
   useEffect(() => {
     const sessionUser = sessionStorage.getItem('user');
     if (!sessionUser) {
-        navigate('/login');
+      navigate('/login');
     } else {
-        const user = JSON.parse(sessionUser);
-        setUserId(user.userid);
-        console.log("User Id: " + user.userid);
+      const user = JSON.parse(sessionUser);
+      setUserId(user.userid);
+      console.log("User Id: " + user.userid);
     }
-}, []);
+  }, []);
 
   const toggleModal = () => {
     setModalOpen(prev => !prev);
@@ -62,41 +62,33 @@ const Sidebar = () => {
     const newCode = generateRandomCode();
     setCode(newCode);
     setShowPopup(true);
-
     const groupName = document.querySelector('[name="groupname"]').value;
-    console.log(groupName);
+
     if (groupName) {
       try {
-        const response = fetch('http://localhost:5001/add-group', {
+        const response = await fetch('http://localhost:5001/add-group', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ groupName: groupName, code: newCode }),
+          body: JSON.stringify({ groupName: groupName, code: newCode, admin: userId }),
         });
-        if (!response) {
-          console.log('no');
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Group created successfully:', data);
         } else {
-          console.log(response);
-        }
-        if (response) {
-          // Handle successful group creation
-          console.log('Group created successfully');
-        } else {
-          // Handle errors
-          console.error('Failed to create group');
+          console.error('Failed to create group, HTTP status:', response.status);
+          const errorData = await response.json();
+          console.error(errorData);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error during fetch operation:', error);
       }
     } else {
-      // Handle case where group name is not entered
       console.error('Group name is required');
     }
   };
-
-
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -110,19 +102,17 @@ const Sidebar = () => {
 
 
   const joinGroup = async () => {
-    if (searchValue.length === 5) { // Assuming invite codes are 5 characters long
+    if (searchValue.length === 5) {
       try {
         const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ inviteCode: searchValue }) // Send invite code in request body
+          body: JSON.stringify({ inviteCode: searchValue })
         });
-  
         const data = await response.json();
-  
-        if (response.ok) {
+        if (response) {
           setResult("Successfully joined the group!");
         } else {
           setResult(data.message || "Error joining the group.");
@@ -135,7 +125,7 @@ const Sidebar = () => {
       setResult('Please enter a 5-character code.');
     }
   };
-  
+
 
   return (
     <>
