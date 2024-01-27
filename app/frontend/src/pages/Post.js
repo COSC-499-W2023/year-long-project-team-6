@@ -18,24 +18,24 @@ function PostPage() {
     const navigate = useNavigate();
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
     const [recordedVideo, setRecordedVideo] = useState(null);
-const [blurFace, setBlurFace] = useState(false);
+    const [blurFace, setBlurFace] = useState(false);
 
 
-    
+
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
-useEffect(() => {
-         const sessionUser = sessionStorage.getItem('user');
-         console.log("Sessopm User: " + sessionUser);
-         if (!sessionUser) {
-             navigate('/login');
-         } else {
-             const user = JSON.parse(sessionUser);
-             setUserId(user.userid);
-             console.log("User Id: " + user.userid);
-         }
-     }, []);
-     useEffect(() => {
+    useEffect(() => {
+        const sessionUser = sessionStorage.getItem('user');
+        console.log("Sessopm User: " + sessionUser);
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
+    useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         console.log("Sessopm User: " + sessionUser);
         if (!sessionUser) {
@@ -74,7 +74,7 @@ useEffect(() => {
         event.preventDefault();
         const formData = new FormData(event.target);
         let videoKey = '';
-        
+
         if (recordedVideo) {
             try {
                 const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title'));
@@ -91,9 +91,9 @@ useEffect(() => {
             s3_content_key: videoKey,
             userid: userId,
             blurFace: blurFace
-        }; 
+        };
         console.log("postData to be sent:", postData); // Add this line for debugging
-        
+
         fetch('http://localhost:5001/add-post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -111,66 +111,67 @@ useEffect(() => {
             })
             .catch((error) => {
                 console.error('Error:', error);
-            });}
+            });
+    }
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
     // Temporary array to hold recorded chunks, outside of the function
-let tempRecordedChunks = [];
+    let tempRecordedChunks = [];
 
-const handleTogglePlay = async () => {
-    console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
+    const handleTogglePlay = async () => {
+        console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
 
-    if (!isPlaying) {
-        setTimeout(async () => {
-            if (localView.current) {
-                try {
-                    const webrtc = await initializeWebRTC(channelARN, localView.current);
-                    signalingClientRef.current = webrtc.signalingClient;
-                    peerConnectionRef.current = webrtc.peerConnection;
+        if (!isPlaying) {
+            setTimeout(async () => {
+                if (localView.current) {
+                    try {
+                        const webrtc = await initializeWebRTC(channelARN, localView.current);
+                        signalingClientRef.current = webrtc.signalingClient;
+                        peerConnectionRef.current = webrtc.peerConnection;
 
-                    // Initialize MediaRecorder here
-                    const stream = localView.current.srcObject; // Assuming this is your local stream
-                    console.log('stream', stream);
+                        // Initialize MediaRecorder here
+                        const stream = localView.current.srcObject; // Assuming this is your local stream
+                        console.log('stream', stream);
 
-                    const recorder = new MediaRecorder(stream);
-                    setMediaRecorder(recorder);
+                        const recorder = new MediaRecorder(stream);
+                        setMediaRecorder(recorder);
 
-                    recorder.ondataavailable = (event) => {
-                        if (event.data.size > 0) {
-                            tempRecordedChunks.push(event.data);
-                        }
-                    };
+                        recorder.ondataavailable = (event) => {
+                            if (event.data.size > 0) {
+                                tempRecordedChunks.push(event.data);
+                            }
+                        };
 
-                    recorder.onstop = async () => {
-                        const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
-                        setRecordedVideo(blob); // Assuming you have a state called recordedVideo
-                        tempRecordedChunks = [];
-                    };
-                    
+                        recorder.onstop = async () => {
+                            const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
+                            setRecordedVideo(blob); // Assuming you have a state called recordedVideo
+                            tempRecordedChunks = [];
+                        };
 
-                    setShowWebRTC(true);
-                    recorder.start();
 
-                } catch (error) {
-                    console.error('Error initializing WebRTC: ', error);
+                        setShowWebRTC(true);
+                        recorder.start();
+
+                    } catch (error) {
+                        console.error('Error initializing WebRTC: ', error);
+                    }
+                } else {
+                    console.log('Refs are not set:', localView.current);
                 }
-            } else {
-                console.log('Refs are not set:', localView.current);
-            }
-        }, 100);
-    } else {
-        if (mediaRecorder) {
-            mediaRecorder.stop();
+            }, 100);
+        } else {
+            if (mediaRecorder) {
+                mediaRecorder.stop();
 
+            }
+            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+            signalingClientRef.current = null;
+            peerConnectionRef.current = null;
+            setShowWebRTC(false);
         }
-        cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
-        signalingClientRef.current = null;
-        peerConnectionRef.current = null;
-        setShowWebRTC(false);
-    }
-    setIsPlaying(!isPlaying);
-};
+        setIsPlaying(!isPlaying);
+    };
 
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
@@ -182,27 +183,27 @@ const handleTogglePlay = async () => {
     return (
         <div id='page'>
             <div id="send">
-                <h2>Send Your Post</h2>
+                <h2>Send Your Post Here</h2>
             </div>
             <div className="flex-container">
                 <div id="input">
-                <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <div id="main" className="main">
-                        <div id="videoContainer">
-                        {isPlaying && (
-                    <>
-                       <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
+                            <div id="videoContainer">
+                                {isPlaying && (
+                                    <>
+                                        <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
 
-                    </>
-                )}
-                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
-</div>
+                                    </>
+                                )}
+                                <button id="record_button" type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+                            </div>
 
-                            <div className="EnterText">
+                            <div className="EnterText" id="text_one">
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-                        {/*
+                            {/*
                             <div className="EnterText">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
@@ -213,23 +214,23 @@ const handleTogglePlay = async () => {
                                 </select>
                             </div>
                         */}
-                            <div className="EnterText">
+                            <div className="EnterText" id="text_two">
                                 <legend>Description of Your Video</legend>
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
                         </div>
                         <div className="blur">
-                                <legend>
-                                    BlurFace  
-                                </legend>   
-                                <input
-                                    type="checkbox"
-                                     id="blurFace"
-                                     checked={blurFace}
-                                     onChange={(e) => setBlurFace(e.target.checked)}
-                                    />
-                            </div>
-                            <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+                            <legend>
+                                BlurFace
+                            </legend>
+                            <input
+                                type="checkbox"
+                                id="blurFace"
+                                checked={blurFace}
+                                onChange={(e) => setBlurFace(e.target.checked)}
+                            />
+                        </div>
+                        <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
                     </form>
                 </div>
                 <div id="HistroyBar">
@@ -244,7 +245,7 @@ const handleTogglePlay = async () => {
                                     </select>
                                 </td>
                             </tr>
-                           
+
                         </thead>
                         <tbody>
                             {postHistory.map((post, index) => (
