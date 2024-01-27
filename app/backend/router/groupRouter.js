@@ -59,8 +59,8 @@ router.get('/get-group-infor/:id', (req, res) => {
 });
 
 router.post('/join-group/:userId', (req, res) => {
-    const userId = req.params.userId; 
-    const { inviteCode } = req.body; 
+    const userId = req.params.userId;
+    const { inviteCode } = req.body;
 
     if (!inviteCode) {
         return res.status(400).json({ message: "Invite code is required" });

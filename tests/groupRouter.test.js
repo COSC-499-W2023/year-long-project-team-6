@@ -1,71 +1,109 @@
-const { addNewGroup, editGroupName, deleteGroup, getGroupInfo } = require('../app/backend/dao/groupDao');
-const express = require('express');
 const request = require('supertest');
-const router = require('../app/backend/router/groupRouter');
-
-jest.mock('../app/backend/dao/groupDao');
+const express = require('express');
+const bodyParser = require('body-parser');
+const groupRouter = require('../app/backend/router/groupRouter');
 
 const app = express();
-app.use(express.json());
-app.use('/groups', router);
+app.use(bodyParser.json());
+app.use('/api/group', groupRouter);
 
-describe('Group Routes', () => {
-    const mockGroupId = 1;
-    const mockGroupName = 'TestGroup';
-    const mockGroupCode = 'ABC123';
+jest.mock('../app/backend/dao/groupDao', () => ({
+    addNewGroup: jest.fn(),
+    editGroupName: jest.fn(),
+    deleteGroup: jest.fn(),
+    getGroupInfo: jest.fn(),
+    joinGroupByInviteCode: jest.fn()
+}));
 
-    test('POST /groups/edit-group/:id should edit group name', async () => {
-        editGroupName.mockImplementation((groupId, newGroupName, callback) => {
-            callback(null, {});
-        });
+const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInviteCode } = require('../app/backend/dao/groupDao');
 
-        const response = await request(app)
-            .post('/groups/edit-group/1')
-            .send({ newGroupName: 'NewTestGroup' });
+const groupDao = require('../app/backend/dao/groupDao');
 
-        expect(response.status).toBe(200);
-        expect(response.text).toContain('Group name updated successfully');
+describe('Group Router', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
     });
 
-    test('POST /groups/add-group - should add a new group successfully', async () => {
-        const mockResult = { insertId: mockGroupId };
-        addNewGroup.mockImplementationOnce((groupName, code, callback) => {
-            callback(null, mockResult);
+    describe('POST /add-group', () => {
+        it('adds a new group', async () => {
+            // Mock implementation
+            addNewGroup.mockImplementation((groupName, code, callback) => {
+                callback(null, { insertId: 1 });
+            });
+
+            const response = await request(app)
+                .post('/api/group/add-group')
+                .send({ groupName: 'TestGroup', code: '1234' });
+
+            expect(response.statusCode).toBe(200);
+            expect(response.text).toContain('New group added successfully');
+            expect(addNewGroup).toHaveBeenCalledWith('TestGroup', '1234', expect.any(Function));
         });
-
-        const response = await request(app)
-            .post('/groups/add-group')
-            .send({ groupName: mockGroupName, code: mockGroupCode });
-
-        expect(response.status).toBe(200);
-        expect(response.text).toContain('New group added successfully');
     });
 
-    test('DELETE /groups/delete-group/:id should delete a group', async () => {
-        deleteGroup.mockImplementation((groupId, callback) => {
-            callback(null, {});
+    describe('POST /edit-group/:id', () => {
+        it('updates a group name', async () => {
+            groupDao.editGroupName.mockImplementation((groupId, newGroupName, callback) => {
+                callback(null, { affectedRows: 1 });
+            });
+
+            const response = await request(app)
+                .post('/api/group/edit-group/1')
+                .send({ newGroupName: 'UpdatedGroupName' });
+
+            expect(response.statusCode).toBe(200);
+            expect(response.text).toContain('Group name updated successfully');
+            expect(editGroupName).toHaveBeenCalledWith('1', 'UpdatedGroupName', expect.any(Function));
         });
 
-        const response = await request(app).delete('/groups/delete-group/1');
-
-        expect(response.status).toBe(200);
-        expect(response.text).toContain('Group deleted successfully');
     });
 
-    test('GET /groups/get-group-info/:id should get group information', async () => {
-        const mockGroup = {
-            id: mockGroupId,
-            name: mockGroupName,
-            code: mockGroupCode,
-        };
+    describe('DELETE /delete-group/:id', () => {
+        it('deletes a group', async () => {
+            deleteGroup.mockImplementation((groupId, callback) => {
+                callback(null, { affectedRows: 1 });
+            });
 
-        getGroupInfo.mockImplementation((groupId, callback) => {
-            callback(null, mockGroup);
+            const response = await request(app)
+                .delete('/api/group/delete-group/1');
+
+            expect(response.statusCode).toBe(200);
+            expect(response.text).toContain('Group deleted successfully');
+            expect(deleteGroup).toHaveBeenCalledWith('1', expect.any(Function));
         });
 
-        const response = await request(app).get('/groups/get-group-infor/1');
+    });
 
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual(mockGroup);
-    }, 10000);
+    describe('GET /get-group-infor/:id', () => {
+        it('retrieves group information', async () => {
+            getGroupInfo.mockImplementation((groupId, callback) => {
+                callback(null, { groupId: 1, groupName: 'TestGroup' });
+            });
+
+            const response = await request(app)
+                .get('/api/group/get-group-infor/1');
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toEqual({ groupId: 1, groupName: 'TestGroup' });
+            expect(getGroupInfo).toHaveBeenCalledWith('1', expect.any(Function));
+        });
+
+    });
+
+    describe('POST /join-group/:userId', () => {
+        it('allows a user to join a group', async () => {
+            joinGroupByInviteCode.mockImplementation((userId, inviteCode, callback) => {
+                callback(null, { message: 'Successfully joined the group' });
+            });
+
+            const response = await request(app)
+                .post('/api/group/join-group/1')
+                .send({ inviteCode: '1234' });
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toContain('Successfully joined the group');
+            expect(joinGroupByInviteCode).toHaveBeenCalledWith('1', '1234', expect.any(Function));
+        });
+    });
 });
+
