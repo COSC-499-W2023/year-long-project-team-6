@@ -113,6 +113,18 @@ function PostPage() {
                 console.error('Error:', error);
             });
     }
+
+    const handleSortChange = (event) => {
+        const sortOrder = event.target.value;
+        setPostHistory(prevHistory => {
+            return [...prevHistory].sort((a, b) => {
+                const dateA = new Date(a.post_date);
+                const dateB = new Date(b.post_date);
+                return sortOrder === 'Asc' ? dateA - dateB : dateB - dateA;
+            });
+        });
+    };
+
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
@@ -239,7 +251,7 @@ function PostPage() {
                             <tr>
                                 <td>History</td>
                                 <td id="Sort">
-                                    <select id="order" name="order">
+                                    <select id="order" name="order" onChange={handleSortChange}>
                                         <option value="Des">Descending</option>
                                         <option value="Asc">Ascending</option>
                                     </select>
