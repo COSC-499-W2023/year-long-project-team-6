@@ -33,12 +33,7 @@ const Sidebar = () => {
     navigate('/Profile'); // Navigate to the profile page
   };
 
-  const searchGroup = () => {
-    const message = searchValue.length === 5
-      ? `Searching for group with code: ${searchValue}`
-      : 'Please enter a 5-character code.';
-    setResult(message);
-  };
+
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -50,6 +45,7 @@ const Sidebar = () => {
     navigate('/login');
   };
 
+
   const generateRandomCode = () => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     let result = '';
@@ -58,6 +54,8 @@ const Sidebar = () => {
     }
     return result;
   };
+
+
   const handleCreateGroup = async () => {
     const newCode = generateRandomCode();
     setCode(newCode);
@@ -103,28 +101,35 @@ const Sidebar = () => {
 
   const joinGroup = async () => {
     if (searchValue.length === 5) {
-      try {
-        const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ inviteCode: searchValue })
-        });
-        const data = await response.json();
-        if (response) {
-          setResult("Successfully joined the group!");
-        } else {
-          setResult(data.message || "Error joining the group.");
+        try {
+            const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ inviteCode: searchValue })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert("Successfully joined the group!");
+                window.location.reload();
+            } else {
+              console.log(data);
+              if (data.error) {
+                alert(data.error);
+                } else {
+                setResult(data.message || "Error to join groups");
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setResult("Failed to join the group.");
         }
-      } catch (error) {
-        console.error('Error:', error);
-        setResult("Failed to join the group.");
-      }
     } else {
-      setResult('Please enter a 5-character code.');
+        setResult('Please enter a 5-character code.');
     }
-  };
+};
+
 
 
   return (

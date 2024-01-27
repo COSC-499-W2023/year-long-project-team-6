@@ -91,16 +91,33 @@ async function joinGroupByInviteCode(userId, inviteCode, callback) {
             callback('No group found with the provided invite code', null);
         } else {
             const groupId = groupResults[0].groupid;
-            const insertQuery = 'INSERT INTO user_groups (userid, groupid) VALUES (?, ?)';
-            db.query(insertQuery, [userId, groupId], (insertErr, insertResult) => {
-                if (insertErr) {
-                    callback(insertErr, null);
-                } else {
-                    callback(null, insertResult);
+
+            // Check if the user is already in the group
+            const checkUserInGroupQuery = 'SELECT * FROM user_groups WHERE userid = ? AND groupid = ?';
+            db.query(checkUserInGroupQuery, [userId, groupId], (checkErr, checkResults) => {
+                if (checkErr) {
+                    callback(checkErr, null);
+                } else if (checkResults.length > 0) {
+                    // User is already in the group
+                    callback('User is already a member of this group', null);
+                } else if (groupResults.length === 0) {
+                    // No group found with the provided invite code
+                    callback('No group found with the provided invite code', null);
+                }else {
+                    // Proceed to add user to the group
+                    const insertQuery = 'INSERT INTO user_groups (userid, groupid) VALUES (?, ?)';
+                    db.query(insertQuery, [userId, groupId], (insertErr, insertResult) => {
+                        if (insertErr) {
+                            callback(insertErr, null);
+                        } else {
+                            callback(null, insertResult);
+                        }
+                    });
                 }
             });
         }
     });
+
 }
 
 

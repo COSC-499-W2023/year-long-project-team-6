@@ -71,7 +71,11 @@ router.post('/join-group/:userId', (req, res) => {
 
     joinGroupByInviteCode(userId, inviteCode, (err, result) => {
         if (err) {
-            res.status(500).json({ error: err });
+            if (err === 'No group found with the provided invite code') {
+                res.status(500).json({ message: 'No group found with the provided invite code' });
+            } else if (err === 'User is already a member of this group') {
+                res.status(500).json({ message: 'User is already a member of this group' });
+            }           
             console.log("Error: " + err);
         } else {
             res.status(200).json({ message: "Successfully joined the group", result });
