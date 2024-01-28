@@ -18,7 +18,8 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.jsx?$": "babel-jest"
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.js$": "babel-jest"
     },
     "moduleNameMapper": {
       "^react$": "<rootDir>/node_modules/react",
@@ -32,8 +33,12 @@
     "testEnvironment": "jsdom"
   },
   "dependencies": {
+    "@aws-sdk/client-kinesis-video": "^3.501.0",
+    "@aws-sdk/client-s3": "^3.501.0",
     "bcrypt": "^5.1.1",
     "express": "^4.18.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.7.1",
     "react": "^18.2.0",
