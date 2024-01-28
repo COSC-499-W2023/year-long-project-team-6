@@ -50,7 +50,7 @@ function MembersPage() {
                 });
         }
     }, [userId]);
-    console.log(members);
+    console.log(roleFilter);
 
     return (
         <div className="members-page">
@@ -64,8 +64,8 @@ function MembersPage() {
                 />
                 <select value={roleFilter} onChange={handleRoleChange} className="dropdown">
                     <option value="All Roles">All Roles</option>
-                    <option value="Sender">Sender</option>
-                    <option value="Receiver">Receiver</option>
+                    <option value="sender">Sender</option>
+                    <option value="Admin">Admin</option>
                 </select>
             </div>
             <table className="members-table">
@@ -77,8 +77,13 @@ function MembersPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {members.map((member) => (
-                        <tr key={member.userId}>
+                    {members
+                    .filter(member => 
+                        member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        (roleFilter === 'All Roles' || member.role === roleFilter)
+                      )
+                    .map((member, index) => (
+                        <tr key={member.userId + '-' + index}>
                             <td>{member.username}</td>
                             <td>{member.role}</td>
                             <td><Link to={`/groupPost/${groupId}/${member.username}`}>Check members</Link></td>
