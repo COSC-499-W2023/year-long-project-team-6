@@ -27,7 +27,7 @@ function App() {
               <Route path="RecordedPage" element={<RecordedPage />} />
               <Route path="EditPage" element={<EditPage />} />
               <Route path="Profile" element={<Profile />} />
-              <Route path="Members" element={<Members />} />
+              <Route path="Members/:groupId" element={<Members />} />
               <Route path="Video/:videoId" element={<VideoPage />} />
             </Route>
           </Routes>

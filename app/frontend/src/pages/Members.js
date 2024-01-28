@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, Link  } from "react-router-dom";
 import '../component/CSS/MembersPage.css';
 
-const mockData = [
-    { name: 'David', group: 'Group 1', role: 'Sender' },
-    { name: 'Smith', group: 'Group 1', role: 'Sender' },
-    { name: 'Grace', group: 'Group 1', role: 'Sender' },
-    { name: 'Jason', group: 'Group 1', role: 'Receiver' },
-    { name: 'Jerry', group: 'Group 1', role: 'Sender' },
-    { name: 'Henry', group: 'Group 1', role: 'Receiver' },
-    { name: 'Lisa', group: 'Group 1', role: 'Sender' },
-];
 
-const Members = () => {
+function MembersPage() {
+    const [userId, setUserId] = useState('');
+    const navigate = useNavigate();
+    const { groupId } = useParams();
+    const [members, setMembers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('All Roles');
+    console.log(groupId);
+    useEffect(() => {
+        const sessionUser = sessionStorage.getItem('user');
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
+
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -23,15 +31,26 @@ const Members = () => {
         setRoleFilter(event.target.value);
     };
 
-    const filteredData = mockData.filter(member => {
-        // Make the filter function here. 
-        // return if the input name matched with the existed mock member name. 
-        const matchesSearchTerm = member.name.toLowerCase().includes(searchTerm.toLowerCase());
-        // if the role still All role, we do not need filters. But if role change, we only show the user with corresponding role. 
-        const matchesRole = roleFilter === 'All Roles' || member.role === roleFilter;
-
-        return matchesSearchTerm && matchesRole;
-    });
+    useEffect(() => {
+        if (userId) {
+            fetch(`http://localhost:5001/groups-users/${groupId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(userId);
+                    console.log('Fetched data:', data);
+                    setMembers(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+        }
+    }, [userId]);
+    console.log(members);
 
     return (
         <div className="members-page">
@@ -53,22 +72,23 @@ const Members = () => {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Section</th>
                         <th>Role</th>
+                        <th>Posts</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData.map((member, index) => (
-                        <tr key={index}>
-                            <td>{member.name}</td>
-                            <td>{member.group}</td>
+                    {members.map((member) => (
+                        <tr key={member.userId}>
+                            <td>{member.username}</td>
                             <td>{member.role}</td>
+                            <td><Link to={`/groupPost/${groupId}/${member.username}`}>Check members</Link></td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
     );
-};
 
-export default Members;
+}
+
+export default MembersPage;

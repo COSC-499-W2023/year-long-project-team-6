@@ -130,7 +130,7 @@ function MainContent() {
           {groups.length > 0 ? (
             groups.map(group => (
               <GroupCard
-                key={group.groupid}
+                id={group.groupid}
                 imgUrl={group.imgUrl}
                 time={group.group_creation_time}
                 groupName={group.groupname}

@@ -43,3 +43,24 @@
     padding: 12px;
     border-bottom: 1px solid #ddd;
 }
+
+.members-table a {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border-color: white;
+    background-color: #007bff;
+    width: 30em;
+}
+
+.members-table a:hover {
+    color: blue;
+    background-color: #007bff;
+}
+
+.members-table a:active {
+    background-color: rgba(255, 255, 255, 0.4);
+}

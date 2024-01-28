@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const groupDao = require('../dao/groupDao');
+const groupDao = require('../dao/group_member_board_Dao');
 
 router.get('/groups-users/:groupId', (req, res) => {
     const groupId = req.params.groupId;
