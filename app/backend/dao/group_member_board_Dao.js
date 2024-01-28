@@ -17,6 +17,19 @@ async function getUsersInGroup(groupId, callback) {
     });
 }
 
+async function checkAdmin(groupId, callback) {
+    const query = 'SELECT admin FROM `groups` WHERE groupid = ?;';
+    db.query(query, [groupId], (err, results) => {
+        if (err) {
+            console.error(err);
+            callback('Error fetching admin in group', null);
+        } else {
+            callback(null, results);
+        }
+    });
+}
+
 module.exports = {
-    getUsersInGroup
+    getUsersInGroup,
+    checkAdmin
 };
