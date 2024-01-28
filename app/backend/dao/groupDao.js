@@ -1,28 +1,64 @@
 const db = require('../db/db');
 
-async function addNewGroup(groupname, invite_code, callback) {
-    const query = 'INSERT INTO `groups` (`groupname`, `invite_code`) VALUES (?, ?)';
-    db.query(query, [groupname, invite_code], (err, result) => {
+async function addNewGroup(groupname, invite_code, admin, callback) {
+    const query = 'INSERT INTO `groups` (`groupname`, `invite_code`, `admin`) VALUES (?, ?, ?)';
+    const queryParams = [groupname, invite_code, admin];
+    db.query(query, queryParams, (err, result) => {
         if (err) {
-            console.error(err); 
-            callback('Error adding group', null); 
+            console.error(err);
+            callback('Error adding group', null);
+        } else {
+            const groupId = result.insertId;
+            const addUserToGroupQuery = 'INSERT INTO user_groups (userid, groupid) VALUES (?, ?)';
+            db.query(addUserToGroupQuery, [admin, groupId], (addUserErr, addUserResult) => {
+                if (addUserErr) {
+                    console.error(addUserErr);
+                    callback('Error adding user to the new group', null);
+                } else {
+                    callback(null, { groupId, addUserResult });
+                }
+            });
+        }
+    });
+}
+
+
+async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
+    let query = 'UPDATE `groups` SET';
+    const queryParams = [];
+
+    // Dynamically construct the query based on provided data
+    if (newGroupName) {
+        query += ' `groupname` = ?,';
+        queryParams.push(newGroupName);
+    }
+    if (newAdmin) {
+        query += ' `admin` = ?,';
+        queryParams.push(newAdmin);
+    }
+    if (newImage !== undefined) {
+        query += ' `image` = ?,';
+        queryParams.push(newImage);
+    }
+    query = query.slice(0, -1);
+
+    query += ' WHERE `groupid` = ?';
+    queryParams.push(groupId);
+
+    if (queryParams.length === 1) {
+        return callback('No new data provided for update', null);
+    }
+
+    db.query(query, queryParams, (err, result) => {
+        if (err) {
+            console.error(err);
+            callback('Error updating group details', null);
         } else {
             callback(null, result);
         }
     });
 }
 
-
-async function editGroupName(groupId, newGroupName, callback) {
-    const query = 'UPDATE groups SET groupname = ? WHERE groupid = ?';
-    db.query(query, [newGroupName, groupId], (err, result) => {
-        if (err) {
-            callback(err, null);
-        } else {
-            callback(null, result);
-        }
-    });
-}
 
 async function deleteGroup(groupId, callback) {
     const query = 'DELETE FROM groups WHERE groupid = ?';
@@ -47,7 +83,7 @@ async function getGroupInfo(groupId, callback) {
 }
 
 async function joinGroupByInviteCode(userId, inviteCode, callback) {
-    const findGroupQuery = 'SELECT groupid FROM groups WHERE invite_code = ?';
+    const findGroupQuery = 'SELECT groupid FROM `groups` WHERE invite_code = ?';
     db.query(findGroupQuery, [inviteCode], (err, groupResults) => {
         if (err) {
             callback(err, null);
@@ -55,22 +91,40 @@ async function joinGroupByInviteCode(userId, inviteCode, callback) {
             callback('No group found with the provided invite code', null);
         } else {
             const groupId = groupResults[0].groupid;
-            const insertQuery = 'INSERT INTO user_groups (user_id, group_id) VALUES (?, ?)';
-            db.query(insertQuery, [userId, groupId], (insertErr, insertResult) => {
-                if (insertErr) {
-                    callback(insertErr, null);
-                } else {
-                    callback(null, insertResult);
+
+            // Check if the user is already in the group
+            const checkUserInGroupQuery = 'SELECT * FROM user_groups WHERE userid = ? AND groupid = ?';
+            db.query(checkUserInGroupQuery, [userId, groupId], (checkErr, checkResults) => {
+                if (checkErr) {
+                    callback(checkErr, null);
+                } else if (checkResults.length > 0) {
+                    // User is already in the group
+                    callback('User is already a member of this group', null);
+                } else if (groupResults.length === 0) {
+                    // No group found with the provided invite code
+                    callback('No group found with the provided invite code', null);
+                }else {
+                    // Proceed to add user to the group
+                    const insertQuery = 'INSERT INTO user_groups (userid, groupid) VALUES (?, ?)';
+                    db.query(insertQuery, [userId, groupId], (insertErr, insertResult) => {
+                        if (insertErr) {
+                            callback(insertErr, null);
+                        } else {
+                            callback(null, insertResult);
+                        }
+                    });
                 }
             });
         }
     });
+
 }
+
 
 
 module.exports = {
     addNewGroup,
-    editGroupName,
+    editGroup,
     deleteGroup,
     getGroupInfo,
     joinGroupByInviteCode
