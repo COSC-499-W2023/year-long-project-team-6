@@ -3,9 +3,24 @@ require('dotenv').config({ path: "./process.env" });
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
+const PostDao = require('./dao/PostDao');
+const createUserRouter = require('./router/userRouter');
 
 const app = express();
 const port = 5001;
+
+// Database connection setup
+const connection = mysql.createConnection({
+  host: process.env.DBHOST,
+  user: process.env.DBUSER,
+  password: process.env.DBPASS,
+  database: process.env.DBNAME
+});
+connection.connect(error => {
+  if (error) throw error;
+  console.log("Successfully connected to the database.");
+});
+const postDao = new PostDao(connection);
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -16,7 +31,10 @@ app.use(cors({
 const awsRouter = require('./router/awsRouter');
 app.use(awsRouter);
 
-
+app.use('/api/auth', createUserRouter(postDao));
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
