@@ -222,17 +222,19 @@ function PostPage() {
                             </div>
                         </div>
                         <div className="blur">
-                            <legend>
-                                BlurFace
-                            </legend>
-                            <input
-                                type="checkbox"
-                                id="blurFace"
-                                checked={blurFace}
-                                onChange={(e) => setBlurFace(e.target.checked)}
-                            />
-                        </div>
-                        <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+                                <legend>
+                                    BlurFace  
+                                </legend>   
+                                <input
+                                    type="checkbox"
+                                     id="blurFace"
+                                     checked={blurFace}
+                                     onChange={(e) => setBlurFace(e.target.checked)}
+                                    />
+                            </div>
+                            <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+
+
                     </form>
                 </div>
                 <div id="HistroyBar">

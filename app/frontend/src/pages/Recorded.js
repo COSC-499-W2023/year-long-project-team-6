@@ -13,7 +13,6 @@ function RecordedPage() {
     const [newText, setNewText] = useState('');
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-    const [videoUrl, setVideoUrl] = useState('');
     const handleView = async (videoId) => {
         navigate(`/Video/${videoId}`)
     };
@@ -94,7 +93,13 @@ function RecordedPage() {
             });
     };
 
-
+    const showdate=(timestamp) =>{
+        let date = new Date(timestamp);
+        let formattedDate = date.toLocaleDateString(); 
+        let formattedTime = date.toLocaleTimeString(); 
+    let formattedDateTime = formattedDate + ' ' + formattedTime;
+    return formattedDateTime
+    }
 
     const renderEditForm = () => {
         if (showModal) {
@@ -158,6 +163,8 @@ function RecordedPage() {
                                 <td>
                                     <h3>Group</h3>
                                 </td>
+                                <td>{showdate(post.post_date)}</td>
+
                                 <td>
                                     <h3>Arrange By</h3>
                                 </td>
