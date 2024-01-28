@@ -3,7 +3,7 @@ import "../component/CSS/post.css";
 import { useNavigate } from "react-router-dom";
 import { initializeWebRTC, cleanupWebRTC } from './webrtc';
 import { uploadVideo } from './webrtc';
-import { wait } from "@testing-library/user-event/dist/utils";
+
 function PostPage() {
     const [showWebRTC, setShowWebRTC] = useState(false);
     const [userId, setUserId] = useState("");
@@ -21,20 +21,7 @@ function PostPage() {
     const [blurFace, setBlurFace] = useState(false);
 
 
-
-
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
-    useEffect(() => {
-        const sessionUser = sessionStorage.getItem('user');
-        console.log("Sessopm User: " + sessionUser);
-        if (!sessionUser) {
-            navigate('/login');
-        } else {
-            const user = JSON.parse(sessionUser);
-            setUserId(user.userid);
-            console.log("User Id: " + user.userid);
-        }
-    }, []);
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         console.log("Sessopm User: " + sessionUser);
@@ -91,7 +78,10 @@ function PostPage() {
             s3_content_key: videoKey,
             userid: userId,
             blurFace: blurFace
+
         };
+
+
         console.log("postData to be sent:", postData); // Add this line for debugging
 
         fetch('http://localhost:5001/add-post', {
@@ -175,7 +165,6 @@ function PostPage() {
         } else {
             if (mediaRecorder) {
                 mediaRecorder.stop();
-
             }
             cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
             signalingClientRef.current = null;
@@ -209,6 +198,7 @@ function PostPage() {
                                     </>
                                 )}
                                 <button id="record_button" type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+
                             </div>
 
                             <div className="EnterText" id="text_one">

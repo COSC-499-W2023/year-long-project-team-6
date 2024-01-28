@@ -88,7 +88,8 @@ body {
     flex-shrink: 0;
 }
 
-.card .photo img {
+.card .photo{
+    background-color: aqua;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -182,4 +183,61 @@ body {
 
 .card:hover {
     opacity: 0.8;
+}
+
+.newUser img{
+    width: 18em;
+    margin-top: 5.5em;
+    margin-left: 0;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    /* Fixed position to cover the entire viewport */
+    z-index: 10000;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black overlay with opacity */
+    color: black;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    position: fixed;
+    /* Fixed position to center within the viewport */
+    background-color: #fefefe;
+    top: 50%;
+    /* Center vertically */
+    left: 50%;
+    /* Center horizontally */
+    transform: translate(-50%, -50%);
+    /* Centering trick */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
