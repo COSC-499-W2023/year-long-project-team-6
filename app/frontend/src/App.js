@@ -8,7 +8,10 @@ import MainContent from './pages/MainContent';
 import Sidebar from './pages/sidebar';
 import Profile from './pages/UserProfile';
 import Members from './pages/Members';
-import './component/CSS/style.css'; 
+
+import VideoPage from './pages/VideoPage';
+import './component/CSS/style.css'; // Assuming your styles are compatible with React
+
 import './component/CSS/sidebar_style.css';
 import './App.css';
 
@@ -25,6 +28,7 @@ function App() {
               <Route path="EditPage" element={<EditPage />} />
               <Route path="Profile" element={<Profile />} />
               <Route path="Members" element={<Members />} />
+              <Route path="Video/:videoId" element={<VideoPage />} />
             </Route>
           </Routes>
         </Router>

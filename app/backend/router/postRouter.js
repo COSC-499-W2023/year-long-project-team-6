@@ -21,6 +21,7 @@ router.post('/add-post', express.json(), (req, res) => {
     const postData = req.body;
     addPost(postData, (err, result) => {
         if (err) {
+            console.error(err);
             res.status(500).send('Error adding post: ' + err.message);
         } else {
             console.log('Post add result:', postData);

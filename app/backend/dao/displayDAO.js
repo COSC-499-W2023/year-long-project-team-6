@@ -24,13 +24,14 @@ async function addPost(postData, callback) {
         s3_content_key,
         post_text,
         userid,
-        post_title
+        post_title,
+        blurFace
     } = postData;
     const query = `
-        INSERT INTO posts (user_group_id, s3_content_key, post_text, userid, post_title)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO posts (user_group_id, s3_content_key, post_text, userid, post_title, blur_face)
+        VALUES (?, ?, ?, ?, ?, ?)
     `;
-    db.query(query, [user_group_id, s3_content_key, post_text, userid, post_title], (err, result) => {
+    db.query(query, [user_group_id, s3_content_key, post_text, userid, post_title,blurFace], (err, result) => {
         if (err) {
             callback(err, null);
         } else {

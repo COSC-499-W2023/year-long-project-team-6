@@ -13,7 +13,12 @@ function RecordedPage() {
     const [newText, setNewText] = useState('');
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-
+    const [videoUrl, setVideoUrl] = useState('');
+    const handleView = async (videoId) => {
+        navigate(`/Video/${videoId}`)
+    };
+    
+    
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         if (!sessionUser) {
@@ -44,7 +49,7 @@ function RecordedPage() {
                 });
         }
     }, [userId]);
-
+    
 
     const handleDelete = (postId) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this post?");
@@ -128,6 +133,7 @@ function RecordedPage() {
 
     return (
         <>
+        <div id="content">
             <div id="condition">
                 <table>
                     <tbody>
@@ -185,10 +191,14 @@ function RecordedPage() {
                                     <button className='deleteButton' onClick={() => handleDelete(post.post_id)}>Delete</button>
                                     {renderEditForm()}
                                 </td>
+                                <td><button className='view' onClick={() => {
+                                       handleView(post.post_id)
+                                    }}>View</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+            </div>
             </div>
         </>
     );

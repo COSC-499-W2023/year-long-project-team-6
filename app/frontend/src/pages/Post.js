@@ -18,6 +18,8 @@ function PostPage() {
     const navigate = useNavigate();
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
     const [recordedVideo, setRecordedVideo] = useState(null);
+    const [blurFace, setBlurFace] = useState(false);
+
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
     useEffect(() => {
@@ -62,7 +64,7 @@ function PostPage() {
 
         if (recordedVideo) {
             try {
-                const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title')); // Modify this function as needed
+                const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title'));
                 console.log('Video uploaded successfully:', uploadResult);
                 videoKey = uploadResult.key;
             } catch (uploadError) {
@@ -74,8 +76,10 @@ function PostPage() {
             post_title: formData.get('post_title'),
             post_text: formData.get('post_text'),
             s3_content_key: videoKey,
-            userid: userId
-        };
+            userid: userId,
+            blurFace: blurFace
+        }; 
+
         console.log("postData to be sent:", postData); // Add this line for debugging
 
         fetch('http://localhost:5001/add-post', {
@@ -148,10 +152,12 @@ function PostPage() {
             if (mediaRecorder) {
                 mediaRecorder.stop();
             }
+
             cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
             signalingClientRef.current = null;
             peerConnectionRef.current = null;
             setShowWebRTC(false);
+
         }
         setIsPlaying(!isPlaying);
     };
@@ -202,10 +208,18 @@ function PostPage() {
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
                         </div>
-
-                        <div id="button">
+                        <div className="blur">
+                                <legend>
+                                    BlurFace  
+                                </legend>   
+                                <input
+                                    type="checkbox"
+                                     id="blurFace"
+                                     checked={blurFace}
+                                     onChange={(e) => setBlurFace(e.target.checked)}
+                                    />
+                            </div>
                             <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
-                        </div>
                     </form>
                 </div>
                 <div id="HistroyBar">
@@ -220,6 +234,7 @@ function PostPage() {
                                     </select>
                                 </td>
                             </tr>
+                           
                         </thead>
                         <tbody>
                             {postHistory.map((post, index) => (
