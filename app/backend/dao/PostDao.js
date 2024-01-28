@@ -91,8 +91,6 @@ class PostDao {
                 // Handle the error in the callback
                 callback(error, null);
             } else {
-                // Assuming s3_content_key is the column name in your posts table
-                // and you're expecting a single result
                 const videoKey = results.length > 0 ? results[0].s3_content_key : null;
                 callback(null, videoKey);
             }

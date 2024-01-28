@@ -1,4 +1,4 @@
-const { addNewGroup, editGroupName, deleteGroup, getGroupInfo } = require('../app/backend/dao/groupDao');
+const { addNewGroup, editGroupName, deleteGroup, getGroupInfo,joinGroupByInviteCode } = require('../app/backend/dao/groupDao');
 const db = require('../app/backend/db/db');
 
 jest.mock('../app/backend/db/db');
@@ -77,7 +77,6 @@ describe('deleteGroup', () => {
     });
 
     test('handles database error', async () => {
-        // Mocking a database error
         db.query.mockImplementationOnce((query, values, callback) => {
             callback('Database error', null);
         });
@@ -119,5 +118,63 @@ describe('getGroupInfo', () => {
             expect.any(Function)
         );
         expect(callback).toHaveBeenCalledWith('Database error', null);
+    });
+});
+describe('joinGroupByInviteCode', () => {
+    test('should join a group with a valid invite code', (done) => {
+        const userId = 1;
+        const inviteCode = 'ABC123';
+        const mockGroupResults = [{ groupid: 123 }];
+
+        db.query.mockImplementationOnce((query, values, callback) => {
+            expect(query).toContain('SELECT groupid FROM groups WHERE invite_code = ?');
+            expect(values).toEqual([inviteCode]);
+            callback(null, mockGroupResults);
+        });
+
+        db.query.mockImplementationOnce((query, values, callback) => {
+            expect(query).toContain('INSERT INTO user_groups (user_id, group_id) VALUES (?, ?)');
+            expect(values).toEqual([userId, mockGroupResults[0].groupid]);
+            callback(null, { /* Mock insert result */ });
+        });
+
+        joinGroupByInviteCode(userId, inviteCode, (err, result) => {
+            expect(err).toBeNull();
+            expect(result).toBeDefined();
+            done();
+        });
+    });
+
+    test('should handle no group found with the provided invite code', (done) => {
+        const userId = 1;
+        const inviteCode = 'INVALID';
+
+        db.query.mockImplementationOnce((query, values, callback) => {
+            expect(query).toContain('SELECT groupid FROM groups WHERE invite_code = ?');
+            expect(values).toEqual([inviteCode]);
+            callback(null, []); // Simulate no group found
+        });
+
+        joinGroupByInviteCode(userId, inviteCode, (err, result) => {
+            expect(err).toBe('No group found with the provided invite code');
+            expect(result).toBeNull();
+            done();
+        });
+    });
+
+    test('should handle database query error', (done) => {
+        const userId = 1;
+        const inviteCode = 'ABC123';
+        const mockError = new Error('Database error');
+
+        db.query.mockImplementationOnce((query, values, callback) => {
+            callback(mockError, null);
+        });
+
+        joinGroupByInviteCode(userId, inviteCode, (err, result) => {
+            expect(err).toEqual(mockError);
+            expect(result).toBeNull();
+            done();
+        });
     });
 });

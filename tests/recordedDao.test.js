@@ -1,4 +1,4 @@
-const {getPostInfor, deletePost, editPost} = require('../app/backend/dao/recordedDao');
+const {getPostInfor, getGroupInfor,deletePost, editPost} = require('../app/backend/dao/recordedDao');
 const db = require('../app/backend/db/db');
 const mysql = require('mysql');
 
@@ -66,6 +66,27 @@ describe('editPost function', () => {
         });
         const mockCallback = jest.fn();
         await editPost(1, 'New Title', 'New Text', mockCallback);
+        expect(mockCallback).toHaveBeenCalledWith(mockError, null);
+    });
+});
+describe('getGroupInfor function', () => {
+    test('should retrieve group information', async () => {
+        const mockResults = [{ groupid: 1, groupname: 'Test Group' }];
+        db.query.mockImplementationOnce((query, callback) => {
+            callback(null, mockResults);
+        });
+        const mockCallback = jest.fn();
+        await getGroupInfor(mockCallback);
+        expect(mockCallback).toHaveBeenCalledWith(null, mockResults);
+    });
+
+    test('should handle errors during database query', async () => {
+        const mockError = new Error('Database error');
+        db.query.mockImplementationOnce((query, callback) => {
+            callback(mockError, null);
+        });
+        const mockCallback = jest.fn();
+        await getGroupInfor(mockCallback);
         expect(mockCallback).toHaveBeenCalledWith(mockError, null);
     });
 });

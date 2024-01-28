@@ -28,7 +28,7 @@ async function getGroupInfor(callback) {
         FROM groups;
         `;
 
-    this.db.query(query, (err, results) => {
+    db.query(query, (err, results) => {
         callback(err, results);
     });
 }
@@ -67,6 +67,7 @@ async function editPost(postId, newTitle, newText, callback) {
 
 module.exports = {
     getPostInfor,
+    getGroupInfor,
     deletePost,
     editPost
 };
