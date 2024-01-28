@@ -1,5 +1,5 @@
 const express = require('express');
-const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInviteCode } = require('../dao/groupDao');
+const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInviteCode, getAllInviteCodes } = require('../dao/groupDao');
 const router = express.Router();
 
 router.post('/add-group', async (req, res) => {
@@ -75,10 +75,20 @@ router.post('/join-group/:userId', (req, res) => {
                 res.status(500).json({ message: 'No group found with the provided invite code' });
             } else if (err === 'User is already a member of this group') {
                 res.status(500).json({ message: 'User is already a member of this group' });
-            }           
+            }
             console.log("Error: " + err);
         } else {
             res.status(200).json({ message: "Successfully joined the group", result });
+        }
+    });
+});
+
+router.get('/invite-codes', (req, res) => {
+    getAllInviteCodes((err, inviteCodes) => {
+        if (err) {
+            res.status(500).json({ error: err });
+        } else {
+            res.status(200).json(inviteCodes);
         }
     });
 });

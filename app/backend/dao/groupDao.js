@@ -103,7 +103,7 @@ async function joinGroupByInviteCode(userId, inviteCode, callback) {
                 } else if (groupResults.length === 0) {
                     // No group found with the provided invite code
                     callback('No group found with the provided invite code', null);
-                }else {
+                } else {
                     // Proceed to add user to the group
                     const insertQuery = 'INSERT INTO user_groups (userid, groupid) VALUES (?, ?)';
                     db.query(insertQuery, [userId, groupId], (insertErr, insertResult) => {
@@ -120,6 +120,18 @@ async function joinGroupByInviteCode(userId, inviteCode, callback) {
 
 }
 
+async function getAllInviteCodes(callback) {
+    const query = 'SELECT invite_code FROM `groups`';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            callback('Error fetching invite codes', null);
+        } else {
+            callback(null, results);
+        }
+    });
+}
+
 
 
 module.exports = {
@@ -127,5 +139,6 @@ module.exports = {
     editGroup,
     deleteGroup,
     getGroupInfo,
-    joinGroupByInviteCode
+    joinGroupByInviteCode,
+    getAllInviteCodes
 };
