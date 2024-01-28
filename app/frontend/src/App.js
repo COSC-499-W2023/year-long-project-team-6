@@ -8,6 +8,7 @@ import MainContent from './pages/MainContent';
 import Sidebar from './pages/sidebar';
 import Profile from './pages/UserProfile';
 import Members from './pages/Members';
+import groupPost from './pages/groupPost';
 
 import VideoPage from './pages/VideoPage';
 import './component/CSS/style.css'; // Assuming your styles are compatible with React
@@ -18,20 +19,21 @@ import './App.css';
 function App() {
   return (
     <div>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/" element={<LayoutWithSidebar />}>
-              <Route index element={<MainContent />} />
-              <Route path="PostPage" element={<PostPage />} />
-              <Route path="RecordedPage" element={<RecordedPage />} />
-              <Route path="EditPage" element={<EditPage />} />
-              <Route path="Profile" element={<Profile />} />
-              <Route path="Members/:groupId" element={<Members />} />
-              <Route path="Video/:videoId" element={<VideoPage />} />
-            </Route>
-          </Routes>
-        </Router>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/" element={<LayoutWithSidebar />}>
+            <Route index element={<MainContent />} />
+            <Route path="PostPage" element={<PostPage />} />
+            <Route path="RecordedPage" element={<RecordedPage />} />
+            <Route path="EditPage" element={<EditPage />} />
+            <Route path="Profile" element={<Profile />} />
+            <Route path="Members/:groupId" element={<Members />} />
+            <Route path="Video/:videoId" element={<VideoPage />} />
+            <Route path="grouppost/:groupId/:userName" element={<groupPost />} />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
