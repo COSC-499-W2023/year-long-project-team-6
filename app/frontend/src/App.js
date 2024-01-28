@@ -8,7 +8,7 @@ import MainContent from './pages/MainContent';
 import Sidebar from './pages/sidebar';
 import Profile from './pages/UserProfile';
 import Members from './pages/Members';
-import groupPost from './pages/groupPost';
+import GroupPost from './pages/groupPost';
 
 import VideoPage from './pages/VideoPage';
 import './component/CSS/style.css'; // Assuming your styles are compatible with React
@@ -30,7 +30,7 @@ function App() {
             <Route path="Profile" element={<Profile />} />
             <Route path="Members/:groupId" element={<Members />} />
             <Route path="Video/:videoId" element={<VideoPage />} />
-            <Route path="grouppost/:groupId/:userName" element={<groupPost />} />
+            <Route path="grouppost/:groupId/:userName" element={<GroupPost />} />
           </Route>
         </Routes>
       </Router>

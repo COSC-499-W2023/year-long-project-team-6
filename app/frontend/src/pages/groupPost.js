@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import "../component/CSS/sidebar_style.css";
 
-function groupPost() {
+function GroupPost() {
     const [userId, setUserId] = useState('');
     const { groupId, senderName } = useParams();
     const [senderId, setSenderId] = useState('');
@@ -35,25 +35,25 @@ function groupPost() {
         }
     }, []);
 
-    useEffect(() => {
-        if (userId) {
-            fetch(`http://localhost:5001/get-posts/${senderId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(userId);
-                    console.log('Fetched data:', data);
-                    setPosts(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching posts:', error);
-                });
-        }
-    }, [senderId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         fetch(`http://localhost:5001/get-posts/${senderId}`)
+    //             .then(response => {
+    //                 if (!response.ok) {
+    //                     throw new Error(`HTTP error! status: ${response.status}`);
+    //                 }
+    //                 return response.json();
+    //             })
+    //             .then(data => {
+    //                 console.log(userId);
+    //                 console.log('Fetched data:', data);
+    //                 setPosts(data);
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error fetching posts:', error);
+    //             });
+    //     }
+    // }, [senderId]);
 
     const handleView = async (videoId) => {
         navigate(`/Video/${videoId}`)
@@ -69,4 +69,4 @@ function groupPost() {
 
 }
 
-export default groupPost;
+export default GroupPost;
