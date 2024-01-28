@@ -78,7 +78,9 @@ function PostPage() {
             s3_content_key: videoKey,
             userid: userId,
             blurFace: blurFace
-        }; 
+
+        };
+
 
         console.log("postData to be sent:", postData); // Add this line for debugging
 
@@ -101,6 +103,18 @@ function PostPage() {
                 console.error('Error:', error);
             });
     }
+
+    const handleSortChange = (event) => {
+        const sortOrder = event.target.value;
+        setPostHistory(prevHistory => {
+            return [...prevHistory].sort((a, b) => {
+                const dateA = new Date(a.post_date);
+                const dateB = new Date(b.post_date);
+                return sortOrder === 'Asc' ? dateA - dateB : dateB - dateA;
+            });
+        });
+    };
+
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
@@ -152,12 +166,10 @@ function PostPage() {
             if (mediaRecorder) {
                 mediaRecorder.stop();
             }
-
             cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
             signalingClientRef.current = null;
             peerConnectionRef.current = null;
             setShowWebRTC(false);
-
         }
         setIsPlaying(!isPlaying);
     };
@@ -172,7 +184,7 @@ function PostPage() {
     return (
         <div id='page'>
             <div id="send">
-                <h2>Send Your Post</h2>
+                <h2>Send Your Post Here</h2>
             </div>
             <div className="flex-container">
                 <div id="input">
@@ -185,10 +197,11 @@ function PostPage() {
 
                                     </>
                                 )}
-                                <button type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+                                <button id="record_button" type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+
                             </div>
 
-                            <div className="EnterText">
+                            <div className="EnterText" id="text_one">
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
@@ -203,23 +216,23 @@ function PostPage() {
                                 </select>
                             </div>
                         */}
-                            <div className="EnterText">
+                            <div className="EnterText" id="text_two">
                                 <legend>Description of Your Video</legend>
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
                         </div>
                         <div className="blur">
-                                <legend>
-                                    BlurFace  
-                                </legend>   
-                                <input
-                                    type="checkbox"
-                                     id="blurFace"
-                                     checked={blurFace}
-                                     onChange={(e) => setBlurFace(e.target.checked)}
-                                    />
-                            </div>
-                            <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+                            <legend>
+                                BlurFace
+                            </legend>
+                            <input
+                                type="checkbox"
+                                id="blurFace"
+                                checked={blurFace}
+                                onChange={(e) => setBlurFace(e.target.checked)}
+                            />
+                        </div>
+                        <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
                     </form>
                 </div>
                 <div id="HistroyBar">
@@ -228,13 +241,13 @@ function PostPage() {
                             <tr>
                                 <td>History</td>
                                 <td id="Sort">
-                                    <select id="order" name="order">
+                                    <select id="order" name="order" onChange={handleSortChange}>
                                         <option value="Des">Descending</option>
                                         <option value="Asc">Ascending</option>
                                     </select>
                                 </td>
                             </tr>
-                           
+
                         </thead>
                         <tbody>
                             {postHistory.map((post, index) => (
