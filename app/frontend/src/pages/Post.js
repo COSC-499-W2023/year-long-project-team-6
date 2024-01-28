@@ -230,6 +230,7 @@ const handleTogglePlay = async () => {
                                     />
                             </div>
                             <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+
                     </form>
                 </div>
                 <div id="HistroyBar">

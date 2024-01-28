@@ -13,7 +13,6 @@ function RecordedPage() {
     const [newText, setNewText] = useState('');
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-    const [videoUrl, setVideoUrl] = useState('');
     const handleView = async (videoId) => {
         navigate(`/Video/${videoId}`)
     };
@@ -94,7 +93,13 @@ function RecordedPage() {
             });
     };
 
-
+    const showdate=(timestamp) =>{
+        let date = new Date(timestamp);
+        let formattedDate = date.toLocaleDateString(); 
+        let formattedTime = date.toLocaleTimeString(); 
+    let formattedDateTime = formattedDate + ' ' + formattedTime;
+    return formattedDateTime
+    }
 
     const renderEditForm = () => {
         if (showModal) {
@@ -180,7 +185,7 @@ function RecordedPage() {
                                 <td className="title" data-description={post.post_text}>
                                     {post.post_title}
                                 </td>
-                                <td>{formatDate(post.post_date)}</td>
+                                <td>{showdate(post.post_date)}</td>
                                 <td>
                                     <button className='editButton' onClick={() => {
                                         setEditingPostId(post.post_id);
