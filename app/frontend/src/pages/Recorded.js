@@ -93,12 +93,12 @@ function RecordedPage() {
             });
     };
 
-    const showdate=(timestamp) =>{
+    const showdate = (timestamp) => {
         let date = new Date(timestamp);
-        let formattedDate = date.toLocaleDateString(); 
-        let formattedTime = date.toLocaleTimeString(); 
-    let formattedDateTime = formattedDate + ' ' + formattedTime;
-    return formattedDateTime
+        let formattedDate = date.toLocaleDateString();
+        let formattedTime = date.toLocaleTimeString();
+        let formattedDateTime = formattedDate + ' ' + formattedTime;
+        return formattedDateTime
     }
 
     const renderEditForm = () => {
@@ -163,7 +163,7 @@ function RecordedPage() {
                                 <td>
                                     <h3>Group</h3>
                                 </td>
-                                <td>{showdate(post.post_date)}</td>
+                                <td>{showdate(posts.post_date)}</td>
 
                                 <td>
                                     <h3>Arrange By</h3>
