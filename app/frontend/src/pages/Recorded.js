@@ -131,10 +131,6 @@ function RecordedPage() {
         }
         return null;
     };
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toISOString().split('T')[0];
-    };
 
     function handleApplyClick() {
         fetch(`http://localhost:5001/get-posts/${userId}?sort=${arrangement}`)
@@ -163,7 +159,7 @@ function RecordedPage() {
                                 <td>
                                     <h3>Group</h3>
                                 </td>
-                                <td>{showdate(post.post_date)}</td>
+
 
                                 <td>
                                     <h3>Arrange By</h3>
@@ -205,7 +201,7 @@ function RecordedPage() {
                                     <td className="title" data-description={post.post_text}>
                                         {post.post_title}
                                     </td>
-                                    <td>{formatDate(post.post_date)}</td>
+                                    <td>{showdate(post.post_date)}</td>
                                     <td>
                                         <button className='editButton' onClick={() => {
                                             setEditingPostId(post.post_id);

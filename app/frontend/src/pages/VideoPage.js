@@ -39,11 +39,12 @@ function VideoPage() {
         <div className="video-container">
             {videoUrl ? (
                 <>
-                    <video width="640" height="480" controls>
+                    <video width="640" controls>
                         <source src={videoUrl} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                     <br />
+                    <h4>Notice: If you upload a blurring face video, it needs maximum 5 minutes to be shown in here</h4>
                     <button className="download-btn" onClick={() => handleDownload(videoUrl, videoId)}> Download Video</button>
 
                 </>

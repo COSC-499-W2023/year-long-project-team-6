@@ -161,8 +161,7 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
 router.get('/get-video-url/:videoId', (req, res) => {
     const videoId = req.params.videoId;
     
-    // Use DAO to retrieve the video key from the database
-    postDao.getVideoByKey(videoId, (err, videoKey) => {
+    postDao.getVideoByKey(videoId, (err, videoKey, faceblur) => {
         if (err) {
             console.error('Error in /get-video-url/:videoId:', err);
             return res.status(500).json({ error: `Error getting video URL: ${err.message}` });
@@ -172,14 +171,17 @@ router.get('/get-video-url/:videoId', (req, res) => {
             return res.status(404).json({ error: 'Video not found' });
         }
 
+        // Choose the bucket based on the faceblur value
+        const bucketName = faceblur ? "cosc-499-blurvideo" : "cosc499-video-submission";
+
         // Generate a signed URL for accessing the video
         const s3Client = new S3Client({ region: "us-east-1" });
-        const urlParams = { Bucket: "cosc499-video-submission", Key: videoKey };
+        const urlParams = { Bucket: bucketName, Key: videoKey }; // Use the chosen bucket name here
         const command = new GetObjectCommand(urlParams);
 
         getSignedUrl(s3Client, command, { expiresIn: 3600 })
             .then(signedUrl => {
-                res.json({ signedUrl });
+                res.json({ signedUrl, faceblur }); // Optionally return the faceblur value if needed on the client side
             })
             .catch(signedUrlErr => {
                 console.error('Error generating signed URL:', signedUrlErr);
@@ -187,6 +189,7 @@ router.get('/get-video-url/:videoId', (req, res) => {
             });
     });
 });
+
 
 
 
