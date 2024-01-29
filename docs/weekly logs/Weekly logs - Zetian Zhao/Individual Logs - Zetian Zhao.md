@@ -401,6 +401,7 @@
 * Complete the function that user able to select the group id for their posted video. 
 * Complete the GroupRouter test left from last week. 
 * Revised the UI layout of the post page (Have some problem again)
+* Complete the selection list function in the post page and recorded page. 
 * Complete the peer evaluation. 
 
 ## Completed Tasks 
@@ -408,6 +409,7 @@
 * User able to select the group id from the list and only able to view the group that they have joined in. 
 * The groupRouter test have all passed test and it has been considered as completed.  
 * UI of the post page have been fixed again. 
+* Selection list functionality work properly in the post and recorded page. 
 * Completed the peer evaluation.
 
 ## ScreenShot of peer evaluation
