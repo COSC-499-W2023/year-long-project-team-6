@@ -324,3 +324,31 @@ In our recent project, I've made significant progress. I successfully held a pro
 ### 5. *From project board*
 ![Board](images15/pb.png)
 
+## Ximin Xu T2 week 3 personal log
+
+### 1. *Date Range*
+
+Jan.21-Jan.28
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images16/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Modify lambda functions to python
+3. Creating state machine workflow for all lambda function
+4. Accomplishing blurring face feature
+
+
+**In progress**
+ 1. Creating page for admin user
+
+### 4. *Self Reflection and learned*
+Reflecting on my contributions to our group project, I feel a sense of accomplishment and growth. The initial group meeting where we assigned tasks was a pivotal moment, allowing me to understand the importance of clear communication and teamwork in achieving our objectives. My work on modifying lambda functions to Python not only challenged my technical skills but also enhanced the project's adaptability and efficiency. The development of a state machine workflow for integrating these functions was particularly rewarding, as it significantly streamlined our operations. Implementing the face-blurring feature was a highlight, adding a crucial privacy aspect to our project. Currently, I am focused on creating a page for admin users, aiming to further refine our project's functionality and user experience. This journey has been a valuable learning experience, highlighting the importance of collaboration, innovation, and continuous improvement.
+
+### 5. *From project board*
+![Board](images16/pb.png)
