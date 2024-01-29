@@ -74,6 +74,8 @@ const Sidebar = () => {
 
         if (response.ok) {
           const data = await response.json();
+          alert("Successfully created the group! group id: " + newCode + ".");
+          window.location.reload();
           console.log('Group created successfully:', data);
         } else {
           console.error('Failed to create group, HTTP status:', response.status);
@@ -193,7 +195,6 @@ const Sidebar = () => {
                   name='groupname'
                 />
                 <button onClick={handleCreateGroup}>Create!</button>
-                {showPopup && <div>Group Code: {code}</div>}
               </div>
               <div className="addgroup">
                 <h3>Find your group here</h3>

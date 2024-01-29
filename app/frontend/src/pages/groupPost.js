@@ -5,11 +5,11 @@ import "../component/CSS/sidebar_style.css";
 
 function GroupPost() {
     const [userId, setUserId] = useState('');
-    const { groupId, sendername } = useParams();
+    const { groupId, currentuserid } = useParams();
     const [senderId, setSenderId] = useState('');
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
-
+console.log(groupId, currentuserid);
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         if (!sessionUser) {
@@ -17,26 +17,7 @@ function GroupPost() {
         } else {
             const user = JSON.parse(sessionUser);
             setUserId(user.userid);
-            fetch(`http://localhost:5001/get-sender-id/${sendername}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data && data.length > 0) {
-                        const sender = data[0].userid;
-                        setSenderId(sender);
-                        console.log("SenderId after setting state: " + sender);
-
-                    } else {
-                        console.log("No data received or data is empty");
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching posts:', error);
-                });
+            setSenderId(currentuserid);
         }
     }, []);
 
@@ -50,6 +31,7 @@ function GroupPost() {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
+                console.log(data);
                 setPosts(data);
             } catch (error) {
                 console.error('Error fetching posts:', error);
@@ -62,11 +44,13 @@ function GroupPost() {
         navigate(`/Video/${videoId}`)
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toISOString().split('T')[0];
-    };
-
+    const showdate = (timestamp) => {
+        let date = new Date(timestamp);
+        let formattedDate = date.toLocaleDateString();
+        let formattedTime = date.toLocaleTimeString();
+        let formattedDateTime = formattedDate + ' ' + formattedTime;
+        return formattedDateTime
+    }
     return (
         <>
             <div id="content">
@@ -83,7 +67,7 @@ function GroupPost() {
                                     <td className="title" data-description={post.post_text}>
                                         {post.post_title}
                                     </td>
-                                    <td>{formatDate(post.post_date)}</td>
+                                    <td>{showdate(post.post_date)}</td>
                                     <td><button className='view' onClick={() => {
                                         handleView(post.post_id)
                                     }}>View</button></td>

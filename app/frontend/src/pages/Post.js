@@ -20,6 +20,8 @@ function PostPage() {
     const [recordedVideo, setRecordedVideo] = useState(null);
     const [blurFace, setBlurFace] = useState(false);
     const [groups, setGroups] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
 
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
@@ -65,7 +67,7 @@ function PostPage() {
                     return response.json();
                 })
                 .then(groupsData => {
-                    setSelectedGroup(groupsData[0]?.groupid); // Or handle this as per your logic
+                    setSelectedGroup(groupsData[0]?.groupid); 
                     setGroups(groupsData);
                 })
                 .catch(error => console.error('Error fetching user groups:', error));
@@ -74,9 +76,31 @@ function PostPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         const formData = new FormData(event.target);
         let videoKey = '';
+        const postTitle = formData.get('post_title').trim(); // Trim whitespace
+        const postText = formData.get('post_text').trim(); // Trim whitespace
+        const groupid = formData.get('groupid'); // Assuming 'groupid' is the name attribute for the group select field
 
+        // Validation checks
+        if (!postTitle) {
+            setIsLoading(false);
+            alert('Please enter a title for your video.');
+            return; 
+        }
+    
+        if (!postText) {
+            setIsLoading(false);
+            alert('Please enter a description for your video.');
+            return; 
+        }
+    
+        if (!groupid || groupid === "") {
+            setIsLoading(false);
+            alert('Please choose a group.');
+            return; 
+        }
         if (recordedVideo) {
             try {
                 const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title'));
@@ -84,16 +108,22 @@ function PostPage() {
                 videoKey = uploadResult.key;
             } catch (uploadError) {
                 console.error('Failed to upload video:', uploadError);
-                return; // Stop the submission if the upload fails
+                return; 
             }
+        }else{
+            setIsLoading(false);
+            alert('Please record your video.');
+            
+            return; 
         }
+        
         const postData = {
             post_title: formData.get('post_title'),
             post_text: formData.get('post_text'),
             s3_content_key: videoKey,
             userid: userId,
             blurFace: blurFace,
-            groupid: selectedGroup
+            group_id: selectedGroup
         };
 
 
@@ -116,7 +146,10 @@ function PostPage() {
             })
             .catch((error) => {
                 console.error('Error:', error);
-            });
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });;
     }
 
     const handleSortChange = (event) => {
@@ -273,11 +306,12 @@ function PostPage() {
                                 <legend>Description of Your Video</legend>
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
-                            <div className="EnterText">
+                            <div className="group">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="groupid" value={selectedGroup} onChange={handleGroupChange}>
+                                <option value=""  >Choose a group</option>
                                     {groups.map(group => (
-                                        <option key={group.groupid} value={group.groupid}>{group.groupid}</option>
+                                        <option key={group.groupname} value={group.groupname}>{group.groupname}</option>
                                     ))}
                                 </select>
                             </div>
@@ -298,6 +332,7 @@ function PostPage() {
                             <button type="button" onClick={handleClear} id="submit">Clear</button>
 
                     </form>
+                    {isLoading && <div>Submitting...</div>}
                 </div>
                 <div id="HistroyBar">
                     <table id="histroyTable">
