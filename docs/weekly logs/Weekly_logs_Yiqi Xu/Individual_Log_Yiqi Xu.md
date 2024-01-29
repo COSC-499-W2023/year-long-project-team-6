@@ -294,7 +294,7 @@ I've made considerable progress, demonstrating a strong command in both frontend
 # Individual Log - Yiqi Xu (Week 1)
 
 ## Applicable data range
-**Januart/8/2023** to **January/14/2023**
+**January/8/2023** to **January/14/2023**
 
 ## Recap Goal 
 *My jobs in this week are:* 
@@ -328,7 +328,7 @@ This week, I demonstrated a strong balance between technical proficiency and col
 # Individual Log - Yiqi Xu (Week 2)
 
 ## Applicable data range
-**Januart/15/2023** to **January/21/2023**
+**January/15/2023** to **January/21/2023**
 
 ## Recap Goal 
 *My jobs in this week are:* 
@@ -359,3 +359,38 @@ This week, I  made substantial strides in backend development, notably coding th
 ![Board](T2_w2_img/Board.png)
 *Table format:*
 ![Table](T2_w2_img/Table.png)
+
+
+# Individual Log - Yiqi Xu (Week 3)
+
+## Applicable data range
+**January/22/2023** to **January/28/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Code backend (group member board and group_post)
+* Code frontend for group post
+* Debug in adding group and inviting user
+* Update Database
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Coded backend (group member board and group_post)
+* Coded frontend for group post
+* Debugged in adding group and inviting user
+* Updated Database
+* Finished Peer Evaluation
+
+## Self reflection
+This week, I coded both the backend and frontend, debugged intricate issues, and efficiently updated the database. Overall, this week was a testament to my commitment to quality and the seamless integration of diverse aspects of project development.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w3_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w3_img/Board.png)
+*Table format:*
+![Table](T2_w3_img/Table.png)
