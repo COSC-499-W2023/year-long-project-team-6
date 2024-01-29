@@ -1,5 +1,5 @@
 #page {
-    margin-top: 10em;
+    margin-top: 2em;
     margin-left: 10em;
 }
 
@@ -26,11 +26,12 @@
     height: 2em;
 }
 
-.main #GName {
+#GName {
     height: 2em;
     box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
     border: 1px solid lightgray;
     border-radius: 5px;
+    width: 10em;
 }
 
 .main #Description {
@@ -188,12 +189,12 @@
     transform: translateY(-2px);
 }
 
-.EnterText legend {
+legend {
     font-size: 1.2em;
     color: #373c53;
     font-weight: bold;
     margin-bottom: 10px;
-    text-align: center;
+
 }
 
 .EnterText input[type="text"] {
@@ -247,8 +248,25 @@
 
 
 .blur {
-    margin-top: 5em;
+    margin-top: 1em;
+    display: flex;
+}
+.blur input{
+    margin-left:3em;
+    margin-bottom: 1em;
 }
 video{
     z-index: 9;
+}
+.group{
+    margin-top: 4em;
+    display: flex;
+}
+.group select{
+    margin-left:3em;
+    width:3em;
+}
+
+.EnterText legend{
+    text-align: center;
 }

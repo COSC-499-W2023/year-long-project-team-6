@@ -2,7 +2,7 @@ const db = require('../db/db');
 
 async function getUsersInGroup(groupId, callback) {
     const query = `
-        SELECT u.userid, u.username, u.email, u.role
+        SELECT u.userid, u.username, u.email
         FROM users u
         JOIN user_groups ug ON u.userid = ug.userid
         WHERE ug.groupid = ?;
@@ -18,7 +18,14 @@ async function getUsersInGroup(groupId, callback) {
 }
 
 async function checkAdmin(groupId, callback) {
-    const query = 'SELECT admin FROM `groups` WHERE groupid = ?;';
+    const query = `
+    SELECT g.admin, u.username
+    FROM \`groups\` g
+    JOIN users u ON g.admin = u.userid
+    WHERE g.groupid = ?;
+`;
+
+
     db.query(query, [groupId], (err, results) => {
         if (err) {
             console.error(err);

@@ -7,10 +7,11 @@ router.post('/add-group', async (req, res) => {
     if (groupName && code && admin) {
         addNewGroup(groupName, code, admin, (err, result) => {
             if (err) {
-                res.status(500).send('Error adding group: ' + err.message);
+                res.status(500).json({ error: `Error adding group: ${err.message}` });
                 console.log('Error adding group: ' + err.message);
             } else {
-                res.status(200).send(`New group added successfully with ID ${admin}`);
+                res.status(200).json({ message: `New group added successfully with ID ${admin}` });
+
             }
         });
     } else {

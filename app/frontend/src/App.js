@@ -30,7 +30,7 @@ function App() {
             <Route path="Profile" element={<Profile />} />
             <Route path="Members/:groupId" element={<Members />} />
             <Route path="Video/:videoId" element={<VideoPage />} />
-            <Route path="grouppost/:groupId/:sendername" element={<GroupPost />} />
+            <Route path="grouppost/:groupId/:currentuserid" element={<GroupPost />} />
           </Route>
         </Routes>
       </Router>
