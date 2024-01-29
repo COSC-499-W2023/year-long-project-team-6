@@ -33,7 +33,7 @@ class PostDao {
         });
     }
     getUserByEmail(email, callback) {
-        const query = 'SELECT userid, username, email,role,user_image FROM users WHERE email = ?';
+        const query = 'SELECT userid, username, email,user_image FROM users WHERE email = ?';
         this.db.query(query, [email], (err, results) => {
             if (err) {
                 callback(err, null);
@@ -69,13 +69,13 @@ class PostDao {
             }
         });
     }
-    signup(username, email, password, role, userImage, callback) {
+    signup(username, email, password, userImage, callback) {
         const query = `
-            INSERT INTO users (username, email, password, role, user_image)
-            VALUES (?, ?, ?, ?, ?);
+            INSERT INTO users (username, email, password, user_image)
+            VALUES (?, ?, ?, ?);
         `;
 
-        this.db.query(query, [username, email, password, role, userImage], (err, results) => {
+        this.db.query(query, [username, email, password, userImage], (err, results) => {
             if (err) {
                 callback(err, null);
             } else {

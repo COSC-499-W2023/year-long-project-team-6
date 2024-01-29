@@ -65,8 +65,9 @@ function LoginSignupForm() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    console.log('Signup successful:', data);
+                    console.log('Signup successful:', JSON.stringify(data.user));
                     alert("Signup successful!");
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
                     navigate('/');
                 } else {
                     console.error('Signup failed:', data.message);
