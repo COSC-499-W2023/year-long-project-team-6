@@ -29,7 +29,8 @@ async function checkAdmin(groupId, callback) {
     });
 }
 
+
 module.exports = {
     getUsersInGroup,
-    checkAdmin
+    checkAdmin,
 };
