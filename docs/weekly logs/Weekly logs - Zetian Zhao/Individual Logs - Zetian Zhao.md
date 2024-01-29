@@ -385,3 +385,43 @@
 *Table format:*
 ![Table](Term_2_Week_2/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 3)
+
+## Applicable date range
+**January/22/2024** to **January/28/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Complete the function that user able to select the group id for their posted video. 
+* Complete the GroupRouter test left from last week. 
+* Revised the UI layout of the post page (Have some problem again)
+* Complete the selection list function in the post page and recorded page. 
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* User able to select the group id from the list and only able to view the group that they have joined in. 
+* The groupRouter test have all passed test and it has been considered as completed.  
+* UI of the post page have been fixed again. 
+* Selection list functionality work properly in the post and recorded page. 
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_3/PE.png)
+
+## Work - people able to only select the group they have join in. 
+*Group id list for the Post Page:*
+![Post Page](Term_2_Week_3/group_id_list.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_3/Board.png)
+*Table format:*
+![Table](Term_2_Week_3/Table.png)
+*missions with tag "done before" are from the previous weeks.*

@@ -296,3 +296,34 @@ I fixed what left from last week. For this week, I successfully make the home pa
 ![Board](T2W2_img/Board.png)
 *Table format:*
 ![Table](T2W2_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 3)
+
+## Applicable data range
+**January/22/2023** to **January/28/2023**
+
+## Recap Goal 
+*My jobs in this week are:*
+* Met with my team members
+* Finish home page group card cover design and new user exception
+* Create group post page
+* Complete add group functionality
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Finish home page group card cover design and new user exception
+* Group post page frontend
+* Complete add group functionality
+* Finished Peer evaluation
+
+## Self reflection
+For this week, I coded most of the frontend for group post page, added more error detection for adding a group and new user(user that has no group) exception on homepage and set a cover for groupcard. It has been a productive week and we made a big step on our website.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W3_img/PE.png)
+## My Task on Board
+*Board format:*
+![Board](T2W3_img/Board.png)
+*Table format:*
+![Table](T2W3_img/Table.png)
