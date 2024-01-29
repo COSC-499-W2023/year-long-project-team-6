@@ -311,6 +311,7 @@
 *My jobs in this week are:* 
 * Meetings and see what's the plan. 
 * test for Dao and router test
+* Group select function
 * Complete the peer evaluation. 
 * Group select backend
 
