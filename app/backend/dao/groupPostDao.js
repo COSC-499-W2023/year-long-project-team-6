@@ -27,6 +27,7 @@ async function getPostInfor(userId, groupId, callback) {
             console.log("DAO: Error - ", err);
             callback(err, null);
         } else {
+            console.log("userid: Results - ", userId);
             console.log("DAO: Results - ", results);
             callback(null, results);
         }

@@ -28,6 +28,8 @@ function GroupPost() {
                     if (data && data.length > 0) {
                         const sender = data[0].userid;
                         setSenderId(sender);
+                        console.log("SenderId after setting state: " + sender);
+
                     } else {
                         console.log("No data received or data is empty");
                     }
@@ -36,42 +38,25 @@ function GroupPost() {
                     console.error('Error fetching posts:', error);
                 });
         }
+    }, []);
 
+    useEffect(() => {
         const fetchPosts = async () => {
             try {
                 console.log("SenderId: " + senderId);
                 console.log("GroupId: " + groupId);
-                const response = await fetch(`http://localhost:5001/posts/22/${groupId}`);
+                const response = await fetch(`http://localhost:5001/posts/${senderId}/${groupId}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
                 setPosts(data);
-                console.log("Post Data: " + data);
             } catch (error) {
                 console.error('Error fetching posts:', error);
             }
         };
         fetchPosts();
-    }, []);
-
-    // useEffect(() => {
-    //     const fetchPosts = async () => {
-    //         try {
-    //             console.log("SenderId: " + senderId);
-    //             console.log("GroupId: " + groupId);
-    //             const response = await fetch(`http://localhost:5001/posts/${senderId}/${groupId}`);
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! status: ${response.status}`);
-    //             }
-    //             const data = await response.json();
-    //             setPosts(data);
-    //         } catch (error) {
-    //             console.error('Error fetching posts:', error);
-    //         }
-    //     };
-    //     fetchPosts();
-    // }, [senderId, groupId]);
+    }, [senderId, groupId]);
 
     const handleView = async (videoId) => {
         navigate(`/Video/${videoId}`)
