@@ -173,7 +173,34 @@ function PostPage() {
         }
         setIsPlaying(!isPlaying);
     };
-
+    const handleClear = () => {
+        // Reset form fields
+        document.getElementById("postform").reset(); // Replace "yourFormId" with the actual ID of your form
+    
+        // Stop recording if it's in progress
+        if (isPlaying && mediaRecorder && mediaRecorder.state !== "inactive") {
+            mediaRecorder.stop();
+        }
+    
+        // Reset all relevant states to their initial values
+        setShowWebRTC(false);
+        setIsPlaying(false);
+        setIsRecordingStopped(false);
+        setRecordedVideo(null);
+        setBlurFace(false);
+    
+        // Cleanup WebRTC if needed
+        if (signalingClientRef.current || peerConnectionRef.current) {
+            cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+            signalingClientRef.current = null;
+            peerConnectionRef.current = null;
+        }
+    
+        // Clear recorded video URL to avoid memory leaks
+        if (recordedVideo) {
+            URL.revokeObjectURL(recordedVideo);
+        }
+    };
     function handleGroupChange(event) {
         setSelectedGroup(event.target.value);
     }
@@ -184,20 +211,31 @@ function PostPage() {
     return (
         <div id='page'>
             <div id="send">
-                <h2>Send Your Post Here</h2>
+                <h2>Send Your Post </h2>
             </div>
             <div className="flex-container">
                 <div id="input">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} id="postform">
                         <div id="main" className="main">
                             <div id="videoContainer">
                                 {isPlaying && (
                                     <>
-                                        <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
+                                        <video ref={localView} style={{ width: '640px'}} autoPlay playsInline />
 
                                     </>
                                 )}
-                                <button id="record_button" type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start'}</button>
+                               
+
+                                {recordedVideo ? (
+                                <div>
+                                <video style={{ width: '640px'}} controls>
+                                <source src={URL.createObjectURL(recordedVideo)} type="video/webm" />
+                                 </video>
+                            </div>
+                            ) : (
+                                <button id="record_button" type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start Recording'}</button>
+                            )}
+
 
                             </div>
 
@@ -233,7 +271,7 @@ function PostPage() {
                                     />
                             </div>
                             <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
-
+                            <button type="button" onClick={handleClear} id="submit">Clear</button>
 
                     </form>
                 </div>
