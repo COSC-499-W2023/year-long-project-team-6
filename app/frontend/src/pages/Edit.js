@@ -16,34 +16,34 @@ function EditPage() {
     return (
         <div id="main">
             <h1>Edit Video</h1>
-            
+
             <form id="editForm" onSubmit={updatePost}>
                 <label htmlFor="videoTitle">Video Title:</label>
-                <input 
-                    type="text" 
-                    id="videoTitle" 
-                    name="videoTitle" 
-                    placeholder="Enter video title" 
-                    value={title} 
+                <input
+                    type="text"
+                    id="videoTitle"
+                    name="videoTitle"
+                    placeholder="Enter video title"
+                    value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 /><br /><br />
 
                 <label htmlFor="videoDescription">Video Description:</label><br />
-                <textarea 
-                    id="videoDescription" 
-                    name="videoDescription" 
-                    rows="4" 
-                    cols="50" 
-                    value={description} 
+                <textarea
+                    id="videoDescription"
+                    name="videoDescription"
+                    rows="4"
+                    cols="50"
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 /><br /><br />
 
                 <label htmlFor="videoDate">Video Date:</label>
-                <input 
-                    type="date" 
-                    id="videoDate" 
-                    name="videoDate" 
-                    value={date} 
+                <input
+                    type="date"
+                    id="videoDate"
+                    name="videoDate"
+                    value={date}
                     onChange={(e) => setDate(e.target.value)}
                 /><br /><br />
 

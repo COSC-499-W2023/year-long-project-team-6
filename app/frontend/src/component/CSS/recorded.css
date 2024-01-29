@@ -1,109 +1,100 @@
-#condition{
-    width: 80em;
-    border-radius: 5px; 
-    margin-left : 50px;
-    margin-top: 50px;
-}
-#condition table{
-    border-collapse: collapse;
-    
-}
-#VideoList{
-    width: 70em;
-    border-radius: 5px; 
-    margin-left : 10em; 
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
-thead{
-    text-align: left;
-    vertical-align: middle;
-    height: 3em;
-    font-weight: bold;
-}
-#VideoList table{
-    border-collapse: collapse;
-}
-
-#VideoList tr{
-    border-bottom: 1px solid #666;
-    line-height: 5em;
-
-}
-
-#condition{
-padding-left: 50px;
-}
-
-#condition select{
-    box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
-    border: 1px solid lightgray;
+#condition {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
     border-radius: 5px;
-    width: 20em;
-    height: 3em;
-    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#VideoList .img{
-    width: 5em;
-}
-#VideoList th{
-    width: 20em;
-    text-align: left;
-}
-#VideoList .head{
-    width: 20em;
-    text-align: left;
-    vertical-align: middle;
-    position: relative;
-}
-#VideoList .all, .title{
-    width: 20em;
-    text-align: left;
-    vertical-align: middle;
-    position: relative;
-}
-#VideoList .date{
-    width: 20em;
-    text-align: left;
-    vertical-align: middle;
-}
-#VideoList .edit{
-    width: 20em;
-    text-align: left;
-    vertical-align: middle;
-}
-#VideoList .delete{
-    width: 20em;
-    text-align: left;
-    vertical-align: middle;
+#condition table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-#VideoList img{
-    width: 50px;
-    height: 50px;
-    text-align: left;
-    vertical-align: middle;
-    border-radius: 50%;
+
+#condition select {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #fff;
+    box-shadow: none;
+    transition: all 0.3s ease;
 }
 
-.save{
-    float: right;
+#condition select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+    outline: none;
+}
+
+#VideoList {
+    max-width: 95%;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#VideoList table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#VideoList thead {
     background-color: #373c53;
     color: #fff;
-    border: 1px solid #666;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 5em;
-    height: 3em;
 }
 
-/* Add these styles to your CSS file */
+#VideoList tr {
+    border-bottom: 1px solid #ddd;
+    line-height: 2.5em;
+}
+
+#VideoList th,
+#VideoList td {
+    padding: 10px;
+    text-align: left;
+}
+
+#VideoList tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.save,
+.editButton,
+.deleteButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save:hover,
+.editButton:hover,
+.deleteButton:hover {
+    background-color: #007bff;
+}
+
 .modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000;
     display: flex;
@@ -112,22 +103,15 @@ padding-left: 50px;
 }
 
 .modal-content {
-    position: fixed;
-    background-color: #fefefe;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid #888;
+    border-radius: 5px;
     width: 80%;
-    z-index: 1001;
-    /* Adjust below as necessary for mobile responsiveness */
     max-width: 500px;
 }
 
 .modal-input {
-    display: block;
-    width: 90%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -144,6 +128,32 @@ padding-left: 50px;
 .close:hover,
 .close:focus {
     color: black;
-    text-decoration: none;
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+    #condition,
+    #VideoList {
+        margin: 10px;
+        width: auto;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}
+
+#VideoList .all {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+#content{
+    margin-left:3em
 }
