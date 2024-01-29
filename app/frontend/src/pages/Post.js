@@ -19,6 +19,7 @@ function PostPage() {
     const [isRecordingStopped, setIsRecordingStopped] = useState(false);
     const [recordedVideo, setRecordedVideo] = useState(null);
     const [blurFace, setBlurFace] = useState(false);
+    const [groups, setGroups] = useState([]);
 
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
@@ -54,6 +55,20 @@ function PostPage() {
                     setPostHistory(arr[0].data);
                 })
                 .catch(error => console.error('Error fetching post history:', error));
+
+            // Fetch groups
+            fetch(`http://localhost:5001/user-groups/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok for fetching user groups');
+                    }
+                    return response.json();
+                })
+                .then(groupsData => {
+                    setSelectedGroup(groupsData[0]?.groupid); // Or handle this as per your logic
+                    setGroups(groupsData);
+                })
+                .catch(error => console.error('Error fetching user groups:', error));
         }
     }, [userId]);
 
@@ -77,8 +92,8 @@ function PostPage() {
             post_text: formData.get('post_text'),
             s3_content_key: videoKey,
             userid: userId,
-            blurFace: blurFace
-
+            blurFace: blurFace,
+            groupid: selectedGroup
         };
 
 
@@ -258,6 +273,15 @@ function PostPage() {
                                 <legend>Description of Your Video</legend>
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
                             </div>
+                            <div className="EnterText">
+                                <legend>Choose a Group</legend>
+                                <select id="GName" name="groupid" value={selectedGroup} onChange={handleGroupChange}>
+                                    {groups.map(group => (
+                                        <option key={group.groupid} value={group.groupid}>{group.groupid}</option>
+                                    ))}
+                                </select>
+                            </div>
+
                         </div>
                         <div className="blur">
                                 <legend>
