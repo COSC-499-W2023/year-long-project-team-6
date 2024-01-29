@@ -88,12 +88,36 @@ function MainContent() {
     }
   };
 
-  const searchGroup = () => {
-    const message = searchValue.length === 5
-      ? `Searching for group with code: ${searchValue}`
-      : 'Please enter a 5-character code.';
-    setResult(message);
-  };
+  const joinGroup = async () => {
+    if (searchValue.length === 5) {
+        try {
+            const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ inviteCode: searchValue })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert("Successfully joined the group!");
+                window.location.reload();
+            } else {
+              console.log(data);
+              if (data.error) {
+                alert(data.error);
+                } else {
+                setResult(data.message || "Error to join groups");
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setResult("Failed to join the group.");
+        }
+    } else {
+        setResult('Please enter a 5-character code.');
+    }
+};
 
   const toggleModal = () => {
     setModalOpen(prev => !prev);
@@ -106,7 +130,7 @@ function MainContent() {
           {groups.length > 0 ? (
             groups.map(group => (
               <GroupCard
-                key={group.groupid}
+                id={group.groupid}
                 imgUrl={group.imgUrl}
                 time={group.group_creation_time}
                 groupName={group.groupname}
@@ -146,7 +170,7 @@ function MainContent() {
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value.toUpperCase())}
                   />
-                  <button onClick={searchGroup}>Join!</button>
+                  <button onClick={joinGroup}>Join!</button>
                   <p>{result}</p>
                 </div>
               </div>

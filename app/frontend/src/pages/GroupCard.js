@@ -11,8 +11,9 @@ function getRandomColor() {
 }
 
 
-function GroupCard({ imgUrl, time, groupName, admin, invite_code, numberOfPeople }) {
+function GroupCard({ id, time, groupName, admin, invite_code, numberOfPeople }) {
   const randomColor = getRandomColor();
+  console.log(id);
   return (
     <div className="card">
       <div className="photo" style={{ backgroundColor: randomColor }}>
@@ -23,8 +24,9 @@ function GroupCard({ imgUrl, time, groupName, admin, invite_code, numberOfPeople
         Admin: {admin}<br />
         Invite Code: {invite_code}<br />
         Number of people: {numberOfPeople}<br />
+        
       </p>
-      <Link to="/Members">Check members</Link>
+      <Link to={`/members/${id}`}>Check members</Link>
     </div>
   );
 }
