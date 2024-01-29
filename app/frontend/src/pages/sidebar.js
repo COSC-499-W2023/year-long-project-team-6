@@ -57,12 +57,13 @@ const Sidebar = () => {
 
 
   const handleCreateGroup = async () => {
-    const newCode = generateRandomCode();
-    setCode(newCode);
-    setShowPopup(true);
+
     const groupName = document.querySelector('[name="groupname"]').value;
 
     if (groupName) {
+      const newCode = generateRandomCode();
+      setCode(newCode);
+      setShowPopup(true);
       try {
         const response = await fetch('http://localhost:5001/add-group', {
           method: 'POST',
