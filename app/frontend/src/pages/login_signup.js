@@ -153,8 +153,8 @@ function LoginSignupForm() {
     const handlesignupFormSubmit = (event) => {
         event.preventDefault();
         console.log(role)
-        console.log(validateEmail(), validatePassw(), validateRole(), validateName())
-        if (validateEmail() && validatePassw() && validateRole() && validateName()) {
+        console.log(validateEmail(), validatePassw(), validateName())
+        if (validateEmail() && validatePassw() && validateName()) {
 
             handleSignup();
             console.log("Submitted:", email, name, passw, role);
@@ -219,7 +219,7 @@ function LoginSignupForm() {
                                 onChange={(e) => setPassw(e.target.value)}
                                 onBlur={validatePassw}
                             />
-                            {passwError && <span className="email-tooltiptext" id="emailTooltip">Invalid format</span>}
+                            {passwError && <span className="email-tooltiptext" id="emailTooltip">Invalid format, must contain a letter, a number and a symbol</span>}
 
                             <input
                                 type="text"
@@ -230,30 +230,6 @@ function LoginSignupForm() {
                                 {showPassword ? "Hide" : "Show"}
                             </p>
                         </div>
-                    </div>
-                    <div className="roleChoose" id="roleInputContainer" style={{ display: "flex", alignItems: "center" }}>
-                        <label htmlFor="role" style={{ fontSize: "1.17em", fontWeight: "bold", color: "#4c00b4", marginRight: "10px", marginBottom: "0" }}>
-                            <h3 style={{ margin: "0" }}>*Select your role:</h3>
-                        </label>
-                        <select
-                            name="role"
-                            id="role"
-                            style={{
-                                fontSize: "18px",
-                                padding: "5px 10px",
-                                borderRadius: "10px",
-                                width: "185px",
-                                border: "1px solid black",
-                                marginTop: "5px",
-                                marginBottom: "8px"
-                            }}
-                            value={role}
-                            onChange={(e) => { setRole(e.target.value); }}
-                        >
-                            <option value="" >Select a role</option>
-                            <option value="sender">Sender</option>
-                            <option value="receiver">Receiver</option>
-                        </select>
                     </div>
                     {/* <div className="forgot-password" onClick={navigateToForgotPasswordPage} id="forgotPassword">
                         Forgot password? <span>Click Here!</span>
