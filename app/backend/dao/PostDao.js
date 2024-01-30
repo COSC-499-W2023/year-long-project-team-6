@@ -33,7 +33,7 @@ class PostDao {
         });
     }
     getUserByEmail(email, callback) {
-        const query = 'SELECT userid, username, email,role,user_image FROM users WHERE email = ?';
+        const query = 'SELECT userid, username, email,user_image FROM users WHERE email = ?';
         this.db.query(query, [email], (err, results) => {
             if (err) {
                 callback(err, null);

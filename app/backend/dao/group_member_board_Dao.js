@@ -2,7 +2,7 @@ const db = require('../db/db');
 
 async function getUsersInGroup(groupId, callback) {
     const query = `
-        SELECT u.userid, u.username, u.email, u.role
+        SELECT u.userid, u.username, u.email
         FROM users u
         JOIN user_groups ug ON u.userid = ug.userid
         WHERE ug.groupid = ?;
