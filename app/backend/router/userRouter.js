@@ -42,7 +42,7 @@ router.post('/login', (req, res) => {
     });
 });
 router.post('/signup', (req, res) => {
-    const { username, email, password, role, userImage } = req.body;
+    const { username, email, password, userImage } = req.body;
     // Check if username exists
     postDao.checkUsernameExists(username, (err, usernameExists) => {
         if (err) {
@@ -64,13 +64,33 @@ router.post('/signup', (req, res) => {
             }
 
             // Proceed with registration if both checks pass
-            postDao.signup(username, email, password, role, userImage, (err, results) => {
+            postDao.signup(username, email, password , userImage, (err, results) => {
                 if (err) {
                     console.error("Error during user registration:", err);
                     return res.status(500).json({ success: false, message: 'Error during user registration' });
                 }
-                return res.status(201).json({ success: true, message: 'User successfully registered' });
+                postDao.authenticateUser(email, password, (err, userExists) => {
+                    if (err) {
+                        console.error("Error during authentication:", err);
+                        res.status(500).send('Error during authentication');
+                    } else if (userExists) {
+                        console.log("Authentication result:", userExists);
+                        postDao.getUserByEmail(email, (err, user) => {
+                            if (err) {
+                                console.log("Error fetching user data:", err.message);
+                                res.status(500).send('Error fetching user data');
+                            } else {
+                                console.log("successful fetching user data");
+                                res.status(200).json({ success: true, message: 'User successfully registered', user: user });
+                            }
+                        });
+                    } else {
+                        res.status(401).send('Invalid credentials');
+                    }
+                });
             });
+            
+
         });
     });
 });

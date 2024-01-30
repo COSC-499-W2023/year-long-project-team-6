@@ -24,7 +24,7 @@ function editUserProfile(userId, userData, callback) {
 
 function getUserProfile(userId, callback) {
     const query = `
-        SELECT username, email, role, gender, birthday 
+        SELECT username, email, gender, birthday 
         FROM users 
         WHERE userid = ?;
     `;

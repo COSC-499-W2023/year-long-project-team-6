@@ -56,37 +56,41 @@ function MainContent() {
     return result;
   };
   const handleCreateGroup = async () => {
-    const newCode = generateRandomCode();
-    setCode(newCode);
-    setShowPopup(true);
+
     const groupName = document.querySelector('[name="groupname"]').value;
-    console.log(groupName);
+
     if (groupName) {
+      const newCode = generateRandomCode();
+      setCode(newCode);
+      setShowPopup(true);
       try {
-        const response = fetch('http://localhost:5001/add-group', {
+        const response = await fetch('http://localhost:5001/add-group', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ groupName: groupName, code: newCode }),
+          body: JSON.stringify({ groupName: groupName, code: newCode, admin: userId }),
         });
-        if (!response) {
-          console.log('no');
+
+        if (response.ok) {
+          const data = await response.json();
+          alert("Successfully created the group! group id: " + newCode + ".");
+          window.location.reload();
+          console.log('Group created successfully:', data);
         } else {
-          console.log(response);
-        }
-        if (response) {
-          console.log('Group created successfully');
-        } else {
-          console.error('Failed to create group');
+          console.error('Failed to create group, HTTP status:', response.status);
+          const errorData = await response.json();
+          console.error(errorData);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error during fetch operation:', error);
       }
     } else {
+      alert('Group name is required');
       console.error('Group name is required');
     }
   };
+
 
   const joinGroup = async () => {
     if (searchValue.length === 5) {

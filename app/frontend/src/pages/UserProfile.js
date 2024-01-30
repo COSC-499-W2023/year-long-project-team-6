@@ -69,7 +69,7 @@ const UserProfile = () => {
 
     const handleSaveClick = () => {
         console.log('Session User:', user);
-        axios.put(`http://localhost:5001/edit-profile/${userId}`, user)
+        axios.put(`http://localhost:5001/edit-profile/${user.userid}`, user)
             .then(response => {
                 console.log('Profile updated:', response.data);
                 setIsEditMode(false);
