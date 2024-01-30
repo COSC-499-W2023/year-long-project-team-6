@@ -311,7 +311,7 @@ function PostPage() {
                                 <select id="GName" name="groupid" value={selectedGroup} onChange={handleGroupChange}>
                                 <option value=""  >Choose a group</option>
                                     {groups.map(group => (
-                                        <option key={group.groupname} value={group.groupname}>{group.groupname}</option>
+                                        <option key={group.groupname} value={group.groupid}>{group.groupname}</option>
                                     ))}
                                 </select>
                             </div>
@@ -332,7 +332,7 @@ function PostPage() {
                             <button type="button" onClick={handleClear} id="submit">Clear</button>
 
                     </form>
-                    {isLoading && <div>Submitting...</div>}
+                    {isLoading && <div><h3>Submitting...</h3></div>}
                 </div>
                 <div id="HistroyBar">
                     <table id="histroyTable">
