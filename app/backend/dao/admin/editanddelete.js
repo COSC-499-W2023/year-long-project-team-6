@@ -66,16 +66,45 @@ async function editGroup(groupId, newGroupName, newAdmin, callback) {
 }
 
 async function deleteGroup(groupId, callback) {
-    const query = 'DELETE FROM groups WHERE groupid = ?';
-    db.query(query, [groupId], (err, result) => {
+    db.beginTransaction(err => {
         if (err) {
             console.error(err);
-            callback('Error deleting group', null);
-        } else {
-            callback(null, result);
+            callback('Transaction start error', null);
+            return;
         }
+        const deleteUserGroupsQuery = 'DELETE FROM user_groups WHERE groupid = ?';
+        db.query(deleteUserGroupsQuery, [groupId], (err, result) => {
+            if (err) {
+                console.error(err);
+                db.rollback(() => {
+                    callback('Error deleting from user_groups', null);
+                });
+                return;
+            }
+            const deleteGroupQuery = 'DELETE FROM groups WHERE groupid = ?';
+            db.query(deleteGroupQuery, [groupId], (err, result) => {
+                if (err) {
+                    console.error(err);
+                    db.rollback(() => {
+                        callback('Error deleting group', null);
+                    });
+                    return;
+                }
+                db.commit(err => {
+                    if (err) {
+                        console.error(err);
+                        db.rollback(() => {
+                            callback('Error committing transaction', null);
+                        });
+                        return;
+                    }
+                    callback(null, result);
+                });
+            });
+        });
     });
 }
+
 
 async function removeUserFromGroup(userId, groupId, callback) {
     const query = 'DELETE FROM user_groups WHERE userid = ? AND groupid = ?';

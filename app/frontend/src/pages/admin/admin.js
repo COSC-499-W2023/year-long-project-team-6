@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './admin.css';
 
 const AdminInterface = () => {
     const [userId, setUserId] = useState('');
@@ -18,7 +19,7 @@ const AdminInterface = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ newUsername, newEmail }),
+                body: JSON.stringify({ newUsername: newUsername, newEmail: newEmail }),
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
