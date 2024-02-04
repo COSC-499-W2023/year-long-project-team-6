@@ -1,5 +1,5 @@
 #page {
-    margin-top: 10em;
+    margin-top: 2em;
     margin-left: 10em;
 }
 
@@ -18,30 +18,28 @@
 }
 
 #record_button {
-    width: 60px;
-    height: 30px;
+    width: 100px;
+    height: 50px;
 }
 
 .main #VName {
     height: 2em;
-    width: 25em;
 }
 
-.main #GName {
+#GName {
     height: 2em;
-    width: 25.5em;
     box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
     border: 1px solid lightgray;
     border-radius: 5px;
+    width: 10em;
 }
 
 .main #Description {
     height: 5em;
-    width: 25em;
 }
 
 #input * {
-    margin: 0;
+    margin: 10;
     padding: 0;
 }
 
@@ -70,7 +68,6 @@
 
 #submit {
     margin-top: 2em;
-    margin-left: 22em;
     padding: 10px 20px;
     transition: all 0.4s ease;
     border: 1px solid #666;
@@ -223,12 +220,12 @@
     transform: translateY(-2px);
 }
 
-.EnterText legend {
+legend {
     font-size: 1.2em;
     color: #373c53;
     font-weight: bold;
     margin-bottom: 10px;
-    text-align: center;
+
 }
 
 .EnterText input[type="text"] {
@@ -248,14 +245,12 @@
 #text_one {
     margin-bottom: 25px;
     margin-top: 15px;
-    margin-left: 400px;
     font-size: larger;
 }
 
 #text_two {
     margin-bottom: 25px;
     margin-top: 15px;
-    margin-left: 400px;
     font-size: larger;
 }
 
@@ -268,7 +263,6 @@
 }
 
 #submit {
-    margin-left: 550px;
     width: 150px;
     height: 50px;
     font-size: 20px;
@@ -283,6 +277,27 @@
 
 }
 
-#videoContainer {
-    margin-left: 590px;
+
+.blur {
+    margin-top: 1em;
+    display: flex;
+}
+.blur input{
+    margin-left:3em;
+    margin-bottom: 1em;
+}
+video{
+    z-index: 9;
+}
+.group{
+    margin-top: 4em;
+    display: flex;
+}
+.group select{
+    margin-left:3em;
+    width:3em;
+}
+
+.EnterText legend{
+    text-align: center;
 }

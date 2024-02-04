@@ -3,13 +3,25 @@ const db = require('../db/db');
 
 
 
-async function getPostInfor(userId, callback) {
+async function getPostInfor(userId, sort, callback) {
+    let orderBy = '';
+    if (sort === 'date_asc') {
+        orderBy = 'ORDER BY p.post_date ASC';
+    } else if (sort === 'date_desc') {
+        orderBy = 'ORDER BY p.post_date DESC';
+    } else if (sort === 'name_asc') {
+        orderBy = 'ORDER BY p.post_title ASC';
+    } else if (sort === 'name_desc') {
+        orderBy = 'ORDER BY p.post_title DESC';
+    }
+
     const query = `
-            SELECT p.userid, p.post_id, p.post_title, p.post_date, p.post_text
-            FROM posts p
-            JOIN users u ON u.userid = p.userid
-            WHERE u.userid = ?;
-        `;
+        SELECT p.userid, p.post_id, p.post_title, p.post_date, p.post_text
+        FROM posts p
+        JOIN users u ON u.userid = p.userid
+        WHERE u.userid = ?
+        ${orderBy};
+    `;
 
     db.query(query, [userId], (err, results) => {
         if (err) {
@@ -21,6 +33,7 @@ async function getPostInfor(userId, callback) {
         }
     });
 }
+
 
 async function getGroupInfor(callback) {
     const query = `

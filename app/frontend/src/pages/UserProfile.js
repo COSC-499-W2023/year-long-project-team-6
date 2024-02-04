@@ -11,10 +11,9 @@ const UserProfile = () => {
         email: '',
         profilePicture: '',
         gender: '',
-        birthday: '',
-        role: ''
+        birthday: null,
     });
-    
+
     const [isEditMode, setIsEditMode] = useState(false);
     const [error, setError] = useState('');
     const [userId, setId] = useState('');
@@ -27,7 +26,7 @@ const UserProfile = () => {
         } else {
             const user = JSON.parse(sessionUser);
             setUser(user);
-            console.log(user);
+            console.log('user',user.userid);
             if (user.userid) {
                 fetch(`http://localhost:5001/get-profile/${user.userid}`)
                     .then(response => {
@@ -43,8 +42,15 @@ const UserProfile = () => {
                         if (data.birthday) {
                             data.birthday = data.birthday.split('T')[0]; // Keeps only the 'YYYY-MM-DD' part
                         }
-                        setUser(data);
-                        console.log(userId);
+                        setUser({
+                            userid: user.userid,
+                            username: data.username,
+                            email: data.email,
+                            profilePicture: data.profilePicture || profilePicture,
+                            gender: data.gender || '',
+                            birthday: data.birthday || null,
+                        });
+                        console.log('userid second',user.userid);
                     })
                     .catch(error => {
                         console.error('Error fetching posts:', error);
@@ -69,7 +75,7 @@ const UserProfile = () => {
 
     const handleSaveClick = () => {
         console.log('Session User:', user);
-        axios.put(`http://localhost:5001/edit-profile/${userId}`, user)
+        axios.put(`http://localhost:5001/edit-profile/${user.userid}`, user)
             .then(response => {
                 console.log('Profile updated:', response.data);
                 setIsEditMode(false);
@@ -84,9 +90,7 @@ const UserProfile = () => {
             <div className="avatar-container">
                 <img src={user.profilePicture || profilePicture} alt={`${user.username}'s profile`} />
                 {isEditMode ? (
-                    <>
                         <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
-                    </>
                 ) : (
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
                 )}
@@ -94,7 +98,7 @@ const UserProfile = () => {
             {isEditMode ? (
                 <>
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} /></p>
-                    <p>Gender: 
+                    <p>Gender:
                         <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
                         <input type="radio" name="gender" value="Female" checked={user.gender === "Female"} onChange={handleInputChange} /><label>Female</label>
                         <input type="radio" name="gender" value="Other" checked={user.gender === "Other"} onChange={handleInputChange} /><label>Other</label>
@@ -109,7 +113,6 @@ const UserProfile = () => {
                     <p><strong>Email: </strong>{user.email}</p>
                     <p><strong>Gender: </strong>{user.gender}</p>
                     <p><strong>Birth Date: </strong>{user.birthday}</p>
-                    <p><strong>Role: </strong>{user.role}</p>
                 </>
             )}
         </div>

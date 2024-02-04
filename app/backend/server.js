@@ -56,6 +56,17 @@ app.use(profileRouter);
 const homeRouter = require('./router/homeRouter');
 app.use(homeRouter);
 
+const group_member_board_Router = require('./router/group_member_board_Router');
+app.use(group_member_board_Router);
+
+
+const selectGroupRouter = require('./router/selectGroupRouter');
+app.use(selectGroupRouter);
+
+const groupPostRouter = require('./router/groupPostRouter');
+app.use(groupPostRouter);
+
+
 const server = http.createServer(app);
 
 server.listen(port, () => {
