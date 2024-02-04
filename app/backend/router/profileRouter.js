@@ -4,7 +4,7 @@ const { editUserProfile, getUserProfile } = require('../dao/profileDao');
 
 router.put('/edit-profile/:userId', (req, res) => {
     console.log('Received data:', req.body);
-    const userId = req.body.userid;
+    const userId = req.params.userId; 
     const userData = req.body; 
     console.log('receivedid:',userId)
     // Assuming the array is sent directly

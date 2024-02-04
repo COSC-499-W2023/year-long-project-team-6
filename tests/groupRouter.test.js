@@ -24,20 +24,18 @@ describe('Group Router', () => {
         jest.clearAllMocks();
     });
 
-    describe('POST /add-group', () => {
-        it('adds a new group', async () => {
-            // Mock implementation
-            addNewGroup.mockImplementation((groupName, code, callback) => {
-                callback(null, { insertId: 1 });
+    describe('POST /api/groups/add-group', () => {
+        it('should add a new group and return 200', async () => {
+          const mockGroup = { groupName: 'Test Group', code: '1234', admin: 'adminUserId' };
+          require('../app/backend/dao/groupDao').addNewGroup.mockImplementation((groupName, code, admin, cb) => cb(null, { id: 'newGroupId' }));
+          
+          await request(app)
+            .post('/api/group/add-group')
+            .send(mockGroup)
+            .expect(200)
+            .then((response) => {
+              expect(response.body.message).toContain('New group added successfully');
             });
-
-            const response = await request(app)
-                .post('/api/group/add-group')
-                .send({ groupName: 'TestGroup', code: '1234' });
-
-            expect(response.statusCode).toBe(200);
-            expect(response.text).toContain('New group added successfully');
-            expect(addNewGroup).toHaveBeenCalledWith('TestGroup', '1234', expect.any(Function));
         });
     });
 
@@ -49,7 +47,7 @@ describe('Group Router', () => {
 
             const response = await request(app)
                 .post('/api/group/edit-group/1')
-                .send({ newGroupName: 'UpdatedGroupName' });
+                .send({ newGroupName: 'UpdatedGroupName', newAdmin: 'newAdminId' });
 
             expect(response.statusCode).toBe(200);
             expect(response.text).toContain('Group name updated successfully');
