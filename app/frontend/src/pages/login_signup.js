@@ -97,12 +97,10 @@ function LoginSignupForm() {
         }
     };
     const validateName = () => {
-        // Check if name length is more than 5 characters
-        if (name.length >= 5) {
-            // Return true if the name is more than 5 characters
+        if (name.length > 5) {
             return true;
         } else {
-            alert("Name must be more than 5 characters.");
+            // alert("Name must be more than 5 characters.");
             return false;
         }
     };
@@ -112,24 +110,13 @@ function LoginSignupForm() {
         const hasDigit = /\d/.test(passw);
         const hasLetter = /[a-zA-Z]/.test(passw);
         const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(passw);
-        let errorMessage = ""; 
-        if (!isLengthValid) {
-            errorMessage = "Password must be between 6 and 30 characters.";
-        } else if (!hasDigit) {
-            errorMessage = "Digits are required for password.";
-        } else if (!hasLetter) {
-            errorMessage = "Letters are required for password.";
-        } else if (!hasSymbol) {
-            errorMessage = "Symbols are required for password.";
-        }
 
-        if (errorMessage) {
-            setPasswError(true);
-            alert(errorMessage); // Show the error message
-            return false;
-        } else {
+        if (isLengthValid && hasDigit && hasLetter && hasSymbol) {
             setPasswError(false);
-            return true;
+            return (true);
+        } else {
+            setPasswError(true);
+            return (false);
         }
     };
 
@@ -157,13 +144,15 @@ function LoginSignupForm() {
         if (validateEmail() && validatePassw() && validateName()) {
             handleSignup();
             console.log("Submitted:", email, name, passw, role);
-        } else if(validatePassw() && validateName()){
-            alert("Email format has to be 'xxx@xxx.com'")
-        }
-        else {
+        } else if (!validateName()) {
+            alert("Name must be more than 5 characters.");
+        } else if (!validateEmail()) {
+            alert("Email format has to be 'xxx@xxx.xx' within 30 characters.");
+        } else if (!validatePassw()) {
+            alert("Letters, digits and symbols are required for password between 6 and 30 characters.");
+        } else {
             alert("Please check your inputs.");
         }
-
     };
     const sendResetLink = () => {
         alert("Reset link has been sent to your email!");
