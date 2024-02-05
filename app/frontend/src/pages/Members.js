@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, Link  } from "react-router-dom";
 import '../component/CSS/MembersPage.css';
 
-const mockData = [
-    { name: 'David', group: 'Group 1', role: 'Sender' },
-    { name: 'Smith', group: 'Group 1', role: 'Sender' },
-    { name: 'Grace', group: 'Group 1', role: 'Sender' },
-    { name: 'Jason', group: 'Group 1', role: 'Receiver' },
-    { name: 'Jerry', group: 'Group 1', role: 'Sender' },
-    { name: 'Henry', group: 'Group 1', role: 'Receiver' },
-    { name: 'Lisa', group: 'Group 1', role: 'Sender' },
-];
 
-const Members = () => {
+function MembersPage() {
+    const [userId, setUserId] = useState('');
+    const navigate = useNavigate();
+    const { groupId } = useParams();
+    const [members, setMembers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('All Roles');
+    const [admin , setAdmin] = useState([])
+    const [adminid, setAdminid]=useState([])
+    console.log(groupId);
+    useEffect(() => {
+        const sessionUser = sessionStorage.getItem('user');
+        if (!sessionUser) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(sessionUser);
+            setUserId(user.userid);
+            console.log("User Id: " + user.userid);
+        }
+    }, []);
+    const navigateToGroupPostMember = (memberId) => () => {
+        navigate(`/groupPost/${groupId}/${memberId}`);
+      };
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -23,18 +35,50 @@ const Members = () => {
         setRoleFilter(event.target.value);
     };
 
-    const filteredData = mockData.filter(member => {
-        // Make the filter function here. 
-        // return if the input name matched with the existed mock member name. 
-        const matchesSearchTerm = member.name.toLowerCase().includes(searchTerm.toLowerCase());
-        // if the role still All role, we do not need filters. But if role change, we only show the user with corresponding role. 
-        const matchesRole = roleFilter === 'All Roles' || member.role === roleFilter;
-
-        return matchesSearchTerm && matchesRole;
-    });
+    useEffect(() => {
+        if (userId) {
+            fetch(`http://localhost:5001/groups-users/${groupId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(userId);
+                    console.log('Fetched data:', data);
+                    setMembers(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+                fetch(`http://localhost:5001/group-admin/${groupId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(userId);
+                    console.log('groupadmin:', data); 
+                    console.log(data[0].username)
+                    setAdmin(data[0].username); 
+                    setAdminid(data[0].admin);
+                    
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+        }
+            
+    }, [userId]);
+    console.log(roleFilter);
 
     return (
+        <>
         <div className="members-page">
+        <h3 id="admin">Admin: {admin}</h3>
             <div className="members-filter">
                 <input
                     type="text"
@@ -43,32 +87,49 @@ const Members = () => {
                     onChange={handleSearchChange}
                     className="search-bar"
                 />
+                
                 <select value={roleFilter} onChange={handleRoleChange} className="dropdown">
                     <option value="All Roles">All Roles</option>
-                    <option value="Sender">Sender</option>
-                    <option value="Receiver">Receiver</option>
+                    <option value="sender">Sender</option>
+                    <option value="Admin">Admin</option>
                 </select>
+                <span className='button'>
+                {userId != adminid ? (
+                             <button onClick={navigateToGroupPostMember(adminid)}>View Posts</button>
+                            ) : null}
+                </span>
             </div>
             <table className="members-table">
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Section</th>
                         <th>Role</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData.map((member, index) => (
-                        <tr key={index}>
-                            <td>{member.name}</td>
-                            <td>{member.group}</td>
-                            <td>{member.role}</td>
+                    {members
+                    .filter(member => 
+                        member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        (roleFilter === 'All Roles' || member.role === roleFilter)
+                      )
+                    .map((member, index) => (
+                        <tr key={member.userid + '-' + index}>
+                            <td>{member.username}</td>
+                            <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
+                            <td>
+                             {userId == adminid ? (
+                             <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
+                            ) : null}
+            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
+        </>
     );
-};
 
-export default Members;
+}
+
+export default MembersPage;

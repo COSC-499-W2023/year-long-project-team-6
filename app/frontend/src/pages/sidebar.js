@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import '../component/CSS/sidebar_style.css';
 import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext';
 
 const Sidebar = () => {
+  const [userId, setUserId] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [result, setResult] = useState('');
@@ -13,7 +13,17 @@ const Sidebar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const modalRef = useRef(null);
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext(AuthContext);
+
+  useEffect(() => {
+    const sessionUser = sessionStorage.getItem('user');
+    if (!sessionUser) {
+      navigate('/login');
+    } else {
+      const user = JSON.parse(sessionUser);
+      setUserId(user.userid);
+      console.log("User Id: " + user.userid);
+    }
+  }, []);
 
   const toggleModal = () => {
     setModalOpen(prev => !prev);
@@ -23,12 +33,7 @@ const Sidebar = () => {
     navigate('/Profile'); // Navigate to the profile page
   };
 
-  const searchGroup = () => {
-    const message = searchValue.length === 5
-      ? `Searching for group with code: ${searchValue}`
-      : 'Please enter a 5-character code.';
-    setResult(message);
-  };
+
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -36,10 +41,10 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
     sessionStorage.removeItem('user');
-    navigate('/Signup');
+    navigate('/login');
   };
+
 
   const generateRandomCode = () => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -49,45 +54,42 @@ const Sidebar = () => {
     }
     return result;
   };
+
+
   const handleCreateGroup = async () => {
-    const newCode = generateRandomCode();
-    setCode(newCode);
-    setShowPopup(true);
-  
+
     const groupName = document.querySelector('[name="groupname"]').value;
-    console.log(groupName);
+
     if (groupName) {
+      const newCode = generateRandomCode();
+      setCode(newCode);
+      setShowPopup(true);
       try {
-        const response = fetch('http://localhost:5001/add-group', {
+        const response = await fetch('http://localhost:5001/add-group', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ groupName: groupName, code: newCode }),
+          body: JSON.stringify({ groupName: groupName, code: newCode, admin: userId }),
         });
-        if(!response){
-          console.log('no');
-        }else{
-          console.log(response);
-        }
-        if (response) {
-          // Handle successful group creation
-          console.log('Group created successfully');
+
+        if (response.ok) {
+          const data = await response.json();
+          alert("Successfully created the group! group id: " + newCode + ".");
+          window.location.reload();
+          console.log('Group created successfully:', data);
         } else {
-          // Handle errors
-          console.error('Failed to create group');
+          console.error('Failed to create group, HTTP status:', response.status);
+          const errorData = await response.json();
+          console.error(errorData);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error during fetch operation:', error);
       }
     } else {
-      // Handle case where group name is not entered
       console.error('Group name is required');
     }
   };
-  
-  
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -98,6 +100,40 @@ const Sidebar = () => {
     window.addEventListener('click', handleClickOutside);
     return () => window.removeEventListener('click', handleClickOutside);
   }, []);
+
+
+  const joinGroup = async () => {
+    if (searchValue.length === 5) {
+        try {
+            const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ inviteCode: searchValue })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert("Successfully joined the group!");
+                window.location.reload();
+            } else {
+              console.log(data);
+              if (data.error) {
+                alert(data.error);
+                } else {
+                setResult(data.message || "Error to join groups");
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setResult("Failed to join the group.");
+        }
+    } else {
+        setResult('Please enter a 5-character code.');
+    }
+};
+
+
 
   return (
     <>
@@ -160,7 +196,6 @@ const Sidebar = () => {
                   name='groupname'
                 />
                 <button onClick={handleCreateGroup}>Create!</button>
-                {showPopup && <div>Group Code: {code}</div>}
               </div>
               <div className="addgroup">
                 <h3>Find your group here</h3>
@@ -171,7 +206,7 @@ const Sidebar = () => {
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value.toUpperCase())}
                 />
-                <button onClick={searchGroup}>Join!</button>
+                <button onClick={joinGroup}>Join!</button>
                 <p>{result}</p>
               </div>
             </div>

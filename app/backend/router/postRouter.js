@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUsernameAndPostDate, addPost} = require('../dao/displayDAO'); 
+const { getUsernameAndPostDate, addPost } = require('../dao/displayDAO');
 
 const router = express.Router();
 
@@ -17,10 +17,11 @@ router.get('/post-history/:user_id', (req, res) => {
 
 // Add a new post
 router.post('/add-post', express.json(), (req, res) => {
-    console.log('Received post data:', req.body); 
+    console.log('Received post data:', req.body);
     const postData = req.body;
     addPost(postData, (err, result) => {
         if (err) {
+            console.error(err);
             res.status(500).send('Error adding post: ' + err.message);
         } else {
             console.log('Post add result:', postData);

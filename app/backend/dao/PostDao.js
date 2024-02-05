@@ -33,7 +33,7 @@ class PostDao {
         });
     }
     getUserByEmail(email, callback) {
-        const query = 'SELECT userid, username, email,role,user_image FROM users WHERE email = ?';
+        const query = 'SELECT userid, username, email,user_image FROM users WHERE email = ?';
         this.db.query(query, [email], (err, results) => {
             if (err) {
                 callback(err, null);
@@ -69,13 +69,13 @@ class PostDao {
             }
         });
     }
-    signup(username, email, password, role, userImage, callback) {
+    signup(username, email, password, userImage, callback) {
         const query = `
-            INSERT INTO users (username, email, password, role, user_image)
-            VALUES (?, ?, ?, ?, ?);
+            INSERT INTO users (username, email, password, user_image)
+            VALUES (?, ?, ?, ?);
         `;
 
-        this.db.query(query, [username, email, password, role, userImage], (err, results) => {
+        this.db.query(query, [username, email, password, userImage], (err, results) => {
             if (err) {
                 callback(err, null);
             } else {
@@ -83,6 +83,31 @@ class PostDao {
             }
         });
     }
+    getVideoByKey(videoId, callback) {
+        const query = 'SELECT s3_content_key, blur_face FROM posts WHERE post_id = ?;';
+    
+        this.db.query(query, [videoId], (error, results) => {
+            if (error) {
+                // Handle the error in the callback
+                callback(error, null, null);
+            } else {
+                // Check if any result is returned
+                if (results.length > 0) {
+                    // Extract the s3_content_key and blur_face values
+                    const videoKey = results[0].s3_content_key;
+                    const faceblur = results[0].blur_face;
+    
+                    // Pass both values to the callback
+                    callback(null, videoKey, faceblur);
+                } else {
+                    // If no results, pass null for both videoKey and faceblur
+                    callback(null, null, null);
+                }
+            }
+        });
+    }
+    
+
 }
 
 module.exports = PostDao;

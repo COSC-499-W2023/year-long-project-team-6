@@ -13,10 +13,13 @@ function RecordedPage() {
     const [newText, setNewText] = useState('');
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
+    const handleView = async (videoId) => {
+        navigate(`/Video/${videoId}`)
+    };
+
 
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
-        console.log("Sessopm User: " + sessionUser);
         if (!sessionUser) {
             navigate('/login');
         } else {
@@ -65,6 +68,7 @@ function RecordedPage() {
             })
             .catch(error => console.error('Error:', error));
     };
+
     const handleEdit = (postId) => {
         const postData = { id: postId, newTitle: newTitle, newText: newText };
 
@@ -89,7 +93,13 @@ function RecordedPage() {
             });
     };
 
-
+    const showdate = (timestamp) => {
+        let date = new Date(timestamp);
+        let formattedDate = date.toLocaleDateString();
+        let formattedTime = date.toLocaleTimeString();
+        let formattedDateTime = formattedDate + ' ' + formattedTime;
+        return formattedDateTime
+    }
 
     const renderEditForm = () => {
         if (showModal) {
@@ -121,74 +131,94 @@ function RecordedPage() {
         }
         return null;
     };
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toISOString().split('T')[0];
-    };
+
+    function handleApplyClick() {
+        fetch(`http://localhost:5001/get-posts/${userId}?sort=${arrangement}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetched data:', data);
+                setPosts(data);
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+            });
+    }
 
     return (
         <>
-            <div id="condition">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <h3>Group</h3>
-                            </td>
-                            <td>
-                                <h3>Arrange By</h3>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <select name="group" value={group} onChange={(e) => setGroup(e.target.value)}>
-                                    <option value="all">All</option>
-                                    <option value="group1">Group 1</option>
-                                    <option value="group2">Group 2</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select name="arrange" value={arrangement} onChange={(e) => setArrangement(e.target.value)}>
-                                    <option value="date">Date</option>
-                                    <option value="asc">Name Ascending</option>
-                                    <option value="des">Name Descending</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button type="submit" name="apply" id="apply">Apply</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="VideoList">
-                <table id="videoTable">
-                    <thead>
-                        <tr>
-                            <td className="all">All Videos</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {posts.map((post) => (
-                            <tr key={post.post_id}>
-                                <td className="title" data-description={post.post_text}>
-                                    {post.post_title}
-                                </td>
-                                <td>{formatDate(post.post_date)}</td>
+            <div id="content">
+                <div id="condition">
+                    <table>
+                        <tbody>
+                            <tr>
                                 <td>
-                                    <button className='editButton' onClick={() => {
-                                        setEditingPostId(post.post_id);
-                                        setNewTitle(post.post_title);
-                                        setNewText(post.post_text);
-                                        setShowModal(true);
-                                    }}>Edit</button>
-                                    <button className='deleteButton' onClick={() => handleDelete(post.post_id)}>Delete</button>
-                                    {renderEditForm()}
+                                    <h3>Group</h3>
+                                </td>
+
+                                <td>
+                                    <h3>Arrange By</h3>
                                 </td>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                            <tr>
+                                <td>
+                                    <select name="group" value={group} onChange={(e) => setGroup(e.target.value)}>
+                                        <option value="all">All</option>
+                                        <option value="group1">Group 1</option>
+                                        <option value="group2">Group 2</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="arrange" value={arrangement} onChange={(e) => setArrangement(e.target.value)}>
+                                        <option value="date_asc">Date Ascending</option>
+                                        <option value="date_desc">Date Descending</option>
+                                        <option value="name_asc">Name Ascending</option>
+                                        <option value="name_desc">Name Descending</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="submit" name="apply" id="apply" onClick={handleApplyClick}>Apply</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="VideoList">
+                    <table id="videoTable">
+                        <thead>
+                            <tr>
+                                <td className="all">All Videos</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {posts.map((post) => (
+                                <tr key={post.post_id}>
+                                    <td className="title" data-description={post.post_text}>
+                                        {post.post_title}
+                                    </td>
+                                    <td>{showdate(post.post_date)}</td>
+                                    <td>
+                                        <button className='editButton' onClick={() => {
+                                            setEditingPostId(post.post_id);
+                                            setNewTitle(post.post_title);
+                                            setNewText(post.post_text);
+                                            setShowModal(true);
+                                        }}>Edit</button>
+                                        <button className='deleteButton' onClick={() => handleDelete(post.post_id)}>Delete</button>
+                                        {renderEditForm()}
+                                    </td>
+                                    <td><button className='view' onClick={() => {
+                                        handleView(post.post_id)
+                                    }}>View</button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     );

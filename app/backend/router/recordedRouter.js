@@ -6,7 +6,9 @@ const router = express.Router();
 // Get post information
 router.get('/get-posts/:user_id', (req, res) => {
     const userId = req.params.user_id;
-    getPostInfor(userId, (err, results) => {
+    const sort = req.query.sort; // Retrieve the sort parameter from query
+
+    getPostInfor(userId, sort, (err, results) => {
         if (err) {
             console.error('Error in /get-posts/:user_id:', err);
             res.status(500).send(`Error retrieving posts: ${err.message}`);
@@ -15,6 +17,7 @@ router.get('/get-posts/:user_id', (req, res) => {
         }
     });
 });
+
 
 
 // Get group information

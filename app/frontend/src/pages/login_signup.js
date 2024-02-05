@@ -5,9 +5,6 @@ import email_image from "../component/image/email.png"
 import exchange from "../component/image/exchange.png"
 import password from "../component/image/password.png"
 import person from "../component/image/person.png"
-import { AuthContext } from "./AuthContext";
-import showpw from "../component/image/showpw.png"
-import showpw2 from "../component/image/showpw2.png"
 
 function LoginSignupForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +15,6 @@ function LoginSignupForm() {
     const [passw, setPassw] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [passwError, setPasswError] = useState(false);
-    const { setIsAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogin = () => {
@@ -41,20 +37,15 @@ function LoginSignupForm() {
             .then(data => {
 
                 if (data.success) { // Check if login was successful
-                    // Store user data in session storage
                     console.log(JSON.stringify(data.user))
                     sessionStorage.setItem('user', JSON.stringify(data.user));
-                    setIsAuthenticated(true);
                     navigate('/'); // navigate to the home page. 
                 } else {
-                    // Handle unsuccessful login
-                    // Display an error message to the user
                     alert("Login failed: Invalid credentials");
                 }
             })
             .catch((error) => {
                 console.error('Error:', error);
-                // Handle error here (e.g., show error message)
             });
     };
     const handleSignup = () => {
@@ -74,9 +65,9 @@ function LoginSignupForm() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    console.log('Signup successful:', data);
+                    console.log('Signup successful:', JSON.stringify(data.user));
                     alert("Signup successful!");
-                    setIsAuthenticated(true);
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
                     navigate('/');
                 } else {
                     console.error('Signup failed:', data.message);
@@ -163,8 +154,8 @@ function LoginSignupForm() {
     const handlesignupFormSubmit = (event) => {
         event.preventDefault();
         console.log(role)
-        console.log(validateEmail(), validatePassw(), validateRole(), validateName())
-        if (validateEmail() && validatePassw() && validateRole() && validateName()) {
+        console.log(validateEmail(), validatePassw(), validateName())
+        if (validateEmail() && validatePassw() && validateName()) {
 
             handleSignup();
             console.log("Submitted:", email, name, passw, role);
@@ -229,7 +220,7 @@ function LoginSignupForm() {
                                 onChange={(e) => setPassw(e.target.value)}
                                 onBlur={validatePassw}
                             />
-                            {passwError && <span className="email-tooltiptext" id="emailTooltip">Invalid format</span>}
+                            {passwError && <span className="email-tooltiptext" id="emailTooltip">Invalid format, must contain a letter, a number and a symbol</span>}
 
                             <input
                                 type="text"
@@ -240,30 +231,6 @@ function LoginSignupForm() {
                                 {showPassword ? "Hide" : "Show"}
                             </p>
                         </div>
-                    </div>
-                    <div className="roleChoose" id="roleInputContainer" style={{ display: "flex", alignItems: "center" }}>
-                        <label htmlFor="role" style={{ fontSize: "1.17em", fontWeight: "bold", color: "#4c00b4", marginRight: "10px", marginBottom: "0" }}>
-                            <h3 style={{ margin: "0" }}>*Select your role:</h3>
-                        </label>
-                        <select
-                            name="role"
-                            id="role"
-                            style={{
-                                fontSize: "18px",
-                                padding: "5px 10px",
-                                borderRadius: "10px",
-                                width: "185px",
-                                border: "1px solid black",
-                                marginTop: "5px",
-                                marginBottom: "8px"
-                            }}
-                            value={role}
-                            onChange={(e) => { setRole(e.target.value); }}
-                        >
-                            <option value="" >Select a role</option>
-                            <option value="sender">Sender</option>
-                            <option value="receiver">Receiver</option>
-                        </select>
                     </div>
                     {/* <div className="forgot-password" onClick={navigateToForgotPasswordPage} id="forgotPassword">
                         Forgot password? <span>Click Here!</span>
