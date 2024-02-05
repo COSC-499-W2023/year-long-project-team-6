@@ -352,3 +352,34 @@ Reflecting on my contributions to our group project, I feel a sense of accomplis
 
 ### 5. *From project board*
 ![Board](images16/pb.png)
+
+## Ximin Xu T2 week 4 personal log
+
+### 1. *Date Range*
+
+Jan.29-Feb.4
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images17/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Fixing bugs(detail in project board)
+3. In post page create identity check, for receivers can see posts from senders, and vice versa
+4. clean unused data for frontend and db
+5. peer testing
+
+
+**In progress**
+ 1. Create announcement feature
+
+### 4. *Self Reflection and learned*
+This week, my contributions to the team project were significant and multifaceted. I played a pivotal role during our group meeting, where I was instrumental in delegating tasks effectively. I tackled and resolved numerous bugs, as detailed on our project board, enhancing the project's stability. I implemented an identity verification feature on the post page, ensuring secure and relevant content visibility between senders and receivers. Additionally, I streamlined the project by purging unnecessary data from both the frontend and database. My efforts in peer testing further ensured our project's robustness. Currently, I am focused on developing an announcement feature to improve our project's communication capabilities.
+
+### 5. *From project board*
+![Board](images17/pb1.png)
+![Board](images17/pb2.png)
