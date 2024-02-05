@@ -425,3 +425,41 @@
 *Table format:*
 ![Table](Term_2_Week_3/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 4)
+
+## Applicable date range
+**January/29/2024** to **February/4/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Prepare the peer testing presentation. 
+* Change the Icon of the sidebar. 
+* Revise the test file since the backend has been changed a bit. 
+* Complete the peer evaluation and peer testing evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* The peer testing session went well with good preparation. 
+* The icons of the sidebar has been improved with the better replacement.
+* Several test files has been revised and still have left some to work in the future.  
+* Completed the peer evaluation and peer testing evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_4/PE.png)
+
+## Work - New icons in the side bar
+*New Icons for the recorded and post page:*
+![Post Page](Term_2_Week_4/icon.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_4/Board.png)
+*Table format:*
+![Table](Term_2_Week_4/Table.png)
+*missions with tag "done before" are from the previous weeks.*
