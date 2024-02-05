@@ -394,3 +394,34 @@ This week, I coded both the backend and frontend, debugged intricate issues, and
 ![Board](T2_w3_img/Board.png)
 *Table format:*
 ![Table](T2_w3_img/Table.png)
+
+
+# Individual Log - Yiqi Xu (Week 4)
+
+## Applicable data range
+**January/29/2023** to **February/4/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Code backend (admin)
+* Code frontend for admin pages
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Coded backend (admin)
+* Coded frontend for admin pages
+* Finished Peer Evaluation
+
+## Self reflection
+This week, I integrated backend and frontend development for admin functionalities, ensuring robust performance and user-friendly interfaces. My participation in the meeting underscored my commitment to collaborative excellence and continuous growth. It was a week marked by productive synergy and technical finesse.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w4_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w4_img/Board.png)
+*Table format:*
+![Table](T2_w4_img/Table.png)
