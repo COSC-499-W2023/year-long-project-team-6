@@ -54,7 +54,7 @@ async function editPost(postId, newTitle, newText, callback) {
 }
 
 async function editGroup(groupId, newGroupName, newAdmin, callback) {
-    const query = 'UPDATE groups SET groupname = ?, admin = ? WHERE groupid = ?';
+    const query = 'UPDATE `groups` SET groupname = ?, admin = ? WHERE groupid = ?';
     db.query(query, [newGroupName, newAdmin, groupId], (err, result) => {
         if (err) {
             console.error(err);
@@ -72,7 +72,7 @@ async function deleteGroup(groupId, callback) {
             callback('Transaction start error', null);
             return;
         }
-        const deleteUserGroupsQuery = 'DELETE FROM user_groups WHERE groupid = ?';
+        const deleteUserGroupsQuery = 'DELETE FROM `user_groups` WHERE groupid = ?';
         db.query(deleteUserGroupsQuery, [groupId], (err, result) => {
             if (err) {
                 console.error(err);
@@ -81,7 +81,7 @@ async function deleteGroup(groupId, callback) {
                 });
                 return;
             }
-            const deleteGroupQuery = 'DELETE FROM groups WHERE groupid = ?';
+            const deleteGroupQuery = 'DELETE FROM `groups` WHERE groupid = ?';
             db.query(deleteGroupQuery, [groupId], (err, result) => {
                 if (err) {
                     console.error(err);

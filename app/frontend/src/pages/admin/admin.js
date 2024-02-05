@@ -14,18 +14,24 @@ const AdminInterface = () => {
 
     const handleEditUser = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/admin-user/edit/${userId}`, {
+            fetch(`http://localhost:5001/admin-user/edit/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ newUsername: newUsername, newEmail: newEmail }),
-            });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const result = await response.json();
-            console.log('User updated successfully:', result);
+            })
+            .then(
+                response => {
+                    console.log('User updated:', response);
+                    window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
         } catch (error) {
             console.error('Error updating user:', error);
         }
@@ -33,16 +39,20 @@ const AdminInterface = () => {
 
     const handleDeleteUser = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/admin-user/${userId}`, {
+            fetch(`http://localhost:5001/admin-user/${userId}`, {
                 method: 'DELETE'
-            });
+            }).then(
+                response => {
+                    console.log('User deleted:', response);
+                    window.location.reload();
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('User deleted successfully:', result);
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
         } catch (error) {
             console.error('Error deleting user:', error);
         }
@@ -50,20 +60,24 @@ const AdminInterface = () => {
 
     const handleEditPost = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/admin-post/edit/${postId}`, {
+            fetch(`http://localhost:5001/admin-post/edit/${postId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ newTitle, newText }),
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('Post updated successfully:', result);
+            }).then(
+                response => {
+                    console.log('Post updated:', response);
+                    alert("Successfully update post!");
+                window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
         } catch (error) {
             console.error('Error updating post:', error);
         }
@@ -71,16 +85,20 @@ const AdminInterface = () => {
 
     const handleDeletePost = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/admin-post/${postId}`, {
+            fetch(`http://localhost:5001/admin-post/${postId}`, {
                 method: 'DELETE'
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('Post deleted successfully:', result);
+            }).then(
+                response => {
+                    console.log('Post deleted:', response.data);
+                    alert("Successfully delete post!");
+                    window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
         } catch (error) {
             console.error('Error deleting post:', error);
         }
@@ -88,20 +106,24 @@ const AdminInterface = () => {
 
     const handleEditGroup = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/admin-group/edit/${groupId}`, {
+            fetch(`http://localhost:5001/admin-group/edit/${groupId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ newGroupName, newAdmin }),
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('Group updated successfully:', result);
+            }).then(
+                response => {
+                    console.log('Group updated:', response.data);
+                    alert("Successfully update the group!");
+                    window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
         } catch (error) {
             console.error('Error updating group:', error);
         }
@@ -109,16 +131,20 @@ const AdminInterface = () => {
 
     const handleDeleteGroup = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/admin-group/${groupId}`, {
+            fetch(`http://localhost:5001/admin-group/${groupId}`, {
                 method: 'DELETE'
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('Group deleted successfully:', result);
+            }).then(
+                response => {
+                    console.log('User updated:', response.data);
+                    alert("Successfully deleted the group!");
+                    window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
         } catch (error) {
             console.error('Error deleting group:', error);
         }
@@ -127,16 +153,20 @@ const AdminInterface = () => {
 
     const handleRemoveUserFromGroup = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/admin-group/${groupId}/user/${userId}`, {
+            fetch(`http://localhost:5001/admin-group/${groupId}/user/${userId}`, {
                 method: 'DELETE'
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('User removed from group successfully:', result);
+            }).then(
+                response => {
+                    console.log('User removed:', response.data);
+                    alert("Successfully removed user from group!");
+                    window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
         } catch (error) {
             console.error('Error removing user from group:', error);
         }
@@ -170,6 +200,7 @@ const AdminInterface = () => {
                 <input type="text" placeholder="Group ID" onChange={(e) => setGroupId(e.target.value)} />
                 <input type="text" placeholder="New Group Name" onChange={(e) => setNewGroupName(e.target.value)} />
                 <input type="text" placeholder="New Admin User ID" onChange={(e) => setNewAdmin(e.target.value)} />
+                <input type="text" placeholder="User ID to remove" onChange={(e) => setUserId(e.target.value)} />
                 <button onClick={handleEditGroup}>Edit Group</button>
                 <button onClick={handleDeleteGroup}>Delete Group</button>
                 <button onClick={handleRemoveUserFromGroup}>Remove User from Group</button>
