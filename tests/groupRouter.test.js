@@ -9,13 +9,13 @@ app.use('/api/group', groupRouter);
 
 jest.mock('../app/backend/dao/groupDao', () => ({
     addNewGroup: jest.fn(),
-    editGroupName: jest.fn(),
+    editGroup: jest.fn(),
     deleteGroup: jest.fn(),
     getGroupInfo: jest.fn(),
     joinGroupByInviteCode: jest.fn()
 }));
 
-const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInviteCode } = require('../app/backend/dao/groupDao');
+const { addNewGroup, editGroup, deleteGroup, getGroupInfo, joinGroupByInviteCode } = require('../app/backend/dao/groupDao');
 
 const groupDao = require('../app/backend/dao/groupDao');
 
@@ -26,34 +26,33 @@ describe('Group Router', () => {
 
     describe('POST /api/groups/add-group', () => {
         it('should add a new group and return 200', async () => {
-          const mockGroup = { groupName: 'Test Group', code: '1234', admin: 'adminUserId' };
-          require('../app/backend/dao/groupDao').addNewGroup.mockImplementation((groupName, code, admin, cb) => cb(null, { id: 'newGroupId' }));
-          
-          await request(app)
-            .post('/api/group/add-group')
-            .send(mockGroup)
-            .expect(200)
-            .then((response) => {
-              expect(response.body.message).toContain('New group added successfully');
-            });
+            const mockGroup = { groupName: 'Test Group', code: '1234', admin: 'adminUserId' };
+            require('../app/backend/dao/groupDao').addNewGroup.mockImplementation((groupName, code, admin, cb) => cb(null, { id: 'newGroupId' }));
+
+            await request(app)
+                .post('/api/group/add-group')
+                .send(mockGroup)
+                .expect(200)
+                .then((response) => {
+                    expect(response.body.message).toContain('New group added successfully');
+                });
         });
     });
 
     describe('POST /edit-group/:id', () => {
         it('updates a group name', async () => {
-            groupDao.editGroupName.mockImplementation((groupId, newGroupName, callback) => {
+            editGroup.mockImplementation((groupId, newGroupName, newAdmin, newImage, callback) => {
                 callback(null, { affectedRows: 1 });
             });
 
             const response = await request(app)
-                .post('/api/group/edit-group/1')
-                .send({ newGroupName: 'UpdatedGroupName', newAdmin: 'newAdminId' });
+                .post('/api/group/edit-group/1') // Ensure the endpoint matches the router definition
+                .send({ newGroupName: 'UpdatedGroupName', newAdmin: 'newAdminId', newImage: 'newImage.png' }); // Include all fields as per your router logic
 
             expect(response.statusCode).toBe(200);
-            expect(response.text).toContain('Group name updated successfully');
-            expect(editGroupName).toHaveBeenCalledWith('1', 'UpdatedGroupName', expect.any(Function));
+            expect(response.text).toContain('Group details updated successfully');
+            expect(editGroup).toHaveBeenCalledWith('1', 'UpdatedGroupName', 'newAdminId', 'newImage.png', expect.any(Function));
         });
-
     });
 
     describe('DELETE /delete-group/:id', () => {

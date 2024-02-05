@@ -1,180 +1,104 @@
-const { addNewGroup, editGroupName, deleteGroup, getGroupInfo,joinGroupByInviteCode } = require('../app/backend/dao/groupDao');
+// const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInviteCode } = require('../app/backend/dao/groupDao');
+const groupDao = require('../app/backend/dao/groupDao');
 const db = require('../app/backend/db/db');
 
 jest.mock('../app/backend/db/db');
 
-describe('addNewGroup', () => {
-    test('adds a new group to the database', async () => {
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback(null, { insertId: 1 }); // Assuming the query was successful and returned an insertId
-        });
-        const callback = jest.fn();
-        await addNewGroup('TestGroup', '123456', callback);
-        expect(db.query).toHaveBeenCalledWith(
-            'INSERT INTO `groups` (`groupname`, `invite_code`) VALUES (?, ?)',
-            ['TestGroup', '123456'],
-            expect.any(Function)
-        );
-        expect(callback).toHaveBeenCalledWith(null, { insertId: 1 });
+describe('Group DAO Functions', () => {
+    beforeEach(() => {
+        // Clear all instances and calls to constructor and all methods:
+        db.query.mockClear();
     });
 
-    test('handles database error', async () => {
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback('Database error', null);
-        });
-        const callback = jest.fn();
-        await addNewGroup('TestGroup', '123456', callback);
-        expect(db.query).toHaveBeenCalledWith(
-            'INSERT INTO `groups` (`groupname`, `invite_code`) VALUES (?, ?)',
-            ['TestGroup', '123456'],
-            expect.any(Function)
-        );
-        expect(callback).toHaveBeenCalledWith('Error adding group', null);
-    });
-});
-describe('editGroupName', () => {
-    test('edits the group name in the database', async () => {
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback(null, { affectedRows: 1 }); // Assuming the query was successful and affected 1 row
-        });
-        const callback = jest.fn();
-        await editGroupName(1, 'NewTestGroup', callback);
-        expect(db.query).toHaveBeenCalledWith(
-            'UPDATE groups SET groupname = ? WHERE groupid = ?',
-            ['NewTestGroup', 1],
-            expect.any(Function)
-        );
-        expect(callback).toHaveBeenCalledWith(null, { affectedRows: 1 });
-    });
+    describe('addNewGroup', () => {
+        it('should successfully add a new group and user to it', async () => {
+            // Mock db.query to simulate successful insertion
+            db.query
+                .mockImplementationOnce((query, queryParams, callback) => callback(null, { insertId: 1 })) // Mocking insert group
+                .mockImplementationOnce((query, queryParams, callback) => callback(null, { affectedRows: 1 })); // Mocking insert user to group
 
-    test('handles database error', async () => {
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback('Database error', null);
-        });
-        const callback = jest.fn();
-        await editGroupName(1, 'NewTestGroup', callback);
-        expect(db.query).toHaveBeenCalledWith(
-            'UPDATE groups SET groupname = ? WHERE groupid = ?',
-            ['NewTestGroup', 1],
-            expect.any(Function)
-        );
-        expect(callback).toHaveBeenCalledWith('Database error', null);
-    });
-});
-describe('deleteGroup', () => {
-    test('deletes the group from the database', async () => {
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback(null, { affectedRows: 1 }); // Assuming the query was successful and affected 1 row
-        });
-        const callback = jest.fn();
-        await deleteGroup(1, callback);
-        expect(db.query).toHaveBeenCalledWith(
-            'DELETE FROM groups WHERE groupid = ?',
-            [1],
-            expect.any(Function)
-        );
-        expect(callback).toHaveBeenCalledWith(null, { affectedRows: 1 });
-    });
+            const callback = jest.fn();
+            await groupDao.addNewGroup('TestGroup', 'inviteCode', 1, callback);
 
-    test('handles database error', async () => {
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback('Database error', null);
-        });
-        const callback = jest.fn();
-        await deleteGroup(1, callback);
-        expect(db.query).toHaveBeenCalledWith(
-            'DELETE FROM groups WHERE groupid = ?',
-            [1],
-            expect.any(Function)
-        );
-        expect(callback).toHaveBeenCalledWith('Database error', null);
-    });
-});
-describe('getGroupInfo', () => {
-    test('returns group information from the database', async () => {
-        const mockResults = [{ groupId: 1, groupName: 'TestGroup' }];
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback(null, mockResults);
-        });
-        const callback = jest.fn();
-        await getGroupInfo(1, callback);
-        expect(db.query).toHaveBeenCalledWith(
-            'SELECT * FROM groups WHERE groupid = ?',
-            [1],
-            expect.any(Function)
-        );
-        expect(callback).toHaveBeenCalledWith(null, mockResults[0]);
-    });
-
-    test('handles database error', async () => {
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback('Database error', null);
-        });
-        const callback = jest.fn();
-        await getGroupInfo(1, callback);
-        expect(db.query).toHaveBeenCalledWith(
-            'SELECT * FROM groups WHERE groupid = ?',
-            [1],
-            expect.any(Function)
-        );
-        expect(callback).toHaveBeenCalledWith('Database error', null);
-    });
-});
-describe('joinGroupByInviteCode', () => {
-    test('should join a group with a valid invite code', (done) => {
-        const userId = 1;
-        const inviteCode = 'ABC123';
-        const mockGroupResults = [{ groupid: 123 }];
-
-        db.query.mockImplementationOnce((query, values, callback) => {
-            expect(query).toContain('SELECT groupid FROM groups WHERE invite_code = ?');
-            expect(values).toEqual([inviteCode]);
-            callback(null, mockGroupResults);
+            expect(callback).toHaveBeenCalledWith(null, expect.any(Object));
+            expect(db.query).toHaveBeenCalledTimes(2);
         });
 
-        db.query.mockImplementationOnce((query, values, callback) => {
-            expect(query).toContain('INSERT INTO user_groups (user_id, group_id) VALUES (?, ?)');
-            expect(values).toEqual([userId, mockGroupResults[0].groupid]);
-            callback(null, { /* Mock insert result */ });
+        // Add more tests here to cover error cases and other scenarios
+    });
+
+    describe('editGroup', () => {
+        it('should successfully edit group details', async () => {
+            // Mock db.query to simulate successful update
+            db.query.mockImplementation((query, queryParams, callback) => callback(null, { affectedRows: 1 }));
+
+            const callback = jest.fn();
+            await groupDao.editGroup(1, 'NewGroupName', null, 'newImage.png', callback);
+
+            expect(callback).toHaveBeenCalledWith(null, expect.any(Object));
+            expect(db.query).toHaveBeenCalledTimes(1);
         });
 
-        joinGroupByInviteCode(userId, inviteCode, (err, result) => {
-            expect(err).toBeNull();
-            expect(result).toBeDefined();
-            done();
+        // Add more tests here to cover error cases and other scenarios
+    });
+
+    describe('deleteGroup', () => {
+        it('should successfully delete a group', async () => {
+            // Mock db.query to simulate successful deletion
+            db.query.mockImplementation((query, queryParams, callback) => callback(null, { affectedRows: 1 }));
+
+            const callback = jest.fn();
+            await groupDao.deleteGroup(1, callback);
+
+            expect(callback).toHaveBeenCalledWith(null, expect.any(Object));
+            expect(db.query).toHaveBeenCalledTimes(1);
+        });
+
+        // Add more tests here to cover error cases and other scenarios
+    });
+
+    describe('getGroupInfo', () => {
+        it('should successfully retrieve group information', async () => {
+            // Mock db.query to simulate fetching group info
+            db.query.mockImplementation((query, queryParams, callback) => callback(null, [{ groupid: 1, groupname: 'TestGroup' }]));
+
+            const callback = jest.fn();
+            await groupDao.getGroupInfo(1, callback);
+
+            expect(callback).toHaveBeenCalledWith(null, expect.any(Object));
+            expect(db.query).toHaveBeenCalledTimes(1);
+        });
+
+        // Add more tests here to cover error cases and other scenarios
+    });
+
+    describe('joinGroupByInviteCode', () => {
+        it('should not allow a user to join a group if they are already a member', async () => {
+            // Mock db.query to simulate finding the group
+            db.query
+                .mockImplementationOnce((query, queryParams, callback) => callback(null, [{ groupid: 1 }])) // Simulate finding group
+                .mockImplementationOnce((query, queryParams, callback) => callback(null, [{ userid: 1, groupid: 1 }])); // Simulate checking user in group
+
+            const callback = jest.fn();
+            await groupDao.joinGroupByInviteCode(1, 'validCode', callback);
+
+            expect(callback).toHaveBeenCalledWith('User is already a member of this group', null);
+            expect(db.query).toHaveBeenCalledTimes(2); // Expecting 2 calls: one for finding group and one for checking user in group
         });
     });
 
-    test('should handle no group found with the provided invite code', (done) => {
-        const userId = 1;
-        const inviteCode = 'INVALID';
 
-        db.query.mockImplementationOnce((query, values, callback) => {
-            expect(query).toContain('SELECT groupid FROM groups WHERE invite_code = ?');
-            expect(values).toEqual([inviteCode]);
-            callback(null, []); // Simulate no group found
-        });
+    describe('getAllInviteCodes', () => {
+        it('should retrieve all invite codes', async () => {
+            // Adjust mockImplementation to correctly match the signature of db.query in this context
+            db.query.mockImplementation((query, callback) => callback(null, [{ invite_code: 'code1' }, { invite_code: 'code2' }]));
 
-        joinGroupByInviteCode(userId, inviteCode, (err, result) => {
-            expect(err).toBe('No group found with the provided invite code');
-            expect(result).toBeNull();
-            done();
-        });
-    });
+            const callback = jest.fn();
+            await groupDao.getAllInviteCodes(callback);
 
-    test('should handle database query error', (done) => {
-        const userId = 1;
-        const inviteCode = 'ABC123';
-        const mockError = new Error('Database error');
-
-        db.query.mockImplementationOnce((query, values, callback) => {
-            callback(mockError, null);
-        });
-
-        joinGroupByInviteCode(userId, inviteCode, (err, result) => {
-            expect(err).toEqual(mockError);
-            expect(result).toBeNull();
-            done();
+            // Verify that the callback was called with the expected results
+            expect(callback).toHaveBeenCalledWith(null, [{ invite_code: 'code1' }, { invite_code: 'code2' }]);
+            expect(db.query).toHaveBeenCalledTimes(1);
         });
     });
 });

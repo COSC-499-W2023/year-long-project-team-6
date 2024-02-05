@@ -184,7 +184,7 @@ describe('PostDao', () => {
                 callback(null, { insertId: 1 }); // Simulate a successful insertion
             });
             const callback = jest.fn();
-            await postDao.signup('testUser', 'test@example.com', 'password', 'user', 'image.jpg', callback);
+            await postDao.signup('testUser', 'test@example.com', 'password', 'image.jpg', callback);
             expect(callback).toHaveBeenCalledWith(null, { insertId: 1 });
         });
 
@@ -194,7 +194,7 @@ describe('PostDao', () => {
                 callback(expectedError, null);
             });
             const callback = jest.fn();
-            await postDao.signup('testUser', 'test@example.com', 'password', 'user', 'image.jpg', callback);
+            await postDao.signup('testUser', 'test@example.com', 'password', 'image.jpg', callback);
             expect(callback).toHaveBeenCalledWith(expectedError, null);
         });
     });
@@ -202,50 +202,50 @@ describe('PostDao', () => {
         test('should return video key for a valid videoId', (done) => {
             const videoId = 1;
             const mockResults = [{ s3_content_key: 'video123.mp4' }];
-    
+
             mockDb.query.mockImplementation((query, values, callback) => {
-                expect(query).toContain('SELECT s3_content_key FROM posts WHERE post_id = ?');
+                expect(query).toContain('SELECT s3_content_key, blur_face FROM posts WHERE post_id = ?');
                 expect(values).toEqual([videoId]);
                 callback(null, mockResults);
             });
-    
+
             const postDao = new PostDao(mockDb);
-    
+
             postDao.getVideoByKey(videoId, (error, result) => {
                 expect(error).toBeNull();
                 expect(result).toEqual('video123.mp4'); // Modify this line
                 done();
             });
         });
-    
+
         test('should handle no results for an invalid videoId', (done) => {
             const videoId = 2;
-    
+
             mockDb.query.mockImplementation((query, values, callback) => {
-                expect(query).toContain('SELECT s3_content_key FROM posts WHERE post_id = ?');
+                expect(query).toContain('SELECT s3_content_key, blur_face FROM posts WHERE post_id = ?');
                 expect(values).toEqual([videoId]);
                 callback(null, []); // Simulate no results
             });
-    
+
             const postDao = new PostDao(mockDb);
-    
+
             postDao.getVideoByKey(videoId, (error, result) => {
                 expect(error).toBeNull();
                 expect(result).toBeNull();
                 done();
             });
         });
-    
+
         test('should handle database query error', (done) => {
             const videoId = 3;
             const mockError = new Error('Database error');
-    
+
             mockDb.query.mockImplementation((query, values, callback) => {
                 callback(mockError, null);
             });
-    
+
             const postDao = new PostDao(mockDb);
-    
+
             postDao.getVideoByKey(videoId, (error, result) => {
                 expect(error).toEqual(mockError);
                 expect(result).toBeNull();
@@ -253,7 +253,7 @@ describe('PostDao', () => {
             });
         });
     });
-    
+
 });
 
 

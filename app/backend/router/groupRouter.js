@@ -1,5 +1,5 @@
 const express = require('express');
-const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInviteCode, getAllInviteCodes } = require('../dao/groupDao');
+const { addNewGroup, editGroup, deleteGroup, getGroupInfo, joinGroupByInviteCode, getAllInviteCodes } = require('../dao/groupDao');
 const router = express.Router();
 
 router.post('/add-group', async (req, res) => {
