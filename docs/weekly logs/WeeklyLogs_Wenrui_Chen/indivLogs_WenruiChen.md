@@ -366,7 +366,7 @@
 *Board format:*
 ![Board](t2w4/board.png)
 
-*Tests (Test reports are shown in team log part):*
+*Tests (Test reports are shown in team log part):*<br>
 ![Board](t2w4/1.jpg)
 ![Board](t2w4/2.jpg)
 ![Board](t2w4/3.jpg)
