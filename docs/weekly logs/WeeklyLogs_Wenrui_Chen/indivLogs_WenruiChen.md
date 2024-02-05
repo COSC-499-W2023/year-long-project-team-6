@@ -301,3 +301,42 @@
 
 *Table format:*
 ![Task1](t2w2/table.png)
+
+# Individual Log - Wenrui Chen (t2w3)
+
+## Applicable data range
+**January/22/2024** to **January/28/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Meetings and see what's the plan. 
+* test for Dao and router test
+* Group select function
+* Complete the peer evaluation. 
+* Group select backend
+
+## Completed Tasks 
+* Meetings and see what's the plan. 
+* test for Dao(all) and router(almost)
+* Complete the peer evaluation. 
+* Group select backend
+* fixed some merge conflicts of worflows
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](t2w3/PE.png)
+
+## Task on Board
+*Board format:*
+![Board](t2w3/board.png)
+
+*Tests (Test reports are shown in team log part):*
+![Board](t2w3/t1.png)
+![Board](t2w3/t2.png)
+![Board](t2w3/t3.png)
+![Board](t2w3/t4.png)
+![Board](t2w3/t5.png)
+![Board](t2w3/t6.png)
+
+
+*Table format:*
+![Task1](t2w2/table.png)

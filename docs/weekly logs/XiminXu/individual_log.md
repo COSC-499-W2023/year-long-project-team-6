@@ -324,3 +324,62 @@ In our recent project, I've made significant progress. I successfully held a pro
 ### 5. *From project board*
 ![Board](images15/pb.png)
 
+## Ximin Xu T2 week 3 personal log
+
+### 1. *Date Range*
+
+Jan.21-Jan.28
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images16/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Modify lambda functions to python
+3. Creating state machine workflow for all lambda function
+4. Accomplishing blurring face feature
+
+
+**In progress**
+ 1. Creating page for admin user
+
+### 4. *Self Reflection and learned*
+Reflecting on my contributions to our group project, I feel a sense of accomplishment and growth. The initial group meeting where we assigned tasks was a pivotal moment, allowing me to understand the importance of clear communication and teamwork in achieving our objectives. My work on modifying lambda functions to Python not only challenged my technical skills but also enhanced the project's adaptability and efficiency. The development of a state machine workflow for integrating these functions was particularly rewarding, as it significantly streamlined our operations. Implementing the face-blurring feature was a highlight, adding a crucial privacy aspect to our project. Currently, I am focused on creating a page for admin users, aiming to further refine our project's functionality and user experience. This journey has been a valuable learning experience, highlighting the importance of collaboration, innovation, and continuous improvement.
+
+### 5. *From project board*
+![Board](images16/pb.png)
+
+## Ximin Xu T2 week 4 personal log
+
+### 1. *Date Range*
+
+Jan.29-Feb.4
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images17/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Fixing bugs(detail in project board)
+3. In post page create identity check, for receivers can see posts from senders, and vice versa
+4. clean unused data for frontend and db
+5. peer testing
+
+
+**In progress**
+ 1. Create announcement feature
+
+### 4. *Self Reflection and learned*
+This week, my contributions to the team project were significant and multifaceted. I played a pivotal role during our group meeting, where I was instrumental in delegating tasks effectively. I tackled and resolved numerous bugs, as detailed on our project board, enhancing the project's stability. I implemented an identity verification feature on the post page, ensuring secure and relevant content visibility between senders and receivers. Additionally, I streamlined the project by purging unnecessary data from both the frontend and database. My efforts in peer testing further ensured our project's robustness. Currently, I am focused on developing an announcement feature to improve our project's communication capabilities.
+
+### 5. *From project board*
+![Board](images17/pb1.png)
+![Board](images17/pb2.png)
