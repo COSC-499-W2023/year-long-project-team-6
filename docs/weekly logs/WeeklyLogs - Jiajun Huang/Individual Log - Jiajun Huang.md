@@ -327,3 +327,33 @@ For this week, I coded most of the frontend for group post page, added more erro
 ![Board](T2W3_img/Board.png)
 *Table format:*
 ![Table](T2W3_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 4)
+
+## Applicable data range
+**January/29/2023** to **February/4/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Met with my team members
+* Code backend (admin)
+* Code frontend for admin pages
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Coded backend (admin)
+* Coded frontend for admin pages
+* Peer evaluation
+
+## Self reflection
+This week, I integrated backend and frontend development for admin functionalities with Yiqi Xu together. It was a chill week but also very productive.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W4_img/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2W4_img/Board.png)
+*Table format:*
+![Table](T2W4_img/Table.png)
