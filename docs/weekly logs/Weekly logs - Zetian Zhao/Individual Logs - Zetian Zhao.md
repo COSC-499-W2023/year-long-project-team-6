@@ -456,7 +456,7 @@
 ## Work - New icons in the side bar
 *New Icons for the recorded and post page:*
 <br>
-![Post Page](Term_2_Week_4/icons.png)
+![Post Page](Term_2_Week_4/Icons.png)
 
 ## My Task on Board
 *Board format:*
