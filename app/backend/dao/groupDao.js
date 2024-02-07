@@ -23,7 +23,7 @@ async function addNewGroup(groupname, invite_code, admin, callback) {
 }
 
 
-async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
+async function editGroup(groupId, newGroupName, newAdmin, callback) {
     let query = 'UPDATE `groups` SET';
     const queryParams = [];
 
@@ -35,10 +35,6 @@ async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
     if (newAdmin) {
         query += ' `admin` = ?,';
         queryParams.push(newAdmin);
-    }
-    if (newImage !== undefined) {
-        query += ' `image` = ?,';
-        queryParams.push(newImage);
     }
     query = query.slice(0, -1);
 

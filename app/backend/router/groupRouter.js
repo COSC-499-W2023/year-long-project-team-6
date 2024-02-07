@@ -1,5 +1,5 @@
 const express = require('express');
-const { addNewGroup, editGroupName, deleteGroup, getGroupInfo, joinGroupByInviteCode, getAllInviteCodes } = require('../dao/groupDao');
+const { addNewGroup, editGroup, deleteGroup, getGroupInfo, joinGroupByInviteCode, getAllInviteCodes } = require('../dao/groupDao');
 const router = express.Router();
 
 router.post('/add-group', async (req, res) => {
@@ -23,9 +23,9 @@ router.post('/add-group', async (req, res) => {
 
 router.post('/edit-group/:id', express.json(), (req, res) => {
     const groupId = req.params.id;
-    const { newGroupName, newAdmin, newImage } = req.body;
+    const { newGroupName, newAdmin } = req.body;
     if (newGroupName && newAdmin) {
-        editGroup(groupId, newGroupName, newAdmin, newImage || null, (err, result) => {
+        editGroup(groupId, newGroupName, newAdmin, (err, result) => {
             if (err) {
                 res.status(500).send('Error updating group details: ' + err.message);
             } else {
