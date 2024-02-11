@@ -24,7 +24,7 @@ function editUserProfile(userId, userData, callback) {
 
 function getUserProfile(userId, callback) {
     const query = `
-        SELECT username, email, gender, birthday 
+        SELECT username, email, gender, birthday, user_image
         FROM users 
         WHERE userid = ?;
     `;
@@ -32,12 +32,32 @@ function getUserProfile(userId, callback) {
         if (err) {
             callback(err, null);
         } else {
-            callback(null, result[0]);
+            const userData = result[0];
+            if (userData && userData.user_image) {
+                userData.user_image = Buffer.from(userData.user_image).toString('base64');
+            }
+            callback(null, userData);
+        }
+    });
+}
+
+function updateUserAvatar(userId, avatarBlob, callback) {
+    const query = `
+        UPDATE users 
+        SET user_image = ?
+        WHERE userid = ?;
+    `;
+    db.query(query, [avatarBlob, userId], (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
         }
     });
 }
 
 module.exports = {
     editUserProfile,
-    getUserProfile
+    getUserProfile,
+    updateUserAvatar,
 };
