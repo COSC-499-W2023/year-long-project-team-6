@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import SamplePicture from '../component/image/AvatarForProfile.png';
@@ -14,12 +14,14 @@ const UserProfile = () => {
         gender: '',
         birthday: null,
     });
-
+    const [isHovering, setIsHovering] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [error, setError] = useState('');
     const [userId, setId] = useState('');
     const navigate = useNavigate();
-
+    const fileInputRef = useRef(null);
+    const handleMouseOver = () => setIsHovering(true);
+    const handleMouseOut = () => setIsHovering(false);
     // In order to automatically update the interface, we define a function that will be contained in the useEffect. 
     const fetchUserProfile = () => {
         const sessionUser = sessionStorage.getItem('user');
@@ -70,6 +72,12 @@ const UserProfile = () => {
     useEffect(() => {
         fetchUserProfile();
     }, [navigate]);
+    const handleAvatarClick = () => {
+        // Trigger file input when the avatar image is clicked
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
 
     const handleInputChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -119,19 +127,21 @@ const UserProfile = () => {
     };
     return (
         <div className="user-profile">
-            <div className="avatar-container">
-                <img src={user.user_image} alt={`${user.username}'s profile`} />
+            <div className="avatar-container" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                <img src={user.user_image} alt={`${user.username}'s profile`} onClick={handleAvatarClick} style={{ cursor: 'pointer' }} />
                 {isEditMode ? (
+                    
                     <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
                 ) : (
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
                 )}
             </div>
-            {isEditMode ? (
+            {isEditMode  ? (
                 <>
-                    <div className="avatar-upload">
+                    {/* <div className="avatar-upload">
                         <input type="file" onChange={handleFileSelect} />
-                    </div>
+                    </div> */}
+                    <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} /></p>
                     <p>Gender:
                         <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
@@ -139,6 +149,7 @@ const UserProfile = () => {
                         <input type="radio" name="gender" value="Other" checked={user.gender === "Other"} onChange={handleInputChange} /><label>Other</label>
                     </p>
                     <p>Birth Date: <input type="date" name="birthday" value={user.birthday} onChange={handleInputChange} /></p>
+                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <button className="save-profile" onClick={handleSaveClick}>Save</button>
                     <button className="cancel-profile" onClick={handleCancelClick}>Cancel</button>
                 </>

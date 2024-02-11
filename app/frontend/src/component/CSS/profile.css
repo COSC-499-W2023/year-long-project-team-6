@@ -35,3 +35,25 @@
     color: #666;
     font-size: 20px;
 }
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+.change-avatar-button {
+    margin-top: 0px;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 130px;
+}
+button.save-profile{
+    margin-top: 10px;
+    padding: 10px 10px;
+    width: 130px;
+    cursor: pointer;
+}
+button.cancel-profile{
+    margin-top: 10px;
+    padding: 10px 10px;
+    width: 130px;
+    cursor: pointer;
+}
