@@ -97,33 +97,21 @@ function LoginSignupForm() {
         }
     };
     const validateName = () => {
-        // Check if name length is more than 5 characters
         if (name.length > 5) {
-            // Return true if the name is more than 5 characters
             return true;
         } else {
-
-            alert("Name must be more than 5 characters.");
+            // alert("Name must be more than 5 characters.");
             return false;
         }
     };
 
     const validatePassw = () => {
-        // Check if password length is between 6 and 30 characters
         const isLengthValid = passw.length >= 6 && passw.length <= 30;
-
-        // Check if password contains at least one digit
         const hasDigit = /\d/.test(passw);
-
-        // Check if password contains at least one letter (uppercase or lowercase)
         const hasLetter = /[a-zA-Z]/.test(passw);
-
-        // Check if password contains at least one symbol
         const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(passw);
 
         if (isLengthValid && hasDigit && hasLetter && hasSymbol) {
-
-            // Return true if all conditions are met
             setPasswError(false);
             return (true);
         } else {
@@ -144,10 +132,8 @@ function LoginSignupForm() {
         event.preventDefault();
         if (validateEmail() && validatePassw()) {
             handleLogin();
-
         } else {
-
-            alert("Please check your input.");
+            alert("Please check your inputs.");
         }
 
     };
@@ -156,13 +142,17 @@ function LoginSignupForm() {
         console.log(role)
         console.log(validateEmail(), validatePassw(), validateName())
         if (validateEmail() && validatePassw() && validateName()) {
-
             handleSignup();
             console.log("Submitted:", email, name, passw, role);
+        } else if (!validateName()) {
+            alert("Name must be more than 5 characters.");
+        } else if (!validateEmail()) {
+            alert("Email format has to be 'xxx@xxx.xx' within 30 characters.");
+        } else if (!validatePassw()) {
+            alert("Letters, digits and symbols are required for password between 6 and 30 characters.");
         } else {
             alert("Please check your inputs.");
         }
-
     };
     const sendResetLink = () => {
         alert("Reset link has been sent to your email!");
@@ -178,7 +168,7 @@ function LoginSignupForm() {
                 <input type="hidden" name="action" id="actionInput" value={action} />
                 <div className="container">
                     <div className="header">
-                        <div className="text">Vup</div>
+                        <div className="text">Sign up</div>
                         <div className="underline"></div>
                     </div>
                     <div className="inputs">
@@ -198,6 +188,8 @@ function LoginSignupForm() {
                         <div className="input">
                             <img src={email_image} alt="Email Icon" />
                             <input
+
+
                                 type="email"
                                 placeholder="Email"
                                 id="emailInput"
@@ -235,17 +227,12 @@ function LoginSignupForm() {
                     {/* <div className="forgot-password" onClick={navigateToForgotPasswordPage} id="forgotPassword">
                         Forgot password? <span>Click Here!</span>
                     </div> */}
-                    <div className="tooltip" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", margin: 0, padding: 0 }}>
-                        <img
-                            src={exchange}
-                            alt="Switch"
-                            className="switch-icon"
-                            style={{ margin: "2px 0", width: "40px", height: "40px" }}
-                            onClick={toggleAction}
-                        />
-                        <span className="tooltiptext" id="switchTooltip" style={{ textAlign: "center", marginTop: "2px", marginBottom: "2px" }}>
-                            {action === "Login" ? "Switch to Sign Up" : "Switch to Log in"}
+                    <div className="tooltip" style={{ textAlign: "center", marginTop: "2px", marginBottom: "2px" }}>
+                        Want to Log in? &nbsp;
+                        <span className="switch-text hover-effect" onClick={toggleAction} style={{ cursor: "pointer", color: "#4c00b4" }}>
+                            {action === "Login" ? "Click here!" : "Click here!"}
                         </span>
+
                     </div>
                     <div className="submit-container">
                         <button className={action === "Login" ? "submit" : "submit"} type="submit">
@@ -262,7 +249,7 @@ function LoginSignupForm() {
                 <input type="hidden" name="action" id="actionInput" value={action} />
                 <div className="container">
                     <div className="header">
-                        <div className="text">Vup</div>
+                        <div className="text">Log in</div>
                         <div className="underline"></div>
                     </div>
                     <div className="inputs">
@@ -324,21 +311,17 @@ function LoginSignupForm() {
                             <option value="receiver">Receiver</option>
                         </select>
                     </div> */}
-                    <div className="forgot-password" onClick={renderForgotPasswordForm} id="forgotPassword">
+                    {/* <div className="forgot-password" onClick={renderForgotPasswordForm} id="forgotPassword">
                         Forgot password? <span onClick={() => setAction("Forget")}>Click Here!</span>
-                    </div>
-                    <div className="tooltip" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", margin: 0, padding: 0 }}>
-                        <img
-                            src={exchange}
-                            alt="Switch"
-                            className="switch-icon"
-                            style={{ margin: "2px 0", width: "40px", height: "40px" }}
-                            onClick={toggleAction}
-                        />
-                        <span className="tooltiptext" id="switchTooltip" style={{ textAlign: "center", marginTop: "2px", marginBottom: "2px" }}>
-                            {action === "Login" ? "Switch to Sign Up" : "Switch to Log in"}
+                    </div> */}
+                    <div className="tooltip" style={{ textAlign: "center", marginTop: "2px", marginBottom: "2px" }}>
+                        Want to Sign up? &nbsp;
+                        <span className="switch-text hover-effect" onClick={toggleAction} style={{ cursor: "pointer", color: "#4c00b4" }}>
+                            {action === "Login" ? "Click here!" : "Click here!"}
                         </span>
+
                     </div>
+
                     <div className="submit-container">
                         <button className={action === "Login" ? "submit" : "submit gray"} type="submit">
                             Submit

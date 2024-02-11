@@ -47,9 +47,14 @@ body {
     position: relative;
     display: inline-block;
     cursor: pointer;
+    margin-left: 70px;
+    color: #797979;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .tooltip .tooltiptext {
+    
     visibility: hidden;
     width: 200px;
     background-color: #555;
@@ -113,6 +118,7 @@ body {
 
 .input {
     display: flex;
+    position: relative;
     align-items: center;
     margin: auto;
     width: 380px;
@@ -150,6 +156,12 @@ body {
 
     height: 40px;
 
+}
+
+.tooltip span.hover-effect:hover{
+    
+    color:#4c00b4; 
+    text-decoration: underline;
 }
 
 #nameInputContainer {
@@ -221,6 +233,20 @@ body {
     cursor: pointer;
 
 }
+.password-toggle {
+    /* position: absolute;
+    margin-right: 20px; 
+    border: none;
+    background: none; */
+    margin-left: 50px;
+    cursor: pointer;
+    color: #797979; 
+}
+.password-toggle:hover{
+    color: black;
+    text-decoration: underline;
+}
+  
 
 .submit-container {
     display: flex;
