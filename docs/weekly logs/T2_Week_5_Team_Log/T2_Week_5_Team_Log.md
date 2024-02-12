@@ -65,7 +65,7 @@ We were working on new features and fixing UI&functions from peer testing, then 
 
 *Table format:*
 
-![Table](./table.pngg)
+![Table](./table.png)
 ![Table](./table1.png)
 
 ## Burnup chart
