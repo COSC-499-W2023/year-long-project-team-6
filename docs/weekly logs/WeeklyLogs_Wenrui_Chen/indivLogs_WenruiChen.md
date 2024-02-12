@@ -339,4 +339,41 @@
 
 
 *Table format:*
-![Task1](t2w2/table.png)
+![Task1](t2w3/table.png)
+
+# Individual Log - Wenrui Chen (t2w4)
+
+## Applicable data range
+**January/29/2024** to **Feburary/4/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Meetings and see what's the plan. 
+* update tests
+* Complete the peer evaluation. 
+* Fix bugs and UI for loginSignup page after peer testing
+
+## Completed Tasks 
+* Meetings and see what's the plan. 
+* Updated tests
+* Completed the peer evaluation. 
+* Peer testing reflection (Login signup page)
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](t2w4/PE.png)
+
+## Task on Board
+*Board format:*
+![Board](t2w4/board.png)
+
+*Tests (Test reports are shown in team log part):*<br>
+![Board](t2w4/1.jpg)
+![Board](t2w4/2.jpg)
+![Board](t2w4/3.jpg)
+<!-- ![Board](t2w3/t4.png)
+![Board](t2w3/t5.png)
+![Board](t2w3/t6.png) -->
+
+
+*Table format:*
+![Task1](t2w4/table.png)
