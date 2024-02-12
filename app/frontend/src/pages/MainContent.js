@@ -131,6 +131,7 @@ function MainContent() {
     <div className="content">
       <div className="main-content">
         <div className="first-row">
+        <div class="card-container">
           {groups.length > 0 ? (
             groups.map(group => (
               <GroupCard
@@ -147,10 +148,11 @@ function MainContent() {
             <div className='newUser'>
               <h2>You are not in any group yet. Join or create a new group to get started!</h2>
               <a id="myBtn" className="addgroup" href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleModal(); }}>
-                <button>Click Here to Create or Join!</button>
+                <button id='clicktocreate'>Click Here to Create or Join!</button>
               </a>
             </div>
           )}
+          </div>
           {isModalOpen && (
             <div className="modal" ref={modalRef}>
               <div className="modal-content">
