@@ -37,6 +37,12 @@ function MembersPage() {
     const navigateToPostPage = () => {
         navigate('/PostPage', { state: { groupId } });
     };
+    const navigateToAnnounce = () => {
+        navigate('/announcement', { state: { groupId } });
+    }
+    const navigateToView = () => {
+        navigate('/view-announce', { state: { groupId } });
+    };
     
     useEffect(() => {
         if (userId) {
@@ -102,6 +108,10 @@ function MembersPage() {
                             ) : null}
                 </span>
                 <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
+                {userId == adminid ? (<button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
+                  ) : null}
+                {userId != adminid ? (<button onClick={navigateToView} className="navigate-view-announce-button">View Announcement</button>
+                  ) : null}
             </div>
             <table className="members-table">
                 <thead>
