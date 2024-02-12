@@ -464,3 +464,41 @@
 *Table format:*
 ![Table](Term_2_Week_4/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 5)
+
+## Applicable date range
+**February/5/2024** to **February/11/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* Add the feature that user able to see avatar with username in the member list. 
+* Add the functionality that user able to change the avatar. 
+* Complete the peer evaluation and peer testing evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* Completed the function that there is a user's avatar beside the username in the member list page. If the user do not have a avatar, there is a default image for the avatar.  
+* Completed the button to change the user's avatar in the profile page. 
+* Completed the peer evaluation and peer testing evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_5/PE.png)
+
+## Work - New icons in the side bar
+*New Icons for the recorded and post page:*
+<br>
+![List](Term_2_Week_5/memberList.png)
+![Profile](Term_2_Week_5/profile.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_5/Board.png)
+*Table format:*
+![Table](Term_2_Week_5/Table.png)
+*missions with tag "done before" are from the previous weeks.*
