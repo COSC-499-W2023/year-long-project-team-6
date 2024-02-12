@@ -383,3 +383,34 @@ This week, my contributions to the team project were significant and multifacete
 ### 5. *From project board*
 ![Board](images17/pb1.png)
 ![Board](images17/pb2.png)
+
+## Ximin Xu T2 week 5 personal log
+
+### 1. *Date Range*
+
+Feb.4-Feb.11
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images18/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. fix selected group bug in postpage
+3. create new postbutton in group members page
+4. update ui, shrink group card
+5. Create announcement feature page frontend finished
+
+
+**In progress**
+ 1. Create announcement page ui 
+ 2. Create announcement page backend
+ 3. View announcements page
+
+### 4. *Self Reflection and learned*
+In this group project, my contributions spanned various aspects, from initial planning in group meetings and task delegation to specific technical implementations. I played a pivotal role in addressing a critical bug on the post page, enhancing user interaction by adding a new post button on the group members' page, and refining the UI by minimizing the group card size. Additionally, I took the initiative to design the frontend of a new announcement feature, which is now complete. Currently, I'm focusing on developing the UI for the announcement creation page, its backend functionalities, and the page for viewing announcements. 
+### 5. *From project board*
+![Board](images18/pb.png)
