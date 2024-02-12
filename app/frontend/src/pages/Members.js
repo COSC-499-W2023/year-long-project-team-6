@@ -34,7 +34,10 @@ function MembersPage() {
     const handleRoleChange = (event) => {
         setRoleFilter(event.target.value);
     };
-
+    const navigateToPostPage = () => {
+        navigate('/PostPage', { state: { groupId } });
+    };
+    
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:5001/groups-users/${groupId}`)
@@ -98,6 +101,7 @@ function MembersPage() {
                              <button onClick={navigateToGroupPostMember(adminid)}>View Posts</button>
                             ) : null}
                 </span>
+                <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
             </div>
             <table className="members-table">
                 <thead>

@@ -19,7 +19,6 @@ function GroupCard({ id, time, groupName, admin, invite_code, numberOfPeople }) 
       <div className="photo" style={{ backgroundColor: randomColor }}>
       </div>
       <h3>{groupName}</h3>
-      <h4>Information:</h4>
       <p>Creation time: {time.split('T')[0]}<br />
         Admin: {admin}<br />
         Invite Code: {invite_code}<br />
