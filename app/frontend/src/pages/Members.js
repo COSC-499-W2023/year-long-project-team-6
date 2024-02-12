@@ -77,6 +77,11 @@ function MembersPage() {
         }
     };
 
+
+    const navigateToPostPage = () => {
+        navigate('/PostPage', { state: { groupId } });
+    };
+    
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:5001/groups-users/${groupId}`)
@@ -142,6 +147,7 @@ function MembersPage() {
                             <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
                         }
                 </span>
+                <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
             </div>
             <table className="members-table">
                 <thead>
