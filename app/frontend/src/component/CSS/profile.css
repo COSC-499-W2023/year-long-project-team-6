@@ -45,6 +45,12 @@
     cursor: pointer;
     width: 130px;
 }
+button.edit-profile{
+    margin-top: 0px;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 130px;
+}
 button.save-profile{
     margin-top: 10px;
     padding: 10px 10px;
