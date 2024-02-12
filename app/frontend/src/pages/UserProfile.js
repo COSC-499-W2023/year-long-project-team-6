@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import SamplePicture from '../component/image/AvatarForProfile.png';
@@ -129,14 +129,18 @@ const UserProfile = () => {
         <div className="user-profile">
             <div className="avatar-container" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                 <img src={user.user_image} alt={`${user.username}'s profile`} onClick={handleAvatarClick} style={{ cursor: 'pointer' }} />
+                {/* <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button> */}
                 {isEditMode ? (
-                    
+
                     <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
                 ) : (
+
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
                 )}
+
             </div>
-            {isEditMode  ? (
+            
+            {isEditMode ? (
                 <>
                     {/* <div className="avatar-upload">
                         <input type="file" onChange={handleFileSelect} />
