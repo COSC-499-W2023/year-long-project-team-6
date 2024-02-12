@@ -76,6 +76,7 @@ const UserProfile = () => {
         // Trigger file input when the avatar image is clicked
         if (fileInputRef.current) {
             fileInputRef.current.click();
+            fetchUserProfile();
         }
     };
 
@@ -89,6 +90,7 @@ const UserProfile = () => {
 
     const handleCancelClick = () => {
         setIsEditMode(false);
+        fetchUserProfile();
     };
 
     const handleSaveClick = () => {
