@@ -377,3 +377,43 @@
 
 *Table format:*
 ![Task1](t2w4/table.png)
+
+# Individual Log - Wenrui Chen (t2w5)
+
+## Applicable data range
+**Feburary/5/2024** to **Feburary/11/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Meetings and see what's the plan. 
+* Change avatar button backend/frontend (with Zetian Zhao)
+* Check members avatar backend/frontend (with Zetian Zhao)
+* Complete the peer evaluation. 
+
+## Completed Tasks 
+* Meetings and see what's the plan. 
+* Change avatar button backend/frontend (with Zetian Zhao)
+* Check members avatar backend/frontend (with Zetian Zhao)
+* Completed the peer evaluation. 
+
+## Task in progress
+* revised tests
+* clickable username to check profile (still deciding)
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](t2w5/PE.png)
+
+## Task on Board
+*Board format:*
+![Board](t2w5/board.png)
+
+<!-- *Tests (Test reports are shown in team log part):*<br>
+![Board](t2w4/1.jpg)
+![Board](t2w4/2.jpg)
+![Board](t2w4/3.jpg) -->
+<!-- ![Board](t2w3/t4.png)
+![Board](t2w3/t5.png)
+![Board](t2w3/t6.png) -->
+
+*Table format:*
+![Task1](t2w5/table.png)
