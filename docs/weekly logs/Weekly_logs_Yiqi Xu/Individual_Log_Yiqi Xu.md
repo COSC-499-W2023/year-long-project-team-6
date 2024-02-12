@@ -425,3 +425,36 @@ This week, I integrated backend and frontend development for admin functionaliti
 ![Board](T2_w4_img/Board.png)
 *Table format:*
 ![Table](T2_w4_img/Table.png)
+
+
+# Individual Log - Yiqi Xu (Week 5)
+
+## Applicable data range
+**February/5/2023** to **February/11/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Code backend (Group admin)
+* Code frontend for group admin pages
+* Update admin page
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Coded backend (Group admin)
+* Coded frontend for group admin pages
+* Updated admin page
+* Finished Peer Evaluation
+
+## Self reflection
+This week, I integrated backend and frontend development for group admin functionalities, ensuring robust performance and user-friendly interfaces. My participation in the meeting underscored my commitment to collaborative excellence and continuous growth. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w5_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w5_img/Board.png)
+*Table format:*
+![Table](T2_w5_img/Table.png)
