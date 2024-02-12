@@ -34,6 +34,50 @@ function MembersPage() {
     const handleRoleChange = (event) => {
         setRoleFilter(event.target.value);
     };
+
+    const removeUserFromGroup = async (memberId) => {
+        try {
+            fetch(`http://localhost:5001/admin-group/${groupId}/user/${memberId}`, {
+                method: 'DELETE'
+            }).then(
+                response => {
+                    console.log('User removed:', response.data);
+                    alert("Successfully removed user from group!");
+                    window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
+        } catch (error) {
+            console.error('Error removing user from group:', error);
+        }
+    };
+
+    const deleteGroup = async (groupId) => {
+        try {
+            fetch(`http://localhost:5001/admin-group/${groupId}`, {
+                method: 'DELETE'
+            }).then(
+                response => {
+                    console.log('User updated:', response.data);
+                    alert("Successfully deleted the group!");
+                    navigate(`/`);
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
+        } catch (error) {
+            console.error('Error deleting group:', error);
+        }
+    };
+
+
     const navigateToPostPage = () => {
         navigate('/PostPage', { state: { groupId } });
     };
@@ -99,7 +143,9 @@ function MembersPage() {
                 <span className='button'>
                 {userId != adminid ? (
                              <button onClick={navigateToGroupPostMember(adminid)}>View Posts</button>
-                            ) : null}
+                            ) :                              
+                            <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
+                        }
                 </span>
                 <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
             </div>
@@ -123,7 +169,10 @@ function MembersPage() {
                             <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                             <td>
                              {userId == adminid ? (
-                             <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
+                                <div className='adminButton'>
+                                    <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
+                                    <button onClick={() => removeUserFromGroup(member.userid)}>Delete User</button>
+                                </div>
                             ) : null}
             </td>
                         </tr>

@@ -48,6 +48,8 @@ app.use(selectGroupRouter);
 const groupPostRouter = require('./router/groupPostRouter');
 app.use(groupPostRouter);
 
+const adminEditandDelete = require('./router/admin/editanddelete');
+app.use(adminEditandDelete);
 
 const server = http.createServer(app);
 
