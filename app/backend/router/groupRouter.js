@@ -1,5 +1,5 @@
 const express = require('express');
-const { addNewGroup, editGroup, deleteGroup, getGroupInfo, joinGroupByInviteCode, getAllInviteCodes, deleteGroupMemberAdmin, editPostAdmin, deleteGroupAdmin, deletePostAdmin } = require('../dao/groupDao');
+const { addNewGroup, editGroup, deleteGroup, getGroupInfo, joinGroupByInviteCode, getAllInviteCodes} = require('../dao/groupDao');
 const router = express.Router();
 
 router.post('/add-group', async (req, res) => {
@@ -90,75 +90,6 @@ router.get('/invite-codes', (req, res) => {
             res.status(500).json({ error: err });
         } else {
             res.status(200).json(inviteCodes);
-        }
-    });
-});
-
-router.delete('/group/:groupId/member/:memberId', (req, res) => {
-    const { groupId, memberId } = req.params;
-    const adminId = req.body.adminId; 
-    if (!adminId) {
-        return res.status(400).json({ error: 'Admin ID is required' });
-    }
-    
-    deleteGroupMemberAdmin(adminId, groupId, memberId, (error, result) => {
-        if (error) {
-            res.status(500).json({ error });
-        } else {
-            res.json({ message: 'Member deleted successfully', result });
-        }
-    });
-});
-
-
-router.put('/post/:postId', (req, res) => {
-    const { postId } = req.params;
-    const { newTitle, newText, adminId } = req.body; 
-    if (!adminId) {
-        return res.status(400).json({ error: 'Admin ID is required' });
-    }
-
-    editPostAdmin(adminId, postId, newTitle, newText, (error, result) => {
-        if (error) {
-            res.status(500).json({ error });
-        } else {
-            res.json({ message: 'Post edited successfully', result });
-        }
-    });
-});
-
-
-
-router.delete('/group/:groupId', (req, res) => {
-    const { groupId } = req.params;
-    const adminId = req.body.adminId; 
-    if (!adminId) {
-        return res.status(400).json({ error: 'Admin ID is required' });
-    }
-
-    deleteGroupAdmin(groupId, adminId, (error, result) => {
-        if (error) {
-            res.status(500).json({ error });
-        } else {
-            res.json({ message: 'Group deleted successfully', result });
-        }
-    });
-});
-
-
-router.delete('/post/:postId', (req, res) => {
-    const adminId = req.body.adminId;
-    if (!adminId) {
-        return res.status(400).json({ error: 'Admin ID required' });
-    }
-
-    const { postId } = req.params;
-
-    deletePostAdmin(adminId, postId, (error, message) => {
-        if (error) {
-            res.status(500).json({ error: error });
-        } else {
-            res.json({ message: message });
         }
     });
 });
