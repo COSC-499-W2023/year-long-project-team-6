@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from "react-router-dom";
 import '../component/CSS/MembersPage.css';
-import testPicture from '../component/image/flash.png';
+import testPicture from '../component/image/profileDefault.jpg';
 
 
 function MembersPage() {
