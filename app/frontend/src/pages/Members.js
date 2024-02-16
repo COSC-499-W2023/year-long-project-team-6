@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, Link  } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { FaEllipsisV } from 'react-icons/fa';
+import ReactModal from 'react-modal';
 import '../component/CSS/MembersPage.css';
 
+ReactModal.setAppElement('#root');
 
 function MembersPage() {
     const [userId, setUserId] = useState('');
@@ -10,9 +13,11 @@ function MembersPage() {
     const [members, setMembers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('All Roles');
-    const [admin , setAdmin] = useState([])
-    const [adminid, setAdminid]=useState([])
-    console.log(groupId);
+    const [admin, setAdmin] = useState([])
+    const [adminid, setAdminid] = useState([])
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedMember, setSelectedMember] = useState(null);
+
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         if (!sessionUser) {
@@ -25,7 +30,7 @@ function MembersPage() {
     }, []);
     const navigateToGroupPostMember = (memberId) => () => {
         navigate(`/groupPost/${groupId}/${memberId}`);
-      };
+    };
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -46,11 +51,11 @@ function MembersPage() {
                     window.location.reload();
                 }
             )
-            .catch(
-                error => {
-                    console.error('Error:', error);
-                }
-            );
+                .catch(
+                    error => {
+                        console.error('Error:', error);
+                    }
+                );
         } catch (error) {
             console.error('Error removing user from group:', error);
         }
@@ -67,11 +72,11 @@ function MembersPage() {
                     navigate(`/`);
                 }
             )
-            .catch(
-                error => {
-                    console.error('Error:', error);
-                }
-            );
+                .catch(
+                    error => {
+                        console.error('Error:', error);
+                    }
+                );
         } catch (error) {
             console.error('Error deleting group:', error);
         }
@@ -81,7 +86,7 @@ function MembersPage() {
     const navigateToPostPage = () => {
         navigate('/PostPage', { state: { groupId } });
     };
-    
+
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:5001/groups-users/${groupId}`)
@@ -99,7 +104,7 @@ function MembersPage() {
                 .catch(error => {
                     console.error('Error fetching posts:', error);
                 });
-                fetch(`http://localhost:5001/group-admin/${groupId}`)
+            fetch(`http://localhost:5001/group-admin/${groupId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -108,78 +113,99 @@ function MembersPage() {
                 })
                 .then(data => {
                     console.log(userId);
-                    console.log('groupadmin:', data); 
+                    console.log('groupadmin:', data);
                     console.log(data[0].username)
-                    setAdmin(data[0].username); 
+                    setAdmin(data[0].username);
                     setAdminid(data[0].admin);
-                    
+
                 })
                 .catch(error => {
                     console.error('Error fetching posts:', error);
                 });
         }
-            
+
     }, [userId]);
-    console.log(roleFilter);
+
+    const openModal = (member) => {
+        if (modalIsOpen && selectedMember && selectedMember.userid === member.userid) {
+            closeModal();
+        } else {
+            setSelectedMember(member);
+            setModalIsOpen(true);
+        }
+    };
+
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
 
     return (
         <>
-        <div className="members-page">
-        <h3 id="admin">Admin: {admin}</h3>
-            <div className="members-filter">
-                <input
-                    type="text"
-                    placeholder="Search username"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    className="search-bar"
-                />
-                
-                <select value={roleFilter} onChange={handleRoleChange} className="dropdown">
-                    <option value="All Roles">All Roles</option>
-                    <option value="sender">Sender</option>
-                    <option value="Admin">Admin</option>
-                </select>
-                <span className='button'>
-                {userId != adminid ? (
-                             <button onClick={navigateToGroupPostMember(adminid)}>View Posts</button>
-                            ) :                              
+            <div className="members-page">
+                <h3 id="admin">Admin: {admin}</h3>
+                <div className="members-filter">
+                    <input
+                        type="text"
+                        placeholder="Search username"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className="search-bar"
+                    />
+
+                    <select value={roleFilter} onChange={handleRoleChange} className="dropdown">
+                        <option value="All Roles">All Roles</option>
+                        <option value="sender">Sender</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                    <span className='button'>
+                        {userId != adminid ? (
+                            <button onClick={navigateToGroupPostMember(adminid)}>View Posts</button>
+                        ) :
                             <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
                         }
-                </span>
-                <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
-            </div>
-            <table className="members-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {members
-                    .filter(member => 
-                        member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                        (roleFilter === 'All Roles' || member.role === roleFilter)
-                      )
-                    .map((member, index) => (
-                        <tr key={member.userid + '-' + index}>
-                            <td>{member.username}</td>
-                            <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
-                            <td>
-                             {userId == adminid ? (
-                                <div className='adminButton'>
-                                    <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
-                                    <button onClick={() => removeUserFromGroup(member.userid)}>Delete User</button>
-                                </div>
-                            ) : null}
-            </td>
+                    </span>
+                    <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
+                </div>
+                <table className="members-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {members
+                            .filter(member =>
+                                member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                                (roleFilter === 'All Roles' || member.role === roleFilter)
+                            )
+                            .map((member, index) => (
+                                <tr key={member.userid + '-' + index}>
+                                    <td>{member.username}</td>
+                                    <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
+                                    <td>
+                                        {userId == adminid && (
+                                            <FaEllipsisV onClick={() => openModal(member)} />
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+                <ReactModal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Member Actions"
+                    className="Modal"
+                    overlayClassName="Overlay"
+                >
+                    <h2>Manage for {selectedMember?.username}</h2>
+                    <button onClick={() => navigateToGroupPostMember(selectedMember?.userid)}>View Posts</button>
+                    <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
+                </ReactModal>
+            </div>
         </>
     );
 
