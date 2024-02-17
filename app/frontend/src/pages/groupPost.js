@@ -8,6 +8,11 @@ function GroupPost() {
     const { groupId, currentuserid } = useParams();
     const [senderId, setSenderId] = useState('');
     const [posts, setPosts] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedMember, setSelectedMember] = useState(null);
+    const [adminid, setAdminid] = useState([]);
+    const [admin, setAdmin] = useState([])
+    const [members, setMembers] = useState([]);
     const navigate = useNavigate();
 console.log(groupId, currentuserid);
     useEffect(() => {
@@ -20,6 +25,45 @@ console.log(groupId, currentuserid);
             setSenderId(currentuserid);
         }
     }, []);
+
+    useEffect(() => {
+        if (userId) {
+            fetch(`http://localhost:5001/groups-users/${groupId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(userId);
+                    console.log('Fetched data:', data);
+                    setMembers(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+            fetch(`http://localhost:5001/group-admin/${groupId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(userId);
+                    console.log('groupadmin:', data);
+                    console.log(data[0].username)
+                    setAdmin(data[0].username);
+                    setAdminid(data[0].admin);
+
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+        }
+
+    }, [userId]);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -51,6 +95,27 @@ console.log(groupId, currentuserid);
         let formattedDateTime = formattedDate + ' ' + formattedTime;
         return formattedDateTime
     }
+
+    const renderEditForm = () => {
+        if (showModal) {
+            return (
+                <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+                        <h2>Manage for {selectedMember?.username}</h2>
+                        {/* <button onClick={() => {
+                        if (selectedMember?.userid) {
+                            navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
+                        }
+                        }}>View Posts</button> */}
+                        {/* <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button> */}
+                    </div>
+                </div>
+            );
+        }
+        return null;
+    };
+
     return (
         <>
             <div id="content">
@@ -71,6 +136,14 @@ console.log(groupId, currentuserid);
                                     <td><button className='view' onClick={() => {
                                         handleView(post.post_id)
                                     }}>View</button></td>
+                                    <td>
+                                        {userId == adminid && (
+                                            <button className='editButton' onClick={() => {
+                                            setShowModal(true);
+                                        }}>Manage</button>                                        
+                                        )}
+                                        {renderEditForm()}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

@@ -15,7 +15,7 @@ function MembersPage() {
     const [roleFilter, setRoleFilter] = useState('All Roles');
     const [admin, setAdmin] = useState([])
     const [adminid, setAdminid] = useState([])
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
 
     useEffect(() => {
@@ -125,19 +125,26 @@ function MembersPage() {
         }
 
     }, [userId]);
+    
 
-    const openModal = (member) => {
-        if (modalIsOpen && selectedMember && selectedMember.userid === member.userid) {
-            closeModal();
-        } else {
-            setSelectedMember(member);
-            setModalIsOpen(true);
+    const renderEditForm = () => {
+        if (showModal) {
+            return (
+                <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+                        <h2>Manage for {selectedMember?.username}</h2>
+                        <button onClick={() => {
+                        if (selectedMember?.userid) {
+                            navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
+                        }
+                        }}>View Posts</button>
+                        <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
+                    </div>
+                </div>
+            );
         }
-    };
-
-
-    const closeModal = () => {
-        setModalIsOpen(false);
+        return null;
     };
 
     return (
@@ -160,7 +167,7 @@ function MembersPage() {
                     </select>
                     <span className='button'>
                         {userId != adminid ? (
-                            <button onClick={navigateToGroupPostMember(adminid)}>View Posts</button>
+                            <button onClick={navigateToGroupPostMember(userId)}>View Posts</button>
                         ) :
                             <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
                         }
@@ -187,24 +194,18 @@ function MembersPage() {
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
                                         {userId == adminid && (
-                                            <FaEllipsisV onClick={() => openModal(member)} />
+                                            <button className='editButton' onClick={() => {
+                                            setSelectedMember(member);
+                                            setShowModal(true);
+                                        }}>Manage</button>                                        
                                         )}
+                                        {renderEditForm()}
                                     </td>
                                 </tr>
                             ))}
                     </tbody>
                 </table>
-                <ReactModal
-                    isOpen={modalIsOpen}
-                    onRequestClose={closeModal}
-                    contentLabel="Member Actions"
-                    className="Modal"
-                    overlayClassName="Overlay"
-                >
-                    <h2>Manage for {selectedMember?.username}</h2>
-                    <button onClick={() => navigateToGroupPostMember(selectedMember?.userid)}>View Posts</button>
-                    <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
-                </ReactModal>
+                
             </div>
         </>
     );
