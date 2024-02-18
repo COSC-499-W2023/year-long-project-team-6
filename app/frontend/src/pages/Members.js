@@ -110,8 +110,8 @@ function MembersPage() {
                 <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
                 {userId == adminid ? (<button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
                   ) : null}
-                {userId != adminid ? (<button onClick={navigateToView} className="navigate-view-announce-button">View Announcement</button>
-                  ) : null}
+        <button onClick={navigateToView} className="navigate-view-announce-button">View Announcement</button>
+
             </div>
             <table className="members-table">
                 <thead>

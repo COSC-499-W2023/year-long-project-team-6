@@ -1,6 +1,6 @@
 require('dotenv').config({ path: "./process.env" });
 const mysql = require('mysql');
-process.env.AWS_SDK_LOAD_CONFIG = '1'; // Enable loading of AWS SDK config
+process.env.AWS_SDK_LOAD_CONFIG = '1'; 
 process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658'; 
 const { KinesisVideo } = require('@aws-sdk/client-kinesis-video');
 const express = require('express');
@@ -10,7 +10,7 @@ const { STSClient, AssumeRoleCommand } = require('@aws-sdk/client-sts');
 const fs = require('fs');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); // temporarily store files in 'uploads' folder
+const upload = multer({ dest: 'uploads/' }); 
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const ffmpegStatic = require('ffmpeg-static');
 const path = require('path');
@@ -22,30 +22,23 @@ const connection = mysql.createConnection({
     database: process.env.DBNAME
 });
 const postDao = new PostDao(connection);
-// This will give you the path to the FFmpeg binary
 const ffmpegPath = ffmpegStatic;
-
-// You can then use this path with fluent-ffmpeg or any other library that requires FFmpeg
 const ffmpeg = require('fluent-ffmpeg');
 const { error } = require('console');
 ffmpeg.setFfmpegPath(ffmpegPath);
-
-// Initialize the S3 client
 const s3Client = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' });
 
-// Initialize Kinesis Video Client
 const kinesisVideoClient = new KinesisVideo({
     region: process.env.AWS_REGION || 'us-east-1',
     // other configurations if needed
 });
 
-// Function to obtain temporary AWS credentials
+
 async function getTemporaryCredentials() {
     const stsClient = new STSClient({ region: 'us-east-1' });
     const assumeRoleCommand = new AssumeRoleCommand({
         RoleArn: 'arn:aws:iam::466618866658:role/web-rtc-499',
         RoleSessionName: 'WebClientSession',
-        // Add other required parameters if necessary
     });
 
     try {
@@ -57,7 +50,6 @@ async function getTemporaryCredentials() {
     }
 }
 
-// Route handler to provide temporary credentials to the client
 router.get('/get-temp-credentials', async (req, res) => {
     try {
         const credentials = await getTemporaryCredentials();
@@ -77,7 +69,6 @@ router.get('/get-temp-credentials', async (req, res) => {
     }
 });
 
-// Route handler to provide signaling channel configuration to the client
 router.get('/getSignalingChannelConfig', async (req, res) => {
     const channelARN = req.query.channelARN;
     
@@ -91,7 +82,6 @@ router.get('/getSignalingChannelConfig', async (req, res) => {
         };
         const endpointResponse = await kinesisVideoClient.getSignalingChannelEndpoint(params);
 
-        // Extract the endpoints
         const endpointsByProtocol = endpointResponse.ResourceEndpointList.reduce((endpoints, endpoint) => {
             endpoints[endpoint.Protocol] = endpoint.ResourceEndpoint;
             return endpoints;
@@ -131,8 +121,6 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
                 .run();
         });
 
-
-        // Read the converted MP4 file
         const fileStream = fs.createReadStream(mp4FilePath);
 
         const uploadParams = {
@@ -145,10 +133,8 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
 
         const data = await s3Client.send(new PutObjectCommand(uploadParams));
 
-        // Delete the original and converted files from local storage after uploading
         fs.unlinkSync(file.path);
         fs.unlinkSync(mp4FilePath);
-
         res.status(200).json({ message: 'Video uploaded successfully', 
         data,
         key: s3Key
@@ -170,18 +156,15 @@ router.get('/get-video-url/:videoId', (req, res) => {
         if (!videoKey) {
             return res.status(404).json({ error: 'Video not found' });
         }
-
-        // Choose the bucket based on the faceblur value
         const bucketName = faceblur ? "cosc-499-blurvideo" : "cosc499-video-submission";
 
-        // Generate a signed URL for accessing the video
         const s3Client = new S3Client({ region: "us-east-1" });
-        const urlParams = { Bucket: bucketName, Key: videoKey }; // Use the chosen bucket name here
+        const urlParams = { Bucket: bucketName, Key: videoKey }; 
         const command = new GetObjectCommand(urlParams);
 
         getSignedUrl(s3Client, command, { expiresIn: 3600 })
             .then(signedUrl => {
-                res.json({ signedUrl, faceblur }); // Optionally return the faceblur value if needed on the client side
+                res.json({ signedUrl, faceblur }); 
             })
             .catch(signedUrlErr => {
                 console.error('Error generating signed URL:', signedUrlErr);

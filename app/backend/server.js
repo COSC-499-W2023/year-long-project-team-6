@@ -48,6 +48,9 @@ app.use(selectGroupRouter);
 const groupPostRouter = require('./router/groupPostRouter');
 app.use(groupPostRouter);
 
+const announcementRouter = require('./router/announcementRouter');
+app.use(announcementRouter);
+
 
 const server = http.createServer(app);
 

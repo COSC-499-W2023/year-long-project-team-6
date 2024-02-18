@@ -4,11 +4,13 @@ import { useNavigate,useLocation } from 'react-router-dom';
 function Announcement() {
     const [userId, setUserId] = useState('');
     const location = useLocation();
-    const groupId = location.state?.groupId; // Assuming groupId is passed in state
+    const groupId = location.state?.groupId; 
     const [title, setTitle] = useState('');
     const [detail, setDetail] = useState('');
     const [posts, setPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const navigate = useNavigate();
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
@@ -45,8 +47,56 @@ function Announcement() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsSubmitting(true); 
+        if (!title.trim()) {
+            window.alert('Please enter a title for the announcement.');
+            return; 
+        }
+    
+        if (!detail.trim()) {
+            window.alert('Please enter details for the announcement.');
+            return; 
+        }
         console.log({ title, detail, selectedPost });
     };
+    useEffect(() => {
+        if (isSubmitting) {
+            let announcementData = {
+                announcer: userId,
+                groupId,
+                title,
+                detail
+            };
+    
+            if (selectedPost) {
+                announcementData.attachedPost = selectedPost;
+            }
+    
+            fetch('http://localhost:5001/insertAnnouncement', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(announcementData),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                setIsSubmitting(false); 
+                navigate(`/Members/${groupId}`);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                setIsSubmitting(false); 
+            });
+        }
+    }, [isSubmitting, userId, groupId, title, detail, selectedPost, navigate]);
+    
 
     return (
         <div className='content'>
