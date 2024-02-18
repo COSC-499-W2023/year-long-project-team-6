@@ -9,8 +9,12 @@ import Sidebar from './pages/sidebar';
 import Profile from './pages/UserProfile';
 import Members from './pages/Members';
 import GroupPost from './pages/groupPost';
+
 import Announcement from './pages/announcement';
 import viewannouncement from './pages/view-announce';
+
+import Admin from './pages/admin/admin';
+
 
 import VideoPage from './pages/VideoPage';
 import './component/CSS/style.css'; 
@@ -35,6 +39,7 @@ function App() {
             <Route path="Members/:groupId" element={<Members />} />
             <Route path="Video/:videoId" element={<VideoPage />} />
             <Route path="grouppost/:groupId/:currentuserid" element={<GroupPost />} />
+            <Route path="admin" element={<Admin />} />
           </Route>
         </Routes>
       </Router>
