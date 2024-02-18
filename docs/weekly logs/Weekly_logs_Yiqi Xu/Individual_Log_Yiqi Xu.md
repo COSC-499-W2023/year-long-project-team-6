@@ -483,7 +483,7 @@ This week, I integrated backend and frontend development for group admin functio
 * Updated UI for admin page
 
 ## Self reflection
-This week, I integrated development for group admin functionalities, ensuring robust performance and user-friendly interfaces. Next week we will keep working the UI for the admain page. My participation in the meeting underscored my commitment to collaborative excellence and continuous growth. 
+This week, I integrated development for group admin functionalities, ensuring robust performance and user-friendly interfaces. Next week we will keep working the UI for the admain page. My participation in the meeting underscored my commitment to collaborative excellence and continuous growth.
 
 ## ScreenShot of peer evaluation
 ![Peer Evaluation](T2_w6_img/PeerEval.png)
