@@ -414,3 +414,32 @@ Tasks done vs in progress
 In this group project, my contributions spanned various aspects, from initial planning in group meetings and task delegation to specific technical implementations. I played a pivotal role in addressing a critical bug on the post page, enhancing user interaction by adding a new post button on the group members' page, and refining the UI by minimizing the group card size. Additionally, I took the initiative to design the frontend of a new announcement feature, which is now complete. Currently, I'm focusing on developing the UI for the announcement creation page, its backend functionalities, and the page for viewing announcements. 
 ### 5. *From project board*
 ![Board](images18/pb.png)
+
+## Ximin Xu T2 week 5 personal log
+
+### 1. *Date Range*
+
+Feb.12-Feb.18
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images19/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Group meeting, assigning people to work
+2. Add router of announcement
+3. Add dao of announcement
+4. Frontend fetch to the backend
+
+
+**In progress**
+ 1. UI announcement
+ 2. View announcements feature
+
+### 4. *Self Reflection and learned*
+Efficiently managed group meetings and task assignments, successfully integrated announcement routing and data access layers, and established frontend-backend connectivity. Currently focusing on enhancing UI for announcements and developing the feature to view announcements.
+### 5. *From project board*
+![Board](images19/pb.png)
