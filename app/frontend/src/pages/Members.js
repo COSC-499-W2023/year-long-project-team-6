@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { FaEllipsisV } from 'react-icons/fa';
 import ReactModal from 'react-modal';
+
 import '../component/CSS/MembersPage.css';
+import testPicture from '../component/image/profileDefault.jpg';
 
 ReactModal.setAppElement('#root');
 
@@ -87,6 +89,13 @@ function MembersPage() {
         navigate('/PostPage', { state: { groupId } });
     };
 
+
+    const navigateToAnnounce = () => {
+        navigate('/announcement', { state: { groupId } });
+    }
+    const navigateToView = () => {
+        navigate('/view-announce', { state: { groupId } });
+    };
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:5001/groups-users/${groupId}`)
@@ -99,7 +108,15 @@ function MembersPage() {
                 .then(data => {
                     console.log(userId);
                     console.log('Fetched data:', data);
-                    setMembers(data);
+                    const updatedMembers = data.map(member => {
+                        if (member.user_image) {
+                            member.user_image = `data:image/*;base64,${member.user_image}`;
+                        } else {
+                            member.user_image = testPicture;
+                        }
+                        return member;
+                    });
+                    setMembers(updatedMembers);
                 })
                 .catch(error => {
                     console.error('Error fetching posts:', error);
@@ -205,7 +222,6 @@ function MembersPage() {
                             ))}
                     </tbody>
                 </table>
-                
             </div>
         </>
     );

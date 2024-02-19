@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import SamplePicture from '../component/image/AvatarForProfile.png';
-import testPicture from '../component/image/flash.png';
+import testPicture from '../component/image/profileDefault.jpg';
 import "../component/CSS/profile.css";
 
 const UserProfile = () => {
