@@ -220,7 +220,8 @@ a.active {
 
 /* Content Styles */
 .content {
-    padding-top: 20px;
+    margin-left:50px;
+    padding: 20px;
 
 }
 

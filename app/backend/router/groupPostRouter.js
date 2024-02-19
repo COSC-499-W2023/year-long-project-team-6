@@ -17,6 +17,8 @@ router.get('/get-sender-id/:senderName', (req, res) => {
 router.get('/posts/:userId/:groupId', (req, res) => {
     const userId = req.params.userId;
     const groupId = req.params.groupId;
+    console.log('inputuserid:',userId)
+    console.log('input group id:',groupId)
 
     groupPostDao.getPostInfor(userId, groupId, (err, posts) => {
         if (err) {
