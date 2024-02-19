@@ -9,10 +9,10 @@ function GroupPost() {
     const [senderId, setSenderId] = useState('');
     const [posts, setPosts] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [selectedMember, setSelectedMember] = useState(null);
-    const [adminid, setAdminid] = useState([]);
     const [admin, setAdmin] = useState([])
     const [members, setMembers] = useState([]);
+    const [adminid, setAdminid] = useState([]);
+    const [selectedPost, setSelectedPost] = useState(null);
     const navigate = useNavigate();
 console.log(groupId, currentuserid);
     useEffect(() => {
@@ -94,21 +94,56 @@ console.log(groupId, currentuserid);
         let formattedTime = date.toLocaleTimeString();
         let formattedDateTime = formattedDate + ' ' + formattedTime;
         return formattedDateTime
-    }
+    };
 
+    const handleDeletePost = async (postId) => {
+        try {
+            const response = await fetch(`http://localhost:5001/admin-post/${postId}`, {
+                method: 'DELETE'
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            alert("Successfully deleted post!");
+            setPosts(posts.filter(post => post.post_id !== postId));
+            setShowModal(false);
+            setSelectedPost(null);
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    };
+    
+
+    const handleRemoveUserFromGroup = async () => {
+        try {
+            fetch(`http://localhost:5001/admin-group/${groupId}/user/${userId}`, {
+                method: 'DELETE'
+            }).then(
+                response => {
+                    console.log('User removed:', response.data);
+                    alert("Successfully removed user from group!");
+                    window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
+        } catch (error) {
+            console.error('Error removing user from group:', error);
+        }
+    };
+
+    
     const renderEditForm = () => {
         if (showModal) {
             return (
                 <div className="modal-backdrop" onClick={() => setShowModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-                        <h2>Manage for {selectedMember?.username}</h2>
-                        {/* <button onClick={() => {
-                        if (selectedMember?.userid) {
-                            navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
-                        }
-                        }}>View Posts</button> */}
-                        {/* <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button> */}
+                        <h2>Manage for {selectedPost.post_title}</h2>
+                        <button className='deleteButton' onClick={() => handleDeletePost(selectedPost.post_id)}>Delete Post</button>    
                     </div>
                 </div>
             );
@@ -139,6 +174,7 @@ console.log(groupId, currentuserid);
                                     <td>
                                         {userId == adminid && (
                                             <button className='editButton' onClick={() => {
+                                            setSelectedPost(post);
                                             setShowModal(true);
                                         }}>Manage</button>                                        
                                         )}
