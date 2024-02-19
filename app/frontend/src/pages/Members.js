@@ -89,7 +89,7 @@ function MembersPage() {
     const navigateToView = () => {
         navigate('/view-announce', { state: { groupId } });
     };
-    
+
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:5001/groups-users/${groupId}`)
@@ -163,42 +163,43 @@ function MembersPage() {
                             <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
                         }
 
-                </span>
-                <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
-                {userId == adminid ? (<button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
-                  ) : null}
-        <button onClick={navigateToView} className="navigate-view-announce-button">View Announcement</button>
+                    </span>
+                    <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
+                    {userId == adminid ? (<button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
+                    ) : null}
+                    <button onClick={navigateToView} className="navigate-view-announce-button">View Announcement</button>
 
-            </div>
-            <table className="members-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {members
-                    .filter(member => 
-                        member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                        (roleFilter === 'All Roles' || member.role === roleFilter)
-                      )
-                    .map((member, index) => (
-                        <tr key={member.userid + '-' + index}>
-                            <td>{member.username}</td>
-                            <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
-                            <td>
-                             {userId == adminid ? (
-                                <div className='adminButton'>
-                                    <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
-                                    <button onClick={() => removeUserFromGroup(member.userid)}>Delete User</button>
-                                </div>
-                            ) : null}
-            </td>
-
+                </div>
+                <table className="members-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th></th>
                         </tr>
                     </thead>
+                    {/* <tbody>
+                        {members
+                            .filter(member =>
+                                member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                                (roleFilter === 'All Roles' || member.role === roleFilter)
+                            )
+                            .map((member, index) => (
+                                <tr key={member.userid + '-' + index}>
+                                    <td>{member.username}</td>
+                                    <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
+                                    <td>
+                                        {userId == adminid ? (
+                                            <div className='adminButton'>
+                                                <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
+                                                <button onClick={() => removeUserFromGroup(member.userid)}>Delete User</button>
+                                            </div>
+                                        ) : null}
+                                    </td>
+
+                                </tr>
+                            ))}
+                    </tbody> */}
                     <tbody>
                         {members
                             .filter(member =>
