@@ -391,3 +391,33 @@ This week, I integrated backend and frontend development for group admin functio
 ![Board](T2W5_img/Board.png)
 *Table format:*
 ![Table](T2W5_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 6)
+
+## Applicable data range
+**February/12/2023** to **February/18/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Met with my team members
+* Update frontend for group admin pages
+* Finish all functionalities for group admin manage their groups
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Updated frontend for group admin pages
+* Finished all functionalities for group admin manage their groups
+* Peer evaluation
+
+## Self reflection
+This week, I integrated frontend development for group admin functionalities that they are able to manage their group with Yiqi Xu together. We have completed all of the functionalities for group admin. They are able to delete users from group, delete entire group and delete posts sent by their group members. By then, we met our plan for group admin.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W6_img/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2W6_img/Board.png)
+*Table format:*
+![Table](T2W6_img/Table.png)
