@@ -502,3 +502,35 @@
 *Table format:*
 ![Table](Term_2_Week_5/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 6)
+
+## Applicable date range
+**February/12/2024** to **February/18/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week. 
+* See if the added features after the peer testing session work properly. 
+* Check entire website functionality (previous features + current features) and see if there is any break down error. 
+* Complete the peer evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week. 
+* The newly added funcionality to the website has been checked and worked with stablity. 
+* All functions of the website were working properly and no error occured. 
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_6/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_6/Board.png)
+*Table format:*
+![Table](Term_2_Week_6/Table.png)
+*missions with tag "done before" are from the previous weeks.*
