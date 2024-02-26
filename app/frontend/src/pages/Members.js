@@ -15,10 +15,13 @@ function MembersPage() {
     const [members, setMembers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('All Roles');
-    const [admin, setAdmin] = useState([])
-    const [adminid, setAdminid] = useState([])
+    const [admin, setAdmin] = useState([]);
+    const [adminid, setAdminid] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
+    const [userDetails, setUserDetails] = useState(null);
+    const [showModal2, setShowModal2] = useState(false);
+    const [code, setCode] = useState([]);
 
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
@@ -96,6 +99,7 @@ function MembersPage() {
     const navigateToView = () => {
         navigate('/view-announce', { state: { groupId } });
     };
+
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:5001/groups-users/${groupId}`)
@@ -131,10 +135,10 @@ function MembersPage() {
                 .then(data => {
                     console.log(userId);
                     console.log('groupadmin:', data);
-                    console.log(data[0].username)
+                    console.log(data[0].username);
                     setAdmin(data[0].username);
                     setAdminid(data[0].admin);
-
+                    setCode(data[0].invite_code);
                 })
                 .catch(error => {
                     console.error('Error fetching posts:', error);
@@ -164,10 +168,35 @@ function MembersPage() {
         return null;
     };
 
+    const handleUserClick = async (userId) => {
+        const response = await fetch(`http://localhost:5001/user-details/${userId}`);
+        const data = await response.json();
+        if (data.user_image) {
+            data.user_image = `data:image/*;base64,${data.user_image}`;
+        }
+        setUserDetails(data); // Assuming this data includes username, gender, birthday, and user_image
+        setShowModal2(true); // Assuming you have a state to control the modal visibility
+    };
+
     return (
         <>
+            <ReactModal className="userDetail" isOpen={showModal2} onRequestClose={() => setShowModal2(false)}>
+                <h2>User Details</h2>
+                <span className="close" onClick={() => setShowModal2(false)}>&times;</span>
+                {userDetails && (
+                    <div>
+                        <img src={userDetails.user_image} style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+                        <p>Username: {userDetails.username}</p>
+                        <p>Gender: {userDetails.gender}</p>
+                        <p>Birthday: {userDetails.birthday}</p>
+                    </div>
+                )}
+            </ReactModal>
+
             <div className="members-page">
                 <h3 id="admin">Admin: {admin}</h3>
+                <h4>{userId == adminid ? (<span>Invite Code: {code}</span>) :
+                    (<span></span>)}</h4>
                 <div className="members-filter">
                     <input
                         type="text"
@@ -204,7 +233,7 @@ function MembersPage() {
                             <th></th>
                         </tr>
                     </thead>
-                    
+
                     <tbody>
                         {members
                             .filter(member =>
@@ -215,7 +244,7 @@ function MembersPage() {
                                 <tr key={member.userid + '-' + index}>
                                     <td>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%' }} alt="avatar" />
+                                            <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%' }} onClick={() => handleUserClick(member.userid)} alt="avatar" />
                                             <span>{member.username}</span>
                                         </div>
                                     </td>
