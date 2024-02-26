@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from "react-router-dom";
+import { FaEllipsisV } from 'react-icons/fa';
+import ReactModal from 'react-modal';
+
 import '../component/CSS/MembersPage.css';
 import testPicture from '../component/image/profileDefault.jpg';
 
+ReactModal.setAppElement('#root');
 
 function MembersPage() {
     const [userId, setUserId] = useState('');
@@ -13,7 +17,9 @@ function MembersPage() {
     const [roleFilter, setRoleFilter] = useState('All Roles');
     const [admin, setAdmin] = useState([])
     const [adminid, setAdminid] = useState([])
-    console.log(groupId);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedMember, setSelectedMember] = useState(null);
+
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
         if (!sessionUser) {
@@ -83,13 +89,13 @@ function MembersPage() {
         navigate('/PostPage', { state: { groupId } });
     };
 
+
     const navigateToAnnounce = () => {
         navigate('/announcement', { state: { groupId } });
     }
     const navigateToView = () => {
         navigate('/view-announce', { state: { groupId } });
     };
-
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:5001/groups-users/${groupId}`)
@@ -136,7 +142,27 @@ function MembersPage() {
         }
 
     }, [userId]);
-    console.log(roleFilter);
+    
+
+    const renderEditForm = () => {
+        if (showModal) {
+            return (
+                <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+                        <h2>Manage for {selectedMember?.username}</h2>
+                        <button onClick={() => {
+                        if (selectedMember?.userid) {
+                            navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
+                        }
+                        }}>View Posts</button>
+                        <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
+                    </div>
+                </div>
+            );
+        }
+        return null;
+    };
 
     return (
         <>
@@ -158,11 +184,11 @@ function MembersPage() {
                     </select>
                     <span className='button'>
                         {userId != adminid ? (
-                            <button onClick={navigateToGroupPostMember(adminid)}>View Posts</button>
+                            <button onClick={navigateToGroupPostMember(userId)}>View Posts</button>
                         ) :
                             <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
                         }
-
+                        
                     </span>
                     <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
                     {userId == adminid ? (<button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
@@ -208,20 +234,16 @@ function MembersPage() {
                             )
                             .map((member, index) => (
                                 <tr key={member.userid + '-' + index}>
-                                    <td>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%' }} alt="avatar" />
-                                            <span>{member.username}</span>
-                                        </div>
-                                    </td>
+                                    <td>{member.username}</td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
-                                        {userId == adminid ? (
-                                            <div className='adminButton'>
-                                                <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
-                                                <button onClick={() => removeUserFromGroup(member.userid)}>Delete User</button>
-                                            </div>
-                                        ) : null}
+                                        {userId == adminid && (
+                                            <button className='editButton' onClick={() => {
+                                            setSelectedMember(member);
+                                            setShowModal(true);
+                                        }}>Manage</button>                                        
+                                        )}
+                                        {renderEditForm()}
                                     </td>
                                 </tr>
                             ))}
