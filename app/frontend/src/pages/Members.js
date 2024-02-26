@@ -142,7 +142,7 @@ function MembersPage() {
         }
 
     }, [userId]);
-    
+
 
     const renderEditForm = () => {
         if (showModal) {
@@ -152,9 +152,9 @@ function MembersPage() {
                         <span className="close" onClick={() => setShowModal(false)}>&times;</span>
                         <h2>Manage for {selectedMember?.username}</h2>
                         <button onClick={() => {
-                        if (selectedMember?.userid) {
-                            navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
-                        }
+                            if (selectedMember?.userid) {
+                                navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
+                            }
                         }}>View Posts</button>
                         <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
                     </div>
@@ -188,7 +188,7 @@ function MembersPage() {
                         ) :
                             <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
                         }
-                        
+
                     </span>
                     <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
                     {userId == adminid ? (<button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
@@ -204,28 +204,7 @@ function MembersPage() {
                             <th></th>
                         </tr>
                     </thead>
-                    {/* <tbody>
-                        {members
-                            .filter(member =>
-                                member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                                (roleFilter === 'All Roles' || member.role === roleFilter)
-                            )
-                            .map((member, index) => (
-                                <tr key={member.userid + '-' + index}>
-                                    <td>{member.username}</td>
-                                    <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
-                                    <td>
-                                        {userId == adminid ? (
-                                            <div className='adminButton'>
-                                                <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
-                                                <button onClick={() => removeUserFromGroup(member.userid)}>Delete User</button>
-                                            </div>
-                                        ) : null}
-                                    </td>
-
-                                </tr>
-                            ))}
-                    </tbody> */}
+                    
                     <tbody>
                         {members
                             .filter(member =>
@@ -234,14 +213,19 @@ function MembersPage() {
                             )
                             .map((member, index) => (
                                 <tr key={member.userid + '-' + index}>
-                                    <td>{member.username}</td>
+                                    <td>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%' }} alt="avatar" />
+                                            <span>{member.username}</span>
+                                        </div>
+                                    </td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
                                         {userId == adminid && (
                                             <button className='editButton' onClick={() => {
-                                            setSelectedMember(member);
-                                            setShowModal(true);
-                                        }}>Manage</button>                                        
+                                                setSelectedMember(member);
+                                                setShowModal(true);
+                                            }}>Manage</button>
                                         )}
                                         {renderEditForm()}
                                     </td>
