@@ -41,7 +41,7 @@ function LoginSignupForm() {
                     sessionStorage.setItem('user', JSON.stringify(data.user));
                     navigate('/'); // navigate to the home page. 
                 } else {
-                    alert("Login failed: Invalid credentials");
+                    alert("Login failed: Invalid email or password");
                 }
             })
             .catch((error) => {
@@ -109,7 +109,7 @@ function LoginSignupForm() {
         const isLengthValid = passw.length >= 6 && passw.length <= 30;
         const hasDigit = /\d/.test(passw);
         const hasLetter = /[a-zA-Z]/.test(passw);
-        const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(passw);
+        const hasSymbol = /[^a-zA-Z\d]/.test(passw);
 
         if (isLengthValid && hasDigit && hasLetter && hasSymbol) {
             setPasswError(false);
@@ -120,9 +120,9 @@ function LoginSignupForm() {
         }
     };
 
-    const validateRole = () => {
-        return role !== "";
-    };
+    // const validateRole = () => {
+    //     return role !== "";
+    // };
 
     const toggleAction = () => {
         setAction(action === "Login" ? "Sign Up" : "Login");
@@ -133,7 +133,7 @@ function LoginSignupForm() {
         if (validateEmail() && validatePassw()) {
             handleLogin();
         } else {
-            alert("Please check your inputs.");
+            alert("Please check your email or password.");
         }
 
     };
@@ -229,7 +229,7 @@ function LoginSignupForm() {
                     </div> */}
                     <div className="tooltip" style={{ textAlign: "center", marginTop: "2px", marginBottom: "2px" }}>
                         Want to Log in? &nbsp;
-                        <span className="switch-text hover-effect" onClick={toggleAction} style={{ cursor: "pointer", color: "#4c00b4" }}>
+                        <span className="switch-text hover-effect" onClick={toggleAction} style={{ cursor: "pointer", color: "#0482f8" }}>
                             {action === "Login" ? "Click here!" : "Click here!"}
                         </span>
 
@@ -316,7 +316,7 @@ function LoginSignupForm() {
                     </div> */}
                     <div className="tooltip" style={{ textAlign: "center", marginTop: "2px", marginBottom: "2px" }}>
                         Want to Sign up? &nbsp;
-                        <span className="switch-text hover-effect" onClick={toggleAction} style={{ cursor: "pointer", color: "#4c00b4" }}>
+                        <span className="switch-text hover-effect" onClick={toggleAction} style={{ cursor: "pointer", color: "#0482f8" }}>
                             {action === "Login" ? "Click here!" : "Click here!"}
                         </span>
 

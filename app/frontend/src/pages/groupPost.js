@@ -8,6 +8,11 @@ function GroupPost() {
     const { groupId, currentuserid } = useParams();
     const [senderId, setSenderId] = useState('');
     const [posts, setPosts] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [admin, setAdmin] = useState([])
+    const [members, setMembers] = useState([]);
+    const [adminid, setAdminid] = useState([]);
+    const [selectedPost, setSelectedPost] = useState(null);
     const navigate = useNavigate();
 console.log(groupId, currentuserid);
     useEffect(() => {
@@ -20,6 +25,45 @@ console.log(groupId, currentuserid);
             setSenderId(currentuserid);
         }
     }, []);
+
+    useEffect(() => {
+        if (userId) {
+            fetch(`http://localhost:5001/groups-users/${groupId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(userId);
+                    console.log('Fetched data:', data);
+                    setMembers(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+            fetch(`http://localhost:5001/group-admin/${groupId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(userId);
+                    console.log('groupadmin:', data);
+                    console.log(data[0].username)
+                    setAdmin(data[0].username);
+                    setAdminid(data[0].admin);
+
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+        }
+
+    }, [userId]);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -50,7 +94,63 @@ console.log(groupId, currentuserid);
         let formattedTime = date.toLocaleTimeString();
         let formattedDateTime = formattedDate + ' ' + formattedTime;
         return formattedDateTime
-    }
+    };
+
+    const handleDeletePost = async (postId) => {
+        try {
+            const response = await fetch(`http://localhost:5001/admin-post/${postId}`, {
+                method: 'DELETE'
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            alert("Successfully deleted post!");
+            setPosts(posts.filter(post => post.post_id !== postId));
+            setShowModal(false);
+            setSelectedPost(null);
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    };
+    
+
+    const handleRemoveUserFromGroup = async () => {
+        try {
+            fetch(`http://localhost:5001/admin-group/${groupId}/user/${userId}`, {
+                method: 'DELETE'
+            }).then(
+                response => {
+                    console.log('User removed:', response.data);
+                    alert("Successfully removed user from group!");
+                    window.location.reload();
+                }
+            )
+            .catch(
+                error => {
+                    console.error('Error:', error);
+                }
+            );
+        } catch (error) {
+            console.error('Error removing user from group:', error);
+        }
+    };
+
+    
+    const renderEditForm = () => {
+        if (showModal) {
+            return (
+                <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+                        <h2>Manage for {selectedPost.post_title}</h2>
+                        <button className='deleteButton' onClick={() => handleDeletePost(selectedPost.post_id)}>Delete Post</button>    
+                    </div>
+                </div>
+            );
+        }
+        return null;
+    };
+
     return (
         <>
             <div id="content">
@@ -71,6 +171,15 @@ console.log(groupId, currentuserid);
                                     <td><button className='view' onClick={() => {
                                         handleView(post.post_id)
                                     }}>View</button></td>
+                                    <td>
+                                        {userId == adminid && (
+                                            <button className='editButton' onClick={() => {
+                                            setSelectedPost(post);
+                                            setShowModal(true);
+                                        }}>Manage</button>                                        
+                                        )}
+                                        {renderEditForm()}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
