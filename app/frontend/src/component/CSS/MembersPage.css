@@ -69,5 +69,27 @@
 }
 
 #admin {
-    margin-left: 3em;
+    margin-left: 10.5em;
 }
+
+.userDetail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px; /* Adjust width as needed */
+    max-height: 300px; /* Set a max-height to limit vertical space */
+    border: 1px solid #ccc;
+    background: #fff;
+    outline: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+.userDetail p {
+    font-weight: bold;
+    margin-top: 15px;
+}  

@@ -15,13 +15,18 @@ function MembersPage() {
     const [members, setMembers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('All Roles');
-    const [admin, setAdmin] = useState([])
-    const [adminid, setAdminid] = useState([])
+    const [admin, setAdmin] = useState([]);
+    const [adminid, setAdminid] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
+
+    const [userDetails, setUserDetails] = useState(null);
+    const [showModal2, setShowModal2] = useState(false);
+    const [code, setCode] = useState([]);
 
 
     useEffect(() => {
@@ -100,6 +105,7 @@ function MembersPage() {
     const navigateToView = () => {
         navigate('/view-announce', { state: { groupId } });
     };
+
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:5001/groups-users/${groupId}`)
@@ -135,10 +141,10 @@ function MembersPage() {
                 .then(data => {
                     console.log(userId);
                     console.log('groupadmin:', data);
-                    console.log(data[0].username)
+                    console.log(data[0].username);
                     setAdmin(data[0].username);
                     setAdminid(data[0].admin);
-
+                    setCode(data[0].invite_code);
                 })
                 .catch(error => {
                     console.error('Error fetching posts:', error);
@@ -146,7 +152,7 @@ function MembersPage() {
         }
 
     }, [userId]);
-    
+
 
     const renderEditForm = () => {
         if (showModal) {
@@ -156,9 +162,9 @@ function MembersPage() {
                         <span className="close" onClick={() => setShowModal(false)}>&times;</span>
                         <h2>Manage for {selectedMember?.username}</h2>
                         <button onClick={() => {
-                        if (selectedMember?.userid) {
-                            navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
-                        }
+                            if (selectedMember?.userid) {
+                                navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
+                            }
                         }}>View Posts</button>
                         <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
                     </div>
@@ -168,10 +174,49 @@ function MembersPage() {
         return null;
     };
 
+    const handleUserClick = async (userId) => {
+        const response = await fetch(`http://localhost:5001/user-details/${userId}`);
+        const data = await response.json();
+        if (data.user_image) {
+            data.user_image = `data:image/*;base64,${data.user_image}`;
+        }
+        setUserDetails(data);
+        setShowModal2(true);
+    };
+    const formatBirthday = (birthday) => {
+        if (!birthday) return '';
+        const date = new Date(birthday);
+        const year = date.getFullYear();
+        const month = `0${date.getMonth() + 1}`.slice(-2);
+        const day = `0${date.getDate()}`.slice(-2);
+        return `${year}-${month}-${day}`;
+    };
+
+
     return (
         <>
+            <ReactModal className="userDetail" isOpen={showModal2} onRequestClose={() => setShowModal2(false)} >
+                {/* <h2><center>User Info</center></h2> */}
+                <span className="close" onClick={() => setShowModal2(false)}>&times;</span>
+                {userDetails && (
+                    <div>
+                        <h2>User Info</h2>
+                        <img src={userDetails.user_image || testPicture} style={{ width: '90px', height: '90px', borderRadius: '50%' }} />
+                        <br></br>
+                        <p>Username: {userDetails.username}</p>
+                        <br></br>
+                        <p>Gender: {userDetails.gender}</p>
+                        <br></br>
+                        <p>Birthday: {formatBirthday(userDetails.birthday)}</p>
+                    </div>
+                )}
+            </ReactModal>
+
             <div className="members-page">
                 <h3 id="admin">Admin: {admin}</h3>
+                <h3 id="admin">{userId == adminid ? (<span>Invite Code: {code}</span>) :
+                    (<span></span>)}
+                </h3>
                 <div className="members-filter">
                     <input
                         type="text"
@@ -183,7 +228,7 @@ function MembersPage() {
 
                     <select value={roleFilter} onChange={handleRoleChange} className="dropdown">
                         <option value="All Roles">All Roles</option>
-                        <option value="sender">Sender</option>
+                        <option value="Sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
                     <button onClick={toggleDropdown} style={{background: 'white', border: '1px solid grey', cursor: 'pointer', color: 'black', padding: '8px'}}>
@@ -214,44 +259,47 @@ function MembersPage() {
                             <th></th>
                         </tr>
                     </thead>
-                    {/* <tbody>
-                        {members
-                            .filter(member =>
-                                member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                                (roleFilter === 'All Roles' || member.role === roleFilter)
-                            )
-                            .map((member, index) => (
-                                <tr key={member.userid + '-' + index}>
-                                    <td>{member.username}</td>
-                                    <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
-                                    <td>
-                                        {userId == adminid ? (
-                                            <div className='adminButton'>
-                                                <button onClick={navigateToGroupPostMember(member.userid)}>View Posts</button>
-                                                <button onClick={() => removeUserFromGroup(member.userid)}>Delete User</button>
-                                            </div>
-                                        ) : null}
-                                    </td>
 
-                                </tr>
-                            ))}
-                    </tbody> */}
                     <tbody>
                         {members
-                            .filter(member =>
-                                member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                                (roleFilter === 'All Roles' || member.role === roleFilter)
-                            )
+                            .filter(member => {
+                                // for the search function
+                                const matchesSearchTerm = member.username.toLowerCase().includes(searchTerm.toLowerCase());
+
+                                if (roleFilter === 'All Roles') {
+                                    // return all 
+                                    return matchesSearchTerm;
+                                } else if (roleFilter === 'Admin') {
+                                    // only return the user that have admin id. 
+                                    return matchesSearchTerm && (member.userid == adminid);
+                                } else if (roleFilter === 'Sender') {
+                                    // only return the users do not have the admin id. 
+                                    return matchesSearchTerm && (member.userid != adminid);
+                                }
+                                // default return false. 
+                                return false;
+                            })
                             .map((member, index) => (
                                 <tr key={member.userid + '-' + index}>
-                                    <td>{member.username}</td>
+                                    <td>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%', cursor: 'pointer', transition: 'transform 0.3s ease' }} onClick={() => handleUserClick(member.userid)} alt="avatar"
+                                                onMouseOver={(e) => (e.target.style.transform = 'scale(1.2)')}
+                                                onMouseOut={(e) => (e.target.style.transform = 'scale(1)')} />
+                                            <span onClick={() => handleUserClick(member.userid)} alt="avatar" style={{ cursor: 'pointer', borderBottom: '1px solid transparent', transition: 'border-bottom 0.3s ease' }}
+                                                onMouseOver={(e) => (e.target.style.borderBottom = '1px solid #000')}
+                                                onMouseOut={(e) => (e.target.style.borderBottom = '1px solid transparent')}>
+                                                {member.username}
+                                            </span>
+                                        </div>
+                                    </td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
                                         {userId == adminid && (
                                             <button className='editButton' onClick={() => {
-                                            setSelectedMember(member);
-                                            setShowModal(true);
-                                        }}>Manage</button>                                        
+                                                setSelectedMember(member);
+                                                setShowModal(true);
+                                            }}>Manage</button>
                                         )}
                                         {renderEditForm()}
                                     </td>
