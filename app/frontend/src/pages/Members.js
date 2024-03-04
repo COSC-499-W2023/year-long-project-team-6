@@ -174,18 +174,18 @@ function MembersPage() {
         if (data.user_image) {
             data.user_image = `data:image/*;base64,${data.user_image}`;
         }
-        setUserDetails(data); 
-        setShowModal2(true); 
+        setUserDetails(data);
+        setShowModal2(true);
     };
     const formatBirthday = (birthday) => {
-        if (!birthday) return ''; 
+        if (!birthday) return '';
         const date = new Date(birthday);
         const year = date.getFullYear();
-        const month = `0${date.getMonth() + 1}`.slice(-2); 
-        const day = `0${date.getDate()}`.slice(-2); 
+        const month = `0${date.getMonth() + 1}`.slice(-2);
+        const day = `0${date.getDate()}`.slice(-2);
         return `${year}-${month}-${day}`;
-      };
-      
+    };
+
 
     return (
         <>
@@ -222,7 +222,7 @@ function MembersPage() {
 
                     <select value={roleFilter} onChange={handleRoleChange} className="dropdown">
                         <option value="All Roles">All Roles</option>
-                        <option value="sender">Sender</option>
+                        <option value="Sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
                     <span className='button'>
@@ -250,10 +250,23 @@ function MembersPage() {
 
                     <tbody>
                         {members
-                            .filter(member =>
-                                member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                                (roleFilter === 'All Roles' || member.role === roleFilter)
-                            )
+                            .filter(member => {
+                                // for the search function
+                                const matchesSearchTerm = member.username.toLowerCase().includes(searchTerm.toLowerCase());
+
+                                if (roleFilter === 'All Roles') {
+                                    // return all 
+                                    return matchesSearchTerm;
+                                } else if (roleFilter === 'Admin') {
+                                    // only return the user that have admin id. 
+                                    return matchesSearchTerm && (member.userid == adminid);
+                                } else if (roleFilter === 'Sender') {
+                                    // only return the users do not have the admin id. 
+                                    return matchesSearchTerm && (member.userid != adminid);
+                                }
+                                // default return false. 
+                                return false;
+                            })
                             .map((member, index) => (
                                 <tr key={member.userid + '-' + index}>
                                     <td>
