@@ -415,7 +415,7 @@ In this group project, my contributions spanned various aspects, from initial pl
 ### 5. *From project board*
 ![Board](images18/pb.png)
 
-## Ximin Xu T2 week 5 personal log
+## Ximin Xu T2 week 6 personal log
 
 ### 1. *Date Range*
 
@@ -443,3 +443,31 @@ Tasks done vs in progress
 Efficiently managed group meetings and task assignments, successfully integrated announcement routing and data access layers, and established frontend-backend connectivity. Currently focusing on enhancing UI for announcements and developing the feature to view announcements.
 ### 5. *From project board*
 ![Board](images19/pb.png)
+
+## Ximin Xu T2 week 7,8 personal log
+
+### 1. *Date Range*
+
+Feb.19-Mar.3
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images20/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. View announcement feature
+2. View announcement UI 
+
+
+**In progress**
+ 1. finalization 
+ 
+
+### 4. *Self Reflection and learned*
+I effectively completed viewing announcement features and UI. Currently, I'm progressing towards finalization. 
+All features are done and no more features shall be added, for the following weeks we will focus on testing and improvement.
+### 5. *From project board*
+![Board](images20/pb.png)
