@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { FaEllipsisV } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 import ReactModal from 'react-modal';
 
 import '../component/CSS/MembersPage.css';
@@ -19,6 +19,10 @@ function MembersPage() {
     const [adminid, setAdminid] = useState([])
     const [showModal, setShowModal] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleDropdown = () => setIsOpen(!isOpen);
+
 
     useEffect(() => {
         const sessionUser = sessionStorage.getItem('user');
@@ -182,19 +186,25 @@ function MembersPage() {
                         <option value="sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
-                    <span className='button'>
-                        {userId != adminid ? (
+                    <button onClick={toggleDropdown} style={{background: 'white', border: '1px solid grey', cursor: 'pointer', color: 'black', padding: '8px'}}>
+                        {isOpen ? 'Close Menu' : 'Group Menu'}
+                        <FaChevronDown />
+                        </button>
+                    {isOpen && (
+                        <div className="dropdown-content">
+                        {userId !== adminid && (
                             <button onClick={navigateToGroupPostMember(userId)}>View Posts</button>
-                        ) :
+                            )}
+                        {userId == adminid && (
+                            <>
                             <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
-                        }
-                        
-                    </span>
-                    <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
-                    {userId == adminid ? (<button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
-                    ) : null}
-                    <button onClick={navigateToView} className="navigate-view-announce-button">View Announcement</button>
-
+                            <button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
+                            </>
+                        )}
+                        <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
+                        <button onClick={navigateToView} className="navigate-view-announce-button">View Announcement</button>
+                        </div>
+                    )}
                 </div>
                 <table className="members-table">
                     <thead>
