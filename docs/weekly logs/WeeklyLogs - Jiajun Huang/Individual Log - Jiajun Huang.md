@@ -421,3 +421,33 @@ This week, I integrated frontend development for group admin functionalities tha
 ![Board](T2W6_img/Board.png)
 *Table format:*
 ![Table](T2W6_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 8)
+
+## Applicable data range
+**February/27/2023** to **March/3/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Met with my team members
+* Modify frontend code for Post Announcement
+* Finish dropdown button for members page
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Modified frontend code for Post Announcement
+* Finished dropdown button for members page
+* Peer evaluation
+
+## Self reflection
+This week, I integrated frontend development for UI for posting announcement page with Yiqi Xu together. And I have included all of the button for managing group on the top of the members page into one dropdown area. This would make page cleaner and more user-friendly.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W8_img/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2W8_img/Board.png)
+*Table format:*
+![Table](T2W8_img/Table.png)
