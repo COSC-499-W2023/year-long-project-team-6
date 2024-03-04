@@ -1,18 +1,34 @@
 #announce{
-    margin-left: 5em;
+    justify-content: center;
+    background-color: #f0f0f0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+#announce h2{
+    margin:0;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    
 }
 .announcetab{
-    width:80%;
-    border:1px solid rgb(183, 183, 183);
-    margin-right:10%;
-    margin-left:10%;
+    padding:10px;
+    justify-content: center;
+    background-color: white;
+    width:50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     margin-bottom:3em;
+    margin: auto;
+    margin-bottom: 2em;
     border-collapse: separate;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 .announcetitle{
+    padding:10px;
     font-size: x-large;
     font-weight: bold;
+
 }
 .announcetab td {
     padding: 0.5em; 
@@ -34,4 +50,26 @@
 }
 .announcedetail{
     font-size:1em;
+}
+.announce-date-row td {
+    border-bottom: 1px solid rgb(145, 145, 145); 
+}
+.announcepost{
+    border:1px solid rgb(202, 202, 202);
+    padding:10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.announcepost:hover {
+    background-color: #f0f0f0; 
+    
+}
+.attachposttitle{
+    font-weight: bold;
+    font-size: x-large;
+    border-bottom: 1px solid rgb(163, 163, 163);
+    padding:10px;
+}
+.attachposttext{
+    padding:10px;
 }
