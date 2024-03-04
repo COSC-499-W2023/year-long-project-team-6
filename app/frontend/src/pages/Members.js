@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from "react-router-dom";
+
+import { FaEllipsisV, FaUnderline } from 'react-icons/fa';
+
 import ReactModal from 'react-modal';
 
 import '../component/CSS/MembersPage.css';
@@ -173,29 +176,43 @@ function MembersPage() {
         if (data.user_image) {
             data.user_image = `data:image/*;base64,${data.user_image}`;
         }
-        setUserDetails(data); // Assuming this data includes username, gender, birthday, and user_image
-        setShowModal2(true); // Assuming you have a state to control the modal visibility
+        setUserDetails(data);
+        setShowModal2(true);
     };
+    const formatBirthday = (birthday) => {
+        if (!birthday) return '';
+        const date = new Date(birthday);
+        const year = date.getFullYear();
+        const month = `0${date.getMonth() + 1}`.slice(-2);
+        const day = `0${date.getDate()}`.slice(-2);
+        return `${year}-${month}-${day}`;
+    };
+
 
     return (
         <>
-            <ReactModal className="userDetail" isOpen={showModal2} onRequestClose={() => setShowModal2(false)}>
-                <h2>User Details</h2>
+            <ReactModal className="userDetail" isOpen={showModal2} onRequestClose={() => setShowModal2(false)} >
+                {/* <h2><center>User Info</center></h2> */}
                 <span className="close" onClick={() => setShowModal2(false)}>&times;</span>
                 {userDetails && (
                     <div>
-                        <img src={userDetails.user_image} style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+                        <h2>User Info</h2>
+                        <img src={userDetails.user_image || testPicture} style={{ width: '90px', height: '90px', borderRadius: '50%' }} />
+                        <br></br>
                         <p>Username: {userDetails.username}</p>
+                        <br></br>
                         <p>Gender: {userDetails.gender}</p>
-                        <p>Birthday: {userDetails.birthday}</p>
+                        <br></br>
+                        <p>Birthday: {formatBirthday(userDetails.birthday)}</p>
                     </div>
                 )}
             </ReactModal>
 
             <div className="members-page">
                 <h3 id="admin">Admin: {admin}</h3>
-                <h4>{userId == adminid ? (<span>Invite Code: {code}</span>) :
-                    (<span></span>)}</h4>
+                <h3 id="admin">{userId == adminid ? (<span>Invite Code: {code}</span>) :
+                    (<span></span>)}
+                </h3>
                 <div className="members-filter">
                     <input
                         type="text"
@@ -207,7 +224,7 @@ function MembersPage() {
 
                     <select value={roleFilter} onChange={handleRoleChange} className="dropdown">
                         <option value="All Roles">All Roles</option>
-                        <option value="sender">Sender</option>
+                        <option value="Sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
                     <span className='button'>
@@ -235,16 +252,35 @@ function MembersPage() {
 
                     <tbody>
                         {members
-                            .filter(member =>
-                                member.username.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                                (roleFilter === 'All Roles' || member.role === roleFilter)
-                            )
+                            .filter(member => {
+                                // for the search function
+                                const matchesSearchTerm = member.username.toLowerCase().includes(searchTerm.toLowerCase());
+
+                                if (roleFilter === 'All Roles') {
+                                    // return all 
+                                    return matchesSearchTerm;
+                                } else if (roleFilter === 'Admin') {
+                                    // only return the user that have admin id. 
+                                    return matchesSearchTerm && (member.userid == adminid);
+                                } else if (roleFilter === 'Sender') {
+                                    // only return the users do not have the admin id. 
+                                    return matchesSearchTerm && (member.userid != adminid);
+                                }
+                                // default return false. 
+                                return false;
+                            })
                             .map((member, index) => (
                                 <tr key={member.userid + '-' + index}>
                                     <td>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%' }} onClick={() => handleUserClick(member.userid)} alt="avatar" />
-                                            <span>{member.username}</span>
+                                            <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%', cursor: 'pointer', transition: 'transform 0.3s ease' }} onClick={() => handleUserClick(member.userid)} alt="avatar"
+                                                onMouseOver={(e) => (e.target.style.transform = 'scale(1.2)')}
+                                                onMouseOut={(e) => (e.target.style.transform = 'scale(1)')} />
+                                            <span onClick={() => handleUserClick(member.userid)} alt="avatar" style={{ cursor: 'pointer', borderBottom: '1px solid transparent', transition: 'border-bottom 0.3s ease' }}
+                                                onMouseOver={(e) => (e.target.style.borderBottom = '1px solid #000')}
+                                                onMouseOut={(e) => (e.target.style.borderBottom = '1px solid transparent')}>
+                                                {member.username}
+                                            </span>
                                         </div>
                                     </td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
