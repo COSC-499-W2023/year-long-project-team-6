@@ -1,0 +1,37 @@
+#announce{
+    margin-left: 5em;
+}
+.announcetab{
+    width:80%;
+    border:1px solid rgb(183, 183, 183);
+    margin-right:10%;
+    margin-left:10%;
+    margin-bottom:3em;
+    border-collapse: separate;
+    border-radius: 15px;
+}
+.announcetitle{
+    font-size: x-large;
+    font-weight: bold;
+}
+.announcetab td {
+    padding: 0.5em; 
+
+}
+.announcetab td span {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.announce-date-row td {
+    font-size: 0.85em; 
+    color: #666; 
+    padding-top: 0; 
+    padding-bottom: 0.5em; 
+}
+.announcetab span:hover {
+    color: #0056b3; 
+    text-decoration: none; 
+}
+.announcedetail{
+    font-size:1em;
+}

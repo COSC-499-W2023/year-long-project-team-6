@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from "react-router-dom";
+
 import { FaEllipsisV, FaUnderline } from 'react-icons/fa';
+
 import ReactModal from 'react-modal';
 
 import '../component/CSS/MembersPage.css';
