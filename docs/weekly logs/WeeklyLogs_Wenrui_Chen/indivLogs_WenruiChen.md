@@ -457,3 +457,45 @@
 
 *Table format:*
 ![Task1](t2w6/table.png)
+
+# Individual Log - Wenrui Chen (t2w7_8)
+
+## Applicable data range
+**Feburary/19/2024** to **March/3/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Meetings and see what's the plan. 
+* show and change avatar in profile
+* Clickable username and avatar to check profile
+* Complete the peer evaluation. 
+ 
+
+## Completed Tasks 
+* Meetings 
+* Show and change avatar in profile
+* Clickable username and avatar on member page to check profile
+* peer evaluation. 
+* UI improvement in clickable username and avatar
+
+<!-- ## Task in progress
+* revised tests
+* clickable username to check profile -->
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](t2w7_8/PE.png)
+
+## Task on Board
+*Board format:*
+![Board](t2w7_8/board.png)
+
+<!-- *Tests (Test reports are shown in team log part):*<br>
+![Board](t2w4/1.jpg)
+![Board](t2w4/2.jpg)
+![Board](t2w4/3.jpg) -->
+<!-- ![Board](t2w3/t4.png)
+![Board](t2w3/t5.png)
+![Board](t2w3/t6.png) -->
+
+*Table format:*
+![Task1](t2w7_8/table.png)
