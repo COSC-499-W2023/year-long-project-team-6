@@ -493,3 +493,48 @@ This week, I integrated development for group admin functionalities, ensuring ro
 ![Board](T2_w6_img/Board.png)
 *Table format:*
 ![Table](T2_w6_img/Table.png)
+
+
+# Individual Log - Yiqi Xu (Week 7 Reading week)
+
+## Applicable data range
+**February/20/2023** to **February/25/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Improve UI for Admin Page
+* Fix conflicts and debug
+
+## Completed Tasks 
+* Improved UI for Admin Page
+* Fixed conflicts and debugged
+
+# Individual Log - Yiqi Xu (Week 8)
+
+## Applicable data range
+**February/27/2023** to **March/3/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Modify frontend code for Post Announcement
+* Finish UI for Post Announcement
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Modified frontend code for Post Announcement
+* Finished UI for Post Announcement
+* Finished Peer Evaluation
+
+## Self reflection
+This week, I successfully completed all my scheduled tasks, including holding a crucial meeting, modifying the frontend code, finalizing the UI for the Post Announcement, and completing the Peer Evaluation. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w8_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w8_img/Board.png)
+*Table format:*
+![Table](T2_w8_img/Table.png)
