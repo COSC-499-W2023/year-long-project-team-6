@@ -28,7 +28,7 @@ const handleView = (postId) =>{
     navigate(`/Video/${postId}`);
 }
     const fetchPostTitle = (postId) => {
-        fetch(`http://localhost:5001/post/${postId}`)
+        fetch(`http://localhost:5001/announcegetpost/${postId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
