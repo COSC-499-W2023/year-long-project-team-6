@@ -39,27 +39,55 @@
     position: relative;
     display: inline-block;
 }
+.avatar-container img {
+    transition: filter 0.3s ease-in-out;
+}
+.avatar-container img:hover{
+    filter: brightness(70%); 
+
+}
 .change-avatar-button {
-    margin-top: 0px;
+    margin-top: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 130px;
+    width: 180px;
 }
 button.edit-profile{
     margin-top: 0px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 130px;
+    width: 180px;
 }
 button.save-profile{
     margin-top: 10px;
     padding: 10px 10px;
-    width: 130px;
+    width: 180px;
     cursor: pointer;
 }
 button.cancel-profile{
     margin-top: 10px;
     padding: 10px 10px;
-    width: 130px;
+    width: 180px;
     cursor: pointer;
+}
+button.changePassw{
+    margin-top: 10px;
+    padding: 10px 10px;
+    width: 180px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+input#username,#birthday{
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+input#birthday{
+    font-weight: bold;
+}
+input#birthday:hover{
+    font-weight: bold;
+    cursor: pointer;
+    /* text-decoration: underline; */
 }

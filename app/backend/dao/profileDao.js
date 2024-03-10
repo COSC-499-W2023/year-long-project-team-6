@@ -55,9 +55,26 @@ function updateUserAvatar(userId, avatarBlob, callback) {
         }
     });
 }
+function updateUserPassword(userId, newPassword, callback) {
+    const query = `
+        UPDATE users 
+        SET password = ?
+        WHERE userid = ?;
+    `;
+
+    db.query(query, [newPassword, userId], (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
+}
+
 
 module.exports = {
     editUserProfile,
     getUserProfile,
     updateUserAvatar,
+    updateUserPassword
 };

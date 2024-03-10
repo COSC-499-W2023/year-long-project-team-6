@@ -130,7 +130,14 @@ const UserProfile = () => {
     return (
         <div className="user-profile">
             <div className="avatar-container" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                <img src={user.user_image} alt={`${user.username}'s profile`} onClick={handleAvatarClick} style={{ cursor: 'pointer' }} />
+                <img
+                    src={user.user_image}
+                    alt={`${user.username}'s profile`}
+                    onClick={handleAvatarClick}
+                    style={{ cursor: 'pointer' }}
+                    title="Change Avatar"
+                />
+
                 {isEditMode ? (
 
                     <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
@@ -143,18 +150,20 @@ const UserProfile = () => {
             {isEditMode ? (
                 <>
 
-                    <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} /></p>
+                    <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} id='username' /></p>
                     <p>Gender:
                         <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
                         <input type="radio" name="gender" value="Female" checked={user.gender === "Female"} onChange={handleInputChange} /><label>Female</label>
                         <input type="radio" name="gender" value="Other" checked={user.gender === "Other"} onChange={handleInputChange} /><label>Other</label>
                     </p>
-                    <p>Birth Date: <input type="date" name="birthday" value={user.birthday} onChange={handleInputChange} /></p>
+                    <p>Birth Date: <input type="date" name="birthday" value={user.birthday} onChange={handleInputChange} id='birthday' /></p>
                     <button className="save-profile" onClick={handleSaveClick}>Save</button>
                     <button className="cancel-profile" onClick={handleCancelClick}>Cancel</button>
                 </>
             ) : (
                 <>
+                    {/* changePassword()没写 */}
+                    <button className="changePassw" type="button" onclick="changePassword()">Change Password</button>
                     <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
                     <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <h1>Username: {user.username}</h1>

@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
-const { editUserProfile, getUserProfile, updateUserAvatar } = require('../dao/profileDao');
+const { editUserProfile, getUserProfile, updateUserAvatar,updateUserPassword} = require('../dao/profileDao');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -52,6 +52,24 @@ router.post('/upload-avatar/:userId', upload.single('avatar'), (req, res) => {
             res.status(500).send('Error updating avatar');
         } else {
             res.status(200).send('Avatar updated successfully');
+        }
+    });
+});
+
+router.put('/update-password/:userId', (req, res) => {
+    const userId = req.params.userId;
+    const newPassword = req.body.newPassword;
+
+    if (!newPassword || newPassword.trim() === '') {
+        return res.status(400).send('Invalid newPassword.');
+    }
+
+    updateUserPassword(userId, newPassword, (err, result) => {
+        if (err) {
+            console.error('Error updating password:', err);
+            res.status(500).send('Error updating password');
+        } else {
+            res.status(200).send('Password updated successfully');
         }
     });
 });
