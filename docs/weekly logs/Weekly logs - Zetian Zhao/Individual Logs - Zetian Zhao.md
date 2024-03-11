@@ -568,3 +568,37 @@
 *Table format:*
 ![Table](Term_2_Week_7&8/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 9)
+
+## Applicable date range
+**March/4/2024** to **March/10/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week 9. 
+* Have a button for changing the password for the user. 
+* Make a form that require current password, new passoword and confirm your new password.
+* Complete the peer testing. 
+* Complete the peer evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week 9. 
+* The button that able to change the password is properly working. 
+* The form has done and is activated by the "change password" button and validation of the new password is also existed. 
+* Completed the peer testing.
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_9/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_9/Board.png)
+*Table format:*
+![Table](Term_2_Week_9/Table.png)
+*missions with tag "done before" are from the previous weeks.*
