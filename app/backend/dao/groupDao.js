@@ -57,15 +57,53 @@ async function editGroup(groupId, newGroupName, newAdmin, callback) {
 
 
 async function deleteGroup(groupId, callback) {
-    const query = 'DELETE FROM groups WHERE groupid = ?';
-    db.query(query, [groupId], (err, result) => {
+    db.beginTransaction(err => {
         if (err) {
             callback(err, null);
-        } else {
-            callback(null, result);
+            return;
         }
+        const deleteAnnouncementsQuery = 'DELETE FROM announcement WHERE groupid = ?';
+        db.query(deleteAnnouncementsQuery, [groupId], (err, announcementResult) => {
+            if (err) {
+                db.rollback(() => {
+                    callback(err, null);
+                });
+                return;
+            }
+            const deleteUserGroupsQuery = 'DELETE FROM `user_groups` WHERE groupid = ?';
+            db.query(deleteUserGroupsQuery, [groupId], (err, userGroupsResult) => {
+                if (err) {
+                    db.rollback(() => {
+                        callback(err, null);
+                    });
+                    return;
+                }
+                const deleteGroupQuery = 'DELETE FROM groups WHERE groupid = ?';
+                db.query(deleteGroupQuery, [groupId], (err, groupResult) => {
+                    if (err) {
+                        db.rollback(() => {
+                            callback(err, null);
+                        });
+                        return;
+                    }
+                    db.commit(err => {
+                        if (err) {
+                            db.rollback(() => {
+                                callback(err, null);
+                            });
+                            return;
+                        }
+                        callback(null, groupResult);
+                    });
+                });
+            });
+        });
     });
 }
+
+
+
+
 
 async function getGroupInfo(groupId, callback) {
     const query = 'SELECT * FROM groups WHERE groupid = ?';
