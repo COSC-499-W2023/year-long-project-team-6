@@ -52,11 +52,11 @@ We were mostly working on fixing UI&functions for peer testing, no outstanding n
 ## Project on Board
 *Board format:*
 
-![Board](./board.png)
+![Board](./Board.png)
 
 *Table format:*
 
-![Table](./table.png)
+![Table](./Table.png)
 
 ## Burnup chart
-![Chart](./chart.png)
+![Chart](./Chart.png)
