@@ -471,3 +471,31 @@ I effectively completed viewing announcement features and UI. Currently, I'm pro
 All features are done and no more features shall be added, for the following weeks we will focus on testing and improvement.
 ### 5. *From project board*
 ![Board](images20/pb.png)
+
+## Ximin Xu T2 week 9 personal log
+
+### 1. *Date Range*
+
+Mar.4-Mar.10
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images21/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Make menu become default open
+2. fix announcement feature bug
+
+
+**In progress**
+ 1. speed up uploading process
+ 2. add uploading progress bar
+ 
+
+### 4. *Self Reflection and learned*
+In reflecting on recent tasks accomplished and those still in progress, I find satisfaction in addressing usability concerns by making the menu default open and resolving bugs in the announcement feature. Yet, the quest for improvement persists as I endeavor to enhance uploading efficiency and user experience with a progress bar. These efforts align with a commitment to continuous enhancement and user-centric design.
+### 5. *From project board*
+![Board](images21/pb.png)
