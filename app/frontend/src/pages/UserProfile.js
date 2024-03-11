@@ -14,6 +14,7 @@ const UserProfile = () => {
         gender: '',
         birthday: null,
     });
+
     const [isHovering, setIsHovering] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [error, setError] = useState('');
@@ -22,6 +23,12 @@ const UserProfile = () => {
     const fileInputRef = useRef(null);
     const handleMouseOver = () => setIsHovering(true);
     const handleMouseOut = () => setIsHovering(false);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+    const [passwError, setPasswError] = useState(false);
+
     // In order to automatically update the interface, we define a function that will be contained in the useEffect. 
     const fetchUserProfile = () => {
         const sessionUser = sessionStorage.getItem('user');
@@ -127,6 +134,87 @@ const UserProfile = () => {
                 console.error('Error uploading avatar:', error);
             });
     };
+
+    const validatePassw = () => {
+        const isLengthValid = newPassword.length >= 6 && newPassword.length <= 30;
+        const hasDigit = /\d/.test(newPassword);
+        const hasLetter = /[a-zA-Z]/.test(newPassword);
+        const hasSymbol = /[^a-zA-Z\d]/.test(newPassword);
+
+        if (isLengthValid && hasDigit && hasLetter && hasSymbol) {
+            setPasswError(false);
+            return (true);
+        } else {
+            setPasswError(true);
+            return (false);
+        }
+    };
+
+    const changePassword = () => {
+        if ((newPassword !== confirmNewPassword)) {
+            alert('New passwords do not match!');
+            return;
+        } else if ((validatePassw() == false)) {
+            alert("New password format is wrong!");
+            return;
+        }
+
+        axios.put(`http://localhost:5001/update-password/${userId}`, {
+            currentPassword,
+            newPassword
+        })
+            .then(response => {
+                console.log('Password changed:', response.data);
+                closeEditPassWord();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setError('Failed to change password.');
+            });
+    };
+
+    const closeEditPassWord = () => {
+        setShowChangePasswordModal(false);
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmNewPassword('');
+    };
+
+    const renderPasswordForm = () => {
+        if (showChangePasswordModal) {
+            return (
+                <div className="modal-backdrop" onClick={() => setShowChangePasswordModal(false)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <span className="close" onClick={closeEditPassWord}>&times;</span>
+                        <div className="change-password-modal">
+                            <input
+                                type="password"
+                                placeholder="Current Password"
+                                value={currentPassword}
+                                onChange={(e) => setCurrentPassword(e.target.value)}
+                            />
+                            <input
+                                type="password"
+                                placeholder="New Password"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                            />
+                            <input
+                                type="password"
+                                placeholder="Confirm New Password"
+                                value={confirmNewPassword}
+                                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                            />
+                            <button onClick={changePassword}>Submit</button>
+                            <button onClick={closeEditPassWord}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        return null;
+    };
+
     return (
         <div className="user-profile">
             <div className="avatar-container" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
@@ -162,8 +250,8 @@ const UserProfile = () => {
                 </>
             ) : (
                 <>
-                    {/* changePassword()没写 */}
-                    <button className="changePassw" type="button" onclick="changePassword()">Change Password</button>
+                    <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
+                    <div>{renderPasswordForm()}</div>
                     <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
                     <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <h1>Username: {user.username}</h1>

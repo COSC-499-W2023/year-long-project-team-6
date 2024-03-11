@@ -55,21 +55,36 @@ function updateUserAvatar(userId, avatarBlob, callback) {
         }
     });
 }
-function updateUserPassword(userId, newPassword, callback) {
-    const query = `
-        UPDATE users 
-        SET password = ?
-        WHERE userid = ?;
-    `;
 
-    db.query(query, [newPassword, userId], (err, result) => {
+function updateUserPassword(userId, currentPassword, newPassword, callback) {
+    // First, retrieve the current password from the database
+    db.query('SELECT password FROM users WHERE userid = ?', [userId], (err, result) => {
         if (err) {
-            callback(err, null);
-        } else {
-            callback(null, result);
+            return callback(err, null);
         }
+
+        const existingPassword = result[0].password;
+
+        // Verify if the current password is correct
+        if (currentPassword !== existingPassword) {
+            return callback(new Error('Current password is incorrect'), null);
+        }
+
+        // Update the password in the database
+        const updateQuery = `
+            UPDATE users 
+            SET password = ?
+            WHERE userid = ?;
+        `;
+        db.query(updateQuery, [newPassword, userId], (updateErr, updateResult) => {
+            if (updateErr) {
+                return callback(updateErr, null);
+            }
+            callback(null, updateResult);
+        });
     });
 }
+
 
 
 module.exports = {
