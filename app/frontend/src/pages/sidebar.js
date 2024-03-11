@@ -23,7 +23,7 @@ const Sidebar = () => {
       setUserId(user.userid);
       console.log("User Id: " + user.userid);
     }
-  }, []);
+  }, [navigate]);
 
   const toggleModal = () => {
     setModalOpen(prev => !prev);
@@ -40,9 +40,14 @@ const Sidebar = () => {
     if (isModalOpen) setModalOpen(false);
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('user');
-    navigate('/login');
+  //logout confirmation
+  const handleLogoutClick = () => {
+    const shouldLogout = window.confirm('Are you sure you want to logout?');
+
+    if (shouldLogout) {
+      sessionStorage.removeItem('user');
+      navigate('/login');
+    }
   };
 
 
@@ -104,34 +109,34 @@ const Sidebar = () => {
 
   const joinGroup = async () => {
     if (searchValue.length === 5) {
-        try {
-            const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ inviteCode: searchValue })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                alert("Successfully joined the group!");
-                window.location.reload();
-            } else {
-              console.log(data);
-              if (data.error) {
-                alert(data.error);
-                } else {
-                setResult(data.message || "Error to join groups");
-                }
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            setResult("Failed to join the group.");
+      try {
+        const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ inviteCode: searchValue })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert("Successfully joined the group!");
+          window.location.reload();
+        } else {
+          console.log(data);
+          if (data.error) {
+            alert(data.error);
+          } else {
+            setResult(data.message || "Error to join groups");
+          }
         }
+      } catch (error) {
+        console.error('Error:', error);
+        setResult("Failed to join the group.");
+      }
     } else {
-        setResult('Please enter a 5-character code.');
+      setResult('Please enter a 5-character code.');
     }
-};
+  };
 
 
 
@@ -140,7 +145,7 @@ const Sidebar = () => {
       <div className="topnav">
         <div className="topnav-right">
           <button onClick={handleProfileClick}>Profile</button>
-          <button onClick={handleLogout} className='logout-button'>
+          <button onClick={handleLogoutClick} className='logout-button'>
             Logout
           </button>
         </div>
@@ -157,7 +162,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link to="/RecordedPage" className={activeLink === 'RecordedPage' ? 'active' : ''} onClick={() => handleLinkClick('RecordedPage')}>
-              <img src='/downloads.png' alt="Recorded" />
+              <img src='/download_new.png' alt="Recorded" />
               <span className="tooltiptext">
                 Recorded
               </span>
@@ -165,7 +170,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link to="/PostPage" className={activeLink === 'PostPage' ? 'active' : ''} onClick={() => handleLinkClick('PostPage')}>
-              <img src='/post.ico' alt="Post" />
+              <img src='/post_new.png' alt="Post" />
               <span className="tooltiptext">
                 Post
               </span>

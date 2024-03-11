@@ -49,6 +49,14 @@ const groupPostRouter = require('./router/groupPostRouter');
 app.use(groupPostRouter);
 
 
+const announcementRouter = require('./router/announcementRouter');
+app.use(announcementRouter);
+
+
+const adminEditandDelete = require('./router/admin/editanddelete');
+app.use(adminEditandDelete);
+
+
 const server = http.createServer(app);
 
 server.listen(port, () => {

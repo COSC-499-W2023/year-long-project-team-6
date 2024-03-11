@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../component/CSS/post.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { initializeWebRTC, cleanupWebRTC } from './webrtc';
 import { uploadVideo } from './webrtc';
 
@@ -21,7 +21,10 @@ function PostPage() {
     const [blurFace, setBlurFace] = useState(false);
     const [groups, setGroups] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-
+    const location = useLocation();
+    const groupIdFromState = location.state?.groupId;
+    console.log('groupid navigated:',groupIdFromState)
+    
 
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
@@ -67,8 +70,12 @@ function PostPage() {
                     return response.json();
                 })
                 .then(groupsData => {
-                    setSelectedGroup(groupsData[0]?.groupid); 
                     setGroups(groupsData);
+                    const selectedGroupFromState = groupsData.find(group => group.groupid == groupIdFromState);
+                    console.log(selectedGroupFromState);
+                    if (selectedGroupFromState) {
+                        setSelectedGroup(selectedGroupFromState.groupid);
+                    }
                 })
                 .catch(error => console.error('Error fetching user groups:', error));
         }
