@@ -25,6 +25,8 @@ Debugging the funcitonality of deleting a group.
 
 Having a window to make user ensure if they want to log out. 
 
+Modifying the UI according to the peer testing comments. 
+
 Testing
 
 ## Completed Tasks 
@@ -36,7 +38,7 @@ The buttons in the menu of the members page are now visible by default.
 
 The confirm window is created after user press the log out button. 
 
-
+The UI of the website has been revised. 
 
 ## Task in progress
 For the window after logout, we will still work on it for better appealing. 
