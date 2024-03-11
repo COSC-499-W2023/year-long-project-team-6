@@ -134,7 +134,7 @@ const UserProfile = () => {
                 console.error('Error uploading avatar:', error);
             });
     };
-
+    
     const validatePassw = () => {
         const isLengthValid = newPassword.length >= 6 && newPassword.length <= 30;
         const hasDigit = /\d/.test(newPassword);
@@ -152,7 +152,7 @@ const UserProfile = () => {
 
     const changePassword = () => {
         if ((newPassword !== confirmNewPassword)) {
-            alert('New passwords do not match!');
+            alert('New password and confirmed password do not match!');
             return;
         } else if ((validatePassw() == false)) {
             alert("New password format is wrong!");
@@ -187,24 +187,28 @@ const UserProfile = () => {
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <span className="close" onClick={closeEditPassWord}>&times;</span>
                         <div className="change-password-modal">
+                            <p id='old'>Old password:</p>
                             <input
                                 type="password"
                                 placeholder="Current Password"
                                 value={currentPassword}
                                 onChange={(e) => setCurrentPassword(e.target.value)}
                             />
+                            <p id='new'>New password:</p>
                             <input
                                 type="password"
                                 placeholder="New Password"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                             />
+                            <p id='confirm'>Confirmed password:</p>
                             <input
                                 type="password"
-                                placeholder="Confirm New Password"
+                                placeholder="Confirmed Password"
                                 value={confirmNewPassword}
                                 onChange={(e) => setConfirmNewPassword(e.target.value)}
                             />
+                            <p></p>
                             <button onClick={changePassword}>Submit</button>
                             <button onClick={closeEditPassWord}>Cancel</button>
                         </div>

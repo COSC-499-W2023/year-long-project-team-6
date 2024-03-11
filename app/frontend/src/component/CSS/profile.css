@@ -31,7 +31,7 @@
 
 .user-profile p {
     padding-top: 20px;
-    margin: 0;
+    /* margin: 0; */
     color: #666;
     font-size: 20px;
 }
@@ -91,3 +91,42 @@ input#birthday:hover{
     cursor: pointer;
     /* text-decoration: underline; */
 }
+.change-password-modal {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    /* border-radius: 20px; */
+    
+}
+.modal-content{
+    border-radius: 20px;
+
+}
+.change-password-modal input{
+    border-radius: 5px;
+    padding: 5px 5px;
+    font-weight: bold;
+    width: 50%;
+
+}
+.modal-content p#confirm{
+    margin-left: -88px;
+    margin-bottom: 5px;
+}
+.modal-content p#old{
+    margin-left: -120px;
+    margin-bottom: 5px;
+
+}
+.modal-content p#new{
+    margin-left: -120px;
+    margin-bottom: 5px;
+
+}
+.change-password-modal button{
+    width: 180px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
