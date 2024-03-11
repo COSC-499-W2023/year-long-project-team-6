@@ -534,3 +534,71 @@
 *Table format:*
 ![Table](Term_2_Week_6/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 7 and 8)
+
+## Applicable date range
+**February/19/2024** to **March/3/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week 8. 
+* Complete the clickable avatar feature on the member list page. (Complete it on Week 7)
+* Complete the clckable name feature which will show the information about the members. 
+* Complete the selection bar filtering function based on the user's role. 
+* Complete the peer evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week 8. 
+* Completed the clickable avatar at week 7 and user able to see the basic information of the people in the same group. 
+* Completed the clickable name in the members list page and its function is similar to the clickable avatar.
+* Completed the role filtering feature for the selection bar in the members page. Therefore, client can filter out users by thier different roles.
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_7&8/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_7&8/Board.png)
+*Table format:*
+![Table](Term_2_Week_7&8/Table.png)
+*missions with tag "done before" are from the previous weeks.*
+
+*** 
+***
+***
+
+# Individual Log - Zetian Zhao (Week 9)
+
+## Applicable date range
+**March/4/2024** to **March/10/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week 9. 
+* Have a button for changing the password for the user. 
+* Make a form that require current password, new passoword and confirm your new password.
+* Complete the peer testing. 
+* Complete the peer evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week 9. 
+* The button that able to change the password is properly working. 
+* The form has done and is activated by the "change password" button and validation of the new password is also existed. 
+* Completed the peer testing.
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_9/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_9/Board.png)
+*Table format:*
+![Table](Term_2_Week_9/Table.png)
+*missions with tag "done before" are from the previous weeks.*
