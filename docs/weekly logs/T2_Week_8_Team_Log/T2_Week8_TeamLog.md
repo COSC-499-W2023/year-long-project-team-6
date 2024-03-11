@@ -1,4 +1,4 @@
-# Team Log - _Team 8_
+# Team Log - _Team 6_
 
 ## Reminder of username 
 * skywalker007-cpu --- **Zetian Zhao**
