@@ -242,7 +242,7 @@ function MembersPage() {
                             )}
                         {userId == adminid && (
                             <>
-                            <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
+                            <button onClick={() => deleteGroup(groupId)} className='dropdown-button'>Delete Group</button>
                             <button onClick={navigateToAnnounce} className='dropdown-button'>Create Announcement</button>
                             </>
                         )}
