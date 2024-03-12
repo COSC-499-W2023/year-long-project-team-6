@@ -120,10 +120,6 @@ function LoginSignupForm() {
         }
     };
 
-    // const validateRole = () => {
-    //     return role !== "";
-    // };
-
     const toggleAction = () => {
         setAction(action === "Login" ? "Sign Up" : "Login");
     };
