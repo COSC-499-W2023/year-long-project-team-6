@@ -33,7 +33,7 @@ router.get('/viewAnnouncement/:groupId', (req, res) => {
         }
     });
 });
-router.get('/post/:postId', (req, res) => {
+router.get('/announcegetpost/:postId', (req, res) => {
     const { postId } = req.params;
     console.log(postId);
     announceDAO.getPostById(postId, (err, post) => {
