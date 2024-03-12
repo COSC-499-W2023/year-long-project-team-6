@@ -24,7 +24,19 @@
     font-size: 16px;
     cursor: pointer;
 }
-
+.dropdown-button{
+    background: white;
+border: 1px solid grey;
+cursor: pointer;
+color: black;
+padding: 8px;
+}
+.dropdown-button:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+transform: translateY(-3.5px);
+background: white;
+cursor: pointer;
+}
 .members-table {
     margin-left: 200px;
     width: 80%;
