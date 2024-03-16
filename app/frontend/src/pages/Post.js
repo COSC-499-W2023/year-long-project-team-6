@@ -23,7 +23,6 @@ function PostPage() {
     const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
     const groupIdFromState = location.state?.groupId;
-    console.log('groupid navigated:',groupIdFromState)
     
 
 
@@ -180,6 +179,9 @@ function PostPage() {
         console.log('Click - isPlaying:', isPlaying, 'Refs:', localView.current);
 
         if (!isPlaying) {
+            console.log(localView.current);
+            
+            
             setTimeout(async () => {
                 if (localView.current) {
                     try {
@@ -225,6 +227,7 @@ function PostPage() {
             signalingClientRef.current = null;
             peerConnectionRef.current = null;
             setShowWebRTC(false);
+            
         }
         setIsPlaying(!isPlaying);
     };

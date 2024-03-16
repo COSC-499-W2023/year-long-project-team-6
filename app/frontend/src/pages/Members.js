@@ -20,7 +20,7 @@ function MembersPage() {
     const [showModal, setShowModal] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -229,16 +229,17 @@ function MembersPage() {
                     
                         <div className="dropdown-content">
                         {userId !== adminid && (
-                            <button onClick={navigateToGroupPostMember(userId)}>View Posts</button>
+                            <button onClick={navigateToGroupPostMember(userId)} className='dropdown-button'>View Posts</button>
                             )}
                         {userId == adminid && (
                             <>
-                            <button onClick={() => deleteGroup(groupId)}>Delete Group</button>
-                            <button onClick={navigateToAnnounce} className="navigate-announce-button">Create Announcement</button>
+                            <button onClick={() => deleteGroup(groupId)} className='dropdown-button'>Delete Group</button>
+                            <button onClick={navigateToAnnounce} className='dropdown-button'>Create Announcement</button>
                             </>
                         )}
-                        <button onClick={navigateToView} className="navigate-view-announce-button">View Announcement</button>
-                        <button onClick={navigateToPostPage} className="navigate-post-page-button">Create Post</button>
+
+                        <button onClick={navigateToPostPage} className='dropdown-button'>Create Post</button>
+                        <button onClick={navigateToView} className='dropdown-button'>View Announcement</button>
                         </div>
 
                 </div>

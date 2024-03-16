@@ -40,9 +40,14 @@ const Sidebar = () => {
     if (isModalOpen) setModalOpen(false);
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('user');
-    navigate('/login');
+  //logout confirmation
+  const handleLogoutClick = () => {
+    const shouldLogout = window.confirm('Are you sure you want to logout?');
+
+    if (shouldLogout) {
+      sessionStorage.removeItem('user');
+      navigate('/login');
+    }
   };
 
 
@@ -140,7 +145,7 @@ const Sidebar = () => {
       <div className="topnav">
         <div className="topnav-right">
           <button onClick={handleProfileClick}>Profile</button>
-          <button onClick={handleLogout} className='logout-button'>
+          <button onClick={handleLogoutClick} className='logout-button'>
             Logout
           </button>
         </div>

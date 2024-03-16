@@ -28,7 +28,7 @@ const handleView = (postId) =>{
     navigate(`/Video/${postId}`);
 }
     const fetchPostTitle = (postId) => {
-        fetch(`http://localhost:5001/post/${postId}`)
+        fetch(`http://localhost:5001/announcegetpost/${postId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -36,7 +36,10 @@ const handleView = (postId) =>{
                 return response.json();
             })
             .then(data => {
-                setPostTitles(prevTitles => ({ ...prevTitles, [postId]: data.post_title }));
+                setPostTitles(prevTitles => ({ ...prevTitles, [postId]: {
+                    title: data.post_title,
+                    description: data.post_text 
+                } }));
             })
             .catch(error => console.error('Error fetching post:', error));
     };
@@ -75,11 +78,15 @@ const handleView = (postId) =>{
                 </tr>
                 <tr>
                 <td>
-                {announcement.attached_post ? (
-        <span onClick={() => handleView(announcement.attached_post)}>
-            <b>Post: </b> {postTitles[announcement.attached_post] || 'Loading...'}
-        </span>
-    ) : ""}
+
+                {announcement.attached_post && postTitles[announcement.attached_post] ? (
+
+                        <div className='announcepost' onClick={() => handleView(announcement.attached_post)}>
+                            <b>Attached Post: </b> 
+                            <p className='attachposttitle'>{postTitles[announcement.attached_post].title}</p>
+                            <p className='attachposttext'>{postTitles[announcement.attached_post].description}</p>
+                        </div>
+                    ) : ""}
 </td>
                 </tr>
             </tbody>
