@@ -288,9 +288,10 @@ function MembersPage() {
                                     <td>
                                     <button onClick={() => {
                                         if (selectedMember?.userid) {
-                                            navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
+                                            navigateToGroupPostMember(selectedMember.userid);
                                         }
                                     }}>View Posts</button>
+
                                         {userId == adminid && (
                                             <button className='editButton' onClick={() => {
                                                 setSelectedMember(member);
