@@ -74,7 +74,7 @@ function MembersPage() {
 
     const deleteGroup = async (groupId) => {
         try {
-            fetch(`http://localhost:5001/admin-group/${groupId}`, {
+            fetch(`http://localhost:5001/delete-group/${groupId}`, {
                 method: 'DELETE'
             }).then(
                 response => {
