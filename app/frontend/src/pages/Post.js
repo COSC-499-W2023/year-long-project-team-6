@@ -134,7 +134,7 @@ function PostPage() {
             })
             .finally(() => {
                 setIsLoading(false);
-                setIsSubmitting(false); // Hide progress bar after submission is complete
+                setIsSubmitting(false); 
             });
     
                 // Cleanup WebRTC after successful navigation
@@ -144,7 +144,6 @@ function PostPage() {
                     peerConnectionRef.current = null;
                 }
     
-                // Reset WebRTC-related states if necessary
                 setShowWebRTC(false);
                 setIsPlaying(false);
     
@@ -203,7 +202,7 @@ function PostPage() {
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
-    // Temporary array to hold recorded chunks, outside of the function
+
     let tempRecordedChunks = [];
 
     const handleTogglePlay = async () => {
@@ -220,8 +219,7 @@ function PostPage() {
                         signalingClientRef.current = webrtc.signalingClient;
                         peerConnectionRef.current = webrtc.peerConnection;
 
-                        // Initialize MediaRecorder here
-                        const stream = localView.current.srcObject; // Assuming this is your local stream
+                        const stream = localView.current.srcObject;
                         console.log('stream', stream);
 
                         const recorder = new MediaRecorder(stream);
@@ -235,7 +233,7 @@ function PostPage() {
 
                         recorder.onstop = async () => {
                             const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
-                            setRecordedVideo(blob); // Assuming you have a state called recordedVideo
+                            setRecordedVideo(blob); 
                             tempRecordedChunks = [];
                         };
 
