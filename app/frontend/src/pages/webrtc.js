@@ -1,29 +1,7 @@
 const SignalingClient = require('amazon-kinesis-video-streams-webrtc').SignalingClient;
 const KVSWebRTC = require('amazon-kinesis-video-streams-webrtc');
-// Add at the top of your webrtc.js
-const uploadVideo = async (blob) => {
-    const formData = new FormData();
-    formData.append('video', blob, 'video.webm'); // Adjust the file name as needed
-
-    try {
-        const response = await fetch('http://localhost:5001/upload-video', {
-            method: 'POST',
-            body: formData,
-        });
-
-        const result = await response.json();
-        console.log('Upload result:', result);
-        return result; // Return the result for further processing if needed
-    } catch (error) {
-        console.error('Error uploading video:', error);
-        throw error; // Throw the error to be handled by the caller
-    }
-};
-
-// Export the function
 export { uploadVideo };
 
-// Function to request signaling channel endpoint and ICE server configuration from the server
 async function getSignalingChannelConfig(channelARN) {
     const response = await fetch(`http://localhost:5001/getSignalingChannelConfig?channelARN=${encodeURIComponent(channelARN)}`);
     if (!response.ok) {
