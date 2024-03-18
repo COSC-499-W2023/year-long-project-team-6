@@ -542,3 +542,45 @@
 
 *Table format:*
 ![Task1](t2w9/table.png)
+
+# Individual Log - Wenrui Chen (t2w10)
+
+## Applicable data range
+**March/11/2024** to **March/17/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Meetings and see what's the plan. 
+* changePassword conditions improvement
+* improvement from Peer testing reflection
+* logout confirmation modal
+* Complete the peer evaluation. 
+
+
+## Completed Tasks 
+* meetings 
+* changePassword conditions improved
+* improvement from peer testing reflection
+* peer evaluation
+* custom logout modal
+
+## Task in progress
+* inspect error when change password (but it doesnt affect our frontend and backend)
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](t2w10/PE.png)
+
+## Task on Board
+*Board format:*
+![Board](t2w10/Board.png)
+
+<!-- *Tests (Test reports are shown in team log part):*<br>
+![Board](t2w4/1.jpg)
+![Board](t2w4/2.jpg)
+![Board](t2w4/3.jpg) -->
+<!-- ![Board](t2w3/t4.png)
+![Board](t2w3/t5.png)
+![Board](t2w3/t6.png) -->
+
+*Table format:*
+![Task1](t2w10/table.png)
