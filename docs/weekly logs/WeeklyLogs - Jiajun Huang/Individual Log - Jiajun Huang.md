@@ -484,3 +484,34 @@ This week, I integrated frontend development for member page UI according to pee
 ![Board](T2W9_img/Board.png)
 *Table format:*
 ![Table](T2W9_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 10)
+
+## Applicable data range
+**March/11/2023** to **March/17/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Met with my team members
+* Adding post title and description in view video page
+* Improve UI for recorded page
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Added post title and description in view video page
+* UI updated for recorded page
+* Peer evaluation
+
+
+## Self reflection
+This week, I add post title and description in view video page, this would let user know which post they are looking at. There was a UI bug detected last week in recorded page, I have fixed that. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W10_img/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2W10_img/Board.png)
+*Table format:*
+![Table](T2W10_img/Table.png)
