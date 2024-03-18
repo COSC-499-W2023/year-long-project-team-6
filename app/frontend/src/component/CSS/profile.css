@@ -128,5 +128,19 @@ input#birthday:hover{
     font-weight: bold;
     font-size: 18px;
 }
+.input-container {
+    display: flex;
+    align-items: center;
+}
 
+.input-container input[type="password"], 
+.input-container input[type="text"] {
+    margin-left: 120px; 
+}
+
+.input-container input[type="checkbox"]{
+    width: 16px;
+    /* height: 3px; */
+    margin-left: 8px;
+}
 
