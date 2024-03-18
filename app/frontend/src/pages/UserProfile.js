@@ -83,7 +83,7 @@ const UserProfile = () => {
         // Trigger file input when the avatar image is clicked
         if (fileInputRef.current) {
             fileInputRef.current.click();
-            fetchUserProfile();
+            // fetchUserProfile();
         }
     };
 
@@ -134,7 +134,7 @@ const UserProfile = () => {
                 console.error('Error uploading avatar:', error);
             });
     };
-    
+
     const validatePassw = () => {
         const isLengthValid = newPassword.length >= 6 && newPassword.length <= 30;
         const hasDigit = /\d/.test(newPassword);
@@ -221,14 +221,17 @@ const UserProfile = () => {
 
     return (
         <div className="user-profile">
-            <div className="avatar-container" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                <img
-                    src={user.user_image}
-                    alt={`${user.username}'s profile`}
-                    onClick={handleAvatarClick}
-                    style={{ cursor: 'pointer' }}
-                    title="Change Avatar"
-                />
+            <div className="avatar-container">
+                <div className="avatar-hover">
+                    <img
+                        src={user.user_image}
+                        alt={`${user.username}'s profile`}
+                        onClick={handleAvatarClick}
+                        style={{ cursor: 'pointer' }}
+                        title="Change Avatar"
+                    />
+                    <span className="hovering-text">Change Avatar</span>
+                </div>
 
                 {isEditMode ? (
 

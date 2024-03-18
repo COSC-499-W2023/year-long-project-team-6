@@ -13,6 +13,8 @@ const Sidebar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const modalRef = useRef(null);
   const navigate = useNavigate();
+  // set the logout modal constant.  
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     const sessionUser = sessionStorage.getItem('user');
@@ -42,12 +44,8 @@ const Sidebar = () => {
 
   //logout confirmation
   const handleLogoutClick = () => {
-    const shouldLogout = window.confirm('Are you sure you want to logout?');
-
-    if (shouldLogout) {
-      sessionStorage.removeItem('user');
-      navigate('/login');
-    }
+    // activate the modal when the log out button being clicked. 
+    setShowLogoutModal(true);
   };
 
 
@@ -138,7 +136,26 @@ const Sidebar = () => {
     }
   };
 
+  // log out modal creation. 
+  const LogoutModal = () => {
+    return (
+      <div className="modal">
+        <div className="modal-content">
+          <span className="close" onClick={() => setShowLogoutModal(false)}>&times;</span>
+          <h3>Are you sure you want to log out from the website?</h3>
+          <button onClick={confirmLogout}>Yes</button>
+          <button onClick={() => setShowLogoutModal(false)}>No</button>
+        </div>
+      </div>
+    );
+  };
 
+  // when the log out confirm, do this. 
+  const confirmLogout = () => {
+    sessionStorage.removeItem('user');
+    navigate('/login');
+    setShowLogoutModal(false);
+  };
 
   return (
     <>
@@ -149,7 +166,10 @@ const Sidebar = () => {
             Logout
           </button>
         </div>
-      </div >
+        {/* log out modal render only when showLogoutModal is true */}
+        {/* https://stackoverflow.com/questions/45653564/react-js-avoid-the-modal-to-be-executed-when-the-component-is-rendered */}
+        {showLogoutModal && <LogoutModal />}
+      </div>
       <div className="sidebar">
         <ul>
           <li>
