@@ -191,7 +191,7 @@ function RecordedPage() {
                     <table id="videoTable">
                         <thead>
                             <tr>
-                                <td className="all">All Videos</td>
+                                <td className="all" colSpan='4'>All Videos</td>
                             </tr>
                         </thead>
                         <tbody>

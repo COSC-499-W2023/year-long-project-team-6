@@ -75,11 +75,26 @@ async function editPost(postId, newTitle, newText, callback) {
     });
 }
 
+async function getPostByPostId(postId, callback) {
+    const query = `
+        SELECT p.userid, p.post_id, p.post_title, p.post_date, p.post_text
+        FROM posts p
+        WHERE p.post_id = ?
+        `;
+    db.query(query, [postId], (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
+}
 
 
 
 module.exports = {
     getPostInfor,
     deletePost,
-    editPost
+    editPost,
+    getPostByPostId
 };
