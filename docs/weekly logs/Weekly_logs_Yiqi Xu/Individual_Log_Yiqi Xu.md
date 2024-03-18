@@ -570,3 +570,31 @@ This week, I successfully completed all my scheduled tasks, including holding a 
 ![Board](T2_w9_img/Board.png)
 *Table format:*
 ![Table](T2_w9_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 10)
+
+## Applicable data range
+**March/11/2023** to **March/17/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Debug for deleting group (if there is an announcement)
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Debugged for deleting group (if there is an announcement)
+* Finished Peer Evaluation
+
+## Self reflection
+This week, I successfully completed all my scheduled tasks, including holding a crucial meeting, debugged several functions in the backend. Make the code can work for the new functions.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w10_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w10_img/Board.png)
+*Table format:*
+![Table](T2_w10_img/Table.png)

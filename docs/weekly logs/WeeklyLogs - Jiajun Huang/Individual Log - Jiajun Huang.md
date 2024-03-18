@@ -451,3 +451,36 @@ This week, I integrated frontend development for UI for posting announcement pag
 ![Board](T2W8_img/Board.png)
 *Table format:*
 ![Table](T2W8_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 9)
+
+## Applicable data range
+**March/4/2023** to **March/10/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Met with my team members
+* Modify frontend according to peer testing review
+* Adding a button to make post as announcement while posting
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Modify frontend according to peer testing review
+* Peer evaluation
+
+## In Progress
+* Adding a button to make post as announcement while posting
+
+
+## Self reflection
+This week, I integrated frontend development for member page UI according to peer testing reviews. The work flow is much better now. I am still working on make post as announcement while posting, trying to find the best way to implement this functionality. Will be done by next week.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W9_img/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2W9_img/Board.png)
+*Table format:*
+![Table](T2W9_img/Table.png)

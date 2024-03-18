@@ -602,3 +602,37 @@
 *Table format:*
 ![Table](Term_2_Week_9/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+***
+***
+***
+
+# Individual Log - Zetian Zhao (Week 10)
+
+## Applicable date range
+**March/11/2024** to **March/17/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week 10. 
+* Create the validation for the changing password window.
+* Create the custom modal for the log out confirmation. 
+* Create the hovering text when the user hover in the image in the profile. (For the use of click image also able to change the avatar)
+* Complete the peer evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week 10. 
+* The validation of chaning password is currently working. (Lots of conditions have been considered.)
+* The confirmation modal is ready when user click the log out button. 
+* The "change avatar" text would be shown when the user is hovering in the current avatar. 
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_10/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_10/Board.png)
+*Table format:*
+![Table](Term_2_Week_10/Table.png)
+*missions with tag "done before" are from the previous weeks.*

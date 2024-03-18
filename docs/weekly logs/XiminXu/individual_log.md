@@ -499,3 +499,30 @@ Tasks done vs in progress
 In reflecting on recent tasks accomplished and those still in progress, I find satisfaction in addressing usability concerns by making the menu default open and resolving bugs in the announcement feature. Yet, the quest for improvement persists as I endeavor to enhance uploading efficiency and user experience with a progress bar. These efforts align with a commitment to continuous enhancement and user-centric design.
 ### 5. *From project board*
 ![Board](images21/pb.png)
+
+## Ximin Xu T2 week 9 personal log
+
+### 1. *Date Range*
+
+Mar.11-Mar.17
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images22/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. add uploading progress bar
+
+
+
+**In progress**
+ 1. bugs and testing 
+ 
+
+### 4. *Self Reflection and learned*
+Since most browser does not support mp4 recording of api mediarecording, i decide not to change the current architecture. i add up bars for indication
+### 5. *From project board*
+![Board](images22/pb.png)
