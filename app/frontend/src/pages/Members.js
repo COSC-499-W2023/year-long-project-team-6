@@ -74,7 +74,7 @@ function MembersPage() {
 
     const deleteGroup = async (groupId) => {
         try {
-            fetch(`http://localhost:5001/admin-group/${groupId}`, {
+            fetch(`http://localhost:5001/delete-group/${groupId}`, {
                 method: 'DELETE'
             }).then(
                 response => {
@@ -161,11 +161,6 @@ function MembersPage() {
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <span className="close" onClick={() => setShowModal(false)}>&times;</span>
                         <h2>Manage for {selectedMember?.username}</h2>
-                        <button onClick={() => {
-                            if (selectedMember?.userid) {
-                                navigate(`/groupPost/${groupId}/${selectedMember.userid}`);
-                            }
-                        }}>View Posts</button>
                         <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
                     </div>
                 </div>
@@ -231,11 +226,7 @@ function MembersPage() {
                         <option value="Sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
-                    <button onClick={toggleDropdown} style={{background: 'white', border: '1px solid grey', cursor: 'pointer', color: 'black', padding: '8px'}}>
-                        {isOpen ? 'Close Menu' : 'Group Menu'}
-                        <FaChevronDown />
-                        </button>
-                    {isOpen && (
+                    
                         <div className="dropdown-content">
                         {userId !== adminid && (
                             <button onClick={navigateToGroupPostMember(userId)} className='dropdown-button'>View Posts</button>
@@ -246,10 +237,11 @@ function MembersPage() {
                             <button onClick={navigateToAnnounce} className='dropdown-button'>Create Announcement</button>
                             </>
                         )}
+
                         <button onClick={navigateToPostPage} className='dropdown-button'>Create Post</button>
                         <button onClick={navigateToView} className='dropdown-button'>View Announcement</button>
                         </div>
-                    )}
+
                 </div>
                 <table className="members-table">
                     <thead>
@@ -295,6 +287,12 @@ function MembersPage() {
                                     </td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
+                                    <button onClick={() => {
+                                        if (selectedMember?.userid) {
+                                            navigateToGroupPostMember(selectedMember.userid);
+                                        }
+                                    }}>View Posts</button>
+
                                         {userId == adminid && (
                                             <button className='editButton' onClick={() => {
                                                 setSelectedMember(member);

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { getPostInfor, deletePost, editPost } = require('../dao/recordedDao');
+const { getPostInfor, deletePost, editPost, getPostByPostId } = require('../dao/recordedDao');
 const router = express.Router();
 
 // Get post information
@@ -54,6 +54,18 @@ router.post('/edit-posts', express.json(), (req, res) => {
         } else {
             res.status(200).send(`Post with ID ${postId} updated successfully`);
         }
+    });
+});
+
+router.get('/get-posts-postid/:post_id', (req, res) => {
+    const postId = req.params.post_id;
+    console.log("postid " + postId);
+    getPostByPostId(postId, (err, results) => {
+        if (err) {
+            console.error('Error fetching post:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.json(results);
     });
 });
 

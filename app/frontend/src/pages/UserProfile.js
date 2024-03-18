@@ -28,6 +28,11 @@ const UserProfile = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
     const [passwError, setPasswError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+
 
     // In order to automatically update the interface, we define a function that will be contained in the useEffect. 
     const fetchUserProfile = () => {
@@ -100,6 +105,7 @@ const UserProfile = () => {
         fetchUserProfile();
     };
 
+
     const handleSaveClick = () => {
         console.log('Session User:', user);
         axios.put(`http://localhost:5001/edit-profile/${user.userid}`, user)
@@ -151,13 +157,23 @@ const UserProfile = () => {
     };
 
     const changePassword = () => {
-        if ((newPassword !== confirmNewPassword)) {
-            alert('New password and confirmed password do not match!');
-            return;
-        } else if ((validatePassw() == false)) {
-            alert("New password format is wrong!");
+        if (!currentPassword && !newPassword && !confirmNewPassword) {
+            alert("Fields cannot be empty!");
             return;
         }
+        if (newPassword !== confirmNewPassword) {
+            alert('New password and confirmed password do not match!');
+            return;
+        }
+        if (!validatePassw()) {
+            alert("New password format is wrong! Make sure you have letters, digits and symbols");
+            return;
+        }
+        if (!currentPassword && newPassword === confirmNewPassword) {
+            alert("Please verify your current password!");
+            return;
+        }
+
 
         axios.put(`http://localhost:5001/update-password/${userId}`, {
             currentPassword,
@@ -165,11 +181,19 @@ const UserProfile = () => {
         })
             .then(response => {
                 console.log('Password changed:', response.data);
+                alert("Password changed successfully!");
                 closeEditPassWord();
             })
             .catch(error => {
                 console.error('Error:', error);
-                setError('Failed to change password.');
+                if (error.response && error.response.data === 'Current password is incorrect') {
+                    alert("Current password is incorrect!");
+                    setCurrentPassword('');
+                    setNewPassword('');
+                    setConfirmNewPassword('');
+                } else {
+                    setError('Failed to change password!');
+                }
             });
     };
 
@@ -188,26 +212,51 @@ const UserProfile = () => {
                         <span className="close" onClick={closeEditPassWord}>&times;</span>
                         <div className="change-password-modal">
                             <p id='old'>Old password:</p>
-                            <input
-                                type="password"
-                                placeholder="Current Password"
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                            />
+                            <div className="input-container">
+                                <input
+                                    type={showCurrentPassword ? "text" : "password"}
+                                    placeholder="Current Password"
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                />
+                                <input
+                                    title='show password'
+                                    type="checkbox"
+                                    onChange={() => setShowCurrentPassword(!showCurrentPassword)}
+                                />
+                            </div>
+
                             <p id='new'>New password:</p>
-                            <input
-                                type="password"
-                                placeholder="New Password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                            />
+                            <div className="input-container">
+                                <input
+                                    type={showNewPassword ? "text" : "password"}
+                                    placeholder="Letters, digits and symbols"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                />
+                                <input
+                                    title='show password'
+                                    type="checkbox"
+                                    onChange={() => setShowNewPassword(!showNewPassword)}
+                                />
+                            </div>
+
                             <p id='confirm'>Confirmed password:</p>
-                            <input
-                                type="password"
-                                placeholder="Confirmed Password"
-                                value={confirmNewPassword}
-                                onChange={(e) => setConfirmNewPassword(e.target.value)}
-                            />
+                            <div className="input-container">
+                                <input
+                                    type={showConfirmNewPassword ? "text" : "password"}
+                                    placeholder="Letters, digits and symbols"
+                                    value={confirmNewPassword}
+                                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                />
+                                <input
+                                    title='show password'
+                                    type="checkbox"
+                                    onChange={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+                                />
+                            </div>
+
+
                             <p></p>
                             <button onClick={changePassword}>Submit</button>
                             <button onClick={closeEditPassWord}>Cancel</button>
@@ -259,6 +308,7 @@ const UserProfile = () => {
                 <>
                     <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
                     <div>{renderPasswordForm()}</div>
+
                     <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
                     <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <h1>Username: {user.username}</h1>
