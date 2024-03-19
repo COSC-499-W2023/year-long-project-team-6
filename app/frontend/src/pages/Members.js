@@ -74,7 +74,7 @@ function MembersPage() {
 
     const deleteGroup = async (groupId) => {
         try {
-            fetch(`http://localhost:5001/admin-group/${groupId}`, {
+            fetch(`http://localhost:5001/delete-group/${groupId}`, {
                 method: 'DELETE'
             }).then(
                 response => {
@@ -187,6 +187,12 @@ function MembersPage() {
         return `${year}-${month}-${day}`;
     };
 
+    // Function inside your component
+    const handleViewPostsClick = (member) => {
+        setSelectedMember(member);
+        navigate(`/groupPost/${groupId}/${member.userid}`);
+    };
+  
 
     return (
         <>
@@ -287,11 +293,7 @@ function MembersPage() {
                                     </td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
-                                    <button onClick={() => {
-                                        if (selectedMember?.userid) {
-                                            navigateToGroupPostMember(selectedMember.userid);
-                                        }
-                                    }}>View Posts</button>
+                                    <button onClick={() => handleViewPostsClick(member)}>View Posts</button>
 
                                         {userId == adminid && (
                                             <button className='editButton' onClick={() => {
