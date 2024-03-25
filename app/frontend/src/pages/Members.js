@@ -160,8 +160,9 @@ function MembersPage() {
                 <div className="modal-backdrop" onClick={() => setShowModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-                        <h2>Manage for {selectedMember?.username}</h2>
-                        <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
+                        <h2>Are you sure to delete {selectedMember?.username}</h2>
+                        <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Yes</button>
+                        <button onClick={() => setShowModal(false)}>No</button>
                     </div>
                 </div>
             );
@@ -234,9 +235,6 @@ function MembersPage() {
                     </select>
                     
                         <div className="dropdown-content">
-                        {userId !== adminid && (
-                            <button onClick={navigateToGroupPostMember(userId)} className='dropdown-button'>View Posts</button>
-                            )}
                         {userId == adminid && (
                             <>
                             <button onClick={() => deleteGroup(groupId)} className='dropdown-button'>Delete Group</button>
@@ -254,6 +252,7 @@ function MembersPage() {
                         <tr>
                             <th>Name</th>
                             <th>Role</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -278,7 +277,10 @@ function MembersPage() {
                                 return false;
                             })
                             .map((member, index) => (
-                                <tr key={member.userid + '-' + index}>
+                                <tr key={member.userid + '-' + index}
+                                    onClick={navigateToGroupPostMember(member.userid)}
+                                    style={{ cursor: 'pointer' }}
+                                    className="table-row-hover">
                                     <td>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                             <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%', cursor: 'pointer', transition: 'transform 0.3s ease' }} onClick={() => handleUserClick(member.userid)} alt="avatar"
@@ -294,12 +296,15 @@ function MembersPage() {
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
                                     <button onClick={() => handleViewPostsClick(member)}>View Posts</button>
+                                        </td>
+                                    <td>
 
                                         {userId == adminid && (
-                                            <button className='editButton' onClick={() => {
+                                            <button className='editButton' onClick={(e) => {
+                                                e.stopPropagation();
                                                 setSelectedMember(member);
                                                 setShowModal(true);
-                                            }}>Manage</button>
+                                            }}>Delete Member</button>
                                         )}
                                         {renderEditForm()}
                                     </td>
