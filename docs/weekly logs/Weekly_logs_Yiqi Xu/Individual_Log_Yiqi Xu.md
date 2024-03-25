@@ -598,3 +598,35 @@ This week, I successfully completed all my scheduled tasks, including holding a 
 ![Board](T2_w10_img/Board.png)
 *Table format:*
 ![Table](T2_w10_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 11)
+
+## Applicable data range
+**March/18/2023** to **March/24/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Update the aws uploading (Return progress)
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Updated the aws uploading (Return progress)
+* Finished Peer Evaluation
+
+## In progress
+* Make the real-time progress return
+* Update progress bar
+
+## Self reflection
+This week, I successfully completed all my scheduled tasks, including holding a crucial meeting, updated several functions and routers in the backend. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w11_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w11_img/Board.png)
+*Table format:*
+![Table](T2_w11_img/Table.png)
