@@ -88,7 +88,7 @@ const UserProfile = () => {
         // Trigger file input when the avatar image is clicked
         if (fileInputRef.current) {
             fileInputRef.current.click();
-            // fetchUserProfile();
+            fetchUserProfile();
         }
     };
 
@@ -112,6 +112,7 @@ const UserProfile = () => {
             .then(response => {
                 console.log('Profile updated:', response.data);
                 setIsEditMode(false);
+                fetchUserProfile();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -133,7 +134,6 @@ const UserProfile = () => {
         })
             .then(response => {
                 console.log('Avatar updated successfully', response.data);
-                //This will refresh the page with new avatar image. 
                 fetchUserProfile();
             })
             .catch(error => {
@@ -173,7 +173,10 @@ const UserProfile = () => {
             alert("Please verify your current password!");
             return;
         }
-
+        if (newPassword === currentPassword) { // Check if new password is the same as the old one
+            alert("New password cannot be the same as the old password!");
+            return;
+        }
 
         axios.put(`http://localhost:5001/update-password/${userId}`, {
             currentPassword,
@@ -197,6 +200,7 @@ const UserProfile = () => {
             });
     };
 
+
     const closeEditPassWord = () => {
         setShowChangePasswordModal(false);
         setCurrentPassword('');
@@ -219,11 +223,12 @@ const UserProfile = () => {
                                     value={currentPassword}
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                 />
-                                <input
-                                    title='show password'
-                                    type="checkbox"
-                                    onChange={() => setShowCurrentPassword(!showCurrentPassword)}
-                                />
+                                <span
+                                    className="show-password-icon"
+                                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                                >
+                                    {!showCurrentPassword ? "show" : "hide"}
+                                </span>
                             </div>
 
                             <p id='new'>New password:</p>
@@ -234,11 +239,12 @@ const UserProfile = () => {
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
                                 />
-                                <input
-                                    title='show password'
-                                    type="checkbox"
-                                    onChange={() => setShowNewPassword(!showNewPassword)}
-                                />
+                                <span
+                                    className="show-password-icon"
+                                    onClick={() => setShowNewPassword(!showNewPassword)}
+                                >
+                                    {!showNewPassword ? "show" : "hide"}
+                                </span>
                             </div>
 
                             <p id='confirm'>Confirmed password:</p>
@@ -249,13 +255,13 @@ const UserProfile = () => {
                                     value={confirmNewPassword}
                                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                                 />
-                                <input
-                                    title='show password'
-                                    type="checkbox"
-                                    onChange={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
-                                />
+                                <span
+                                    className="show-password-icon"
+                                    onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+                                >
+                                    {!showConfirmNewPassword ? "show" : "hide"}
+                                </span>
                             </div>
-
 
                             <p></p>
                             <button onClick={changePassword}>Submit</button>
@@ -279,11 +285,11 @@ const UserProfile = () => {
                         style={{ cursor: 'pointer' }}
                         title="Change Avatar"
                     />
-                    <span className="hovering-text">Change Avatar</span>
+                    {isEditMode && <span className="hovering-text">Change Avatar</span>} 
+                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                 </div>
 
                 {isEditMode ? (
-
                     <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
                 ) : (
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
@@ -293,7 +299,10 @@ const UserProfile = () => {
 
             {isEditMode ? (
                 <>
-
+                    <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
+                    <div>{renderPasswordForm()}</div>
+                    <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
+                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} id='username' /></p>
                     <p>Gender:
                         <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
@@ -306,11 +315,6 @@ const UserProfile = () => {
                 </>
             ) : (
                 <>
-                    <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
-                    <div>{renderPasswordForm()}</div>
-
-                    <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
-                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <h1>Username: {user.username}</h1>
                     <p><strong>Email: </strong>{user.email}</p>
                     <p><strong>Gender: </strong>{user.gender}</p>
@@ -319,6 +323,7 @@ const UserProfile = () => {
             )}
         </div>
     );
+
 }
 
 export default UserProfile;
