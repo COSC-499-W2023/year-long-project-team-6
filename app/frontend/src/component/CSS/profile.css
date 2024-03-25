@@ -142,10 +142,7 @@ input#birthday:hover {
     font-size: 18px;
 }
 
-.input-container {
-    display: flex;
-    align-items: center;
-}
+
 
 .avatar-hover {
     position: relative;
@@ -177,11 +174,6 @@ input#birthday:hover {
     margin-left: 120px;
 }
 
-.input-container input[type="checkbox"] {
-    width: 16px;
-    /* height: 3px; */
-    margin-left: 8px;
-}
 
 /* Additional styles for a line */
 .hovering-text::before {
@@ -192,4 +184,20 @@ input#birthday:hover {
     transform: translateX(-50%);
     width: 2px;
     height: 100%;
+}
+.input-container span[type="show password"]{
+    margin-right: 10px;
+    /* font-weight: bold; */
+}
+.input-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.show-password-icon {
+    position: absolute;
+    right: 120px; 
+    /* margin-right: 20px; */
+    cursor: pointer;
+    user-select: none;
 }

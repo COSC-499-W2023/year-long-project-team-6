@@ -219,11 +219,13 @@ const UserProfile = () => {
                                     value={currentPassword}
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                 />
-                                <input
+                                <span
                                     title='show password'
-                                    type="checkbox"
-                                    onChange={() => setShowCurrentPassword(!showCurrentPassword)}
-                                />
+                                    className="show-password-icon"
+                                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                                >
+                                    {!showCurrentPassword ? "show" : "hide"}  
+                                </span>
                             </div>
 
                             <p id='new'>New password:</p>
@@ -234,11 +236,13 @@ const UserProfile = () => {
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
                                 />
-                                <input
+                                <span
                                     title='show password'
-                                    type="checkbox"
-                                    onChange={() => setShowNewPassword(!showNewPassword)}
-                                />
+                                    className="show-password-icon"
+                                    onClick={() => setShowNewPassword(!showNewPassword)}
+                                >
+                                    {!showNewPassword ? "show" : "hide"}  
+                                </span>
                             </div>
 
                             <p id='confirm'>Confirmed password:</p>
@@ -249,13 +253,14 @@ const UserProfile = () => {
                                     value={confirmNewPassword}
                                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                                 />
-                                <input
+                                <span
                                     title='show password'
-                                    type="checkbox"
-                                    onChange={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
-                                />
+                                    className="show-password-icon"
+                                    onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+                                >
+                                    {!showConfirmNewPassword ? "show" : "hide"}  
+                                </span>
                             </div>
-
 
                             <p></p>
                             <button onClick={changePassword}>Submit</button>
@@ -293,7 +298,10 @@ const UserProfile = () => {
 
             {isEditMode ? (
                 <>
-
+                    <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
+                    <div>{renderPasswordForm()}</div>
+                    <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
+                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} id='username' /></p>
                     <p>Gender:
                         <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
@@ -306,11 +314,6 @@ const UserProfile = () => {
                 </>
             ) : (
                 <>
-                    <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
-                    <div>{renderPasswordForm()}</div>
-
-                    <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
-                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <h1>Username: {user.username}</h1>
                     <p><strong>Email: </strong>{user.email}</p>
                     <p><strong>Gender: </strong>{user.gender}</p>
