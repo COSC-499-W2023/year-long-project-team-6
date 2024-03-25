@@ -261,20 +261,15 @@ function MembersPage() {
                     <tbody>
                         {members
                             .filter(member => {
-                                // for the search function
                                 const matchesSearchTerm = member.username.toLowerCase().includes(searchTerm.toLowerCase());
 
                                 if (roleFilter === 'All Roles') {
-                                    // return all 
                                     return matchesSearchTerm;
                                 } else if (roleFilter === 'Admin') {
-                                    // only return the user that have admin id. 
                                     return matchesSearchTerm && (member.userid == adminid);
                                 } else if (roleFilter === 'Sender') {
-                                    // only return the users do not have the admin id. 
                                     return matchesSearchTerm && (member.userid != adminid);
                                 }
-                                // default return false. 
                                 return false;
                             })
                             .map((member, index) => (
