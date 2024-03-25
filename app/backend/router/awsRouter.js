@@ -1,4 +1,6 @@
 require('dotenv').config({ path: "./process.env" });
+const { Upload } = require("@aws-sdk/lib-storage");
+
 const mysql = require('mysql');
 process.env.AWS_SDK_LOAD_CONFIG = '1'; 
 process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658'; 
@@ -23,6 +25,7 @@ const connection = mysql.createConnection({
 });
 const postDao = new PostDao(connection);
 const ffmpegPath = ffmpegStatic;
+
 const ffmpeg = require('fluent-ffmpeg');
 const { error } = require('console');
 ffmpeg.setFfmpegPath(ffmpegPath);
@@ -94,7 +97,6 @@ router.get('/getSignalingChannelConfig', async (req, res) => {
     }
 });
 
-
 router.post('/upload-video', upload.single('video'), async (req, res) => {
     try {
         const file = req.file;
@@ -108,6 +110,7 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
         const mp4FileName = `${Date.now()}_converted.mp4`;
         const mp4FilePath = path.join(dirPath, mp4FileName); // Use absolute path
         const s3Key = "videos/" + mp4FileName;
+
         // Convert video to MP4 using FFmpeg
         await new Promise((resolve, reject) => {
             ffmpeg(file.path)
@@ -123,27 +126,37 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
 
         const fileStream = fs.createReadStream(mp4FilePath);
 
-        const uploadParams = {
-            Bucket: "cosc499-video-submission",
-            Key: s3Key,
-            Body: fileStream,
-            ContentType: 'video/mp4',
-            ContentDisposition: 'attachment'
-        };
+        // Upload to S3 with progress tracking
+        const upload = new Upload({
+            client: s3Client, 
+            params: {
+                Bucket: "cosc499-video-submission",
+                Key: s3Key,
+                Body: fileStream,
+                ContentType: 'video/mp4',
+                ContentDisposition: 'attachment'
+            },
+            leavePartsOnError: false, 
+        });
 
-        const data = await s3Client.send(new PutObjectCommand(uploadParams));
+        upload.on('httpUploadProgress', (progress) => {
+            console.log(`Upload progress: ${progress.loaded} / ${progress.total}`);
+        });
+
+        const data = await upload.done();
 
         fs.unlinkSync(file.path);
         fs.unlinkSync(mp4FilePath);
-        res.status(200).json({ message: 'Video uploaded successfully', 
-        data,
-        key: s3Key
-    });
+
+        res.status(200).json({ message: 'Video uploaded successfully', data, key: s3Key });
     } catch (error) {
         console.error('Error uploading video:', error);
         res.status(500).json({ error: 'Error uploading video', details: error.toString() });
     }
 });
+
+
+
 router.get('/get-video-url/:videoId', (req, res) => {
     const videoId = req.params.videoId;
     

@@ -44,7 +44,7 @@ function VideoPage() {
         };
 
         fetchVideoUrl();
-    }, [videoId]); 
+    }, [videoId]);
 
     const handleDownload = (url, id) => {
         const anchor = document.createElement('a');
