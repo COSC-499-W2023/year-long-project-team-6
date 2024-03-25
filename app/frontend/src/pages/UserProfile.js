@@ -173,7 +173,10 @@ const UserProfile = () => {
             alert("Please verify your current password!");
             return;
         }
-
+        if (newPassword === currentPassword) { // Check if new password is the same as the old one
+            alert("New password cannot be the same as the old password!");
+            return;
+        }
 
         axios.put(`http://localhost:5001/update-password/${userId}`, {
             currentPassword,
@@ -196,6 +199,7 @@ const UserProfile = () => {
                 }
             });
     };
+
 
     const closeEditPassWord = () => {
         setShowChangePasswordModal(false);
@@ -220,11 +224,10 @@ const UserProfile = () => {
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                 />
                                 <span
-                                    title='show password'
                                     className="show-password-icon"
                                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                                 >
-                                    {!showCurrentPassword ? "show" : "hide"}  
+                                    {!showCurrentPassword ? "show" : "hide"}
                                 </span>
                             </div>
 
@@ -237,11 +240,10 @@ const UserProfile = () => {
                                     onChange={(e) => setNewPassword(e.target.value)}
                                 />
                                 <span
-                                    title='show password'
                                     className="show-password-icon"
                                     onClick={() => setShowNewPassword(!showNewPassword)}
                                 >
-                                    {!showNewPassword ? "show" : "hide"}  
+                                    {!showNewPassword ? "show" : "hide"}
                                 </span>
                             </div>
 
@@ -254,11 +256,10 @@ const UserProfile = () => {
                                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                                 />
                                 <span
-                                    title='show password'
                                     className="show-password-icon"
                                     onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
                                 >
-                                    {!showConfirmNewPassword ? "show" : "hide"}  
+                                    {!showConfirmNewPassword ? "show" : "hide"}
                                 </span>
                             </div>
 
