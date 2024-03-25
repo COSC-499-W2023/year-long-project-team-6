@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import "../component/CSS/post.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import "../component/CSS/post.css";
 import { initializeWebRTC, cleanupWebRTC } from './webrtc';
-import { uploadVideo } from './webrtc';
 
 function PostPage() {
     const [showWebRTC, setShowWebRTC] = useState(false);
@@ -23,7 +22,8 @@ function PostPage() {
     const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
     const groupIdFromState = location.state?.groupId;
-    
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [progress, setProgress] = useState(0);
 
 
     const channelARN = 'arn:aws:kinesisvideo:us-east-1:466618866658:channel/webrtc-499/1701571372732';
@@ -83,59 +83,38 @@ function PostPage() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
+        setIsSubmitting(true);
+    
         const formData = new FormData(event.target);
+        const postTitle = formData.get('post_title').trim();
+        const postText = formData.get('post_text').trim();
+        const groupid = formData.get('groupid');
         let videoKey = '';
-        const postTitle = formData.get('post_title').trim(); // Trim whitespace
-        const postText = formData.get('post_text').trim(); // Trim whitespace
-        const groupid = formData.get('groupid'); // Assuming 'groupid' is the name attribute for the group select field
-
-        // Validation checks
-        if (!postTitle) {
+        if (!postTitle || !postText || !groupid || groupid === "") {
             setIsLoading(false);
-            alert('Please enter a title for your video.');
-            return; 
+            setIsSubmitting(false);
+            alert('Please ensure all fields are filled out correctly.');
+            return;
         }
     
-        if (!postText) {
-            setIsLoading(false);
-            alert('Please enter a description for your video.');
-            return; 
-        }
-    
-        if (!groupid || groupid === "") {
-            setIsLoading(false);
-            alert('Please choose a group.');
-            return; 
-        }
         if (recordedVideo) {
             try {
-                const uploadResult = await uploadVideo(recordedVideo, formData.get('post_title'));
-                console.log('Video uploaded successfully:', uploadResult);
+                
+                const uploadResult = await uploadVideoWithProgress(recordedVideo, postTitle, (progressEvent) => {
+                    const progress = (progressEvent.loaded / progressEvent.total) * 100;
+                    setProgress(progress);
+                });
                 videoKey = uploadResult.key;
-            } catch (uploadError) {
-                console.error('Failed to upload video:', uploadError);
-                return; 
-            }
-        }else{
-            setIsLoading(false);
-            alert('Please record your video.');
-            
-            return; 
-        }
-        
-        const postData = {
-            post_title: formData.get('post_title'),
-            post_text: formData.get('post_text'),
-            s3_content_key: videoKey,
-            userid: userId,
-            blurFace: blurFace,
-            group_id: selectedGroup
-        };
-
-
-        console.log("postData to be sent:", postData); // Add this line for debugging
-
-        fetch('http://localhost:5001/add-post', {
+                console.log('Video uploaded successfully');
+                const postData = {
+                    post_title: postTitle,
+                    post_text: postText,
+                    s3_content_key: videoKey,
+                    userid: userId,
+                    blurFace: blurFace,
+                    group_id: selectedGroup
+                };
+                fetch('http://localhost:5001/add-post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(postData)
@@ -155,8 +134,59 @@ function PostPage() {
             })
             .finally(() => {
                 setIsLoading(false);
-            });;
-    }
+                setIsSubmitting(false); 
+            });
+    
+                // Cleanup WebRTC after successful navigation
+                if (signalingClientRef.current || peerConnectionRef.current) {
+                    cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
+                    signalingClientRef.current = null;
+                    peerConnectionRef.current = null;
+                }
+    
+                setShowWebRTC(false);
+                setIsPlaying(false);
+    
+            } catch (uploadError) {
+                console.error('Failed to upload video:', uploadError);
+                setIsLoading(false);
+                setIsSubmitting(false);
+                alert('Failed to upload video.');
+            }
+        } else {
+            setIsLoading(false);
+            setIsSubmitting(false);
+            alert('Please record your video.');
+        }
+    };
+    
+    const uploadVideoWithProgress = (videoBlob, title, onProgress) => {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            const formData = new FormData();
+            formData.append('video', videoBlob, `${title}.webm`);
+
+            xhr.open('POST', 'http://localhost:5001/upload-video', true);
+
+            xhr.upload.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    onProgress(event);
+                }
+            };
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve(JSON.parse(xhr.responseText));
+                } else {
+                    reject('Upload failed with status: ' + xhr.status);
+                }
+            };
+
+            xhr.onerror = () => reject(xhr.statusText);
+
+            xhr.send(formData);
+        });
+    };
 
     const handleSortChange = (event) => {
         const sortOrder = event.target.value;
@@ -172,7 +202,7 @@ function PostPage() {
     useEffect(() => {
         console.log('recordedChunks updated:', recordedChunks);
     }, [recordedChunks]);
-    // Temporary array to hold recorded chunks, outside of the function
+
     let tempRecordedChunks = [];
 
     const handleTogglePlay = async () => {
@@ -189,8 +219,7 @@ function PostPage() {
                         signalingClientRef.current = webrtc.signalingClient;
                         peerConnectionRef.current = webrtc.peerConnection;
 
-                        // Initialize MediaRecorder here
-                        const stream = localView.current.srcObject; // Assuming this is your local stream
+                        const stream = localView.current.srcObject;
                         console.log('stream', stream);
 
                         const recorder = new MediaRecorder(stream);
@@ -204,7 +233,7 @@ function PostPage() {
 
                         recorder.onstop = async () => {
                             const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
-                            setRecordedVideo(blob); // Assuming you have a state called recordedVideo
+                            setRecordedVideo(blob); 
                             tempRecordedChunks = [];
                         };
 
@@ -338,11 +367,19 @@ function PostPage() {
                                      onChange={(e) => setBlurFace(e.target.checked)}
                                     />
                             </div>
-                            <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
-                            <button type="button" onClick={handleClear} id="submit">Clear</button>
-
+                            {!isSubmitting ? (
+                <>
+                    <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+                    <button type="button" onClick={handleClear} id="submit">Clear</button>
+                </>
+            ) : (
+                <div>
+                    <label>{progress < 100 ? "Uploading..." : "Transcoding..."}</label>
+                    <progress value={progress} max="100"></progress>
+                </div>
+            )}
                     </form>
-                    {isLoading && <div><h3>Submitting...</h3></div>}
+                   
                 </div>
                 <div id="HistroyBar">
                     <table id="histroyTable">

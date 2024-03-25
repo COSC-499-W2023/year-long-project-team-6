@@ -216,8 +216,8 @@ function MembersPage() {
 
             <div className="members-page">
                 <h3 id="admin">Admin: {admin}</h3>
-                <h3 id="admin">{userId == adminid ? (<span>Invite Code: {code}</span>) :
-                    (<span></span>)}
+                {/* everyone can see the invite code and it is easy for the invitation between the team members */}
+                <h3 id="admin">{(<span>Invite Code: {code}</span>)}
                 </h3>
                 <div className="members-filter">
                     <input
@@ -233,18 +233,19 @@ function MembersPage() {
                         <option value="Sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
-                    
+       
                         <div className="dropdown-content">
+
                         {userId == adminid && (
                             <>
-                            <button onClick={() => deleteGroup(groupId)} className='dropdown-button'>Delete Group</button>
-                            <button onClick={navigateToAnnounce} className='dropdown-button'>Create Announcement</button>
+                                <button onClick={() => deleteGroup(groupId)} className='dropdown-button'>Delete Group</button>
+                                <button onClick={navigateToAnnounce} className='dropdown-button'>Create Announcement</button>
                             </>
                         )}
 
                         <button onClick={navigateToPostPage} className='dropdown-button'>Create Post</button>
                         <button onClick={navigateToView} className='dropdown-button'>View Announcement</button>
-                        </div>
+                    </div>
 
                 </div>
                 <table className="members-table">
@@ -295,9 +296,11 @@ function MembersPage() {
                                     </td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
+
                                     <button onClick={() => handleViewPostsClick(member)}>View Posts</button>
                                         </td>
                                     <td>
+
 
                                         {userId == adminid && (
                                             <button className='editButton' onClick={(e) => {

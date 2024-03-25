@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 20px;
     max-width: 300px;
     border: 1px solid #ddd;
@@ -35,42 +35,45 @@
     color: #666;
     font-size: 20px;
 }
+
 .avatar-container {
     position: relative;
     display: inline-block;
 }
+
 .avatar-container img {
     transition: filter 0.3s ease-in-out;
 }
-.avatar-container img:hover{
-    filter: brightness(70%); 
 
-}
 .change-avatar-button {
     margin-top: 10px;
     padding: 10px 10px;
     cursor: pointer;
     width: 180px;
 }
-button.edit-profile{
+
+button.edit-profile {
     margin-top: 0px;
     padding: 10px 10px;
     cursor: pointer;
     width: 180px;
 }
-button.save-profile{
+
+button.save-profile {
     margin-top: 10px;
     padding: 10px 10px;
     width: 180px;
     cursor: pointer;
 }
-button.cancel-profile{
+
+button.cancel-profile {
     margin-top: 10px;
     padding: 10px 10px;
     width: 180px;
     cursor: pointer;
 }
-button.changePassw{
+
+button.changePassw {
     margin-top: 10px;
     padding: 10px 10px;
     width: 180px;
@@ -78,55 +81,126 @@ button.changePassw{
     margin-bottom: 10px;
 }
 
-input#username,#birthday{
+input#username,
+#birthday {
     padding: 5px 5px;
     border-radius: 5px;
     font-size: 16px;
 }
-input#birthday{
+
+input#birthday {
     font-weight: bold;
 }
-input#birthday:hover{
+
+input#birthday:hover {
     font-weight: bold;
     cursor: pointer;
     /* text-decoration: underline; */
 }
+
 .change-password-modal {
     margin: 0;
     border: 0;
     padding: 0;
     /* border-radius: 20px; */
-    
+
 }
-.modal-content{
+
+.modal-content {
     border-radius: 20px;
 
 }
-.change-password-modal input{
+
+.change-password-modal input {
     border-radius: 5px;
     padding: 5px 5px;
     font-weight: bold;
     width: 50%;
 
 }
-.modal-content p#confirm{
+
+.modal-content p#confirm {
     margin-left: -88px;
     margin-bottom: 5px;
 }
-.modal-content p#old{
+
+.modal-content p#old {
     margin-left: -120px;
     margin-bottom: 5px;
 
 }
-.modal-content p#new{
+
+.modal-content p#new {
     margin-left: -120px;
     margin-bottom: 5px;
 
 }
-.change-password-modal button{
+
+.change-password-modal button {
     width: 180px;
     font-weight: bold;
     font-size: 18px;
 }
 
 
+
+.avatar-hover {
+    position: relative;
+    display: inline-block;
+}
+
+.avatar-hover img:hover {
+    filter: brightness(70%);
+}
+
+.avatar-hover:hover .hovering-text {
+    display: block;
+    pointer-events: none;
+}
+
+.hovering-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.input-container input[type="password"],
+.input-container input[type="text"] {
+    margin-left: 120px;
+}
+
+
+/* Additional styles for a line */
+.hovering-text::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+}
+.input-container span[type="show password"]{
+    margin-right: 10px;
+    /* font-weight: bold; */
+}
+.input-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.show-password-icon {
+    position: absolute;
+    right: 125px; 
+    font-weight: bold; 
+    cursor: pointer;
+    user-select: none;
+}
+.show-password-icon:hover {
+    text-decoration: underline; 
+}
