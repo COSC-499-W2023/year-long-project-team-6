@@ -211,21 +211,24 @@ const Sidebar = () => {
 
         {isModalOpen && (
           <div className="modal" ref={modalRef}>
-            <div className="modal-content">
-              <span className="close" onClick={toggleModal}>&times;</span>
+            <div className="modal-content" id='group-modal'>
+              <span className="closeModal" onClick={toggleModal}>&times;</span>
+              <br />
               <div className='creategroup'>
-                <h3>Create your group here</h3>
+                <h3 class='Title'>Create your group here</h3>
                 <input
                   type="text"
+                  class="modalInput"
                   placeholder="Your Group Name"
                   name='groupname'
                 />
-                <button onClick={handleCreateGroup}>Create!</button>
+                <button onClick={handleCreateGroup} className='createButton'>Create!</button>
               </div>
-              <div className="addgroup">
+              <div className="addGroup">
                 <h3>Find your group here</h3>
                 <input
                   type="text"
+                  class="modalInput"
                   maxLength="5"
                   placeholder="Enter a 5-character code"
                   value={searchValue}
