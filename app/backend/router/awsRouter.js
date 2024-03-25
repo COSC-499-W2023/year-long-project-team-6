@@ -2,8 +2,8 @@ require('dotenv').config({ path: "./process.env" });
 const { Upload } = require("@aws-sdk/lib-storage");
 
 const mysql = require('mysql');
-process.env.AWS_SDK_LOAD_CONFIG = '1'; 
-process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658'; 
+process.env.AWS_SDK_LOAD_CONFIG = '1';
+process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658';
 const { KinesisVideo } = require('@aws-sdk/client-kinesis-video');
 const express = require('express');
 const { GetObjectCommand } = require('@aws-sdk/client-s3');
@@ -12,11 +12,11 @@ const { STSClient, AssumeRoleCommand } = require('@aws-sdk/client-sts');
 const fs = require('fs');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); 
+const upload = multer({ dest: 'uploads/' });
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const ffmpegStatic = require('ffmpeg-static');
 const path = require('path');
-const PostDao = require('../dao/PostDao'); 
+const PostDao = require('../dao/PostDao');
 const connection = mysql.createConnection({
     host: process.env.DBHOST,
     user: process.env.DBUSER,
@@ -74,7 +74,7 @@ router.get('/get-temp-credentials', async (req, res) => {
 
 router.get('/getSignalingChannelConfig', async (req, res) => {
     const channelARN = req.query.channelARN;
-    
+
     try {
         const params = {
             ChannelARN: channelARN,
@@ -128,7 +128,7 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
 
         // Upload to S3 with progress tracking
         const upload = new Upload({
-            client: s3Client, 
+            client: s3Client,
             params: {
                 Bucket: "cosc499-video-submission",
                 Key: s3Key,
@@ -136,7 +136,7 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
                 ContentType: 'video/mp4',
                 ContentDisposition: 'attachment'
             },
-            leavePartsOnError: false, 
+            leavePartsOnError: false,
         });
 
         upload.on('httpUploadProgress', (progress) => {
@@ -159,7 +159,7 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
 
 router.get('/get-video-url/:videoId', (req, res) => {
     const videoId = req.params.videoId;
-    
+
     postDao.getVideoByKey(videoId, (err, videoKey, faceblur) => {
         if (err) {
             console.error('Error in /get-video-url/:videoId:', err);
@@ -172,12 +172,12 @@ router.get('/get-video-url/:videoId', (req, res) => {
         const bucketName = faceblur ? "cosc-499-blurvideo" : "cosc499-video-submission";
 
         const s3Client = new S3Client({ region: "us-east-1" });
-        const urlParams = { Bucket: bucketName, Key: videoKey }; 
+        const urlParams = { Bucket: bucketName, Key: videoKey };
         const command = new GetObjectCommand(urlParams);
 
         getSignedUrl(s3Client, command, { expiresIn: 3600 })
             .then(signedUrl => {
-                res.json({ signedUrl, faceblur }); 
+                res.json({ signedUrl, faceblur });
             })
             .catch(signedUrlErr => {
                 console.error('Error generating signed URL:', signedUrlErr);
