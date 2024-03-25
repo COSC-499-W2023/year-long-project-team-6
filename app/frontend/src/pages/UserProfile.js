@@ -88,7 +88,7 @@ const UserProfile = () => {
         // Trigger file input when the avatar image is clicked
         if (fileInputRef.current) {
             fileInputRef.current.click();
-            // fetchUserProfile();
+            fetchUserProfile();
         }
     };
 
@@ -112,6 +112,7 @@ const UserProfile = () => {
             .then(response => {
                 console.log('Profile updated:', response.data);
                 setIsEditMode(false);
+                fetchUserProfile();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -133,7 +134,6 @@ const UserProfile = () => {
         })
             .then(response => {
                 console.log('Avatar updated successfully', response.data);
-                //This will refresh the page with new avatar image. 
                 fetchUserProfile();
             })
             .catch(error => {
@@ -285,11 +285,11 @@ const UserProfile = () => {
                         style={{ cursor: 'pointer' }}
                         title="Change Avatar"
                     />
-                    <span className="hovering-text">Change Avatar</span>
+                    {isEditMode && <span className="hovering-text">Change Avatar</span>} 
+                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                 </div>
 
                 {isEditMode ? (
-
                     <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
                 ) : (
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
@@ -323,6 +323,7 @@ const UserProfile = () => {
             )}
         </div>
     );
+
 }
 
 export default UserProfile;
