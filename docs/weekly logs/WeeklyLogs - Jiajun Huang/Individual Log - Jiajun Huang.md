@@ -515,3 +515,34 @@ This week, I add post title and description in view video page, this would let u
 ![Board](T2W10_img/Board.png)
 *Table format:*
 ![Table](T2W10_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 11)
+
+## Applicable data range
+**March/18/2023** to **March/24/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Met with my team members
+* Modify all the tables in members, groupPost, recorded
+* Modify delete user and delete post modal
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Modify all the tables in members, groupPost, recorded
+* Modify all the tables in members, groupPost, recorded
+* Peer evaluation
+
+
+## Self reflection
+This week, I made the entire rows clickable and can lead user to view post page in every table exists. UI of the tables are changed as well. Also, after discussing, we removed manage button, instead, we are using modal as confirmation while deleting user or post. 
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W11_img/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2W11_img/Board.png)
+*Table format:*
+![Table](T2W11_img/Table.png)
