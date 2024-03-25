@@ -608,11 +608,13 @@ This week, I successfully completed all my scheduled tasks, including holding a 
 *My jobs in this week are:* 
 * Have a meeting 
 * Update the aws uploading (Return progress)
+* Finish Team-Log
 * Finish Peer Evaluation
 
 ## Completed Tasks 
 * Had a meeting 
 * Updated the aws uploading (Return progress)
+* Finished Team-Log
 * Finished Peer Evaluation
 
 ## In progress
@@ -620,7 +622,7 @@ This week, I successfully completed all my scheduled tasks, including holding a 
 * Update progress bar
 
 ## Self reflection
-This week, I successfully completed all my scheduled tasks, including holding a crucial meeting, updated several functions and routers in the backend. 
+This week, I successfully completed all my scheduled tasks, including holding a crucial meeting, updated several functions and routers in the backend. I was working on modifing the functions of aws. 
 
 ## ScreenShot of peer evaluation
 ![Peer Evaluation](T2_w11_img/PeerEval.png)
