@@ -636,3 +636,35 @@
 *Table format:*
 ![Table](Term_2_Week_10/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+***
+***
+***
+
+# Individual Log - Zetian Zhao (Week 11)
+
+## Applicable date range
+**March/18/2024** to **March/24/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week 11. 
+* Modify the UI of the modal when create the group or enter into a group page. 
+* Change the visbility of the invitaiton in the members page. 
+* Complete the peer evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week 11. 
+* The UI of the create group modal page has been improved. For exmaple, adjustment of the input and button location. Moreover, the CSS of the input text also be modified. 
+* The visibility of the invitation code has changed. Now, all the user type in the website able to see the invitation code for more convenient joining process. 
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_11/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_11/Board.png)
+*Table format:*
+![Table](Term_2_Week_11/Table.png)
+*missions with tag "done before" are from the previous weeks.*
