@@ -57,44 +57,38 @@ async function editGroup(groupId, newGroupName, newAdmin, callback) {
 
 
 async function deleteGroup(groupId, callback) {
-    db.beginTransaction(err => {
+    const deleteAnnouncementsQuery = 'DELETE FROM announcement WHERE groupid = ?';
+    db.query(deleteAnnouncementsQuery, [groupId], (err, announcementResult) => {
         if (err) {
-            callback(err, null);
+            db.rollback(() => {
+                callback(err, null);
+            });
             return;
         }
-        const deleteAnnouncementsQuery = 'DELETE FROM announcement WHERE groupid = ?';
-        db.query(deleteAnnouncementsQuery, [groupId], (err, announcementResult) => {
+        const deleteUserGroupsQuery = 'DELETE FROM `user_groups` WHERE groupid = ?';
+        db.query(deleteUserGroupsQuery, [groupId], (err, userGroupsResult) => {
             if (err) {
                 db.rollback(() => {
                     callback(err, null);
                 });
                 return;
             }
-            const deleteUserGroupsQuery = 'DELETE FROM `user_groups` WHERE groupid = ?';
-            db.query(deleteUserGroupsQuery, [groupId], (err, userGroupsResult) => {
+            const deleteGroupQuery = 'DELETE FROM groups WHERE groupid = ?';
+            db.query(deleteGroupQuery, [groupId], (err, groupResult) => {
                 if (err) {
                     db.rollback(() => {
                         callback(err, null);
                     });
                     return;
                 }
-                const deleteGroupQuery = 'DELETE FROM groups WHERE groupid = ?';
-                db.query(deleteGroupQuery, [groupId], (err, groupResult) => {
+                db.commit(err => {
                     if (err) {
                         db.rollback(() => {
                             callback(err, null);
                         });
                         return;
                     }
-                    db.commit(err => {
-                        if (err) {
-                            db.rollback(() => {
-                                callback(err, null);
-                            });
-                            return;
-                        }
-                        callback(null, groupResult);
-                    });
+                    callback(null, groupResult);
                 });
             });
         });

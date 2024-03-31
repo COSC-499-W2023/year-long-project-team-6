@@ -16,7 +16,6 @@ app.use(cors({
 const awsRouter = require('./router/awsRouter');
 app.use(awsRouter);
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

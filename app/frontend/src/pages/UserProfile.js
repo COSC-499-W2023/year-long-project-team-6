@@ -28,6 +28,11 @@ const UserProfile = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
     const [passwError, setPasswError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+
 
     // In order to automatically update the interface, we define a function that will be contained in the useEffect. 
     const fetchUserProfile = () => {
@@ -100,12 +105,14 @@ const UserProfile = () => {
         fetchUserProfile();
     };
 
+
     const handleSaveClick = () => {
         console.log('Session User:', user);
         axios.put(`http://localhost:5001/edit-profile/${user.userid}`, user)
             .then(response => {
                 console.log('Profile updated:', response.data);
                 setIsEditMode(false);
+                fetchUserProfile();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -127,14 +134,13 @@ const UserProfile = () => {
         })
             .then(response => {
                 console.log('Avatar updated successfully', response.data);
-                //This will refresh the page with new avatar image. 
                 fetchUserProfile();
             })
             .catch(error => {
                 console.error('Error uploading avatar:', error);
             });
     };
-    
+
     const validatePassw = () => {
         const isLengthValid = newPassword.length >= 6 && newPassword.length <= 30;
         const hasDigit = /\d/.test(newPassword);
@@ -151,11 +157,24 @@ const UserProfile = () => {
     };
 
     const changePassword = () => {
-        if ((newPassword !== confirmNewPassword)) {
+        if (!currentPassword && !newPassword && !confirmNewPassword) {
+            alert("Fields cannot be empty!");
+            return;
+        }
+        if (newPassword !== confirmNewPassword) {
             alert('New password and confirmed password do not match!');
             return;
-        } else if ((validatePassw() == false)) {
-            alert("New password format is wrong!");
+        }
+        if (!validatePassw()) {
+            alert("New password format is wrong! Make sure you have letters, digits and symbols");
+            return;
+        }
+        if (!currentPassword && newPassword === confirmNewPassword) {
+            alert("Please verify your current password!");
+            return;
+        }
+        if (newPassword === currentPassword) { // Check if new password is the same as the old one
+            alert("New password cannot be the same as the old password!");
             return;
         }
 
@@ -165,13 +184,22 @@ const UserProfile = () => {
         })
             .then(response => {
                 console.log('Password changed:', response.data);
+                alert("Password changed successfully!");
                 closeEditPassWord();
             })
             .catch(error => {
                 console.error('Error:', error);
-                setError('Failed to change password.');
+                if (error.response && error.response.data === 'Current password is incorrect') {
+                    alert("Current password is incorrect!");
+                    setCurrentPassword('');
+                    setNewPassword('');
+                    setConfirmNewPassword('');
+                } else {
+                    setError('Failed to change password!');
+                }
             });
     };
+
 
     const closeEditPassWord = () => {
         setShowChangePasswordModal(false);
@@ -188,26 +216,53 @@ const UserProfile = () => {
                         <span className="close" onClick={closeEditPassWord}>&times;</span>
                         <div className="change-password-modal">
                             <p id='old'>Old password:</p>
-                            <input
-                                type="password"
-                                placeholder="Current Password"
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                            />
+                            <div className="input-container">
+                                <input
+                                    type={showCurrentPassword ? "text" : "password"}
+                                    placeholder="Current Password"
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                />
+                                <span
+                                    className="show-password-icon"
+                                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                                >
+                                    {!showCurrentPassword ? "show" : "hide"}
+                                </span>
+                            </div>
+
                             <p id='new'>New password:</p>
-                            <input
-                                type="password"
-                                placeholder="New Password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                            />
+                            <div className="input-container">
+                                <input
+                                    type={showNewPassword ? "text" : "password"}
+                                    placeholder="Letters, digits and symbols"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                />
+                                <span
+                                    className="show-password-icon"
+                                    onClick={() => setShowNewPassword(!showNewPassword)}
+                                >
+                                    {!showNewPassword ? "show" : "hide"}
+                                </span>
+                            </div>
+
                             <p id='confirm'>Confirmed password:</p>
-                            <input
-                                type="password"
-                                placeholder="Confirmed Password"
-                                value={confirmNewPassword}
-                                onChange={(e) => setConfirmNewPassword(e.target.value)}
-                            />
+                            <div className="input-container">
+                                <input
+                                    type={showConfirmNewPassword ? "text" : "password"}
+                                    placeholder="Letters, digits and symbols"
+                                    value={confirmNewPassword}
+                                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                />
+                                <span
+                                    className="show-password-icon"
+                                    onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+                                >
+                                    {!showConfirmNewPassword ? "show" : "hide"}
+                                </span>
+                            </div>
+
                             <p></p>
                             <button onClick={changePassword}>Submit</button>
                             <button onClick={closeEditPassWord}>Cancel</button>
@@ -221,17 +276,20 @@ const UserProfile = () => {
 
     return (
         <div className="user-profile">
-            <div className="avatar-container" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-                <img
-                    src={user.user_image}
-                    alt={`${user.username}'s profile`}
-                    onClick={handleAvatarClick}
-                    style={{ cursor: 'pointer' }}
-                    title="Change Avatar"
-                />
+            <div className="avatar-container">
+                <div className="avatar-hover">
+                    <img
+                        src={user.user_image}
+                        alt={`${user.username}'s profile`}
+                        onClick={handleAvatarClick}
+                        style={{ cursor: 'pointer' }}
+                        title="Change Avatar"
+                    />
+                    {isEditMode && <span className="hovering-text">Change Avatar</span>} 
+                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
+                </div>
 
                 {isEditMode ? (
-
                     <button className="save-profile" onClick={handleSaveClick} hidden="hidden">Save</button>
                 ) : (
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
@@ -241,7 +299,10 @@ const UserProfile = () => {
 
             {isEditMode ? (
                 <>
-
+                    <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
+                    <div>{renderPasswordForm()}</div>
+                    <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
+                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} id='username' /></p>
                     <p>Gender:
                         <input type="radio" name="gender" value="Male" checked={user.gender === "Male"} onChange={handleInputChange} /><label>Male</label>
@@ -254,10 +315,6 @@ const UserProfile = () => {
                 </>
             ) : (
                 <>
-                    <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
-                    <div>{renderPasswordForm()}</div>
-                    <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
-                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <h1>Username: {user.username}</h1>
                     <p><strong>Email: </strong>{user.email}</p>
                     <p><strong>Gender: </strong>{user.gender}</p>
@@ -266,6 +323,7 @@ const UserProfile = () => {
             )}
         </div>
     );
+
 }
 
 export default UserProfile;

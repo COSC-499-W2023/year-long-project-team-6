@@ -84,7 +84,7 @@ function PostPage() {
         event.preventDefault();
         setIsLoading(true);
         setIsSubmitting(true);
-    
+
         const formData = new FormData(event.target);
         const postTitle = formData.get('post_title').trim();
         const postText = formData.get('post_text').trim();
@@ -96,10 +96,10 @@ function PostPage() {
             alert('Please ensure all fields are filled out correctly.');
             return;
         }
-    
+
         if (recordedVideo) {
             try {
-                
+
                 const uploadResult = await uploadVideoWithProgress(recordedVideo, postTitle, (progressEvent) => {
                     const progress = (progressEvent.loaded / progressEvent.total) * 100;
                     setProgress(progress);
@@ -115,38 +115,38 @@ function PostPage() {
                     group_id: selectedGroup
                 };
                 fetch('http://localhost:5001/add-post', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(postData)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(data => {
-                console.log('Success:', data);
-                navigate('/');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            })
-            .finally(() => {
-                setIsLoading(false);
-                setIsSubmitting(false); 
-            });
-    
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+                        navigate('/');
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                        setIsSubmitting(false);
+                    });
+
                 // Cleanup WebRTC after successful navigation
                 if (signalingClientRef.current || peerConnectionRef.current) {
                     cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
                     signalingClientRef.current = null;
                     peerConnectionRef.current = null;
                 }
-    
+
                 setShowWebRTC(false);
                 setIsPlaying(false);
-    
+
             } catch (uploadError) {
                 console.error('Failed to upload video:', uploadError);
                 setIsLoading(false);
@@ -159,7 +159,7 @@ function PostPage() {
             alert('Please record your video.');
         }
     };
-    
+
     const uploadVideoWithProgress = (videoBlob, title, onProgress) => {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -210,8 +210,8 @@ function PostPage() {
 
         if (!isPlaying) {
             console.log(localView.current);
-            
-            
+
+
             setTimeout(async () => {
                 if (localView.current) {
                     try {
@@ -233,7 +233,7 @@ function PostPage() {
 
                         recorder.onstop = async () => {
                             const blob = new Blob(tempRecordedChunks, { type: 'video/webm' });
-                            setRecordedVideo(blob); 
+                            setRecordedVideo(blob);
                             tempRecordedChunks = [];
                         };
 
@@ -256,33 +256,33 @@ function PostPage() {
             signalingClientRef.current = null;
             peerConnectionRef.current = null;
             setShowWebRTC(false);
-            
+
         }
         setIsPlaying(!isPlaying);
     };
     const handleClear = () => {
         // Reset form fields
         document.getElementById("postform").reset(); // Replace "yourFormId" with the actual ID of your form
-    
+
         // Stop recording if it's in progress
         if (isPlaying && mediaRecorder && mediaRecorder.state !== "inactive") {
             mediaRecorder.stop();
         }
-    
+
         // Reset all relevant states to their initial values
         setShowWebRTC(false);
         setIsPlaying(false);
         setIsRecordingStopped(false);
         setRecordedVideo(null);
         setBlurFace(false);
-    
+
         // Cleanup WebRTC if needed
         if (signalingClientRef.current || peerConnectionRef.current) {
             cleanupWebRTC(signalingClientRef.current, peerConnectionRef.current);
             signalingClientRef.current = null;
             peerConnectionRef.current = null;
         }
-    
+
         // Clear recorded video URL to avoid memory leaks
         if (recordedVideo) {
             URL.revokeObjectURL(recordedVideo);
@@ -307,21 +307,19 @@ function PostPage() {
                             <div id="videoContainer">
                                 {isPlaying && (
                                     <>
-                                        <video ref={localView} style={{ width: '640px'}} autoPlay playsInline />
+                                        <video ref={localView} style={{ width: '640px' }} autoPlay playsInline />
 
                                     </>
                                 )}
-                               
-
                                 {recordedVideo ? (
-                                <div>
-                                <video style={{ width: '640px'}} controls>
-                                <source src={URL.createObjectURL(recordedVideo)} type="video/webm" />
-                                 </video>
-                            </div>
-                            ) : (
-                                <button id="record_button" type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start Recording'}</button>
-                            )}
+                                    <div>
+                                        <video style={{ width: '640px' }} controls>
+                                            <source src={URL.createObjectURL(recordedVideo)} type="video/webm" />
+                                        </video>
+                                    </div>
+                                ) : (
+                                    <button id="record_button" type='button' onClick={handleTogglePlay}>{isPlaying ? 'Stop' : 'Start Recording'}</button>
+                                )}
 
 
                             </div>
@@ -330,17 +328,6 @@ function PostPage() {
                                 <legend>Name your new video</legend>
                                 <input type="text" id="VName" placeholder="Video Name" name="post_title" />
                             </div>
-                            {/*
-                            <div className="EnterText">
-                                <legend>Choose a Group</legend>
-                                <select id="GName" name="GName" value={selectedGroup} onChange={handleGroupChange}>
-                                    <option value=""></option>
-                                    <option value="Sender">Sender</option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Professor">Professor</option>
-                                </select>
-                            </div>
-                        */}
                             <div className="EnterText" id="text_two">
                                 <legend>Description of Your Video</legend>
                                 <input type="text" id="Description" placeholder="Describe your video" name="post_text" />
@@ -348,7 +335,7 @@ function PostPage() {
                             <div className="group">
                                 <legend>Choose a Group</legend>
                                 <select id="GName" name="groupid" value={selectedGroup} onChange={handleGroupChange}>
-                                <option value=""  >Choose a group</option>
+                                    <option value=""  >Choose a group</option>
                                     {groups.map(group => (
                                         <option key={group.groupname} value={group.groupid}>{group.groupname}</option>
                                     ))}
@@ -357,29 +344,31 @@ function PostPage() {
 
                         </div>
                         <div className="blur">
-                                <legend>
-                                    BlurFace  
-                                </legend>   
-                                <input
-                                    type="checkbox"
-                                     id="blurFace"
-                                     checked={blurFace}
-                                     onChange={(e) => setBlurFace(e.target.checked)}
-                                    />
+                            <legend>
+                                BlurFace
+                            </legend>
+                            <input
+                                type="checkbox"
+                                id="blurFace"
+                                checked={blurFace}
+                                onChange={(e) => setBlurFace(e.target.checked)}
+                            />
+                        </div>
+                        {!isSubmitting ? (
+                            <>
+                                <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
+                                <button type="button" onClick={handleClear} id="submit">Clear</button>
+                            </>
+                        ) : (
+                            <div>
+                                <label>
+                                    {progress < 100 ? "Uploading..." : "Processing..."}
+                                </label>
+                                <progress value={progress} max="100"></progress>
                             </div>
-                            {!isSubmitting ? (
-                <>
-                    <button type="submit" value="Submit" name="submit" id="submit">Submit</button>
-                    <button type="button" onClick={handleClear} id="submit">Clear</button>
-                </>
-            ) : (
-                <div>
-                    <label>{progress < 100 ? "Uploading..." : "Transcoding..."}</label>
-                    <progress value={progress} max="100"></progress>
-                </div>
-            )}
+                        )}
                     </form>
-                   
+
                 </div>
                 <div id="HistroyBar">
                     <table id="histroyTable">
