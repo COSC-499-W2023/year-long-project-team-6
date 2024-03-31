@@ -554,3 +554,30 @@ Tasks done vs in progress
 I have done the very last testing. For the rest I am just going to finalizing some backend stuff.
 ### 5. *From project board*
 ![Board](images23/pb.png)
+
+
+## Ximin Xu T2 week 12 personal log
+
+### 1. *Date Range*
+
+Mar.25-Mar.31
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images24/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Delete the video from s3 bucket as it is deleted in the db
+
+
+
+**In progress**
+ 1. documentation
+
+### 4. *Self Reflection and learned*
+I have finalized the video deleting function, i will write my documentation next
+### 5. *From project board*
+![Board](images24/pb.png)
