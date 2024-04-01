@@ -1,7 +1,7 @@
 const express = require('express');
 
 
-const { getPostInfor,  editPost, getPostByPostId } = require('../dao/recordedDao');
+const { getPostInfor,  editPost, getPostByPostId, getGroupInfor} = require('../dao/recordedDao');
 
 const router = express.Router();
 
