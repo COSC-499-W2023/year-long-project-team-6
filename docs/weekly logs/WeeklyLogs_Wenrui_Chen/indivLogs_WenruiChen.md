@@ -625,3 +625,43 @@
 
 *Table format:*
 ![Task1](t2w11/table.png)
+
+# Individual Log - Wenrui Chen (t2w12)
+
+## Applicable data range
+**March/25/2024** to **March/31/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Meetings and see what's the plan. 
+* UI consistency
+* avatar clicking for enlarging
+* Complete the peer evaluation. 
+
+
+## Completed Tasks 
+* meetings 
+* recorded page UI consistency
+* enlarge avatar when not editing
+* peer evaluation
+
+## Task in progress
+* automated testing
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](t2w12/PE.png)
+
+## Task on Board
+*Board format:*
+![Board](t2w12/board.png)
+
+<!-- *Tests (Test reports are shown in team log part):*<br>
+![Board](t2w4/1.jpg)
+![Board](t2w4/2.jpg)
+![Board](t2w4/3.jpg) -->
+<!-- ![Board](t2w3/t4.png)
+![Board](t2w3/t5.png)
+![Board](t2w3/t6.png) -->
+
+*Table format:*
+![Task1](t2w12/table.png)
