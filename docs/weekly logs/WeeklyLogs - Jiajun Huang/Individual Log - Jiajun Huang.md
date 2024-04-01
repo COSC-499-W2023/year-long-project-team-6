@@ -546,3 +546,36 @@ This week, I made the entire rows clickable and can lead user to view post page 
 ![Board](T2W11_img/Board.png)
 *Table format:*
 ![Table](T2W11_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 12)
+
+## Applicable data range
+**March/25/2023** to **March/31/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Met with my team members
+* Create view all posts page on members page
+* Fix button UI
+* Team log
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Created view all posts page on members page
+* Button Ui fixed
+* Team log
+* Peer evaluation
+
+
+## Self reflection
+This week, I create a page that is similar to group post for all the post in a certain group. Also, there were some issues with button animation, I have fixed that as well.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W12_img/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2W12_img/Board.png)
+*Table format:*
+![Table](T2W12_img/Table.png)
