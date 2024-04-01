@@ -632,3 +632,34 @@ This week, I successfully completed all my scheduled tasks, including holding a 
 ![Board](T2_w11_img/Board.png)
 *Table format:*
 ![Table](T2_w11_img/Table.png)
+
+# Individual Log - Yiqi Xu (Week 12)
+
+## Applicable data range
+**March/25/2023** to **March/31/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Debug for backend of admin functions (The bugs are due to new functions)
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Debugged for backend of admin functions (The bugs are due to new functions)
+* Finished Peer Evaluation
+
+## In progress
+* Documentation
+
+## Self reflection
+This week, I successfully completed all my scheduled tasks, including debugged several functions of admin. I figured out all the bugs, now the function is able to work.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w12_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w12_img/Board.png)
+*Table format:*
+![Table](T2_w12_img/Table.png)
