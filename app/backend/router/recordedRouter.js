@@ -1,14 +1,16 @@
 const express = require('express');
 
-const { getPostInfor, deletePost, editPost, getPostByPostId } = require('../dao/recordedDao');
+const { getPostInfor, deletePost, editPost, getPostByPostId, getGroupInfor } = require('../dao/recordedDao');
 const router = express.Router();
 
 // Get post information
 router.get('/get-posts/:user_id', (req, res) => {
     const userId = req.params.user_id;
     const sort = req.query.sort; // Retrieve the sort parameter from query
+    // get group id from the url
+    const groupId = req.query.group;
 
-    getPostInfor(userId, sort, (err, results) => {
+    getPostInfor(userId, sort, groupId, (err, results) => {
         if (err) {
             console.error('Error in /get-posts/:user_id:', err);
             res.status(500).send(`Error retrieving posts: ${err.message}`);
@@ -21,8 +23,9 @@ router.get('/get-posts/:user_id', (req, res) => {
 
 
 // Get group information
-router.get('/get-groups', (req, res) => {
-    getGroupInfor((err, results) => {
+router.get('/get-groups/:userid', (req, res) => {
+    const userId = req.params.userid;
+    getGroupInfor(userId, (err, results) => {
         if (err) {
             res.status(500).send('Error retrieving groups');
         } else {
