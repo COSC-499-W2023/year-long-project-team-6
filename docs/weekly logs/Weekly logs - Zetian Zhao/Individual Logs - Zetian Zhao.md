@@ -668,3 +668,35 @@
 *Table format:*
 ![Table](Term_2_Week_11/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+***
+***
+***
+
+# Individual Log - Zetian Zhao (Week 12)
+
+## Applicable date range
+**March/25/2024** to **March/31/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week 12. 
+* Work on the function of the another selection bar in the recorded page. 
+* Work on the collaboration of the two filtering bar in the recorded page. 
+* Complete the peer evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week 12. 
+* The function of the filtering bar based on the group name is working now. User will see all the joined group with their name in the selection bar dynamically. 
+* Two filtering selection bars are working properly in the recorded page now. For instance, user able to sort posts regarding certian group by their post date via using the filters together. 
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_12/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_12/Board.png)
+*Table format:*
+![Table](Term_2_Week_12/Table.png)
+*missions with tag "done before" are from the previous weeks.*
