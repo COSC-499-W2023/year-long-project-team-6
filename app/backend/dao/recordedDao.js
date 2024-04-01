@@ -3,7 +3,7 @@ const db = require('../db/db');
 
 
 
-async function getPostInfor(userId, sort, callback) {
+async function getPostInfor(userId, sort, groupId, callback) {
     let orderBy = '';
     if (sort === 'date_asc') {
         orderBy = 'ORDER BY p.post_date ASC';
@@ -15,15 +15,23 @@ async function getPostInfor(userId, sort, callback) {
         orderBy = 'ORDER BY p.post_title DESC';
     }
 
+    let groupFilter = '';
+    // if group filter not selected, then no groupId. 
+    let parameters = [userId];
+    if (groupId && groupId !== 'all') {
+        groupFilter = 'AND groupid = ?';
+        parameters = [userId, groupId];
+    }
+
     const query = `
         SELECT p.userid, p.post_id, p.post_title, p.post_date, p.post_text
         FROM posts p
         JOIN users u ON u.userid = p.userid
-        WHERE u.userid = ?
+        WHERE u.userid = ? ${groupFilter}
         ${orderBy};
     `;
 
-    db.query(query, [userId], (err, results) => {
+    db.query(query, parameters, (err, results) => {
         if (err) {
             console.log("DAO: Error - ", err);
             callback(err, null);
@@ -35,14 +43,22 @@ async function getPostInfor(userId, sort, callback) {
 }
 
 
-async function getGroupInfor(callback) {
+async function getGroupInfor(userId, callback) {
     const query = `
-        SELECT groupid, groupname
-        FROM groups;
-        `;
+        SELECT g.groupid, g.groupname
+        FROM \`groups\` g
+        JOIN user_groups ug ON g.groupid = ug.groupid
+        WHERE ug.userid = ?
+    `;
 
-    this.db.query(query, (err, results) => {
-        callback(err, results);
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.log("DAO: Error in getGroupInfor - ", err);
+            callback(err, null);
+        } else {
+            console.log("DAO: Group Info Results - ", results);
+            callback(null, results);
+        }
     });
 }
 
@@ -96,5 +112,6 @@ module.exports = {
     getPostInfor,
     deletePost,
     editPost,
-    getPostByPostId
+    getPostByPostId,
+    getGroupInfor
 };
