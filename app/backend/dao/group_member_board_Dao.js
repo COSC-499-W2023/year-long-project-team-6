@@ -67,10 +67,30 @@ async function getUserDetails(userId, callback) {
     });
 }
 
+async function getAllPosts(groupId, callback) {
+    const query = `
+    SELECT p.*
+        FROM posts p
+        INNER JOIN user_groups ug ON p.userid = ug.userid AND ug.groupid = p.groupid
+        WHERE p.groupid = ?;
+
+        `;
+
+
+    db.query(query, [groupId], (err, results) => {
+        if (err) {
+            console.error(err);
+            callback('Error fetching admin in group', null);
+        } else {
+            callback(null, results);
+        }
+    });
+}
 
 
 module.exports = {
     getUsersInGroup,
     checkAdmin,
     getUserDetails,
+    getAllPosts
 };

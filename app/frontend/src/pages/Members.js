@@ -193,6 +193,10 @@ function MembersPage() {
         setSelectedMember(member);
         navigate(`/groupPost/${groupId}/${member.userid}`);
     };
+
+    const handleViewAllPosts = (groupId) => {
+        navigate(`/allGroupPost/${groupId}`);
+    };
   
 
     return (
@@ -235,7 +239,7 @@ function MembersPage() {
                     </select>
        
                         <div className="dropdown-content">
-
+                        <button onClick={() => handleViewAllPosts(groupId)} className='dropdown-button'>View All Posts</button>
                         {userId == adminid && (
                             <>
                                 <button onClick={() => deleteGroup(groupId)} className='dropdown-button'>Delete Group</button>
