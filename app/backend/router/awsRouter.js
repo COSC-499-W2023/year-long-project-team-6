@@ -10,12 +10,14 @@ const { GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { STSClient, AssumeRoleCommand } = require('@aws-sdk/client-sts');
 const fs = require('fs');
+const {deletePost } = require('../dao/recordedDao');
 const router = express.Router();
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const ffmpegStatic = require('ffmpeg-static');
 const path = require('path');
+const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const PostDao = require('../dao/PostDao');
 const connection = mysql.createConnection({
     host: process.env.DBHOST,
@@ -185,8 +187,57 @@ router.get('/get-video-url/:videoId', (req, res) => {
             });
     });
 });
+router.delete('/delete-posts/:id', async (req, res) => {
+    const postId = req.params.id;
 
+    postDao.getVideoByKey(postId, async (err, s3_content_key) => {
+        if (err) {
+            console.error('Error retrieving s3_content_key:', err);
+            return res.status(500).json({ error: 'Error retrieving video information' });
+        }
 
+        if (!s3_content_key) {
+            return res.status(404).json({ error: 'Post or video not found' });
+        }
 
+        // Attempt to delete from the primary bucket first
+        const primaryBucket = "cosc499-video-submission";
+        const secondaryBucket = "cosc-499-blurvideo";
+
+        try {
+            await s3Client.send(new DeleteObjectCommand({
+                Bucket: primaryBucket,
+                Key: s3_content_key,
+            }));
+            console.log(`Video deleted successfully from ${primaryBucket}`);
+        } catch (error) {
+            if (error.name === 'NoSuchKey') {
+                console.log(`Video not found in ${primaryBucket}, attempting delete from ${secondaryBucket}`);
+            } else {
+                console.error('Error deleting video from S3:', error);
+                return res.status(500).json({ error: 'Error deleting video from S3', details: error.toString() });
+            }
+        }
+        try {
+            await s3Client.send(new DeleteObjectCommand({
+                Bucket: secondaryBucket,
+                Key: s3_content_key,
+            }));
+            console.log(`Video deleted successfully from ${secondaryBucket}`);
+        } catch (secondaryError) {
+            console.error('Error deleting video from S3:', secondaryError);
+            return res.status(500).json({ error: 'Error deleting video from S3', details: secondaryError.toString() });
+        }
+        // Proceed to delete the post entry from the database after ensuring video deletion
+        deletePost(postId, (err, result) => {
+            if (err) {
+                console.error('Error deleting post from database:', err);
+                return res.status(500).json({ error: 'Error deleting post' });
+            }
+
+            res.status(200).json({ message: `Post with ID ${postId} and associated video deleted successfully` });
+        });
+    });
+});
 
 module.exports = router;

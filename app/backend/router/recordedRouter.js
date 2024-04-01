@@ -1,6 +1,8 @@
 const express = require('express');
 
-const { getPostInfor, deletePost, editPost, getPostByPostId, getGroupInfor } = require('../dao/recordedDao');
+
+const { getPostInfor,  editPost, getPostByPostId } = require('../dao/recordedDao');
+
 const router = express.Router();
 
 // Get post information
@@ -30,18 +32,6 @@ router.get('/get-groups/:userid', (req, res) => {
             res.status(500).send('Error retrieving groups');
         } else {
             res.json(results);
-        }
-    });
-});
-
-// Delete a post
-router.delete('/delete-posts/:id', (req, res) => {
-    const postId = req.params.id;
-    deletePost(postId, (err, result) => {
-        if (err) {
-            res.status(500).send('Error deleting post');
-        } else {
-            res.status(200).send(`Post with ID ${postId} deleted successfully`);
         }
     });
 });
