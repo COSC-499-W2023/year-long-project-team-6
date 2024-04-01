@@ -252,6 +252,7 @@ button {
     cursor: pointer;
     margin: 10px;
     transition: all 0.4s ease;
+    width: 120px;
 }
 
 button:hover {
@@ -313,7 +314,7 @@ p#resultContainer {
 .closeModal {
     color: #aaa;
     float: right;
-    font-size: 1em;
+    font-size: 1.3em;
     font-weight: bold;
 }
 

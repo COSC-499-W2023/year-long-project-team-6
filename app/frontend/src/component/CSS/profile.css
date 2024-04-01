@@ -204,3 +204,24 @@ input#birthday:hover {
 .show-password-icon:hover {
     text-decoration: underline; 
 }
+.darken-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); 
+    z-index: 9998; 
+    cursor: pointer;
+}
+.enlarge-image {
+    transform: scale(3.5);  
+    transition: transform 0.3s ease-in-out;  
+    position:absolute;
+    margin-top: 18%;
+    margin-left: -2%;
+    cursor: pointer;
+    object-fit: cover;
+
+}
+
