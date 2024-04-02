@@ -8,8 +8,7 @@ const router = express.Router();
 // Get post information
 router.get('/get-posts/:user_id', (req, res) => {
     const userId = req.params.user_id;
-    const sort = req.query.sort; // Retrieve the sort parameter from query
-    // get group id from the url
+    const sort = req.query.sort; 
     const groupId = req.query.group;
 
     getPostInfor(userId, sort, groupId, (err, results) => {
@@ -21,8 +20,6 @@ router.get('/get-posts/:user_id', (req, res) => {
         }
     });
 });
-
-
 
 // Get group information
 router.get('/get-groups/:userid', (req, res) => {

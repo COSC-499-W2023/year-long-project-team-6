@@ -54,11 +54,31 @@ async function editPost(postId, newTitle, newText, callback) {
 }
 
 async function editGroup(groupId, newGroupName, newAdmin, callback) {
-    const query = 'UPDATE `groups` SET groupname = ?, admin = ? WHERE groupid = ?';
-    db.query(query, [newGroupName, newAdmin, groupId], (err, result) => {
+    let query = 'UPDATE `groups` SET';
+    const queryParams = [];
+
+    // Dynamically construct the query based on provided data
+    if (newGroupName) {
+        query += ' `groupname` = ?,';
+        queryParams.push(newGroupName);
+    }
+    if (newAdmin) {
+        query += ' `admin` = ?,';
+        queryParams.push(newAdmin);
+    }
+    query = query.slice(0, -1);
+
+    query += ' WHERE `groupid` = ?';
+    queryParams.push(groupId);
+
+    if (queryParams.length === 1) {
+        return callback('No new data provided for update', null);
+    }
+
+    db.query(query, queryParams, (err, result) => {
         if (err) {
             console.error(err);
-            callback('Error updating group', null);
+            callback('Error updating group details', null);
         } else {
             callback(null, result);
         }
@@ -66,39 +86,38 @@ async function editGroup(groupId, newGroupName, newAdmin, callback) {
 }
 
 async function deleteGroup(groupId, callback) {
-    db.beginTransaction(err => {
+    const deleteAnnouncementsQuery = 'DELETE FROM announcement WHERE groupid = ?';
+    db.query(deleteAnnouncementsQuery, [groupId], (err, announcementResult) => {
         if (err) {
-            console.error(err);
-            callback('Transaction start error', null);
+            db.rollback(() => {
+                callback(err, null);
+            });
             return;
         }
         const deleteUserGroupsQuery = 'DELETE FROM `user_groups` WHERE groupid = ?';
-        db.query(deleteUserGroupsQuery, [groupId], (err, result) => {
+        db.query(deleteUserGroupsQuery, [groupId], (err, userGroupsResult) => {
             if (err) {
-                console.error(err);
                 db.rollback(() => {
-                    callback('Error deleting from user_groups', null);
+                    callback(err, null);
                 });
                 return;
             }
-            const deleteGroupQuery = 'DELETE FROM `groups` WHERE groupid = ?';
-            db.query(deleteGroupQuery, [groupId], (err, result) => {
+            const deleteGroupQuery = 'DELETE FROM groups WHERE groupid = ?';
+            db.query(deleteGroupQuery, [groupId], (err, groupResult) => {
                 if (err) {
-                    console.error(err);
                     db.rollback(() => {
-                        callback('Error deleting group', null);
+                        callback(err, null);
                     });
                     return;
                 }
                 db.commit(err => {
                     if (err) {
-                        console.error(err);
                         db.rollback(() => {
-                            callback('Error committing transaction', null);
+                            callback(err, null);
                         });
                         return;
                     }
-                    callback(null, result);
+                    callback(null, groupResult);
                 });
             });
         });
