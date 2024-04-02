@@ -24,19 +24,7 @@
     font-size: 16px;
     cursor: pointer;
 }
-.dropdown-button{
-    background: white;
-border: 1px solid grey;
-cursor: pointer;
-color: black;
-padding: 8px;
-}
-.dropdown-button:hover{
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-transform: translateY(-3.5px);
-background: white;
-cursor: pointer;
-}
+
 .members-table {
     margin-left: 200px;
     width: 80%;
@@ -51,28 +39,34 @@ cursor: pointer;
 
 .members-table th,
 .members-table td {
+    width: 130px;
     text-align: left;
     padding: 12px;
     border-bottom: 1px solid #ddd;
 }
 
-.members-table a,
+.members-table button,
+.modal-content button,
+.dropdown-content button,
 .button {
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 10px;
-    border-radius: 8px;
-    border-color: white;
     background-color: #007bff;
-    width: 30em;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.4s ease;
 }
 
-.members-table a:hover,
+.members-table button:hover,
+.modal-content button:hover,
+.dropdown-content button:hover,
 .button {
-    color: blue;
-    background-color: #007bff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3.5px);
 }
 
 .members-table a:active,
@@ -105,3 +99,35 @@ cursor: pointer;
     font-weight: bold;
     margin-top: 15px;
 }  
+.editButton {
+    margin-left: auto;
+}
+.modal-content{
+    text-align: center;
+}
+.modal-content button{
+    margin-left: 2em;
+    margin-right: 2em;
+}
+.members-table tr,
+.videoTable tr {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.members-table tr:hover,
+.videoTable tr:hover {
+    background-color: #e9e9e9;
+    color: #000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.members-table tr td 
+.videoTable tr td {
+    transition: color 0.3s ease;
+}
+
+.members-table tr:hover td,
+.videoTable tr:hover td {
+    color: #333;
+}
+
