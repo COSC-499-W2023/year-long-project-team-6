@@ -301,7 +301,7 @@ function MembersPage() {
                                     <td>
 
 
-                                        {userId == adminid && (
+                                        {userId == adminid && member.userid != adminid && (
                                             <button className='editButton' onClick={(e) => {
                                                 e.stopPropagation();
                                                 setSelectedMember(member);
