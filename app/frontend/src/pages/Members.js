@@ -197,7 +197,7 @@ function MembersPage() {
     const handleViewAllPosts = (groupId) => {
         navigate(`/allGroupPost/${groupId}`);
     };
-  
+
 
     return (
         <>
@@ -237,8 +237,8 @@ function MembersPage() {
                         <option value="Sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
-       
-                        <div className="dropdown-content">
+
+                    <div className="dropdown-content">
                         <button onClick={() => handleViewAllPosts(groupId)} className='dropdown-button'>View All Posts</button>
                         {userId == adminid && (
                             <>
@@ -278,7 +278,7 @@ function MembersPage() {
                             })
                             .map((member, index) => (
                                 <tr key={member.userid + '-' + index}
-                                    onClick={navigateToGroupPostMember(member.userid)}
+                                    onClick={() => navigateToGroupPostMember(member.userid, 'tr')}  // 使用箭头函数传递额外参数 'tr'
                                     style={{ cursor: 'pointer' }}
                                     className="table-row-hover">
                                     <td>
@@ -296,8 +296,8 @@ function MembersPage() {
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
 
-                                    <button onClick={() => handleViewPostsClick(member)}>View Posts</button>
-                                        </td>
+                                        <button onClick={() => handleViewPostsClick(member)}>View Posts</button>
+                                    </td>
                                     <td>
 
 
