@@ -8,8 +8,8 @@ const upload = multer({ storage: storage });
 
 router.put('/edit-profile/:userId', (req, res) => {
     console.log('Received data:', req.body);
-    const userId = req.body.userid;
-    const userData = req.body;
+    const userId = req.params.userId;
+    const { user_image, ...userData } = req.body;
     console.log('receivedid:', userId)
     // Assuming the array is sent directly
     editUserProfile(userId, userData, (err, result) => {
