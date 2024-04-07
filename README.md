@@ -37,10 +37,14 @@ aws configure sso
 ```
 ```
 SSO session name (Recommended): my-sso 
-SSO start URL [None]: https://my-sso-portal.awsapps.com/start SSO region [None]: us-east-1 
+
+SSO start URL [None]:https://my-sso-portal.awsapps.com/start 
+
+SSO region [None]: us-east-1 
+
 SSO registration scopes [None]: sso:account:access
-```    
-you can type random session name, start URL is the access key from https://ubc-cicsso.awsapps.com/start/#/?tab=accounts , region is ```ca-central-1``` and type ```sso:account:access``` for registration scopes
+```
+Above is just an example, you can type random session name, start URL is the access key from https://ubc-cicsso.awsapps.com/start/#/?tab=accounts , region is ```ca-central-1``` and type ```sso:account:access``` for registration scopes
 
 **3. Start the application:**  
 Open two terminals on editer, cd the first terminal to the frontend folder, and use ```npm start``` to start the frontend server:
