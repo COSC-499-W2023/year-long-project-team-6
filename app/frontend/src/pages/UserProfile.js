@@ -107,13 +107,14 @@ const UserProfile = () => {
 
     const handleSaveClick = () => {
         console.log('Session User:', user);
-        axios.put(`http://localhost:5001/edit-profile/${user.userid}`, user)
+        const { user_image, ...userDataWithoutImage } = user;
+        axios.put(`http://localhost:5001/edit-profile/${user.userid}`, userDataWithoutImage)
             .then(response => {
                 console.log('Profile updated:', response.data);
                 fetchUserProfile() // Fetch updated user data
                     .then(() => {
                         setIsEditMode(false);
-                        alert("Information updated!");
+                        console.log("Information updated!");
                     })
                     .catch(error => {
                         console.error('Error updating user profile:', error);
@@ -130,7 +131,7 @@ const UserProfile = () => {
         if (!file) {
             return;
         }
-        const validTypes = ['image/jpeg', 'image/png', 'image/gif','image/webp'];
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         if (!validTypes.includes(file.type)) {
             alert('Please select a file of type JPG, PNG, WEBP or GIF.');
             return;
