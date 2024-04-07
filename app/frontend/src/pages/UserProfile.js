@@ -136,10 +136,6 @@ const UserProfile = () => {
             alert('Please select a file of type JPG, PNG, WEBP or GIF.');
             return;
         }
-        if (file.size > 200 * 1024) {
-            alert('Please select a file smaller than 200KB.');
-            return;
-        }
         const formData = new FormData();
         formData.append('avatar', file);
         axios.post(`http://localhost:5001/upload-avatar/${user.userid}`, formData, {
