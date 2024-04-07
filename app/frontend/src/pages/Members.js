@@ -237,7 +237,6 @@ function MembersPage() {
                         <option value="Sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
-                    <button onClick={() => handleViewAllPosts(groupId)} className='dropdown-button'>View All Posts</button>
                     <div className="dropdown-content">
                     {userId != adminid ? (
                               <button onClick={navigateToGroupPostMember(adminid)}>View admin's Posts</button>
@@ -298,8 +297,12 @@ function MembersPage() {
                                     </td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
-
-                                        <button onClick={() => handleViewPostsClick(member)}>View Posts</button>
+                                    {userId == adminid && (
+                            <>
+                                <button onClick={() => handleViewPostsClick(member)}>View Posts</button>
+                            </>
+                        )}
+                                       
                                     </td>
                                     <td>
 
