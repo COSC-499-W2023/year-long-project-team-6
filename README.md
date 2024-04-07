@@ -27,7 +27,7 @@ https://docs.aws.amazon.com/cli/latest/userguide/sso-configure-profile-token.htm
 
 Or follow the following step:
 
-Go to the root directory of the application, type the following command in your terminal:  
+Go to the repo directory of the application, type the following command in your terminal:  
 ```
 aws configure sso
 ```  
