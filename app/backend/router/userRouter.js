@@ -64,7 +64,7 @@ router.post('/signup', (req, res) => {
             }
 
             // Proceed with registration if both checks pass
-            postDao.signup(username, email, password , userImage, (err, results) => {
+            postDao.signup(username, email, password, userImage, (err, results) => {
                 if (err) {
                     console.error("Error during user registration:", err);
                     return res.status(500).json({ success: false, message: 'Error during user registration' });
@@ -89,7 +89,7 @@ router.post('/signup', (req, res) => {
                     }
                 });
             });
-            
+
 
         });
     });

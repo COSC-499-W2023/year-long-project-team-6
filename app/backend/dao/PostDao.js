@@ -33,7 +33,7 @@ class PostDao {
         });
     }
     getUserByEmail(email, callback) {
-        const query = 'SELECT userid, username, email,user_image FROM users WHERE email = ?';
+        const query = 'SELECT userid, username, email FROM users WHERE email = ?';
         this.db.query(query, [email], (err, results) => {
             if (err) {
                 callback(err, null);
@@ -85,7 +85,7 @@ class PostDao {
     }
     getVideoByKey(videoId, callback) {
         const query = 'SELECT s3_content_key, blur_face FROM posts WHERE post_id = ?;';
-    
+
         this.db.query(query, [videoId], (error, results) => {
             if (error) {
                 // Handle the error in the callback
@@ -96,7 +96,7 @@ class PostDao {
                     // Extract the s3_content_key and blur_face values
                     const videoKey = results[0].s3_content_key;
                     const faceblur = results[0].blur_face;
-    
+
                     // Pass both values to the callback
                     callback(null, videoKey, faceblur);
                 } else {
@@ -106,7 +106,7 @@ class PostDao {
             }
         });
     }
-    
+
 
 }
 
