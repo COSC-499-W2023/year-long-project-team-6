@@ -13,6 +13,8 @@ const Sidebar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const modalRef = useRef(null);
   const navigate = useNavigate();
+  // set the logout modal constant.  
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     const sessionUser = sessionStorage.getItem('user');
@@ -23,7 +25,7 @@ const Sidebar = () => {
       setUserId(user.userid);
       console.log("User Id: " + user.userid);
     }
-  }, []);
+  }, [navigate]);
 
   const toggleModal = () => {
     setModalOpen(prev => !prev);
@@ -40,9 +42,10 @@ const Sidebar = () => {
     if (isModalOpen) setModalOpen(false);
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('user');
-    navigate('/login');
+  //logout confirmation
+  const handleLogoutClick = () => {
+    // activate the modal when the log out button being clicked. 
+    setShowLogoutModal(true);
   };
 
 
@@ -104,47 +107,69 @@ const Sidebar = () => {
 
   const joinGroup = async () => {
     if (searchValue.length === 5) {
-        try {
-            const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ inviteCode: searchValue })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                alert("Successfully joined the group!");
-                window.location.reload();
-            } else {
-              console.log(data);
-              if (data.error) {
-                alert(data.error);
-                } else {
-                setResult(data.message || "Error to join groups");
-                }
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            setResult("Failed to join the group.");
+      try {
+        const response = await fetch(`http://localhost:5001/join-group/${userId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ inviteCode: searchValue })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert("Successfully joined the group!");
+          window.location.reload();
+        } else {
+          console.log(data);
+          if (data.error) {
+            alert(data.error);
+          } else {
+            setResult(data.message || "Error to join groups");
+          }
         }
+      } catch (error) {
+        console.error('Error:', error);
+        setResult("Failed to join the group.");
+      }
     } else {
-        setResult('Please enter a 5-character code.');
+      setResult('Please enter a 5-character code.');
     }
-};
+  };
 
+  // log out modal creation. 
+  const LogoutModal = () => {
+    return (
+      <div className="modal">
+        <div className="modal-content">
+          <span className="close" onClick={() => setShowLogoutModal(false)}>&times;</span>
+          <h3>Are you sure you want to log out from the website?</h3>
+          <button onClick={confirmLogout}>Yes</button>
+          <button onClick={() => setShowLogoutModal(false)}>No</button>
+        </div>
+      </div>
+    );
+  };
 
+  // when the log out confirm, do this. 
+  const confirmLogout = () => {
+    sessionStorage.removeItem('user');
+    navigate('/login');
+    setShowLogoutModal(false);
+  };
 
   return (
     <>
       <div className="topnav">
         <div className="topnav-right">
           <button onClick={handleProfileClick}>Profile</button>
-          <button onClick={handleLogout} className='logout-button'>
+          <button onClick={handleLogoutClick} className='logout-button'>
             Logout
           </button>
         </div>
-      </div >
+        {/* log out modal render only when showLogoutModal is true */}
+        {/* https://stackoverflow.com/questions/45653564/react-js-avoid-the-modal-to-be-executed-when-the-component-is-rendered */}
+        {showLogoutModal && <LogoutModal />}
+      </div>
       <div className="sidebar">
         <ul>
           <li>
@@ -157,7 +182,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link to="/RecordedPage" className={activeLink === 'RecordedPage' ? 'active' : ''} onClick={() => handleLinkClick('RecordedPage')}>
-              <img src='/downloads.png' alt="Recorded" />
+              <img src='/download_new.png' alt="Recorded" />
               <span className="tooltiptext">
                 Recorded
               </span>
@@ -165,7 +190,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link to="/PostPage" className={activeLink === 'PostPage' ? 'active' : ''} onClick={() => handleLinkClick('PostPage')}>
-              <img src='/post.ico' alt="Post" />
+              <img src='/post_new.png' alt="Post" />
               <span className="tooltiptext">
                 Post
               </span>
@@ -186,21 +211,24 @@ const Sidebar = () => {
 
         {isModalOpen && (
           <div className="modal" ref={modalRef}>
-            <div className="modal-content">
-              <span className="close" onClick={toggleModal}>&times;</span>
+            <div className="modal-content" id='group-modal'>
+              <span className="closeModal" onClick={toggleModal}>&times;</span>
+              <br />
               <div className='creategroup'>
-                <h3>Create your group here</h3>
+                <h3 class='Title'>Create your group here</h3>
                 <input
                   type="text"
+                  class="modalInput"
                   placeholder="Your Group Name"
                   name='groupname'
                 />
-                <button onClick={handleCreateGroup}>Create!</button>
+                <button onClick={handleCreateGroup} className='createButton'>Create!</button>
               </div>
-              <div className="addgroup">
+              <div className="addGroup">
                 <h3>Find your group here</h3>
                 <input
                   type="text"
+                  class="modalInput"
                   maxLength="5"
                   placeholder="Enter a 5-character code"
                   value={searchValue}

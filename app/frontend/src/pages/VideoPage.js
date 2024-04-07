@@ -5,8 +5,28 @@ import "../component/CSS/videopage.css";
 import "../component/CSS/recorded.css";
 function VideoPage() {
     const [videoUrl, setVideoUrl] = useState('');
-    const { videoId } = useParams(); 
+    const { videoId } = useParams();
+    const [postId, setPostId] = useState('');
+    const [postInfo, setPostInfo] = useState('');
 
+    useEffect(() => {
+        const fetchPostInfo = async () => {
+            try {
+                const response = await fetch(`http://localhost:5001/get-posts-postid/${videoId}`);
+                const data = await response.json();
+                console.log(data);
+                if (response.ok) {
+                    setPostInfo(data[0]);
+                } else {
+                    console.error('Failed to fetch post information:', data.error || 'Unknown error');
+                }
+            } catch (error) {
+                console.error('Error fetching post information:', error);
+            }
+        };
+        console.log(postInfo);
+        fetchPostInfo();
+    }, [videoId])
     useEffect(() => {
 
         const fetchVideoUrl = async () => {
@@ -24,7 +44,8 @@ function VideoPage() {
         };
 
         fetchVideoUrl();
-    }, [videoId]); 
+    }, [videoId]);
+
     const handleDownload = (url, id) => {
         const anchor = document.createElement('a');
         anchor.href = url;
@@ -33,10 +54,12 @@ function VideoPage() {
         anchor.click();
         document.body.removeChild(anchor);
     };
-    
-    
+
+
     return (
         <div className="video-container">
+            <h1>{postInfo.post_title}</h1>
+            <h3>{postInfo.post_text}</h3>
             {videoUrl ? (
                 <>
                     <video width="640" controls>

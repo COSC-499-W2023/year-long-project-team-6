@@ -9,9 +9,15 @@ import Sidebar from './pages/sidebar';
 import Profile from './pages/UserProfile';
 import Members from './pages/Members';
 import GroupPost from './pages/groupPost';
+import Announcement from './pages/announcement';
+import ViewAnnouncement from './pages/view-announce';
+import AllGroupPost from './pages/allGroupPost';
+
+import Admin from './pages/admin/admin';
+
 
 import VideoPage from './pages/VideoPage';
-import './component/CSS/style.css'; // Assuming your styles are compatible with React
+import './component/CSS/style.css'; 
 
 import './component/CSS/sidebar_style.css';
 import './App.css';
@@ -28,9 +34,13 @@ function App() {
             <Route path="RecordedPage" element={<RecordedPage />} />
             <Route path="EditPage" element={<EditPage />} />
             <Route path="Profile" element={<Profile />} />
+            <Route path="announcement" element={<Announcement />} />
+            <Route path="view-announce" element={<ViewAnnouncement />} />
             <Route path="Members/:groupId" element={<Members />} />
             <Route path="Video/:videoId" element={<VideoPage />} />
             <Route path="grouppost/:groupId/:currentuserid" element={<GroupPost />} />
+            <Route path="admin" element={<Admin />} />
+            <Route path='allGroupPost/:groupId' element={<AllGroupPost />} />
           </Route>
         </Routes>
       </Router>

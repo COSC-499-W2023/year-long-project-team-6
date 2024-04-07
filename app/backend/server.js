@@ -16,7 +16,6 @@ app.use(cors({
 const awsRouter = require('./router/awsRouter');
 app.use(awsRouter);
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,6 +46,14 @@ app.use(selectGroupRouter);
 
 const groupPostRouter = require('./router/groupPostRouter');
 app.use(groupPostRouter);
+
+
+const announcementRouter = require('./router/announcementRouter');
+app.use(announcementRouter);
+
+
+const adminEditandDelete = require('./router/admin/editanddelete');
+app.use(adminEditandDelete);
 
 
 const server = http.createServer(app);

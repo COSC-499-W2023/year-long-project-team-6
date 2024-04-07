@@ -23,7 +23,7 @@ async function addNewGroup(groupname, invite_code, admin, callback) {
 }
 
 
-async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
+async function editGroup(groupId, newGroupName, newAdmin, callback) {
     let query = 'UPDATE `groups` SET';
     const queryParams = [];
 
@@ -35,10 +35,6 @@ async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
     if (newAdmin) {
         query += ' `admin` = ?,';
         queryParams.push(newAdmin);
-    }
-    if (newImage !== undefined) {
-        query += ' `image` = ?,';
-        queryParams.push(newImage);
     }
     query = query.slice(0, -1);
 
@@ -61,15 +57,47 @@ async function editGroup(groupId, newGroupName, newAdmin, newImage, callback) {
 
 
 async function deleteGroup(groupId, callback) {
-    const query = 'DELETE FROM groups WHERE groupid = ?';
-    db.query(query, [groupId], (err, result) => {
+    const deleteAnnouncementsQuery = 'DELETE FROM announcement WHERE groupid = ?';
+    db.query(deleteAnnouncementsQuery, [groupId], (err, announcementResult) => {
         if (err) {
-            callback(err, null);
-        } else {
-            callback(null, result);
+            db.rollback(() => {
+                callback(err, null);
+            });
+            return;
         }
+        const deleteUserGroupsQuery = 'DELETE FROM `user_groups` WHERE groupid = ?';
+        db.query(deleteUserGroupsQuery, [groupId], (err, userGroupsResult) => {
+            if (err) {
+                db.rollback(() => {
+                    callback(err, null);
+                });
+                return;
+            }
+            const deleteGroupQuery = 'DELETE FROM groups WHERE groupid = ?';
+            db.query(deleteGroupQuery, [groupId], (err, groupResult) => {
+                if (err) {
+                    db.rollback(() => {
+                        callback(err, null);
+                    });
+                    return;
+                }
+                db.commit(err => {
+                    if (err) {
+                        db.rollback(() => {
+                            callback(err, null);
+                        });
+                        return;
+                    }
+                    callback(null, groupResult);
+                });
+            });
+        });
     });
 }
+
+
+
+
 
 async function getGroupInfo(groupId, callback) {
     const query = 'SELECT * FROM groups WHERE groupid = ?';
@@ -91,20 +119,15 @@ async function joinGroupByInviteCode(userId, inviteCode, callback) {
             callback('No group found with the provided invite code', null);
         } else {
             const groupId = groupResults[0].groupid;
-
-            // Check if the user is already in the group
             const checkUserInGroupQuery = 'SELECT * FROM user_groups WHERE userid = ? AND groupid = ?';
             db.query(checkUserInGroupQuery, [userId, groupId], (checkErr, checkResults) => {
                 if (checkErr) {
                     callback(checkErr, null);
                 } else if (checkResults.length > 0) {
-                    // User is already in the group
                     callback('User is already a member of this group', null);
                 } else if (groupResults.length === 0) {
-                    // No group found with the provided invite code
                     callback('No group found with the provided invite code', null);
                 } else {
-                    // Proceed to add user to the group
                     const insertQuery = 'INSERT INTO user_groups (userid, groupid) VALUES (?, ?)';
                     db.query(insertQuery, [userId, groupId], (insertErr, insertResult) => {
                         if (insertErr) {

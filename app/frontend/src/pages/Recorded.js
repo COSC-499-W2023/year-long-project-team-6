@@ -12,6 +12,7 @@ function RecordedPage() {
     const [newTitle, setNewTitle] = useState('');
     const [newText, setNewText] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [groups, setGroups] = useState([]);
     const navigate = useNavigate();
     const handleView = async (videoId) => {
         navigate(`/Video/${videoId}`)
@@ -46,6 +47,12 @@ function RecordedPage() {
                 .catch(error => {
                     console.error('Error fetching posts:', error);
                 });
+
+            // get the groupname and id from the database. 
+            fetch(`http://localhost:5001/get-groups/${userId}`)
+                .then(response => response.json())
+                .then(data => setGroups(data))
+                .catch(error => console.error('Error fetching groups:', error));
         }
     }, [userId]);
 
@@ -133,7 +140,7 @@ function RecordedPage() {
     };
 
     function handleApplyClick() {
-        fetch(`http://localhost:5001/get-posts/${userId}?sort=${arrangement}`)
+        fetch(`http://localhost:5001/get-posts/${userId}?sort=${arrangement}&group=${group}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -168,8 +175,10 @@ function RecordedPage() {
                                 <td>
                                     <select name="group" value={group} onChange={(e) => setGroup(e.target.value)}>
                                         <option value="all">All</option>
-                                        <option value="group1">Group 1</option>
-                                        <option value="group2">Group 2</option>
+                                        {/* dynamically showing the selection options for the existed group names. */}
+                                        {groups.map((G) => (
+                                            <option key={G.groupid} value={G.groupid}>{G.groupname}</option>
+                                        ))}
                                     </select>
                                 </td>
                                 <td>
@@ -191,7 +200,7 @@ function RecordedPage() {
                     <table id="videoTable">
                         <thead>
                             <tr>
-                                <td className="all">All Videos</td>
+                                <td className="all" colSpan='4'>All Videos</td>
                             </tr>
                         </thead>
                         <tbody>

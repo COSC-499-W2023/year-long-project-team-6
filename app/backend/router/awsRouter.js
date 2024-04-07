@@ -1,20 +1,24 @@
 require('dotenv').config({ path: "./process.env" });
+const { Upload } = require("@aws-sdk/lib-storage");
+
 const mysql = require('mysql');
-process.env.AWS_SDK_LOAD_CONFIG = '1'; // Enable loading of AWS SDK config
-process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658'; 
+process.env.AWS_SDK_LOAD_CONFIG = '1';
+process.env.AWS_PROFILE = 'COSC499_CapstonePowerUserAccess-466618866658';
 const { KinesisVideo } = require('@aws-sdk/client-kinesis-video');
 const express = require('express');
 const { GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { STSClient, AssumeRoleCommand } = require('@aws-sdk/client-sts');
 const fs = require('fs');
+const {deletePost } = require('../dao/recordedDao');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); // temporarily store files in 'uploads' folder
+const upload = multer({ dest: 'uploads/' });
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const ffmpegStatic = require('ffmpeg-static');
 const path = require('path');
-const PostDao = require('../dao/PostDao'); 
+const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const PostDao = require('../dao/PostDao');
 const connection = mysql.createConnection({
     host: process.env.DBHOST,
     user: process.env.DBUSER,
@@ -22,30 +26,24 @@ const connection = mysql.createConnection({
     database: process.env.DBNAME
 });
 const postDao = new PostDao(connection);
-// This will give you the path to the FFmpeg binary
 const ffmpegPath = ffmpegStatic;
 
-// You can then use this path with fluent-ffmpeg or any other library that requires FFmpeg
 const ffmpeg = require('fluent-ffmpeg');
 const { error } = require('console');
 ffmpeg.setFfmpegPath(ffmpegPath);
-
-// Initialize the S3 client
 const s3Client = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' });
 
-// Initialize Kinesis Video Client
 const kinesisVideoClient = new KinesisVideo({
     region: process.env.AWS_REGION || 'us-east-1',
     // other configurations if needed
 });
 
-// Function to obtain temporary AWS credentials
+
 async function getTemporaryCredentials() {
     const stsClient = new STSClient({ region: 'us-east-1' });
     const assumeRoleCommand = new AssumeRoleCommand({
         RoleArn: 'arn:aws:iam::466618866658:role/web-rtc-499',
         RoleSessionName: 'WebClientSession',
-        // Add other required parameters if necessary
     });
 
     try {
@@ -57,7 +55,6 @@ async function getTemporaryCredentials() {
     }
 }
 
-// Route handler to provide temporary credentials to the client
 router.get('/get-temp-credentials', async (req, res) => {
     try {
         const credentials = await getTemporaryCredentials();
@@ -77,10 +74,9 @@ router.get('/get-temp-credentials', async (req, res) => {
     }
 });
 
-// Route handler to provide signaling channel configuration to the client
 router.get('/getSignalingChannelConfig', async (req, res) => {
     const channelARN = req.query.channelARN;
-    
+
     try {
         const params = {
             ChannelARN: channelARN,
@@ -91,7 +87,6 @@ router.get('/getSignalingChannelConfig', async (req, res) => {
         };
         const endpointResponse = await kinesisVideoClient.getSignalingChannelEndpoint(params);
 
-        // Extract the endpoints
         const endpointsByProtocol = endpointResponse.ResourceEndpointList.reduce((endpoints, endpoint) => {
             endpoints[endpoint.Protocol] = endpoint.ResourceEndpoint;
             return endpoints;
@@ -103,7 +98,6 @@ router.get('/getSignalingChannelConfig', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
 
 router.post('/upload-video', upload.single('video'), async (req, res) => {
     try {
@@ -118,6 +112,7 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
         const mp4FileName = `${Date.now()}_converted.mp4`;
         const mp4FilePath = path.join(dirPath, mp4FileName); // Use absolute path
         const s3Key = "videos/" + mp4FileName;
+
         // Convert video to MP4 using FFmpeg
         await new Promise((resolve, reject) => {
             ffmpeg(file.path)
@@ -131,36 +126,42 @@ router.post('/upload-video', upload.single('video'), async (req, res) => {
                 .run();
         });
 
-
-        // Read the converted MP4 file
         const fileStream = fs.createReadStream(mp4FilePath);
 
-        const uploadParams = {
-            Bucket: "cosc499-video-submission",
-            Key: s3Key,
-            Body: fileStream,
-            ContentType: 'video/mp4',
-            ContentDisposition: 'attachment'
-        };
+        // Upload to S3 with progress tracking
+        const upload = new Upload({
+            client: s3Client,
+            params: {
+                Bucket: "cosc499-video-submission",
+                Key: s3Key,
+                Body: fileStream,
+                ContentType: 'video/mp4',
+                ContentDisposition: 'attachment'
+            },
+            leavePartsOnError: false,
+        });
 
-        const data = await s3Client.send(new PutObjectCommand(uploadParams));
+        upload.on('httpUploadProgress', (progress) => {
+            console.log(`Upload progress: ${progress.loaded} / ${progress.total}`);
+        });
 
-        // Delete the original and converted files from local storage after uploading
+        const data = await upload.done();
+
         fs.unlinkSync(file.path);
         fs.unlinkSync(mp4FilePath);
 
-        res.status(200).json({ message: 'Video uploaded successfully', 
-        data,
-        key: s3Key
-    });
+        res.status(200).json({ message: 'Video uploaded successfully', data, key: s3Key });
     } catch (error) {
         console.error('Error uploading video:', error);
         res.status(500).json({ error: 'Error uploading video', details: error.toString() });
     }
 });
+
+
+
 router.get('/get-video-url/:videoId', (req, res) => {
     const videoId = req.params.videoId;
-    
+
     postDao.getVideoByKey(videoId, (err, videoKey, faceblur) => {
         if (err) {
             console.error('Error in /get-video-url/:videoId:', err);
@@ -170,18 +171,15 @@ router.get('/get-video-url/:videoId', (req, res) => {
         if (!videoKey) {
             return res.status(404).json({ error: 'Video not found' });
         }
-
-        // Choose the bucket based on the faceblur value
         const bucketName = faceblur ? "cosc-499-blurvideo" : "cosc499-video-submission";
 
-        // Generate a signed URL for accessing the video
         const s3Client = new S3Client({ region: "us-east-1" });
-        const urlParams = { Bucket: bucketName, Key: videoKey }; // Use the chosen bucket name here
+        const urlParams = { Bucket: bucketName, Key: videoKey };
         const command = new GetObjectCommand(urlParams);
 
         getSignedUrl(s3Client, command, { expiresIn: 3600 })
             .then(signedUrl => {
-                res.json({ signedUrl, faceblur }); // Optionally return the faceblur value if needed on the client side
+                res.json({ signedUrl, faceblur });
             })
             .catch(signedUrlErr => {
                 console.error('Error generating signed URL:', signedUrlErr);
@@ -189,8 +187,57 @@ router.get('/get-video-url/:videoId', (req, res) => {
             });
     });
 });
+router.delete('/delete-posts/:id', async (req, res) => {
+    const postId = req.params.id;
 
+    postDao.getVideoByKey(postId, async (err, s3_content_key) => {
+        if (err) {
+            console.error('Error retrieving s3_content_key:', err);
+            return res.status(500).json({ error: 'Error retrieving video information' });
+        }
 
+        if (!s3_content_key) {
+            return res.status(404).json({ error: 'Post or video not found' });
+        }
 
+        // Attempt to delete from the primary bucket first
+        const primaryBucket = "cosc499-video-submission";
+        const secondaryBucket = "cosc-499-blurvideo";
+
+        try {
+            await s3Client.send(new DeleteObjectCommand({
+                Bucket: primaryBucket,
+                Key: s3_content_key,
+            }));
+            console.log(`Video deleted successfully from ${primaryBucket}`);
+        } catch (error) {
+            if (error.name === 'NoSuchKey') {
+                console.log(`Video not found in ${primaryBucket}, attempting delete from ${secondaryBucket}`);
+            } else {
+                console.error('Error deleting video from S3:', error);
+                return res.status(500).json({ error: 'Error deleting video from S3', details: error.toString() });
+            }
+        }
+        try {
+            await s3Client.send(new DeleteObjectCommand({
+                Bucket: secondaryBucket,
+                Key: s3_content_key,
+            }));
+            console.log(`Video deleted successfully from ${secondaryBucket}`);
+        } catch (secondaryError) {
+            console.error('Error deleting video from S3:', secondaryError);
+            return res.status(500).json({ error: 'Error deleting video from S3', details: secondaryError.toString() });
+        }
+        // Proceed to delete the post entry from the database after ensuring video deletion
+        deletePost(postId, (err, result) => {
+            if (err) {
+                console.error('Error deleting post from database:', err);
+                return res.status(500).json({ error: 'Error deleting post' });
+            }
+
+            res.status(200).json({ message: `Post with ID ${postId} and associated video deleted successfully` });
+        });
+    });
+});
 
 module.exports = router;

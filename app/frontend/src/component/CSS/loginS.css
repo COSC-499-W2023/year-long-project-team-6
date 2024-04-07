@@ -1,12 +1,10 @@
 .container {
     max-width: 400px;
-    /* Adjust the maximum width as per your design */
     margin: 0 auto;
     background-color: white;
     position: absolute;
 
     flex-direction: column;
-    /* 默认方向 */
     padding: 20px;
     top: 50%;
     left: 50%;
@@ -21,12 +19,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    /* You can change the font-family if needed */
 }
 
-body {
-    /* background: linear-gradient(to bottom, white, #4c00b4); */
-}
 
 .header {
     display: flex;
@@ -38,7 +32,7 @@ body {
 }
 
 .text {
-    color: #3c009d;
+    color: #0482f8;
     font-size: 48px;
     font-weight: 700;
 }
@@ -47,9 +41,14 @@ body {
     position: relative;
     display: inline-block;
     cursor: pointer;
+    margin-left: 70px;
+    color: #797979;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .tooltip .tooltiptext {
+    
     visibility: hidden;
     width: 200px;
     background-color: #555;
@@ -99,7 +98,7 @@ body {
 .underline {
     width: 61px;
     height: 6px;
-    background: #3c009d;
+    background: #0482f8;
     border-radius: 9px;
 }
 
@@ -113,6 +112,7 @@ body {
 
 .input {
     display: flex;
+    position: relative;
     align-items: center;
     margin: auto;
     width: 380px;
@@ -150,6 +150,12 @@ body {
 
     height: 40px;
 
+}
+
+.tooltip span.hover-effect:hover{
+    
+    color:#0482f8; 
+    text-decoration: underline;
 }
 
 #nameInputContainer {
@@ -217,10 +223,24 @@ body {
 }
 
 .forgot-password span {
-    color: #4c00b4;
+    color: #0482f8;
     cursor: pointer;
 
 }
+.password-toggle {
+    /* position: absolute;
+    margin-right: 20px; 
+    border: none;
+    background: none; */
+    margin-left: 50px;
+    cursor: pointer;
+    color: #797979; 
+}
+.password-toggle:hover{
+    color: black;
+    text-decoration: underline;
+}
+  
 
 .submit-container {
     display: flex;
@@ -241,7 +261,7 @@ body {
     width: 220px;
     height: 59px;
     color: #fff;
-    background: #4c00b4;
+    background: #0482f8;
     border-radius: 50px;
     font-size: 19px;
     font-weight: 700;
@@ -261,7 +281,7 @@ body {
 }
 
 .submit:hover {
-    background: #250060;
+    background: #014381;
     /* Change the background color on hover */
     color: #fff;
     /* Change the text color on hover */
