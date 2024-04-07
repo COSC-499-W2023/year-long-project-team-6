@@ -1,9 +1,8 @@
 #announce{
     justify-content: center;
     background-color: #f0f0f0;
-    height: 100%;
     width: 100%;
-    position: fixed;
+    overflow-y: auto;
 }
 #announce h2{
     margin:0;
