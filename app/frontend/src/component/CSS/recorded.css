@@ -73,20 +73,27 @@ body {
 
 .save,
 .editButton,
-.deleteButton {
+.deleteButton,
+.view,
+#apply {
     background-color: #007bff;
     color: white;
     border: none;
+    border-radius: 5px;
     padding: 10px 20px;
-    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    margin: 10px;   
+    transition: all 0.4s ease;
 }
 
 .save:hover,
 .editButton:hover,
-.deleteButton:hover {
-    background-color: #007bff;
+.deleteButton:hover,
+.view:hover,
+#apply:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3.5px);
 }
 
 .modal-backdrop {
@@ -111,7 +118,7 @@ body {
 }
 
 .modal-input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;

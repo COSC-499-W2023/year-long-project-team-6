@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 
 import "../component/CSS/sidebar_style.css";
+import '../component/CSS/MembersPage.css';
 
 function GroupPost() {
     const [userId, setUserId] = useState('');
@@ -112,28 +113,6 @@ console.log(groupId, currentuserid);
             console.error('Error deleting post:', error);
         }
     };
-    
-
-    const handleRemoveUserFromGroup = async () => {
-        try {
-            fetch(`http://localhost:5001/admin-group/${groupId}/user/${userId}`, {
-                method: 'DELETE'
-            }).then(
-                response => {
-                    console.log('User removed:', response.data);
-                    alert("Successfully removed user from group!");
-                    window.location.reload();
-                }
-            )
-            .catch(
-                error => {
-                    console.error('Error:', error);
-                }
-            );
-        } catch (error) {
-            console.error('Error removing user from group:', error);
-        }
-    };
 
     
     const renderEditForm = () => {
@@ -142,8 +121,9 @@ console.log(groupId, currentuserid);
                 <div className="modal-backdrop" onClick={() => setShowModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-                        <h2>Manage for {selectedPost.post_title}</h2>
-                        <button className='deleteButton' onClick={() => handleDeletePost(selectedPost.post_id)}>Delete Post</button>    
+                        <h2>Are you sure to delete {selectedPost.post_title}</h2>
+                        <button onClick={() => handleDeletePost(selectedPost.post_id)}>Yes</button>
+                        <button onClick={() => setShowModal(false)}>No</button>    
                     </div>
                 </div>
             );
@@ -155,15 +135,15 @@ console.log(groupId, currentuserid);
         <>
             <div id="content">
                 <div id="VideoList">
-                    <table id="videoTable">
+                    <table className="videoTable">
                         <thead>
                             <tr>
-                                <td className="all">All Videos</td>
+                                <td className="all" colSpan='4'>All Videos</td>
                             </tr>
                         </thead>
                         <tbody>
                             {posts.map((post) => (
-                                <tr key={post.post_id}>
+                                <tr key={post.post_id} onClick={() => handleView(post.post_id)} style={{cursor: 'pointer'}}>
                                     <td className="title" data-description={post.post_text}>
                                         {post.post_title}
                                     </td>
@@ -173,10 +153,11 @@ console.log(groupId, currentuserid);
                                     }}>View</button></td>
                                     <td>
                                         {userId == adminid && (
-                                            <button className='editButton' onClick={() => {
+                                            <button className='editButton' onClick={(e) => {
+                                            e.stopPropagation();
                                             setSelectedPost(post);
                                             setShowModal(true);
-                                        }}>Manage</button>                                        
+                                        }}>Delete Post</button>                                        
                                         )}
                                         {renderEditForm()}
                                     </td>

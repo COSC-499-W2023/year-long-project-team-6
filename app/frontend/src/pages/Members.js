@@ -160,8 +160,9 @@ function MembersPage() {
                 <div className="modal-backdrop" onClick={() => setShowModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-                        <h2>Manage for {selectedMember?.username}</h2>
-                        <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Delete User</button>
+                        <h2>Are you sure to delete {selectedMember?.username}</h2>
+                        <button onClick={() => removeUserFromGroup(selectedMember?.userid)}>Yes</button>
+                        <button onClick={() => setShowModal(false)}>No</button>
                     </div>
                 </div>
             );
@@ -185,6 +186,16 @@ function MembersPage() {
         const month = `0${date.getMonth() + 1}`.slice(-2);
         const day = `0${date.getDate()}`.slice(-2);
         return `${year}-${month}-${day}`;
+    };
+
+    // Function inside your component
+    const handleViewPostsClick = (member) => {
+        setSelectedMember(member);
+        navigate(`/groupPost/${groupId}/${member.userid}`);
+    };
+
+    const handleViewAllPosts = (groupId) => {
+        navigate(`/allGroupPost/${groupId}`);
     };
 
 
@@ -228,9 +239,7 @@ function MembersPage() {
                     </select>
 
                     <div className="dropdown-content">
-                        {userId !== adminid && (
-                            <button onClick={navigateToGroupPostMember(userId)} className='dropdown-button'>View Posts</button>
-                        )}
+                        <button onClick={() => handleViewAllPosts(groupId)} className='dropdown-button'>View All Posts</button>
                         {userId == adminid && (
                             <>
                                 <button onClick={() => deleteGroup(groupId)} className='dropdown-button'>Delete Group</button>
@@ -249,30 +258,29 @@ function MembersPage() {
                             <th>Name</th>
                             <th>Role</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {members
                             .filter(member => {
-                                // for the search function
                                 const matchesSearchTerm = member.username.toLowerCase().includes(searchTerm.toLowerCase());
 
                                 if (roleFilter === 'All Roles') {
-                                    // return all 
                                     return matchesSearchTerm;
                                 } else if (roleFilter === 'Admin') {
-                                    // only return the user that have admin id. 
                                     return matchesSearchTerm && (member.userid == adminid);
                                 } else if (roleFilter === 'Sender') {
-                                    // only return the users do not have the admin id. 
                                     return matchesSearchTerm && (member.userid != adminid);
                                 }
-                                // default return false. 
                                 return false;
                             })
                             .map((member, index) => (
-                                <tr key={member.userid + '-' + index}>
+                                <tr key={member.userid + '-' + index}
+                                    onClick={() => navigateToGroupPostMember(member.userid, 'tr')}  // 使用箭头函数传递额外参数 'tr'
+                                    style={{ cursor: 'pointer' }}
+                                    className="table-row-hover">
                                     <td>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                             <img src={member.user_image} style={{ width: '30px', height: '30px', borderRadius: '50%', cursor: 'pointer', transition: 'transform 0.3s ease' }} onClick={() => handleUserClick(member.userid)} alt="avatar"
@@ -287,17 +295,18 @@ function MembersPage() {
                                     </td>
                                     <td>{member.userid == adminid ? 'Admin' : 'Sender'}</td>
                                     <td>
-                                        <button onClick={() => {
-                                            if (selectedMember?.userid) {
-                                                navigateToGroupPostMember(selectedMember.userid);
-                                            }
-                                        }}>View Posts</button>
 
-                                        {userId == adminid && (
-                                            <button className='editButton' onClick={() => {
+                                        <button onClick={() => handleViewPostsClick(member)}>View Posts</button>
+                                    </td>
+                                    <td>
+
+
+                                        {userId == adminid && member.userid != adminid && (
+                                            <button className='editButton' onClick={(e) => {
+                                                e.stopPropagation();
                                                 setSelectedMember(member);
                                                 setShowModal(true);
-                                            }}>Manage</button>
+                                            }}>Delete Member</button>
                                         )}
                                         {renderEditForm()}
                                     </td>

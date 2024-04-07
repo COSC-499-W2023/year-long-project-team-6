@@ -11,6 +11,7 @@ import Members from './pages/Members';
 import GroupPost from './pages/groupPost';
 import Announcement from './pages/announcement';
 import ViewAnnouncement from './pages/view-announce';
+import AllGroupPost from './pages/allGroupPost';
 
 import Admin from './pages/admin/admin';
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="Video/:videoId" element={<VideoPage />} />
             <Route path="grouppost/:groupId/:currentuserid" element={<GroupPost />} />
             <Route path="admin" element={<Admin />} />
+            <Route path='allGroupPost/:groupId' element={<AllGroupPost />} />
           </Route>
         </Routes>
       </Router>

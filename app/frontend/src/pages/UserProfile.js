@@ -14,7 +14,7 @@ const UserProfile = () => {
         gender: '',
         birthday: null,
     });
-
+    const [isImageFullScreen, setIsImageFullScreen] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [error, setError] = useState('');
@@ -86,10 +86,14 @@ const UserProfile = () => {
     }, [navigate]);
     const handleAvatarClick = () => {
         // Trigger file input when the avatar image is clicked
-        if (fileInputRef.current) {
+        if (!isEditMode) {
+            setIsImageFullScreen(!isImageFullScreen);
+        } else {
             fileInputRef.current.click();
-            fetchUserProfile();
+            // fetchUserProfile();
+            // alert("Changed your avatar successfully!");
         }
+
     };
 
     const handleInputChange = (e) => {
@@ -207,7 +211,7 @@ const UserProfile = () => {
         setNewPassword('');
         setConfirmNewPassword('');
     };
-
+  
     const renderPasswordForm = () => {
         if (showChangePasswordModal) {
             return (
@@ -276,6 +280,18 @@ const UserProfile = () => {
 
     return (
         <div className="user-profile">
+            {isImageFullScreen && (
+                <div className="darken-background" onClick={() => setIsImageFullScreen(false)}>
+                    <div className="fullscreen-image-container">
+                        <img
+                            src={user.user_image}
+                            alt={`${user.username}'s profile`}
+                            className="fullscreen-image enlarge-image"
+                            onClick={(e) => e.stopPropagation()} // 
+                        />
+                    </div>
+                </div>
+            )}
             <div className="avatar-container">
                 <div className="avatar-hover">
                     <img
@@ -283,10 +299,9 @@ const UserProfile = () => {
                         alt={`${user.username}'s profile`}
                         onClick={handleAvatarClick}
                         style={{ cursor: 'pointer' }}
-                        title="Change Avatar"
+                        title={!isEditMode ? "Check Avatar" : "Change Avatar"}
                     />
-                    {isEditMode && <span className="hovering-text">Change Avatar</span>} 
-                    <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
+                    {isEditMode && <span className="hovering-text">Change Avatar</span>}
                 </div>
 
                 {isEditMode ? (
