@@ -36,51 +36,50 @@ const UserProfile = () => {
 
     // In order to automatically update the interface, we define a function that will be contained in the useEffect. 
     const fetchUserProfile = () => {
-        const sessionUser = sessionStorage.getItem('user');
-        if (!sessionUser) {
-            navigate('/login');
-        } else {
-            const user = JSON.parse(sessionUser);
-            setUser(user);
-            console.log('user', user.userid);
-            if (user.userid) {
-                fetch(`http://localhost:5001/get-profile/${user.userid}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log(user.userid);
-                        setId(user.userid);
-                        console.log('Fetched data:', data);
-                        if (data.birthday) {
-                            data.birthday = data.birthday.split('T')[0]; // Keeps only the 'YYYY-MM-DD' part
-                        }
-                        if (data.user_image) {
-                            const imageUrl = `data:image/*;base64,${data.user_image}`;
-                            data.user_image = imageUrl;
-                        } else {
-                            data.user_image = testPicture;
-                        }
-                        setUser({
-                            userid: user.userid,
-                            username: data.username,
-                            email: data.email,
-                            user_image: data.user_image || SamplePicture,
-                            gender: data.gender || '',
-                            birthday: data.birthday || null,
+        return new Promise((resolve, reject) => {
+            const sessionUser = sessionStorage.getItem('user');
+            if (!sessionUser) {
+                navigate('/login');
+                reject();
+            } else {
+                const user = JSON.parse(sessionUser);
+                setUser(user);
+                if (user.userid) {
+                    fetch(`http://localhost:5001/get-profile/${user.userid}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.birthday) {
+                                data.birthday = data.birthday.split('T')[0];
+                            }
+                            if (data.user_image) {
+                                const imageUrl = `data:image/*;base64,${data.user_image}`;
+                                data.user_image = imageUrl;
+                            } else {
+                                data.user_image = testPicture;
+                            }
+                            setUser({
+                                userid: user.userid,
+                                username: data.username,
+                                email: data.email,
+                                user_image: data.user_image || SamplePicture,
+                                gender: data.gender || '',
+                                birthday: data.birthday || null,
+                            });
+                            resolve(data); // Resolve with the fetched data
+                        })
+                        .catch(error => {
+                            console.error('Error fetching posts:', error);
+                            reject(error);
                         });
-                        console.log('userid second', user.userid);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching posts:', error);
-                    });
+                }
             }
-        }
+        });
     };
-
     useEffect(() => {
         fetchUserProfile();
     }, [navigate]);
@@ -90,12 +89,8 @@ const UserProfile = () => {
             setIsImageFullScreen(!isImageFullScreen);
         } else {
             fileInputRef.current.click();
-            // fetchUserProfile();
-            // alert("Changed your avatar successfully!");
         }
-
     };
-
     const handleInputChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
@@ -115,18 +110,33 @@ const UserProfile = () => {
         axios.put(`http://localhost:5001/edit-profile/${user.userid}`, user)
             .then(response => {
                 console.log('Profile updated:', response.data);
-                setIsEditMode(false);
-                fetchUserProfile();
+                fetchUserProfile() // Fetch updated user data
+                    .then(() => {
+                        setIsEditMode(false);
+                        alert("Information updated!");
+                    })
+                    .catch(error => {
+                        console.error('Error updating user profile:', error);
+                        setError('Failed to update profile.');
+                    });
             })
             .catch(error => {
                 console.error('Error:', error);
                 setError('Failed to update profile.');
             });
     };
-
     const handleFileSelect = (event) => {
         const file = event.target.files[0]; // Assuming single file selection
         if (!file) {
+            return;
+        }
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif','image/webp'];
+        if (!validTypes.includes(file.type)) {
+            alert('Please select a file of type JPG, PNG, WEBP or GIF.');
+            return;
+        }
+        if (file.size > 200 * 1024) {
+            alert('Please select a file smaller than 200KB.');
             return;
         }
         const formData = new FormData();
@@ -211,7 +221,7 @@ const UserProfile = () => {
         setNewPassword('');
         setConfirmNewPassword('');
     };
-  
+
     const renderPasswordForm = () => {
         if (showChangePasswordModal) {
             return (
@@ -309,14 +319,13 @@ const UserProfile = () => {
                 ) : (
                     <button className="edit-profile" onClick={handleEditClick}>Edit Profile</button>
                 )}
-
             </div>
 
             {isEditMode ? (
                 <>
                     <button className="changePassw" type="button" onClick={() => setShowChangePasswordModal(true)}>Change Password</button>
                     <div>{renderPasswordForm()}</div>
-                    <button className="change-avatar-button" onClick={() => fileInputRef.current.click()}>Change Avatar</button>
+                    <button className="change-avatar-button" onClick={handleAvatarClick}>Change Avatar</button>
                     <input type="file" onChange={handleFileSelect} ref={fileInputRef} style={{ display: 'none' }} />
                     <p>Name: <input type="text" name="username" value={user.username} onChange={handleInputChange} id='username' /></p>
                     <p>Gender:
