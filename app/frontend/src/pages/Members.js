@@ -237,11 +237,14 @@ function MembersPage() {
                         <option value="Sender">Sender</option>
                         <option value="Admin">Admin</option>
                     </select>
-
+                    <button onClick={() => handleViewAllPosts(groupId)} className='dropdown-button'>View All Posts</button>
                     <div className="dropdown-content">
-                        <button onClick={() => handleViewAllPosts(groupId)} className='dropdown-button'>View All Posts</button>
+                    {userId != adminid ? (
+                              <button onClick={navigateToGroupPostMember(adminid)}>View admin's Posts</button>
+                             ) : null}
                         {userId == adminid && (
                             <>
+                                <button onClick={() => handleViewAllPosts(groupId)} className='dropdown-button'>View All Posts</button>
                                 <button onClick={() => deleteGroup(groupId)} className='dropdown-button'>Delete Group</button>
                                 <button onClick={navigateToAnnounce} className='dropdown-button'>Create Announcement</button>
                             </>
