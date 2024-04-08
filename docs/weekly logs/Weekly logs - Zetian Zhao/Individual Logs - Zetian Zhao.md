@@ -700,3 +700,37 @@
 *Table format:*
 ![Table](Term_2_Week_12/Table.png)
 *missions with tag "done before" are from the previous weeks.*
+
+***
+***
+***
+
+# Individual Log - Zetian Zhao (Week 13)
+
+## Applicable date range
+**April/1/2024** to **April/7/2024**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting to discuss our plan about the week 13. 
+* Complete the final individual report. 
+* Complete the final project video demo. 
+* find and fix minor bugs before the final deadline. 
+* Complete the peer evaluation.
+
+## Completed Tasks 
+* Had a meeting to discuss our plan about the week 13. 
+* The final report is being completed and have a video link inside of it. 
+* The project video demo has been made for around 10 mins. 
+* Found and fix the minor bugs for avatar chaning and log in process. 
+* Completed the peer evaluation.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](Term_2_Week_13/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](Term_2_Week_13/Board.png)
+*Table format:*
+![Table](Term_2_Week_13/Table.png)
+*missions with tag "done before" are from the previous weeks.*
