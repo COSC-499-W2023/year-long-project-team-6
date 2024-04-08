@@ -581,3 +581,30 @@ Tasks done vs in progress
 I have finalized the video deleting function, i will write my documentation next
 ### 5. *From project board*
 ![Board](images24/pb.png)
+
+## Ximin Xu T2 week 13 personal log
+
+### 1. *Date Range*
+
+Apr.1-Apr.7
+
+### 2. *Screenshot from peer evaluation*
+![peer-eva](images25/pe.png)
+
+### 3. *Recap*
+
+Tasks done vs in progress
+
+**Tasks done:**
+1. Bugs fixing in members page
+2. documentation
+
+
+
+**In progress**
+
+
+### 4. *Self Reflection and learned*
+We finalized the documentation. Found some minor bugs when recording so i fixed them
+### 5. *From project board*
+![Board](images25/pb.png)
