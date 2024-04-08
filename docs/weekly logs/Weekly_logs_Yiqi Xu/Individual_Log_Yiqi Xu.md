@@ -663,3 +663,34 @@ This week, I successfully completed all my scheduled tasks, including debugged s
 ![Board](T2_w12_img/Board.png)
 *Table format:*
 ![Table](T2_w12_img/Table.png)
+
+
+# Individual Log - Yiqi Xu (Week 13)
+
+## Applicable data range
+**April/1/2023** to **April/7/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Have a meeting 
+* Review the code
+* Finish the final report
+* Finish Peer Evaluation
+
+## Completed Tasks 
+* Had a meeting 
+* Review the code
+* Finish the final report
+* Finished Peer Evaluation
+
+## Self reflection
+This week, we finished this project and finished the final report. We cooperated well as a team in this year.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2_w13_img/PeerEval.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2_w13_img/Board.png)
+*Table format:*
+![Table](T2_w13_img/Table.png)
