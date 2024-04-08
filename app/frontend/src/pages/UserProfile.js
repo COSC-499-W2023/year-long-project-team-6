@@ -189,7 +189,7 @@ const UserProfile = () => {
             return;
         }
 
-        axios.put(`http://localhost:5001/update-password/${userId}`, {
+        axios.put(`http://localhost:5001/update-password/${user.userid}`, {
             currentPassword,
             newPassword
         })
