@@ -579,3 +579,32 @@ This week, I create a page that is similar to group post for all the post in a c
 ![Board](T2W12_img/Board.png)
 *Table format:*
 ![Table](T2W12_img/Table.png)
+
+# Individual Log - Jiajun Huang (Term 2 Week 13)
+
+## Applicable data range
+**April/1/2023** to **March/7/2023**
+
+## Recap Goal 
+*My jobs in this week are:* 
+* Met with my team members
+* Finish report
+* Peer evaluation
+
+## Completed Tasks 
+* Met with my team members
+* Report done
+* Peer evaluation
+
+
+## Self reflection
+This week, we finished all features we planned and were very happy about our project. Report is done as well.
+
+## ScreenShot of peer evaluation
+![Peer Evaluation](T2W13_img/PE.png)
+
+## My Task on Board
+*Board format:*
+![Board](T2W13_img/Board.png)
+*Table format:*
+![Table](T2W13_img/Table.png)
