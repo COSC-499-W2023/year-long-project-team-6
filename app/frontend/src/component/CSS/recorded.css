@@ -1,0 +1,166 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#condition {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#condition table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+#condition select {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #fff;
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+#condition select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+    outline: none;
+}
+
+#VideoList {
+    max-width: 95%;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#VideoList table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#VideoList thead {
+    background-color: #373c53;
+    color: #fff;
+}
+
+#VideoList tr {
+    border-bottom: 1px solid #ddd;
+    line-height: 2.5em;
+}
+
+#VideoList th,
+#VideoList td {
+    padding: 10px;
+    text-align: left;
+}
+
+#VideoList tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.save,
+.editButton,
+.deleteButton,
+.view,
+#apply {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;   
+    transition: all 0.4s ease;
+}
+
+.save:hover,
+.editButton:hover,
+.deleteButton:hover,
+.view:hover,
+#apply:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3.5px);
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.modal-input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+    #condition,
+    #VideoList {
+        margin: 10px;
+        width: auto;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}
+
+#VideoList .all {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;}
+#content{
+    margin-left:3em
+}

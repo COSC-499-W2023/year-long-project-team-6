@@ -1,0 +1,315 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: white;
+}
+
+.banner {
+    width: 100%;
+    padding: 20px;
+}
+
+.navbar .header {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 40px;
+    margin-right: 10px;
+}
+
+#logoName {
+    color: black;
+    font-size: 24px;
+    margin: 0;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    top: 0;
+}
+
+.user-details {
+    display: flex;
+    align-items: center;
+}
+
+.Userlogo {
+    width: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#name .username {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#name .student {
+    font-size: 14px;
+    color: lightgreen;
+}
+
+.Logout {
+    width: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+#clicktocreate{
+    width:300px;
+    height:40px;
+}
+.main-content {
+    margin-left: 50px;
+}
+
+.container h2 {
+    font-size: 24px;
+    margin-top: 0;
+    color: black;
+    padding-left: 250px;
+}
+
+.card {
+    position: relative;
+    width: 500px;
+    height: 330px;
+    margin: 20px;
+    background-color: black;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+}
+
+.card .photo {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0%;
+    overflow: hidden;
+    /* aniamtion transition. */
+    transition: 0.5s;
+    object-fit: cover;
+}
+
+/* when mouse hover on the image, image shrink.  */
+.card:hover .photo {
+    top: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* add black to transparent background, so the content can be viewed easily. */
+.card .photo::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 50%, #222)
+}
+.card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; /* This will space out the cards evenly */
+    align-items: center; /* This aligns the cards vertically in the middle of the container */
+    flex-wrap: wrap; /* This allows cards to wrap to the next line if there isn't enough space */
+    padding: 20px;
+}
+.card h3 {
+    font-size: 80px;
+    position: absolute;
+    top: 120px;
+    transition: 0.5s;
+}
+
+.card:hover h3 {
+    top: 100px;
+    font-size: 15px;
+}
+
+.card p {
+    margin-top:130px;
+    width: 80%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card p {
+    font-size: 15px;
+    margin-top: 150px;
+    line-height: 25px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.card a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border-color: white;
+}
+
+.card a:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.card a:active {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.Logout:hover {
+    opacity: 0.8;
+}
+
+.navbar {
+    display: flex;
+}
+
+.card:hover {
+    opacity: 0.8;
+}
+
+.newUser img{
+    width: 18em;
+    margin-top: 5.5em;
+    margin-left: 0;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    /* Fixed position to cover the entire viewport */
+    z-index: 10000;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black overlay with opacity */
+    color: black;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    position: fixed;
+    /* Fixed position to center within the viewport */
+    background-color: #fefefe;
+    top: 50%;
+    /* Center vertically */
+    left: 50%;
+    /* Center horizontally */
+    transform: translate(-50%, -50%);
+    /* Centering trick */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.announcement-container {
+    display: flex;
+    justify-content: center;
+    min-height: 90vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .form-container {
+    background-color: white;
+    padding: 40px; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .heading {
+    font-size: 24px; 
+    color: #333;
+    margin-bottom: 20px; 
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    width: 100%; 
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  .form-input,
+  .form-textarea,
+  .form-select {
+    width: calc(100% - 16px); 
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-textarea {
+    resize: vertical;
+  }
+  
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; 
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  

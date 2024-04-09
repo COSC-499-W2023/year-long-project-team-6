@@ -1,0 +1,261 @@
+#page {
+    margin-top: 2em;
+    margin-left: 10em;
+}
+
+#send {
+    margin-left: 50px;
+    margin-top: 50px;
+    width: 30em;
+
+}
+
+#input {
+    margin-left: 50px;
+    margin-top: 2em;
+    line-height: 2em;
+    width: 30em;
+}
+
+#record_button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;   
+    transition: all 0.4s ease;
+    width: 100px;
+    height: 50px;
+}
+
+#record_button:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3.5px);
+}
+
+.main #VName {
+    height: 2em;
+}
+
+#GName {
+    height: 2em;
+    box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 10em;
+}
+
+.main #Description {
+    height: 5em;
+}
+
+#input * {
+    margin: 10;
+    padding: 0;
+}
+
+
+#selectedFileName {
+    margin-left: 10px;
+    /* Adjust as necessary */
+}
+
+#file {
+    display: none;
+}
+
+
+#submit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;   
+    transition: all 0.4s ease;
+    width: 150px;
+    height: 50px;
+}
+
+#submit:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3.5px);
+}
+
+#HistroyBar {
+    float: right;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 20em;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10em;
+    background-color: #fff;
+    padding: 20px;
+}
+
+#HistroyBar thead {
+    background-color: #007bff;
+    color: white;
+    border: 2px solid #ddd;
+}
+
+#HistroyBar thead tr {
+    height: 3em;
+    line-height: 3em;
+}
+
+#HistroyBar table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    border: 2px solid #ddd;
+}
+
+#HistroyBar td,
+#HistroyBar th {
+    padding: 8px;
+}
+
+#HistroyBar tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+#HistroyBar tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#HistroyBar tbody tr:hover {
+    background-color: #e2e2e2;
+}
+
+#HistroyBar #Sort {
+    text-align: right;
+}
+
+#HistroyBar #order {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #fff;
+}
+
+#HistroyBar img {
+    width: 50px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#date {
+    text-align: right;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.page input[type="text"] {
+    border: 1px solid lightgray;
+    box-shadow: 0 8px 12px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+
+}
+
+.EnterText {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 94%;
+    height: 80px;
+}
+
+.EnterText:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+legend {
+    font-size: 1.2em;
+    color: #373c53;
+    font-weight: bold;
+    margin-bottom: 10px;
+
+}
+
+.EnterText input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+}
+
+.EnterText input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+#text_one {
+    margin-bottom: 25px;
+    margin-top: 15px;
+    font-size: larger;
+}
+
+#text_two {
+    margin-bottom: 25px;
+    margin-top: 15px;
+    font-size: larger;
+}
+
+#VName {
+    font-size: large;
+}
+
+#Description {
+    font-size: large;
+}
+
+#send {
+    margin-left: 375px;
+    color: #3498db;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+}
+
+
+.blur {
+    margin-top: 1em;
+    display: flex;
+}
+.blur input{
+    margin-left:3em;
+    margin-bottom: 1em;
+}
+video{
+    z-index: 9;
+}
+.group{
+    margin-top: 4em;
+    display: flex;
+}
+.group select{
+    margin-left:3em;
+    width:3em;
+}
+
+.EnterText legend{
+    text-align: center;
+}
